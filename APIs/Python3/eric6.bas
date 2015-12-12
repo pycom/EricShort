@@ -146,7 +146,7 @@ E5ClearableLineEdit E5LineEdit
 E5ClickableLabel QLabel
 E5ClickableLed E5Led
 E5ComboBox QComboBox
-E5ComboPathPicker QWidget
+E5ComboPathPicker E5PathPickerBase
 E5DirCompleter QCompleter
 E5DnDTabBar E5WheelTabBar
 E5ErrorMessage QErrorMessage
@@ -174,7 +174,8 @@ E5NetworkMonitor QDialog Ui_E5NetworkMonitor
 E5NetworkProxyFactory QNetworkProxyFactory
 E5PassivePopup QFrame
 E5PasswordMeter QProgressBar
-E5PathPicker QWidget
+E5PathPicker E5PathPickerBase
+E5PathPickerBase QWidget
 E5PathPickerModes Enum
 E5ProgressDialog QProgressDialog
 E5RequestModel QAbstractTableModel

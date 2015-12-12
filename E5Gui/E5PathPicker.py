@@ -40,15 +40,16 @@ class E5PathPickerModes(Enum):
     CustomMode = 99
     NoMode = 100
 
-# TODO: Refactor the classes using a base class with common functions
 
-
-class E5PathPicker(QWidget):
+class E5PathPickerBase(QWidget):
     """
-    Class implementing a path picker widget consisting of a line edit and a
-    tool button to open a file dialog.
+    Class implementing the base of a path picker widget consisting of a
+    line edit or combo box and a tool button to open a file dialog.
     
     @signal textChanged(path) emitted when the entered path has changed
+        (line edit based widget)
+    @signal editTextChanged(path) emitted when the entered path has changed
+        (combo box based widget)
     @signal pathSelected(path) emitted after a path has been selected via the
         file dialog
     @signal aboutToShowPathPickerDialog emitted before the file dialog is shown
@@ -58,23 +59,28 @@ class E5PathPicker(QWidget):
     DefaultMode = E5PathPickerModes.NoMode
     
     textChanged = pyqtSignal(str)
+    editTextChanged = pyqtSignal(str)
     pathSelected = pyqtSignal(str)
     aboutToShowPathPickerDialog = pyqtSignal()
     pickerButtonClicked = pyqtSignal()
     
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, useLineEdit=True):
         """
         Constructor
         
         @param parent reference to the parent widget
         @type QWidget
+        @param useLineEdit flag indicating the use of a line edit
+        @type bool
         """
-        super(E5PathPicker, self).__init__(parent)
+        super(E5PathPickerBase, self).__init__(parent)
+        
+        self.__lineEditKind = useLineEdit
         
         self.__mode = E5PathPicker.DefaultMode
         self.__editorEnabled = True
         
-        self.__completer = None
+        self._completer = None
         self.__filters = ""
         self.__defaultDirectory = ""
         self.__windowTitle = ""
@@ -84,20 +90,28 @@ class E5PathPicker(QWidget):
         self.__layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.__layout)
         
-        self.__editor = E5ClearableLineEdit(self, self.tr("Enter Path Name"))
+        if useLineEdit:
+            self._editor = E5ClearableLineEdit(
+                self, self.tr("Enter Path Name"))
+        else:
+            self._editor = E5ClearableComboBox(
+                self, self.tr("Enter Path Name"))
         
         self.__button = QToolButton(self)
         self.__button.setToolButtonStyle(Qt.ToolButtonIconOnly)
         self.__button.setIcon(UI.PixmapCache.getIcon("open.png"))
         
-        self.__layout.addWidget(self.__editor)
+        self.__layout.addWidget(self._editor)
         self.__layout.addWidget(self.__button)
         
         self.__button.clicked.connect(self.__showPathPickerDialog)
-        self.__editor.textEdited.connect(self.__pathEdited)
-        self.__editor.textChanged.connect(self.textChanged)
+        if useLineEdit:
+            self._editor.textEdited.connect(self.__pathEdited)
+            self._editor.textChanged.connect(self.textChanged)
+        else:
+            self._editor.editTextChanged.connect(self.editTextChanged)
         
-        self.setFocusProxy(self.__editor)
+        self.setFocusProxy(self._editor)
         self.setFocusPolicy(Qt.StrongFocus)
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
         
@@ -110,8 +124,8 @@ class E5PathPicker(QWidget):
         @param path current text of the path line edit
         @type str
         """
-        if self.__completer and not self.__completer.popup().isVisible():
-            self.__completer.setRootPath(Utilities.toNativeSeparators(path))
+        if self._completer and not self._completer.popup().isVisible():
+            self._completer.setRootPath(Utilities.toNativeSeparators(path))
     
     def setMode(self, mode):
         """
@@ -125,25 +139,26 @@ class E5PathPicker(QWidget):
         oldMode = self.__mode
         self.__mode = mode
         
-        if mode != oldMode or not self.__completer:
-            if self.__completer:
+        if mode != oldMode or (self.__lineEditKind and not self._completer):
+            if self.__lineEditKind and self._completer:
                 # Remove current completer
-                self.__editor.setCompleter(None)
-                self.__completer = None
+                self._editor.setCompleter(None)
+                self._completer = None
             
             if mode != E5PathPickerModes.NoMode:
-                # Set a new completer
-                if mode == E5PathPickerModes.DirectoryMode:
-                    self.__completer = E5DirCompleter(self.__editor)
-                else:
-                    self.__completer = E5FileCompleter(self.__editor)
+                if self.__lineEditKind:
+                    # Set a new completer
+                    if mode == E5PathPickerModes.DirectoryMode:
+                        self._completer = E5DirCompleter(self._editor)
+                    else:
+                        self._completer = E5FileCompleter(self._editor)
                 
                 # set inactive text
                 if mode == E5PathPickerModes.OpenFilesMode:
-                    self.__editor.setInactiveText(
+                    self._editor.setInactiveText(
                         self.tr("Enter Path Names separated by ';'"))
                 else:
-                    self.__editor.setInactiveText(
+                    self._editor.setInactiveText(
                         self.tr("Enter Path Name"))
         self.__button.setEnabled(self.__mode != E5PathPickerModes.NoMode)
     
@@ -176,9 +191,40 @@ class E5PathPicker(QWidget):
     
     def clear(self):
         """
+        Public method to clear the current path or list of paths.
+        """
+        self._editor.clear()
+    
+    def clearEditText(self):
+        """
         Public method to clear the current path.
         """
-        self.__editor.clear()
+        if not self.__lineEditKind:
+            self._editor.clearEditText()
+    
+    def _setEditorText(self, text):
+        """
+        Protected method to set the text of the editor.
+        
+        @param text text to set
+        @type str
+        """
+        if self.__lineEditKind:
+            self._editor.setText(text)
+        else:
+            self._editor.setEditText(text)
+    
+    def _editorText(self):
+        """
+        Protected method to get the text of the editor.
+        
+        @return text of the editor
+        @rtype str
+        """
+        if self.__lineEditKind:
+            return self._editor.text()
+        else:
+            return self._editor.currentText()
     
     def setText(self, path):
         """
@@ -188,12 +234,12 @@ class E5PathPicker(QWidget):
         @type str
         """
         if self.__mode == E5PathPickerModes.OpenFilesMode:
-            self.__editor.setText(path)
+            self._setEditorText(path)
         else:
             path = Utilities.toNativeSeparators(path)
-            self.__editor.setText(path)
-            if self.__completer:
-                self.__completer.setRootPath(path)
+            self._setEditorText(path)
+            if self._completer:
+                self._completer.setRootPath(path)
     
     def text(self):
         """
@@ -205,10 +251,28 @@ class E5PathPicker(QWidget):
         if self.__mode == E5PathPickerModes.OpenFilesMode:
             return ";".join(
                 [Utilities.toNativeSeparators(path)
-                 for path in self.__editor.text().split(";")])
+                 for path in self._editorText().split(";")])
         else:
             return os.path.expanduser(
-                Utilities.toNativeSeparators(self.__editor.text()))
+                Utilities.toNativeSeparators(self._editorText()))
+    
+    def setEditText(self, path):
+        """
+        Public method to set the current path.
+        
+        @param path path to be set
+        @type str
+        """
+        self.setText(path)
+    
+    def currentText(self):
+        """
+        Public method to get the current path.
+        
+        @return current path
+        @rtype str
+        """
+        return self.text()
     
     def setPath(self, path):
         """
@@ -247,10 +311,7 @@ class E5PathPicker(QWidget):
         @return first path
         @rtype str
         """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return self.path().split(";")[0]
-        else:
-            return self.path()
+        self.paths()[0]
     
     def lastPath(self):
         """
@@ -259,10 +320,7 @@ class E5PathPicker(QWidget):
         @return first path
         @rtype str
         """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return self.path().split(";")[-1]
-        else:
-            return self.path()
+        self.paths()[-1]
     
     def setEditorEnabled(self, enable):
         """
@@ -271,9 +329,9 @@ class E5PathPicker(QWidget):
         @param enable flag indicating the enable state
         @type bool
         """
-        if enable != self.__editorEnabled:
-            self.__editorEnabled = enable
-            self.__editor.setEnabled(enable)
+        if enable != self._editorEnabled:
+            self._editorEnabled = enable
+            self._editor.setEnabled(enable)
     
     def editorEnabled(self):
         """
@@ -282,7 +340,7 @@ class E5PathPicker(QWidget):
         @return flag indicating the enabled state
         @rtype bool
         """
-        return self.__editorEnabled
+        return self._editorEnabled
     
     def setDefaultDirectory(self, directory):
         """
@@ -347,7 +405,8 @@ class E5PathPicker(QWidget):
         @param filters list of file name filters
         @type list of str
         """
-        self.__editor.completer().model().setNameFilters(filters)
+        if self._completer:
+            self._completer.model().setNameFilters(filters)
     
     def setButtonToolTip(self, tooltip):
         """
@@ -374,7 +433,7 @@ class E5PathPicker(QWidget):
         @param tooltip text to be set as a tool tip
         @type str
         """
-        self.__editor.setToolTip(tooltip)
+        self._editor.setToolTip(tooltip)
     
     def editorToolTip(self):
         """
@@ -383,7 +442,7 @@ class E5PathPicker(QWidget):
         @return tool tip text
         @rtype str
         """
-        return self.__editor.toolTip()
+        return self._editor.toolTip()
     
     def __showPathPickerDialog(self):
         """
@@ -411,7 +470,7 @@ class E5PathPicker(QWidget):
             elif self.__mode == E5PathPickerModes.DirectoryMode:
                 windowTitle = self.tr("Choose a directory")
         
-        directory = self.__editor.text()
+        directory = self._editorText()
         if not directory and self.__defaultDirectory:
             directory = self.__defaultDirectory
         if self.__mode == E5PathPickerModes.OpenFilesMode:
@@ -471,210 +530,12 @@ class E5PathPicker(QWidget):
                 path = path[:-1]
         
         if path:
-            self.__editor.setText(path)
+            self._setEditorText(path)
             self.pathSelected.emit(path)
-
-
-class E5ComboPathPicker(QWidget):
-    """
-    Class implementing a path picker widget consisting of a combobox and a
-    tool button to open a file dialog.
     
-    @signal editTextChanged(path) emitted when the entered path has changed
-    @signal pathSelected(path) emitted after a path has been selected via the
-        file dialog
-    @signal aboutToShowPathPickerDialog emitted before the file dialog is shown
-    @signal pickerButtonClicked emitted when the picker button was pressed and
-        the widget mode is custom
-    """
-    DefaultMode = E5PathPickerModes.NoMode
-    
-    editTextChanged = pyqtSignal(str)
-    pathSelected = pyqtSignal(str)
-    aboutToShowPathPickerDialog = pyqtSignal()
-    pickerButtonClicked = pyqtSignal()
-    
-    def __init__(self, parent=None):
-        """
-        Constructor
-        
-        @param parent reference to the parent widget
-        @type QWidget
-        """
-        super(E5ComboPathPicker, self).__init__(parent)
-        
-        self.__mode = E5PathPicker.DefaultMode
-        self.__editorEnabled = True
-        
-        self.__filters = ""
-        self.__defaultDirectory = ""
-        self.__windowTitle = ""
-        
-        self.__layout = QHBoxLayout()
-        self.__layout.setSpacing(0)
-        self.__layout.setContentsMargins(0, 0, 0, 0)
-        self.setLayout(self.__layout)
-        
-        self.__editor = E5ClearableComboBox(self, self.tr("Enter Path Name"))
-        
-        self.__button = QToolButton(self)
-        self.__button.setToolButtonStyle(Qt.ToolButtonIconOnly)
-        self.__button.setIcon(UI.PixmapCache.getIcon("open.png"))
-        
-        self.__layout.addWidget(self.__editor)
-        self.__layout.addWidget(self.__button)
-        
-        self.__button.clicked.connect(self.__showPathPickerDialog)
-        self.__editor.editTextChanged.connect(self.editTextChanged)
-        
-        self.setFocusProxy(self.__editor)
-        self.setFocusPolicy(Qt.StrongFocus)
-        self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        
-        self.__button.setEnabled(self.__mode != E5PathPickerModes.NoMode)
-    
-    def setMode(self, mode):
-        """
-        Public method to set the path picker mode.
-        
-        @param mode picker mode
-        @type E5PathPickerModes
-        """
-        assert mode in E5PathPickerModes
-        
-        oldMode = self.__mode
-        self.__mode = mode
-        
-        if mode != oldMode:
-            if mode != E5PathPickerModes.NoMode:
-                # set inactive text
-                if mode == E5PathPickerModes.OpenFilesMode:
-                    self.__editor.setInactiveText(
-                        self.tr("Enter Path Names separated by ';'"))
-                else:
-                    self.__editor.setInactiveText(
-                        self.tr("Enter Path Name"))
-        self.__button.setEnabled(self.__mode != E5PathPickerModes.NoMode)
-    
-    def mode(self):
-        """
-        Public method to get the path picker mode.
-        
-        @return path picker mode
-        @rtype E5PathPickerModes
-        """
-        return self.__mode
-    
-    def setPickerEnabled(self, enable):
-        """
-        Public method to set the enabled state of the file dialog button.
-        
-        @param enable flag indicating the enabled state
-        @type bool
-        """
-        self.__button.setEnabled(enable)
-    
-    def isPickerEnabled(self):
-        """
-        Public method to get the file dialog button enabled state.
-        
-        @return flag indicating the enabled state
-        @rtype bool
-        """
-        return self.__button.isEnabled()
-    
-    def clear(self):
-        """
-        Public method to clear the list of paths.
-        """
-        self.__editor.clear()
-    
-    def clearEditText(self):
-        """
-        Public method to clear the current path.
-        """
-        self.__editor.clearEditText()
-    
-    def setEditText(self, path):
-        """
-        Public method to set the current path.
-        
-        @param path path to be set
-        @type str
-        """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            self.__editor.setEditText(path)
-        else:
-            self.__editor.setEditText(Utilities.toNativeSeparators(path))
-    
-    def currentText(self):
-        """
-        Public method to get the current path.
-        
-        @return current path
-        @rtype str
-        """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return ";".join(
-                [Utilities.toNativeSeparators(path)
-                 for path in self.__editor.currentText().split(";")])
-        else:
-            return os.path.expanduser(
-                Utilities.toNativeSeparators(self.__editor.currentText()))
-    
-    def setPath(self, path):
-        """
-        Public method to set the current path.
-        
-        @param path path to be set
-        @type str
-        """
-        self.setEditText(path)
-    
-    def path(self):
-        """
-        Public method to get the current path.
-        
-        @return current path
-        @rtype str
-        """
-        return self.currentText()
-    
-    def paths(self):
-        """
-        Public method to get the list of entered paths.
-        
-        @return entered paths
-        @rtype list of str
-        """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return self.path().split(";")
-        else:
-            return [self.path()]
-    
-    def firstPath(self):
-        """
-        Public method to get the first path of a list of entered paths.
-        
-        @return first path
-        @rtype str
-        """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return self.path().split(";")[0]
-        else:
-            return self.path()
-    
-    def lastPath(self):
-        """
-        Public method to get the last path of a list of entered paths.
-        
-        @return first path
-        @rtype str
-        """
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return self.path().split(";")[-1]
-        else:
-            return self.path()
+    ##################################################################
+    ## Methods below emulate some of the QComboBox API
+    ##################################################################
     
     def addItems(self, pathsList):
         """
@@ -683,7 +544,7 @@ class E5ComboPathPicker(QWidget):
         @param pathsList list of paths to add
         @type list of str
         """
-        self.__editor.addItems(pathsList)
+        self._editor.addItems(pathsList)
     
     def addItem(self, path):
         """
@@ -692,7 +553,7 @@ class E5ComboPathPicker(QWidget):
         @param path path to add
         @type str
         """
-        self.__editor.addItem(path)
+        self._editor.addItem(path)
     
     def setPathsList(self, pathsList):
         """
@@ -711,119 +572,7 @@ class E5ComboPathPicker(QWidget):
         @param index index of the item to set current
         @type int
         """
-        self.__editor.setCurrentIndex(index)
-    
-    def setEditorEnabled(self, enable):
-        """
-        Public method to set the path editor's enabled state.
-        
-        @param enable flag indicating the enable state
-        @type bool
-        """
-        if enable != self.__editorEnabled:
-            self.__editorEnabled = enable
-            self.__editor.setEnabled(enable)
-    
-    def editorEnabled(self):
-        """
-        Public method to get the path editor's enabled state.
-        
-        @return flag indicating the enabled state
-        @rtype bool
-        """
-        return self.__editorEnabled
-    
-    def setDefaultDirectory(self, directory):
-        """
-        Public method to set the default directory.
-        
-        @param directory default directory
-        @type str
-        """
-        self.__defaultDirectory = directory
-    
-    def defaultDirectory(self):
-        """
-        Public method to get the default directory.
-        
-        @return default directory
-        @rtype str
-        """
-        return self.__defaultDirectory
-    
-    def setWindowTitle(self, title):
-        """
-        Public method to set the path picker dialog window title.
-        
-        @param title window title
-        @type str
-        """
-        self.__windowTitle = title
-    
-    def windowTitle(self):
-        """
-        Public method to get the path picker dialog's window title.
-        
-        @return window title
-        @rtype str
-        """
-        return self.__windowTitle
-    
-    def setFilters(self, filters):
-        """
-        Public method to set the filters for the path picker dialog.
-        
-        Note: Multiple filters must be separated by ';;'.
-        
-        @param filters string containing the file filters
-        @type str
-        """
-        self.__filters = filters
-    
-    def filters(self):
-        """
-        Public methods to get the filter string.
-        
-        @return filter string
-        @rtype str
-        """
-        return self.__filters
-    
-    def setButtonToolTip(self, tooltip):
-        """
-        Public method to set the tool button tool tip.
-        
-        @param tooltip text to be set as a tool tip
-        @type str
-        """
-        self.__button.setToolTip(tooltip)
-    
-    def buttonToolTip(self):
-        """
-        Public method to get the tool button tool tip.
-        
-        @return tool tip text
-        @rtype str
-        """
-        return self.__button.toolTip()
-    
-    def setEditorToolTip(self, tooltip):
-        """
-        Public method to set the editor tool tip.
-        
-        @param tooltip text to be set as a tool tip
-        @type str
-        """
-        self.__editor.setToolTip(tooltip)
-    
-    def editorToolTip(self):
-        """
-        Public method to get the editor tool tip.
-        
-        @return tool tip text
-        @rtype str
-        """
-        return self.__editor.toolTip()
+        self._editor.setCurrentIndex(index)
     
     def setInsertPolicy(self, policy):
         """
@@ -832,7 +581,7 @@ class E5ComboPathPicker(QWidget):
         @param policy insertion policy
         @type QComboBox.InsertPolicy
         """
-        self.__editor.setInsertPolicy(policy)
+        self._editor.setInsertPolicy(policy)
     
     def setSizeAdjustPolicy(self, policy):
         """
@@ -841,91 +590,48 @@ class E5ComboPathPicker(QWidget):
         @param policy size adjust policy
         @type QComboBox.SizeAdjustPolicy
         """
-        self.__editor.setSizeAdjustPolicy(policy)
+        self._editor.setSizeAdjustPolicy(policy)
+
+
+class E5PathPicker(E5PathPickerBase):
+    """
+    Class implementing a path picker widget consisting of a line edit and a
+    tool button to open a file dialog.
     
-    def __showPathPickerDialog(self):
+    @signal textChanged(path) emitted when the entered path has changed
+    @signal pathSelected(path) emitted after a path has been selected via the
+        file dialog
+    @signal aboutToShowPathPickerDialog emitted before the file dialog is shown
+    @signal pickerButtonClicked emitted when the picker button was pressed and
+        the widget mode is custom
+    """
+    def __init__(self, parent=None):
         """
-        Private slot to show the path picker dialog.
+        Constructor
+        
+        @param parent reference to the parent widget
+        @type QWidget
         """
-        if self.__mode == E5PathPickerModes.NoMode:
-            return
+        super(E5PathPicker, self).__init__(parent, useLineEdit=True)
+
+
+class E5ComboPathPicker(E5PathPickerBase):
+    """
+    Class implementing a path picker widget consisting of a combobox and a
+    tool button to open a file dialog.
+    
+    @signal editTextChanged(path) emitted when the entered path has changed
+    @signal pathSelected(path) emitted after a path has been selected via the
+        file dialog
+    @signal aboutToShowPathPickerDialog emitted before the file dialog is shown
+    @signal pickerButtonClicked emitted when the picker button was pressed and
+        the widget mode is custom
+    """
+    def __init__(self, parent=None):
+        """
+        Constructor
         
-        if self.__mode == E5PathPickerModes.CustomMode:
-            self.pickerButtonClicked.emit()
-            return
-        
-        self.aboutToShowPathPickerDialog.emit()
-        
-        windowTitle = self.__windowTitle
-        if not windowTitle:
-            if self.__mode == E5PathPickerModes.OpenFileMode:
-                windowTitle = self.tr("Choose a file to open")
-            elif self.__mode == E5PathPickerModes.OpenFilesMode:
-                windowTitle = self.tr("Choose files to open")
-            elif self.__mode == E5PathPickerModes.SaveFileMode:
-                windowTitle = self.tr("Choose a file to save")
-            elif self.__mode == E5PathPickerModes.DirectoryMode:
-                windowTitle = self.tr("Choose a directory")
-        
-        directory = self.__editor.currentText()
-        if not directory and self.__defaultDirectory:
-            directory = self.__defaultDirectory
-        if self.__mode == E5PathPickerModes.OpenFilesMode:
-            directory = os.path.expanduser(directory.split(";")[0])
-        else:
-            directory = os.path.expanduser(directory)
-        if not os.path.isabs(directory) and self.__defaultDirectory:
-            directory = os.path.join(self.__defaultDirectory, directory)
-        directory = Utilities.fromNativeSeparators(directory)
-        
-        if self.__mode == E5PathPickerModes.OpenFileMode:
-            path = E5FileDialog.getOpenFileName(
-                self,
-                windowTitle,
-                directory,
-                self.__filters)
-            path = Utilities.toNativeSeparators(path)
-        elif self.__mode == E5PathPickerModes.OpenFilesMode:
-            paths = E5FileDialog.getOpenFileNames(
-                self,
-                windowTitle,
-                directory,
-                self.__filters)
-            path = ";".join([Utilities.toNativeSeparators(path)
-                             for path in paths])
-        elif self.__mode == E5PathPickerModes.SaveFileMode:
-            path = E5FileDialog.getSaveFileName(
-                self,
-                windowTitle,
-                directory,
-                self.__filters,
-                E5FileDialog.Options(E5FileDialog.DontConfirmOverwrite))
-            path = Utilities.toNativeSeparators(path)
-        elif self.__mode == E5PathPickerModes.SaveFileEnsureExtensionMode:
-            path, selectedFilter = E5FileDialog.getSaveFileNameAndFilter(
-                self,
-                windowTitle,
-                directory,
-                self.__filters,
-                None,
-                E5FileDialog.Options(E5FileDialog.DontConfirmOverwrite))
-            path = Utilities.toNativeSeparators(path)
-            if path:
-                ext = QFileInfo(path).suffix()
-                if not ext:
-                    ex = selectedFilter.split("(*")[1].split(")")[0]
-                    if ex:
-                        path += ex
-        elif self.__mode == E5PathPickerModes.DirectoryMode:
-            path = E5FileDialog.getExistingDirectory(
-                self,
-                windowTitle,
-                directory,
-                E5FileDialog.Options(E5FileDialog.ShowDirsOnly))
-            path = Utilities.toNativeSeparators(path)
-            while path.endswith(os.sep):
-                path = path[:-1]
-        
-        if path:
-            self.__editor.setEditText(path)
-            self.pathSelected.emit(path)
+        @param parent reference to the parent widget
+        @type QWidget
+        """
+        super(E5ComboPathPicker, self).__init__(parent, useLineEdit=False)

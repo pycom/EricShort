@@ -7418,36 +7418,6 @@ Ainda assim deseja abandonar?</numerusform>
 </context>
 <context>
     <name>E5ComboPathPicker</name>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="561"/>
-        <source>Enter Path Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="558"/>
-        <source>Enter Path Names separated by &apos;;&apos;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="868"/>
-        <source>Choose a file to open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="870"/>
-        <source>Choose files to open</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="872"/>
-        <source>Choose a file to save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="874"/>
-        <source>Choose a directory</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>E5ErrorMessage</name>
@@ -8040,34 +8010,37 @@ com o rato.&lt;/li&gt;
 </context>
 <context>
     <name>E5PathPicker</name>
+</context>
+<context>
+    <name>E5PathPickerBase</name>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="149"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="164"/>
         <source>Enter Path Name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="407"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="161"/>
+        <source>Enter Path Names separated by &apos;;&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../E5Gui/E5PathPicker.py" line="466"/>
         <source>Choose a file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="409"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="468"/>
         <source>Choose files to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="413"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="472"/>
         <source>Choose a file to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="415"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="474"/>
         <source>Choose a directory</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="146"/>
-        <source>Enter Path Names separated by &apos;;&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
