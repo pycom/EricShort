@@ -7413,9 +7413,6 @@ Vuoi uscire comunque ?</numerusform>
     </message>
 </context>
 <context>
-    <name>E5ComboPathPicker</name>
-</context>
-<context>
     <name>E5ErrorMessage</name>
     <message>
         <location filename="../E5Gui/E5ErrorMessage.py" line="107"/>
@@ -8042,9 +8039,6 @@ gli elementi visualizzati.&lt;/p&gt;
         <source>Proxy usage was activated but no proxy host for protocol &apos;{0}&apos; configured.</source>
         <translation>E&apos; stato attivato l&apos;uso del proxy ma non è stato impostato nessun host per il protocollo &apos;{0}&apos;.</translation>
     </message>
-</context>
-<context>
-    <name>E5PathPicker</name>
 </context>
 <context>
     <name>E5PathPickerBase</name>
@@ -36784,12 +36778,12 @@ Selezionare Aggiorna.</translation>
 <context>
     <name>PreviewProcessingThread</name>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="333"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="376"/>
         <source>&lt;p&gt;No preview available for this type of file.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Non è prevista la visualizzazione per questo tipo di flusso.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="497"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="540"/>
         <source>&lt;p&gt;Markdown preview requires the &lt;b&gt;python-markdown&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager or see &lt;a href=&quot;http://pythonhosted.org/Markdown/install.html&quot;&gt;installation instructions.&lt;/a&gt;&lt;/p&gt;</source>
         <translation type="unfinished">&lt;p&gt;La visualizzazione Markdown richiede &lt;b&gt;il pacchetto&lt;/b&gt; python-markdown.&lt;br/&gt;Intallarlo con il vostro gestore di pacchetti o vedere &lt;a href=&quot;http://pythonhosted.org/Markdown/install.html&quot;&gt; per le istruzioni di installazione.&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
@@ -36799,12 +36793,12 @@ Selezionare Aggiorna.</translation>
         <translation type="obsolete">&lt;p&gt;La visualizzazione ReStructuredText richiede &lt;b&gt;il pacchetto&lt;/b&gt; python-docutils.&lt;br/&gt;Installarlo con il vostro gestore di pacchetti o vedere &lt;a href=&quot;http://pypi.python.org/pypi/docutils&quot;&gt; questa pagina.&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="472"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="515"/>
         <source>&lt;p&gt;ReStructuredText preview requires the &lt;b&gt;python-docutils&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager, &apos;pip install docutils&apos; or see &lt;a href=&quot;http://pypi.python.org/pypi/docutils&quot;&gt;this page.&lt;/a&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="410"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="453"/>
         <source>&lt;p&gt;ReStructuredText preview requires the &lt;b&gt;sphinx&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager,&apos;pip install Sphinx&apos; or see &lt;a href=&quot;http://pypi.python.org/pypi/Sphinx&quot;&gt;this page.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alternatively you may disable Sphinx usage on the Editor, Filehandling configuration page.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36812,42 +36806,37 @@ Selezionare Aggiorna.</translation>
 <context>
     <name>PreviewerHTML</name>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="37"/>
-        <source>about:blank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="45"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="75"/>
         <source>Select to enable JavaScript for HTML previews</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="48"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="74"/>
         <source>Enable JavaScript</source>
         <translation type="unfinished">Abilita Javascript</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="55"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="81"/>
         <source>Select to enable support for Server Side Includes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="58"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="79"/>
         <source>Enable Server Side Includes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="136"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="176"/>
         <source>&lt;p&gt;No preview available for this type of file.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;p&gt;Non è prevista la visualizzazione per questo tipo di flusso.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="178"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="219"/>
         <source>Preview - {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="180"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="221"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65266,12 +65255,12 @@ aggiunto alla dimensione del font nella finestra di edit.&lt;/p&gt;</translation
 <context>
     <name>eric6</name>
     <message>
-        <location filename="../eric6.py" line="327"/>
+        <location filename="../eric6.py" line="332"/>
         <source>Starting...</source>
         <translation type="unfinished">Inizio...</translation>
     </message>
     <message>
-        <location filename="../eric6.py" line="332"/>
+        <location filename="../eric6.py" line="337"/>
         <source>Generating Main Window...</source>
         <translation type="unfinished">Generazione Main Window...</translation>
     </message>

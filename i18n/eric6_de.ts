@@ -36095,22 +36095,22 @@ Bitte „Aktualisieren“ drücken.</translation>
 <context>
     <name>PreviewProcessingThread</name>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="333"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="376"/>
         <source>&lt;p&gt;No preview available for this type of file.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Für diesen Dateityp ist keine Vorschau verfügbar.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="497"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="540"/>
         <source>&lt;p&gt;Markdown preview requires the &lt;b&gt;python-markdown&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager or see &lt;a href=&quot;http://pythonhosted.org/Markdown/install.html&quot;&gt;installation instructions.&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;Die Markdown-Vorschau erfordert das &lt;b&gt;python-markdown&lt;/b&gt;-Paket.&lt;br/&gt;Installiere es mit dem Paketmanager oder siehe &lt;a href=&quot;http://pythonhosted.org/Markdown/install.html&quot;&gt;die Installationsanleitung.&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="472"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="515"/>
         <source>&lt;p&gt;ReStructuredText preview requires the &lt;b&gt;python-docutils&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager, &apos;pip install docutils&apos; or see &lt;a href=&quot;http://pypi.python.org/pypi/docutils&quot;&gt;this page.&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;Die ReStructuredText-Vorschau erfordert das &lt;b&gt;python-docutils&lt;/b&gt;-Paket.&lt;br/&gt;Installiere es mit dem Paketmanager,&apos;pip install docutils&apos; oder siehe &lt;a href=&quot;http://pypi.python.org/pypi/docutils&quot;&gt;diese Seite.&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="410"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="453"/>
         <source>&lt;p&gt;ReStructuredText preview requires the &lt;b&gt;sphinx&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager,&apos;pip install Sphinx&apos; or see &lt;a href=&quot;http://pypi.python.org/pypi/Sphinx&quot;&gt;this page.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alternatively you may disable Sphinx usage on the Editor, Filehandling configuration page.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Die ReStructuredText-Vorschau erfordert das &lt;b&gt;sphinx&lt;/b&gt;-Paket.&lt;br/&gt;Installiere es mit dem Paketmanager,&apos;pip install Sphinx&apos; oder siehe &lt;a href=&quot;http://pypi.python.org/pypi/Sphinx&quot;&gt;diese Seite.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alternativ kann die Verwendung von Sphinx auf der Konfigurationsseite Editor, Dateibehandlung deaktiviert werden.&lt;/p&gt;</translation>
     </message>
@@ -36118,42 +36118,37 @@ Bitte „Aktualisieren“ drücken.</translation>
 <context>
     <name>PreviewerHTML</name>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="37"/>
-        <source>about:blank</source>
-        <translation>about:blank</translation>
-    </message>
-    <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="45"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="75"/>
         <source>Select to enable JavaScript for HTML previews</source>
         <translation>Auswählen, um JavaScript für die Vorschau zu aktivieren</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="48"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="74"/>
         <source>Enable JavaScript</source>
         <translation>JavaScript aktivieren</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="55"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="81"/>
         <source>Select to enable support for Server Side Includes</source>
         <translation>Auswählen, um Unterstützung für Server Side Includes zu aktivieren</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.ui" line="58"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="79"/>
         <source>Enable Server Side Includes</source>
         <translation>Server Side Includes aktivieren</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="136"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="176"/>
         <source>&lt;p&gt;No preview available for this type of file.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Für diesen Dateityp ist keine Vorschau verfügbar.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="178"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="219"/>
         <source>Preview - {0}</source>
         <translation>Vorschau – {0}</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="180"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="221"/>
         <source>Preview</source>
         <translation>Vorschau</translation>
     </message>
@@ -64360,12 +64355,12 @@ aktuellen Editors hinzugefügt wird.&lt;/p&gt;</translation>
 <context>
     <name>eric6</name>
     <message>
-        <location filename="../eric6.py" line="327"/>
+        <location filename="../eric6.py" line="332"/>
         <source>Starting...</source>
         <translation>Starte...</translation>
     </message>
     <message>
-        <location filename="../eric6.py" line="332"/>
+        <location filename="../eric6.py" line="337"/>
         <source>Generating Main Window...</source>
         <translation>Erzeuge das Hauptfenster...</translation>
     </message>
