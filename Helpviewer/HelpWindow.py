@@ -2868,8 +2868,8 @@ class HelpWindow(E5MainWindow):
         @param word word to search for (string)
         """
         if self.useQtHelp:
-                self.__searchWord = word
-                self.__searchForWord()
+            self.__searchWord = word
+            self.__searchForWord()
         
     def __removeOldDocumentation(self):
         """
