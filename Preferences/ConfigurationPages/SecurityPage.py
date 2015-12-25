@@ -11,7 +11,10 @@ from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog
-from PyQt5.QtWebKit import QWebSettings
+try:
+    from PyQt5.QtWebKit import QWebSettings
+except ImportError:
+    QWebSettings = None
 
 from .ConfigurationPageBase import ConfigurationPageBase
 from .Ui_SecurityPage import Ui_SecurityPage
@@ -43,7 +46,7 @@ class SecurityPage(ConfigurationPageBase, Ui_SecurityPage):
             Preferences.getUser("UseMasterPassword"))
         self.masterPasswordButton.setEnabled(
             Preferences.getUser("UseMasterPassword"))
-        if hasattr(QWebSettings, "DnsPrefetchEnabled"):
+        if QWebSettings and hasattr(QWebSettings, "DnsPrefetchEnabled"):
             self.dnsPrefetchCheckBox.setChecked(
                 Preferences.getHelp("DnsPrefetchEnabled"))
         else:

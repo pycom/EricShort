@@ -27,6 +27,11 @@ from PyQt5.QtWidgets import QSizePolicy, QWidget, QWhatsThis, QToolBar, \
 from PyQt5.Qsci import QSCINTILLA_VERSION_STR
 from PyQt5.QtNetwork import QNetworkProxyFactory, QNetworkAccessManager, \
     QNetworkRequest, QNetworkReply
+try:
+    from PyQt5 import QtWebKit      # __IGNORE_WARNING__
+    WEBKIT_AVAILABLE = True
+except ImportError:
+    WEBKIT_AVAILABLE = False
 
 from .Info import Version, BugAddress, Program, FeatureAddress
 from . import Config
@@ -457,9 +462,10 @@ class UserInterface(E5MainWindow):
         self.__initExternalToolsActions()
         
         # create a dummy help window for shortcuts handling
-        from Helpviewer.HelpWindow import HelpWindow
-        self.dummyHelpViewer = \
-            HelpWindow(None, '.', None, 'help viewer', True, True)
+        if WEBKIT_AVAILABLE:
+            from Helpviewer.HelpWindow import HelpWindow
+            self.dummyHelpViewer = \
+                HelpWindow(None, '.', None, 'help viewer', True, True)
         
         # register all relevant objects
         splash.showMessage(self.tr("Registering Objects..."))
@@ -474,7 +480,8 @@ class UserInterface(E5MainWindow):
         e5App().registerObject("TaskViewer", self.taskViewer)
         e5App().registerObject("TemplateViewer", self.templateViewer)
         e5App().registerObject("Shell", self.shell)
-        e5App().registerObject("DummyHelpViewer", self.dummyHelpViewer)
+        if WEBKIT_AVAILABLE:
+            e5App().registerObject("DummyHelpViewer", self.dummyHelpViewer)
         e5App().registerObject("PluginManager", self.pluginManager)
         e5App().registerObject("ToolbarManager", self.toolbarManager)
         e5App().registerObject("Cooperation", self.cooperation)
@@ -1583,25 +1590,29 @@ class UserInterface(E5MainWindow):
         self.whatsThisAct.triggered.connect(self.__whatsThis)
         self.actions.append(self.whatsThisAct)
 
-        self.helpviewerAct = E5Action(
-            self.tr('Helpviewer'),
-            UI.PixmapCache.getIcon("help.png"),
-            self.tr('&Helpviewer...'),
-            QKeySequence(self.tr("F1")),
-            0, self, 'helpviewer')
-        self.helpviewerAct.setStatusTip(self.tr(
-            'Open the helpviewer window'))
-        self.helpviewerAct.setWhatsThis(self.tr(
-            """<b>Helpviewer</b>"""
-            """<p>Display the eric6 web browser. This window will show"""
-            """ HTML help files and help from Qt help collections. It has"""
-            """ the capability to navigate to links, set bookmarks, print"""
-            """ the displayed help and some more features. You may use it to"""
-            """ browse the internet as well</p><p>If called with a word"""
-            """ selected, this word is search in the Qt help collection.</p>"""
-        ))
-        self.helpviewerAct.triggered.connect(self.__helpViewer)
-        self.actions.append(self.helpviewerAct)
+        if WEBKIT_AVAILABLE:
+            self.helpviewerAct = E5Action(
+                self.tr('Helpviewer'),
+                UI.PixmapCache.getIcon("help.png"),
+                self.tr('&Helpviewer...'),
+                QKeySequence(self.tr("F1")),
+                0, self, 'helpviewer')
+            self.helpviewerAct.setStatusTip(self.tr(
+                'Open the helpviewer window'))
+            self.helpviewerAct.setWhatsThis(self.tr(
+                """<b>Helpviewer</b>"""
+                """<p>Display the eric6 web browser. This window will show"""
+                """ HTML help files and help from Qt help collections. It"""
+                """ has the capability to navigate to links, set bookmarks,"""
+                """ print the displayed help and some more features. You may"""
+                """ use it to browse the internet as well</p><p>If called"""
+                """ with a word selected, this word is search in the Qt help"""
+                """ collection.</p>"""
+            ))
+            self.helpviewerAct.triggered.connect(self.__helpViewer)
+            self.actions.append(self.helpviewerAct)
+        else:
+            self.helpviewerAct = None
         
         self.__initQtDocActions()
         self.__initPythonDocActions()
@@ -1893,19 +1904,22 @@ class UserInterface(E5MainWindow):
         self.miniEditorAct.triggered.connect(self.__openMiniEditor)
         self.actions.append(self.miniEditorAct)
 
-        self.webBrowserAct = E5Action(
-            self.tr('eric6 Web Browser'),
-            UI.PixmapCache.getIcon("ericWeb.png"),
-            self.tr('eric6 &Web Browser...'),
-            0, 0, self, 'web_browser')
-        self.webBrowserAct.setStatusTip(self.tr(
-            'Start the eric6 Web Browser'))
-        self.webBrowserAct.setWhatsThis(self.tr(
-            """<b>eric6 Web Browser</b>"""
-            """<p>Browse the Internet with the eric6 Web Browser.</p>"""
-        ))
-        self.webBrowserAct.triggered.connect(self.__startWebBrowser)
-        self.actions.append(self.webBrowserAct)
+        if WEBKIT_AVAILABLE:
+            self.webBrowserAct = E5Action(
+                self.tr('eric6 Web Browser'),
+                UI.PixmapCache.getIcon("ericWeb.png"),
+                self.tr('eric6 &Web Browser...'),
+                0, 0, self, 'web_browser')
+            self.webBrowserAct.setStatusTip(self.tr(
+                'Start the eric6 Web Browser'))
+            self.webBrowserAct.setWhatsThis(self.tr(
+                """<b>eric6 Web Browser</b>"""
+                """<p>Browse the Internet with the eric6 Web Browser.</p>"""
+            ))
+            self.webBrowserAct.triggered.connect(self.__startWebBrowser)
+            self.actions.append(self.webBrowserAct)
+        else:
+            self.webBrowserAct = None
 
         self.iconEditorAct = E5Action(
             self.tr('Icon Editor'),
@@ -2519,8 +2533,9 @@ class UserInterface(E5MainWindow):
         self.__menus["help"] = QMenu(self.tr('&Help'), self)
         mb.addMenu(self.__menus["help"])
         self.__menus["help"].setTearOffEnabled(True)
-        self.__menus["help"].addAction(self.helpviewerAct)
-        self.__menus["help"].addSeparator()
+        if self.helpviewerAct:
+            self.__menus["help"].addAction(self.helpviewerAct)
+            self.__menus["help"].addSeparator()
         self.__menus["help"].addAction(self.ericDocAct)
         self.__menus["help"].addAction(self.pythonDocAct)
         self.__menus["help"].addAction(self.python2DocAct)
@@ -2628,8 +2643,9 @@ class UserInterface(E5MainWindow):
         toolstb.addAction(self.miniEditorAct)
         toolstb.addAction(self.iconEditorAct)
         toolstb.addAction(self.snapshotAct)
-        toolstb.addSeparator()
-        toolstb.addAction(self.webBrowserAct)
+        if self.webBrowserAct:
+            toolstb.addSeparator()
+            toolstb.addAction(self.webBrowserAct)
         self.toolbarManager.addToolBar(toolstb, toolstb.windowTitle())
         
         # setup the settings toolbar
@@ -2647,7 +2663,9 @@ class UserInterface(E5MainWindow):
         # setup the help toolbar
         helptb.addAction(self.whatsThisAct)
         self.toolbarManager.addToolBar(helptb, helptb.windowTitle())
-        self.toolbarManager.addAction(self.helpviewerAct, helptb.windowTitle())
+        if self.helpviewerAct:
+            self.toolbarManager.addAction(self.helpviewerAct,
+                                          helptb.windowTitle())
         
         # setup the view profiles toolbar
         profilestb.addActions(self.viewProfileActGrp.actions())
@@ -3322,7 +3340,8 @@ class UserInterface(E5MainWindow):
         btMenu.addAction(self.miniEditorAct)
         btMenu.addAction(self.iconEditorAct)
         btMenu.addAction(self.snapshotAct)
-        btMenu.addAction(self.webBrowserAct)
+        if self.webBrowserAct:
+            btMenu.addAction(self.webBrowserAct)
         
         ptMenu = QMenu(self.tr("&Plugin Tools"), self)
         ptMenu.aboutToShow.connect(self.__showPluginToolsMenu)
@@ -4792,8 +4811,11 @@ class UserInterface(E5MainWindow):
             if hvType == 1:
                 self.launchHelpViewer(home)
             elif hvType == 2:
-                self.__assistant(home, version=4)
-            elif hvType == 3:
+                if home.startswith("qthelp://"):
+                    self.__assistant(home, version=4)
+                else:
+                    self.__webBrowser(home)
+            elif hvType in 3:
                 self.__webBrowser(home)
             else:
                 self.__customViewer(home)
@@ -4849,7 +4871,10 @@ class UserInterface(E5MainWindow):
             if hvType == 1:
                 self.launchHelpViewer(home)
             elif hvType == 2:
-                self.__assistant(home, version=4)
+                if home.startswith("qthelp://"):
+                    self.__assistant(home, version=4)
+                else:
+                    self.__webBrowser(home)
             elif hvType == 3:
                 self.__webBrowser(home)
             else:
@@ -4912,7 +4937,10 @@ class UserInterface(E5MainWindow):
         if hvType == 1:
             self.launchHelpViewer(home)
         elif hvType == 2:
-            self.__assistant(home, version=4)
+            if home.startswith("qthelp://"):
+                self.__assistant(home, version=4)
+            else:
+                self.__webBrowser(home)
         elif hvType == 3:
             self.__webBrowser(home)
         else:
@@ -4972,7 +5000,10 @@ class UserInterface(E5MainWindow):
         if hvType == 1:
             self.launchHelpViewer(home)
         elif hvType == 2:
-            self.__assistant(home, version=4)
+            if home.startswith("qthelp://"):
+                self.__assistant(home, version=4)
+            else:
+                self.__webBrowser(home)
         elif hvType == 3:
             self.__webBrowser(home)
         else:
@@ -5034,7 +5065,10 @@ class UserInterface(E5MainWindow):
         if hvType == 1:
             self.launchHelpViewer(home)
         elif hvType == 2:
-            self.__assistant(home, version=4)
+            if home.startswith("qthelp://"):
+                self.__assistant(home, version=4)
+            else:
+                self.__webBrowser(home)
         elif hvType == 3:
             self.__webBrowser(home)
         else:
@@ -5068,7 +5102,10 @@ class UserInterface(E5MainWindow):
         if hvType == 1:
             self.launchHelpViewer(home)
         elif hvType == 2:
-            self.__assistant(home, version=4)
+            if home.startswith("qthelp://"):
+                self.__assistant(home, version=4)
+            else:
+                self.__webBrowser(home)
         elif hvType == 3:
             self.__webBrowser(home)
         else:
@@ -5118,7 +5155,10 @@ class UserInterface(E5MainWindow):
         if hvType == 1:
             self.launchHelpViewer(home)
         elif hvType == 2:
-            self.__assistant(home, version=4)
+            if home.startswith("qthelp://"):
+                self.__assistant(home, version=4)
+            else:
+                self.__webBrowser(home)
         elif hvType == 3:
             self.__webBrowser(home)
         else:
@@ -5137,31 +5177,35 @@ class UserInterface(E5MainWindow):
             homeUrl = QUrl(home)
             if not homeUrl.scheme():
                 home = QUrl.fromLocalFile(home).toString()
-        if not (useSingle or Preferences.getHelp("SingleHelpWindow")) or \
-           self.helpWindow is None:
-            from Helpviewer.HelpWindow import HelpWindow
-            help = HelpWindow(home, '.', None, 'help viewer', True,
-                              searchWord=searchWord)
+        
+        if WEBKIT_AVAILABLE:
+            if not (useSingle or Preferences.getHelp("SingleHelpWindow")) or \
+               self.helpWindow is None:
+                from Helpviewer.HelpWindow import HelpWindow
+                help = HelpWindow(home, '.', None, 'help viewer', True,
+                                  searchWord=searchWord)
 
-            if QApplication.desktop().width() > 400 and \
-               QApplication.desktop().height() > 500:
-                help.show()
+                if QApplication.desktop().width() > 400 and \
+                   QApplication.desktop().height() > 500:
+                    help.show()
+                else:
+                    help.showMaximized()
+                
+                if useSingle or Preferences.getHelp("SingleHelpWindow"):
+                    self.helpWindow = help
+                    self.helpWindow.helpClosed.connect(self.__helpClosed)
+                    self.preferencesChanged.connect(
+                        self.helpWindow.preferencesChanged)
+                    self.masterPasswordChanged.connect(
+                        self.helpWindow.masterPasswordChanged)
+            elif searchWord is not None:
+                self.helpWindow.search(searchWord)
+                self.helpWindow.raise_()
             else:
-                help.showMaximized()
-            
-            if useSingle or Preferences.getHelp("SingleHelpWindow"):
-                self.helpWindow = help
-                self.helpWindow.helpClosed.connect(self.__helpClosed)
-                self.preferencesChanged.connect(
-                    self.helpWindow.preferencesChanged)
-                self.masterPasswordChanged.connect(
-                    self.helpWindow.masterPasswordChanged)
-        elif searchWord is not None:
-            self.helpWindow.search(searchWord)
-            self.helpWindow.raise_()
+                self.helpWindow.newTab(home)
+                self.helpWindow.raise_()
         else:
-            self.helpWindow.newTab(home)
-            self.helpWindow.raise_()
+            self.__webBrowser(home)
     
     def __helpClosed(self):
         """
@@ -5205,10 +5249,13 @@ class UserInterface(E5MainWindow):
             (boolean)
         @return reference to the help window instance (HelpWindow)
         """
-        if self.helpWindow is None:
-            self.launchHelpViewer("", useSingle=True)
-        self.helpWindow.raise_()
-        return self.helpWindow
+        if WEBKIT_AVAILABLE:
+            if self.helpWindow is None:
+                self.launchHelpViewer("", useSingle=True)
+            self.helpWindow.raise_()
+            return self.helpWindow
+        else:
+            return None
     
     @pyqtSlot()
     @pyqtSlot(str)
