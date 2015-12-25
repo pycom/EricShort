@@ -870,6 +870,10 @@ class ProjectResourcesBrowser(ProjectBaseBrowser):
                         dirname, self.RCFilenameFormatRuby.format(filename))
                 else:
                     return
+                # TODO: check for files contained in resources as well
+                #  - read the resource *.rc file and extract file names
+                #  - add the resource file, if one file is newer as the
+                #    compiled Python/Ruby source
                 if not os.path.exists(ofn) or \
                    os.stat(ifn).st_mtime > os.stat(ofn).st_mtime:
                     changedResources.append(fn)
