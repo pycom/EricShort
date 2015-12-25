@@ -817,6 +817,7 @@ class Prefs(object):
         "PyQt4DocDir": "",
         "PyQt5DocDir": "",
         "PySideDocDir": "",
+        "EricDocDir": "",
         "SingleHelpWindow": True,
         "SaveGeometry": True,
         "HelpViewerState": QByteArray(),

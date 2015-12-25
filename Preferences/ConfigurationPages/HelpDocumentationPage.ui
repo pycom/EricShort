@@ -32,6 +32,41 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox_9">
+     <property name="title">
+      <string>eric API Documentation</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_9">
+      <item>
+       <widget class="E5PathPicker" name="ericDocDirPicker" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
+        <property name="toolTip">
+         <string>Enter the eric documentation directory</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="textLabel1_8_2_2_6">
+        <property name="text">
+         <string>&lt;b&gt;Note&lt;/b&gt;: Leave empty to use the default location.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="groupBox_5">
      <property name="title">
       <string>Python 2 Documentation</string>
@@ -299,6 +334,16 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>ericDocDirPicker</tabstop>
+  <tabstop>python2DocDirPicker</tabstop>
+  <tabstop>pythonDocDirPicker</tabstop>
+  <tabstop>qt4DocDirPicker</tabstop>
+  <tabstop>qt5DocDirPicker</tabstop>
+  <tabstop>pyqt4DocDirPicker</tabstop>
+  <tabstop>pyqt5DocDirPicker</tabstop>
+  <tabstop>pysideDocDirPicker</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

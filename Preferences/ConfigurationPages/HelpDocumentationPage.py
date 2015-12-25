@@ -30,6 +30,9 @@ class HelpDocumentationPage(ConfigurationPageBase, Ui_HelpDocumentationPage):
         self.setupUi(self)
         self.setObjectName("HelpDocumentationPage")
         
+        self.ericDocDirPicker.setMode(E5PathPickerModes.OpenFileMode)
+        self.ericDocDirPicker.setFilters(self.tr(
+            "HTML Files (*.html *.htm);;All Files (*)"))
         self.python2DocDirPicker.setMode(E5PathPickerModes.OpenFileMode)
         self.python2DocDirPicker.setFilters(self.tr(
             "HTML Files (*.html *.htm);;"
@@ -68,6 +71,8 @@ class HelpDocumentationPage(ConfigurationPageBase, Ui_HelpDocumentationPage):
             self.pysideGroup.setEnabled(False)
         
         # set initial values
+        self.ericDocDirPicker.setText(
+            Preferences.getHelp("EricDocDir"))
         self.python2DocDirPicker.setText(
             Preferences.getHelp("Python2DocDir"))
         self.pythonDocDirPicker.setText(
@@ -87,6 +92,9 @@ class HelpDocumentationPage(ConfigurationPageBase, Ui_HelpDocumentationPage):
         """
         Public slot to save the Help Documentation configuration.
         """
+        Preferences.setHelp(
+            "EricDocDir",
+            self.ericDocDirPicker.text())
         Preferences.setHelp(
             "Python2DocDir",
             self.python2DocDirPicker.text())

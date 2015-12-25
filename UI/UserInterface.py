@@ -4771,8 +4771,7 @@ class UserInterface(E5MainWindow):
                 pythonDocDir = Utilities.getEnvironmentEntry(
                     "PYTHON3DOCDIR",
                     '/usr/share/doc/packages/python3/html')
-        if not pythonDocDir.startswith("http://") and \
-           not pythonDocDir.startswith("https://"):
+        if not pythonDocDir.startswith(("http://", "https://")):
             if pythonDocDir.startswith("file://"):
                 pythonDocDir = pythonDocDir[7:]
             if not os.path.splitext(pythonDocDir)[1]:
@@ -4838,8 +4837,7 @@ class UserInterface(E5MainWindow):
                 pythonDocDir = Utilities.getEnvironmentEntry(
                     "PYTHON2DOCDIR",
                     '/usr/share/doc/packages/python/html')
-        if not pythonDocDir.startswith("http://") and \
-           not pythonDocDir.startswith("https://"):
+        if not pythonDocDir.startswith(("http://", "https://")):
             if pythonDocDir.startswith("file://"):
                 pythonDocDir = pythonDocDir[7:]
             if not os.path.splitext(pythonDocDir)[1]:
@@ -4909,7 +4907,7 @@ class UserInterface(E5MainWindow):
                 home = qtDocDir + "/index.html"
             else:
                 home = qtDocDir
-        elif qtDocDir.startswith("http://") or qtDocDir.startswith("https://"):
+        elif qtDocDir.startswith(("http://", "https://")):
             home = qtDocDir
         else:
             if qtDocDir.startswith("file://"):
@@ -4962,8 +4960,7 @@ class UserInterface(E5MainWindow):
                         """ has not been configured.</p>"""))
             return
         
-        if not pyqt4DocDir.startswith("http://") and \
-           not pyqt4DocDir.startswith("https://"):
+        if not pyqt4DocDir.startswith(("http://", "https://")):
             home = ""
             if pyqt4DocDir:
                 if pyqt4DocDir.startswith("file://"):
@@ -5025,8 +5022,7 @@ class UserInterface(E5MainWindow):
                         """ has not been configured.</p>"""))
             return
         
-        if not pyqt5DocDir.startswith("http://") and \
-           not pyqt5DocDir.startswith("https://"):
+        if not pyqt5DocDir.startswith(("http://", "https://")):
             home = ""
             if pyqt5DocDir:
                 if pyqt5DocDir.startswith("file://"):
@@ -5078,12 +5074,12 @@ class UserInterface(E5MainWindow):
         """
         Private slot to show the Eric documentation.
         """
-        home = Utilities.normjoinpath(
-            getConfig('ericDocDir'), "Source", "index.html")
+        home = Preferences.getHelp("EricDocDir")
+        if not home:
+            home = Utilities.normjoinpath(
+                getConfig('ericDocDir'), "Source", "index.html")
         
-        if not home.startswith("http://") and \
-           not home.startswith("https://") and \
-           not home.startswith("qthelp://"):
+        if not home.startswith(("http://", "https://", "qthelp://")):
             if not os.path.exists(home):
                 E5MessageBox.warning(
                     self,
@@ -5127,8 +5123,7 @@ class UserInterface(E5MainWindow):
                         """ has not been configured.</p>"""))
             return
         
-        if not pysideDocDir.startswith("http://") and \
-           not pysideDocDir.startswith("https://"):
+        if not pysideDocDir.startswith(("http://", "https://")):
             if pysideDocDir.startswith("file://"):
                 pysideDocDir = pysideDocDir[7:]
             if not os.path.splitext(pysideDocDir)[1]:
