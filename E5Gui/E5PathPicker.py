@@ -311,16 +311,16 @@ class E5PathPickerBase(QWidget):
         @return first path
         @rtype str
         """
-        self.paths()[0]
+        return self.paths()[0]
     
     def lastPath(self):
         """
         Public method to get the last path of a list of entered paths.
         
-        @return first path
+        @return last path
         @rtype str
         """
-        self.paths()[-1]
+        return self.paths()[-1]
     
     def setEditorEnabled(self, enable):
         """
