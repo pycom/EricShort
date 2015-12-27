@@ -51,15 +51,15 @@ class PreviewerHTML(QWidget):
         self.__layout.addWidget(self.titleLabel)
         
         try:
+            from PyQt5.QtWebEngineWidgets import QWebEngineView
+            self.previewView = QWebEngineView(self)
+            self.__usesWebKit = False
+        except ImportError:
             from PyQt5.QtWebKitWidgets import QWebPage, QWebView
             self.previewView = QWebView(self)
             self.previewView.page().setLinkDelegationPolicy(
                 QWebPage.DelegateAllLinks)
             self.__usesWebKit = True
-        except ImportError:
-            from PyQt5.QtWebEngineWidgets import QWebEngineView
-            self.previewView = QWebEngineView(self)
-            self.__usesWebKit = False
         
         sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -200,9 +200,12 @@ class PreviewerHTML(QWidget):
         """
         self.__previewedPath = Utilities.normcasepath(
             Utilities.fromNativeSeparators(filePath))
+        self.__saveScrollBarPositions()
         if self.__usesWebKit:
-            self.__saveScrollBarPositions()
             self.previewView.page().mainFrame().contentsSizeChanged.connect(
+                self.__restoreScrollBarPositions)
+        else:
+            self.previewView.page().loadFinished.connect(
                 self.__restoreScrollBarPositions)
         self.previewView.setHtml(html, baseUrl=QUrl.fromLocalFile(filePath))
     
@@ -233,6 +236,23 @@ class PreviewerHTML(QWidget):
                 frame.scrollBarMaximum(Qt.Horizontal) == pos.x()
             self.__vScrollBarAtEnd[self.__previewedPath] = \
                 frame.scrollBarMaximum(Qt.Vertical) == pos.y()
+        else:
+            from PyQt5.QtCore import QPoint
+            pos = self.__execJavaScript(
+                "(function() {"
+                "var res = {"
+                "    x: 0,"
+                "    y: 0,"
+                "};"
+                "res.x = window.scrollX;"
+                "res.y = window.scrollY;"
+                "return res;"
+                "})()"
+            )
+            pos = QPoint(pos["x"], pos["y"])
+            self.__scrollBarPositions[self.__previewedPath] = pos
+            self.__hScrollBarAtEnd[self.__previewedPath] = False
+            self.__vScrollBarAtEnd[self.__previewedPath] = False
 
     def __restoreScrollBarPositions(self):
         """
@@ -260,6 +280,13 @@ class PreviewerHTML(QWidget):
             if self.__vScrollBarAtEnd[self.__previewedPath]:
                 frame.setScrollBarValue(
                     Qt.Vertical, frame.scrollBarMaximum(Qt.Vertical))
+        else:
+            if self.__previewedPath not in self.__scrollBarPositions:
+                return
+            
+            pos = self.__scrollBarPositions[self.__previewedPath]
+            self.previewView.page().runJavaScript(
+                "window.scrollTo({0}, {1});".format(pos.x(), pos.y()))
     
     @pyqtSlot(QUrl)
     def on_previewView_linkClicked(self, url):
@@ -269,6 +296,30 @@ class PreviewerHTML(QWidget):
         @param url url of the clicked link (QUrl)
         """
         e5App().getObject("UserInterface").launchHelpViewer(url.toString())
+    
+    def __execJavaScript(self, script):
+        """
+        Private function to execute a JavaScript function Synchroneously.
+        
+        @param script JavaScript script source to be executed
+        @type str
+        @return result of the script
+        @rtype depending upon script result
+        """
+        from PyQt5.QtCore import QEventLoop
+        loop = QEventLoop()
+        resultDict = {"res": None}
+        
+        def resultCallback(res, resDict=resultDict):
+            if loop and loop.isRunning():
+                resDict["res"] = res
+                loop.quit()
+        
+        self.previewView.page().runJavaScript(
+            script, resultCallback)
+        
+        loop.exec_()
+        return resultDict["res"]
 
 
 class PreviewProcessingThread(QThread):
