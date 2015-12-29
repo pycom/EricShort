@@ -200,6 +200,7 @@
     <Source>E5Gui/__init__.py</Source>
     <Source>E5Network/E5Ftp.py</Source>
     <Source>E5Network/E5NetworkHeaderDetailsDialog.py</Source>
+    <Source>E5Network/E5NetworkIcon.py</Source>
     <Source>E5Network/E5NetworkMonitor.py</Source>
     <Source>E5Network/E5NetworkProxyFactory.py</Source>
     <Source>E5Network/E5RFC6266.py</Source>

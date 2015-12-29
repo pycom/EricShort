@@ -20,7 +20,7 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QFile, QIODevice, QUrl, \
 from PyQt5.QtWidgets import QWidget, QDialogButtonBox, QAbstractButton, \
     QTreeWidgetItem, QDialog, QVBoxLayout, QMenu
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest, \
-    QNetworkReply
+    QNetworkReply, QNetworkConfigurationManager
 
 from .Ui_PluginRepositoryDialog import Ui_PluginRepositoryDialog
 
@@ -123,6 +123,13 @@ class PluginRepositoryWidget(QWidget, Ui_PluginRepositoryDialog):
             self.__networkManager.sslErrors.connect(self.__sslErrors)
         self.__replies = []
         
+        self.__networkConfigurationManager = QNetworkConfigurationManager(self)
+        self.__onlineStateChanged(
+            self.__networkConfigurationManager.isOnline())
+        
+        self.__networkConfigurationManager.onlineStateChanged.connect(
+            self.__onlineStateChanged)
+        
         self.__doneMethod = None
         self.__inDownload = False
         self.__pluginsToDownload = []
@@ -133,6 +140,22 @@ class PluginRepositoryWidget(QWidget, Ui_PluginRepositoryDialog):
         self.__hiddenPlugins = Preferences.getPluginManager("HiddenPlugins")
         
         self.__populateList()
+    
+    @pyqtSlot(bool)
+    def __onlineStateChanged(self, online):
+        """
+        Private slot handling online state changes.
+        
+        @param online flag indicating the online status
+        @type bool
+        """
+        self.__updateButton.setEnabled(online)
+        self.on_repositoryList_itemSelectionChanged()
+        if online:
+            msg = self.tr("Network Status: online")
+        else:
+            msg = self.tr("Network Status: offline")
+        self.statusLabel.setText(msg)
     
     @pyqtSlot(QAbstractButton)
     def on_buttonBox_clicked(self, button):
@@ -232,8 +255,12 @@ class PluginRepositoryWidget(QWidget, Ui_PluginRepositoryDialog):
         """
         Private slot to handle a change of the selection.
         """
-        self.__downloadButton.setEnabled(len(self.__selectedItems()))
-        self.__downloadInstallButton.setEnabled(len(self.__selectedItems()))
+        self.__downloadButton.setEnabled(
+            len(self.__selectedItems()) and
+            self.__networkConfigurationManager.isOnline())
+        self.__downloadInstallButton.setEnabled(
+            len(self.__selectedItems()) and
+            self.__networkConfigurationManager.isOnline())
         self.__installButton.setEnabled(len(self.__selectedItems()))
     
     def __updateList(self):
@@ -395,26 +422,35 @@ class PluginRepositoryWidget(QWidget, Ui_PluginRepositoryDialog):
         @param filename local name of the file (string)
         @param doneMethod method to be called when done
         """
-        self.__updateButton.setEnabled(False)
-        self.__downloadButton.setEnabled(False)
-        self.__downloadInstallButton.setEnabled(False)
-        self.__downloadCancelButton.setEnabled(True)
-        
-        self.statusLabel.setText(url)
-        
-        self.__doneMethod = doneMethod
-        self.__downloadURL = url
-        self.__downloadFileName = filename
-        self.__downloadIODevice = QFile(self.__downloadFileName + ".tmp")
-        self.__downloadCancelled = False
-        
-        request = QNetworkRequest(QUrl(url))
-        request.setAttribute(QNetworkRequest.CacheLoadControlAttribute,
-                             QNetworkRequest.AlwaysNetwork)
-        reply = self.__networkManager.get(request)
-        reply.finished.connect(self.__downloadFileDone)
-        reply.downloadProgress.connect(self.__downloadProgress)
-        self.__replies.append(reply)
+        if self.__networkConfigurationManager.isOnline():
+            self.__updateButton.setEnabled(False)
+            self.__downloadButton.setEnabled(False)
+            self.__downloadInstallButton.setEnabled(False)
+            self.__downloadCancelButton.setEnabled(True)
+            
+            self.statusLabel.setText(url)
+            
+            self.__doneMethod = doneMethod
+            self.__downloadURL = url
+            self.__downloadFileName = filename
+            self.__downloadIODevice = QFile(self.__downloadFileName + ".tmp")
+            self.__downloadCancelled = False
+            
+            request = QNetworkRequest(QUrl(url))
+            request.setAttribute(QNetworkRequest.CacheLoadControlAttribute,
+                                 QNetworkRequest.AlwaysNetwork)
+            reply = self.__networkManager.get(request)
+            reply.finished.connect(self.__downloadFileDone)
+            reply.downloadProgress.connect(self.__downloadProgress)
+            self.__replies.append(reply)
+        else:
+            E5MessageBox.warning(
+                self,
+                self.tr("Error downloading file"),
+                self.tr(
+                    """<p>Could not download the requested file"""
+                    """ from {0}.</p><p>Error: {1}</p>"""
+                ).format(url, self.tr("Computer is offline.")))
     
     def __downloadFileDone(self):
         """
@@ -423,7 +459,8 @@ class PluginRepositoryWidget(QWidget, Ui_PluginRepositoryDialog):
         """
         self.__updateButton.setEnabled(True)
         self.__downloadCancelButton.setEnabled(False)
-        self.statusLabel.setText("  ")
+        self.__onlineStateChanged(
+            self.__networkConfigurationManager.isOnline())
         
         ok = True
         reply = self.sender()

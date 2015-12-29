@@ -51,6 +51,7 @@ import Utilities
 
 import UI.PixmapCache
 
+from E5Network.E5NetworkIcon import E5NetworkIcon
 from E5Network.E5NetworkProxyFactory import E5NetworkProxyFactory, \
     proxyAuthenticationRequired
 try:
@@ -2818,6 +2819,9 @@ class UserInterface(E5MainWindow):
         from VCS.StatusMonitorLed import StatusMonitorLed
         self.sbVcsMonitorLed = StatusMonitorLed(self.project, self.__statusBar)
         self.__statusBar.addPermanentWidget(self.sbVcsMonitorLed)
+        
+        self.networkIcon = E5NetworkIcon(self.__statusBar)
+        self.__statusBar.addPermanentWidget(self.networkIcon)
     
     def __initExternalToolsActions(self):
         """
@@ -5931,6 +5935,15 @@ class UserInterface(E5MainWindow):
         Preferences.syncPreferences()
         self.shutdownCalled = True
         return True
+    
+    def isOnline(self):
+        """
+        Public method to get the online state.
+        
+        @return online state
+        @rtype bool
+        """
+        return self.networkIcon.isOnline()
 
     ##############################################
     ## Below are methods to check for new versions
@@ -5952,55 +5965,64 @@ class UserInterface(E5MainWindow):
         @param alternative index of server to download from (integer)
         @keyparam showVersions flag indicating the show versions mode (boolean)
         """
-        if not manual:
-            if Version.startswith("@@"):
-                return
-            else:
-                period = Preferences.getUI("PerformVersionCheck")
-                if period == 0:
+        if self.isOnline():
+            if not manual:
+                if Version.startswith("@@"):
                     return
-                elif period in [2, 3, 4]:
-                    lastCheck = Preferences.Prefs.settings.value(
-                        "Updates/LastCheckDate", QDate(1970, 1, 1))
-                    if lastCheck.isValid():
-                        now = QDate.currentDate()
-                        if period == 2 and lastCheck.day() == now.day():
-                            # daily
-                            return
-                        elif period == 3 and lastCheck.daysTo(now) < 7:
-                            # weekly
-                            return
-                        elif period == 4 and (lastCheck.daysTo(now) <
-                                              lastCheck.daysInMonth()):
-                            # monthly
-                            return
-        
-        self.__inVersionCheck = True
-        self.manualUpdatesCheck = manual
-        self.showAvailableVersions = showVersions
-        self.httpAlternative = alternative
-        url = QUrl(self.__httpAlternatives[alternative])
-        self.__versionCheckCanceled = False
-        if manual:
-            if self.__versionCheckProgress is None:
-                self.__versionCheckProgress = E5ProgressDialog(
-                    "", self.tr("&Cancel"),
-                    0, len(self.__httpAlternatives),
-                    self.tr("%v/%m"), self)
-                self.__versionCheckProgress.setWindowTitle(
-                    self.tr("Version Check"))
-                self.__versionCheckProgress.setMinimumDuration(0)
-                self.__versionCheckProgress.canceled.connect(
-                    self.__versionsDownloadCanceled)
-            self.__versionCheckProgress.setLabelText(
-                self.tr("Trying host {0}").format(url.host()))
-            self.__versionCheckProgress.setValue(alternative)
-        request = QNetworkRequest(url)
-        request.setAttribute(QNetworkRequest.CacheLoadControlAttribute,
-                             QNetworkRequest.AlwaysNetwork)
-        reply = self.__networkManager.get(request)
-        reply.finished.connect(self.__versionsDownloadDone)
-        self.__replies.append(reply)
+                else:
+                    period = Preferences.getUI("PerformVersionCheck")
+                    if period == 0:
+                        return
+                    elif period in [2, 3, 4]:
+                        lastCheck = Preferences.Prefs.settings.value(
+                            "Updates/LastCheckDate", QDate(1970, 1, 1))
+                        if lastCheck.isValid():
+                            now = QDate.currentDate()
+                            if period == 2 and lastCheck.day() == now.day():
+                                # daily
+                                return
+                            elif period == 3 and lastCheck.daysTo(now) < 7:
+                                # weekly
+                                return
+                            elif period == 4 and (lastCheck.daysTo(now) <
+                                                  lastCheck.daysInMonth()):
+                                # monthly
+                                return
+            
+            self.__inVersionCheck = True
+            self.manualUpdatesCheck = manual
+            self.showAvailableVersions = showVersions
+            self.httpAlternative = alternative
+            url = QUrl(self.__httpAlternatives[alternative])
+            self.__versionCheckCanceled = False
+            if manual:
+                if self.__versionCheckProgress is None:
+                    self.__versionCheckProgress = E5ProgressDialog(
+                        "", self.tr("&Cancel"),
+                        0, len(self.__httpAlternatives),
+                        self.tr("%v/%m"), self)
+                    self.__versionCheckProgress.setWindowTitle(
+                        self.tr("Version Check"))
+                    self.__versionCheckProgress.setMinimumDuration(0)
+                    self.__versionCheckProgress.canceled.connect(
+                        self.__versionsDownloadCanceled)
+                self.__versionCheckProgress.setLabelText(
+                    self.tr("Trying host {0}").format(url.host()))
+                self.__versionCheckProgress.setValue(alternative)
+            request = QNetworkRequest(url)
+            request.setAttribute(QNetworkRequest.CacheLoadControlAttribute,
+                                 QNetworkRequest.AlwaysNetwork)
+            reply = self.__networkManager.get(request)
+            reply.finished.connect(self.__versionsDownloadDone)
+            self.__replies.append(reply)
+        else:
+            if manual:
+                E5MessageBox.warning(
+                    self,
+                    self.tr("Error getting versions information"),
+                    self.tr("""The versions information cannot not be"""
+                            """ downloaded because you are <b>offline</b>."""
+                            """ Please go online and try again."""))
         
     @pyqtSlot()
     def __versionsDownloadDone(self):

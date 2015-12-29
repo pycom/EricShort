@@ -7962,6 +7962,24 @@ whole selection.&lt;/li&gt;
     </message>
 </context>
 <context>
+    <name>E5NetworkIcon</name>
+    <message>
+        <location filename="../E5Network/E5NetworkIcon.py" line="52"/>
+        <source>&lt;p&gt;Shows the network status&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Network:&lt;/b&gt; {0}&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../E5Network/E5NetworkIcon.py" line="56"/>
+        <source>Connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../E5Network/E5NetworkIcon.py" line="58"/>
+        <source>Offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>E5NetworkMonitor</name>
     <message>
         <location filename="../E5Network/E5NetworkMonitor.ui" line="14"/>
@@ -16868,7 +16886,7 @@ Reason: {0}</source>
 <context>
     <name>HelpDocsInstaller</name>
     <message>
-        <location filename="../Helpviewer/HelpDocsInstaller.py" line="220"/>
+        <location filename="../Helpviewer/HelpDocsInstaller.py" line="230"/>
         <source>&lt;p&gt;The file &lt;b&gt;{0}&lt;/b&gt; could not be registered. &lt;br/&gt;Reason: {1}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно зарегистрировать файл &lt;b&gt;{0}&lt;/b&gt;:&lt;br&gt;Причина: {1}.&lt;/p&gt;</translation>
     </message>
@@ -18189,1386 +18207,1386 @@ URL: {1}</source>
 <context>
     <name>HelpWindow</name>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="470"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="475"/>
         <source>New Window</source>
         <translation>Новое окно</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2047"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2052"/>
         <source>Open File</source>
         <translation>Открыть файл</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="485"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="490"/>
         <source>&amp;Open File</source>
         <translation>&amp;Открыть файл</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="491"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="496"/>
         <source>Open a help file for display</source>
         <translation>Открыть файл помощи для дисплея</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="492"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="497"/>
         <source>&lt;b&gt;Open File&lt;/b&gt;&lt;p&gt;This opens a new help file for display. It pops up a file selection dialog.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Открыть файл&lt;/b&gt;&lt;p&gt;Открыть новый файл помощи. Вызывает файловый диалог&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="598"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="603"/>
         <source>Print</source>
         <translation>Печать</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="598"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="603"/>
         <source>&amp;Print</source>
         <translation>&amp;Печать</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="604"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="609"/>
         <source>Print the displayed help</source>
         <translation>Печатать текущий раздел помощи</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="605"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="610"/>
         <source>&lt;b&gt;Print&lt;/b&gt;&lt;p&gt;Print the displayed help text.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Печать&lt;/b&gt;&lt;p&gt;Печатать текущий раздел помощи&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="645"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="650"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="645"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="650"/>
         <source>&amp;Close</source>
         <translation>&amp;Закрыть</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="651"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="656"/>
         <source>Close the current help window</source>
         <translation>Закрыть это окно помощи</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="692"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="697"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="692"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="697"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="710"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="715"/>
         <source>Backward</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="710"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="715"/>
         <source>&amp;Backward</source>
         <translation>&amp;Назад</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="717"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="722"/>
         <source>Move one help screen backward</source>
         <translation>Назад на один экран</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="718"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="723"/>
         <source>&lt;b&gt;Backward&lt;/b&gt;&lt;p&gt;Moves one help screen backward. If none is available, this action is disabled.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Назад&lt;/b&gt;&lt;p&gt;Сместиться на один экран назад. Если это возможно.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="727"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="732"/>
         <source>Forward</source>
         <translation>Вперёд</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="727"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="732"/>
         <source>&amp;Forward</source>
         <translation>&amp;Вперёд</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="734"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="739"/>
         <source>Move one help screen forward</source>
         <translation>Вперёд на один экран</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="736"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="741"/>
         <source>&lt;b&gt;Forward&lt;/b&gt;&lt;p&gt;Moves one help screen forward. If none is available, this action is disabled.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Вперёд&lt;/b&gt;&lt;p&gt;Сместиться на один экран вперёд, если это возможно.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="745"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="750"/>
         <source>Home</source>
         <translation>Домой</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="745"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="750"/>
         <source>&amp;Home</source>
         <translation>&amp;Домой</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="751"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="756"/>
         <source>Move to the initial help screen</source>
         <translation>Вернуться на первоначальную страницу</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="753"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="758"/>
         <source>&lt;b&gt;Home&lt;/b&gt;&lt;p&gt;Moves to the initial help screen.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Домой&lt;/b&gt;&lt;p&gt;Вернуться на первоначальную страницу.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="873"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="878"/>
         <source>Add Bookmark</source>
         <translation>Добавить закладку</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="920"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="925"/>
         <source>What&apos;s This?</source>
         <translation>Что это?</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="920"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="925"/>
         <source>&amp;What&apos;s This?</source>
         <translation>&amp;Что это?</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="926"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="931"/>
         <source>Context sensitive help</source>
         <translation>Контекстная помощь</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="927"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="932"/>
         <source>&lt;b&gt;Display context sensitive help&lt;/b&gt;&lt;p&gt;In What&apos;s This? mode, the mouse cursor shows an arrow with a question mark, and you can click on the interface elements to get a short description of what they do and how to use them. In dialogs, this feature can be accessed using the context help button in the titlebar.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать контекстную помощь&lt;/b&gt;
 &lt;p&gt;В режиме контекстной помощи курсор мыши выглядит как стрелка со знаком вопроса, и, щёлкнув по элементу интерфейса, Вы можете просмотреть краткую помощь о его роли и его использовании. В диалогах можно воспользоваться кнопкой контекстной помощи в заголовке окна.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="939"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="944"/>
         <source>About</source>
         <translation>О</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="939"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="944"/>
         <source>&amp;About</source>
         <translation>&amp;О</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="943"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="948"/>
         <source>Display information about this software</source>
         <translation>Информация о ПО</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="945"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="950"/>
         <source>&lt;b&gt;About&lt;/b&gt;&lt;p&gt;Display some information about this software.&lt;/p&gt;</source>
         <translation>&lt;b&gt;О...&lt;/b&gt;&lt;p&gt;Информация об этом программном продукте.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="953"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="958"/>
         <source>About Qt</source>
         <translation>О Qt</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="953"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="958"/>
         <source>About &amp;Qt</source>
         <translation>О &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="957"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="962"/>
         <source>Display information about the Qt toolkit</source>
         <translation>Информация о библиотеке Qt</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="959"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="964"/>
         <source>&lt;b&gt;About Qt&lt;/b&gt;&lt;p&gt;Display some information about the Qt toolkit.&lt;/p&gt;</source>
         <translation>&lt;b&gt;О Qt&lt;/b&gt;&lt;p&gt;Информация о библиотеке Qt.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="967"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="972"/>
         <source>Zoom in</source>
         <translation>Увеличить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="967"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="972"/>
         <source>Zoom &amp;in</source>
         <translation>У&amp;величить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="974"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="979"/>
         <source>Zoom in on the text</source>
         <translation>Увеличить масштаб текста</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="975"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="980"/>
         <source>&lt;b&gt;Zoom in&lt;/b&gt;&lt;p&gt;Zoom in on the text. This makes the text bigger.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Увеличить масштаб&lt;/b&gt;&lt;p&gt;Увеличить масштаб. Размер букв увеличится.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="983"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="988"/>
         <source>Zoom out</source>
         <translation>Уменьшить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="983"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="988"/>
         <source>Zoom &amp;out</source>
         <translation>У&amp;меньшить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="990"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="995"/>
         <source>Zoom out on the text</source>
         <translation>Уменьшить масштаб текста</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="991"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="996"/>
         <source>&lt;b&gt;Zoom out&lt;/b&gt;&lt;p&gt;Zoom out on the text. This makes the text smaller.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Уменьшить масштаб&lt;/b&gt;&lt;p&gt;Уменьшить масштаб. Размер букв уменьшится.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="794"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="799"/>
         <source>Copy</source>
         <translation>Копировать</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="794"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="799"/>
         <source>&amp;Copy</source>
         <translation>&amp;Копировать</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="800"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="805"/>
         <source>Copy the selected text</source>
         <translation>Копировать выбранный текст</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="801"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="806"/>
         <source>&lt;b&gt;Copy&lt;/b&gt;&lt;p&gt;Copy the selected text to the clipboard.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Копировать&lt;/b&gt;&lt;p&gt;Копировать выбранный текст в буфер обмена.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1600"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1605"/>
         <source>&amp;File</source>
         <translation>&amp;Файл</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1622"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1627"/>
         <source>&amp;Edit</source>
         <translation>&amp;Правка</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1630"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1635"/>
         <source>&amp;View</source>
         <translation>&amp;Вид</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1647"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1652"/>
         <source>&amp;Go</source>
         <translation>&amp;Перейти</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1662"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1667"/>
         <source>H&amp;istory</source>
         <translation>И&amp;стория</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1670"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1675"/>
         <source>&amp;Bookmarks</source>
         <translation>&amp;Закладки</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1747"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1752"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="761"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="766"/>
         <source>Reload</source>
         <translation>Переоткрыть</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="761"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="766"/>
         <source>&amp;Reload</source>
         <translation>П&amp;ереоткрыть</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="768"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="773"/>
         <source>Reload the current help screen</source>
         <translation>Переоткрыть это окно помощи</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="770"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="775"/>
         <source>&lt;b&gt;Reload&lt;/b&gt;&lt;p&gt;Reloads the current help screen.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Переоткрыть&lt;/b&gt;&lt;p&gt;Переоткрыть это окно помощи.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="470"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="475"/>
         <source>Ctrl+N</source>
         <comment>File|New Window</comment>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="485"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="490"/>
         <source>Ctrl+O</source>
         <comment>File|Open</comment>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="598"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="603"/>
         <source>Ctrl+P</source>
         <comment>File|Print</comment>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="645"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="650"/>
         <source>Ctrl+W</source>
         <comment>File|Close</comment>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="692"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="697"/>
         <source>Ctrl+Q</source>
         <comment>File|Quit</comment>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="809"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="814"/>
         <source>&amp;Find...</source>
         <translation>&amp;Найти...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="815"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="820"/>
         <source>Find text in page</source>
         <translation>Найти далее</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="816"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="821"/>
         <source>&lt;b&gt;Find&lt;/b&gt;&lt;p&gt;Find text in the current page.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Поиск&lt;/b&gt;&lt;p&gt;Искать текст на текущей странице.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="824"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="829"/>
         <source>Find &amp;next</source>
         <translation>Найти &amp;далее</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="840"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="845"/>
         <source>Find &amp;previous</source>
         <translation>Найти п&amp;редыдущее</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="794"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="799"/>
         <source>Ctrl+C</source>
         <comment>Edit|Copy</comment>
         <translation>Ctrl+C</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1758"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1763"/>
         <source>File</source>
         <translation>Файл</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1783"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1788"/>
         <source>Edit</source>
         <translation>Редактировать</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1788"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1793"/>
         <source>View</source>
         <translation>Вид</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1797"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1802"/>
         <source>Find</source>
         <translation>Найти</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1837"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1842"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1844"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1849"/>
         <source>Go</source>
         <translation>Перейти</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2047"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2052"/>
         <source>Help Files (*.html *.htm);;PDF Files (*.pdf);;CHM Files (*.chm);;All Files (*)</source>
         <translation>Файлы помощи (*.html *.htm);;Файлы PDF (*.pdf);;Файлы CHM (*.chm);;Все файлы (*)</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="455"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="460"/>
         <source>&amp;New Tab</source>
         <translation>&amp;Новая закладка</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="455"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="460"/>
         <source>Ctrl+T</source>
         <comment>File|New Tab</comment>
         <translation>Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="462"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="467"/>
         <source>&lt;b&gt;New Tab&lt;/b&gt;&lt;p&gt;This opens a new help window tab.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Новая закладка&lt;/b&gt;
 &lt;p&gt;Открывает новую закладку с помощью.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="477"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="482"/>
         <source>&lt;b&gt;New Window&lt;/b&gt;&lt;p&gt;This opens a new help browser window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Новое окно&lt;/b&gt;
 &lt;p&gt;Открывает новое окно просмотрщика.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="653"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="658"/>
         <source>&lt;b&gt;Close&lt;/b&gt;&lt;p&gt;Closes the current help window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Закрыть&lt;/b&gt;
 &lt;p&gt;Закрывает текущее окно просмотрщика помощи.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="661"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="666"/>
         <source>Close &amp;All</source>
         <translation>Закрыть &amp;всё</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="666"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="671"/>
         <source>&lt;b&gt;Close All&lt;/b&gt;&lt;p&gt;Closes all help windows except the first one.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Закрыть все&lt;/b&gt;
 &lt;p&gt;Закрывает все окна просмотрщиков помощи, кроме первого.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="461"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="466"/>
         <source>Open a new help window tab</source>
         <translation>Открыть новую закладку</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="476"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="481"/>
         <source>Open a new help browser window</source>
         <translation>Открыть новое окно</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="501"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="506"/>
         <source>Open File in New &amp;Tab</source>
         <translation>Открыть файл в новой &amp;закладке</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="501"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="506"/>
         <source>Shift+Ctrl+O</source>
         <comment>File|Open in new tab</comment>
         <translation>Shift+Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="507"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="512"/>
         <source>Open a help file for display in a new tab</source>
         <translation>Открыть файл для отображения в новой закладке</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="509"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="514"/>
         <source>&lt;b&gt;Open File in New Tab&lt;/b&gt;&lt;p&gt;This opens a new help file for display in a new tab. It pops up a file selection dialog.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Открыть файл в новой закладке&lt;/b&gt;
 &lt;p&gt;Открывает файл в новой закладке. Запускает диалог выбора файла&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="455"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="460"/>
         <source>New Tab</source>
         <translation>Новая закладка</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="501"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="506"/>
         <source>Open File in New Tab</source>
         <translation>Открыть файл в новой закладке</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="661"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="666"/>
         <source>Close All</source>
         <translation>Закрыть всё</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="710"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="715"/>
         <source>Alt+Left</source>
         <comment>Go|Backward</comment>
         <translation>Alt+Left</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="710"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="715"/>
         <source>Backspace</source>
         <comment>Go|Backward</comment>
         <translation>Backspace</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="727"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="732"/>
         <source>Alt+Right</source>
         <comment>Go|Forward</comment>
         <translation>Alt+Right</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="727"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="732"/>
         <source>Shift+Backspace</source>
         <comment>Go|Forward</comment>
         <translation>Shift+Backspace</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="745"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="750"/>
         <source>Ctrl+Home</source>
         <comment>Go|Home</comment>
         <translation>Ctrl+Home</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="761"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="766"/>
         <source>Ctrl+R</source>
         <comment>Go|Reload</comment>
         <translation>Ctrl+R</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="809"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="814"/>
         <source>Find...</source>
         <translation>Найти...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="809"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="814"/>
         <source>Ctrl+F</source>
         <comment>Edit|Find</comment>
         <translation>Ctrl+F</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="824"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="829"/>
         <source>Find next</source>
         <translation>Найти далее</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="824"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="829"/>
         <source>F3</source>
         <comment>Edit|Find next</comment>
         <translation>F3</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="840"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="845"/>
         <source>Find previous</source>
         <translation>Найти предыдущее</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="840"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="845"/>
         <source>Shift+F3</source>
         <comment>Edit|Find previous</comment>
         <translation>Shift+F3</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="920"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="925"/>
         <source>Shift+F1</source>
         <comment>Help|What&apos;s This?&apos;</comment>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="967"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="972"/>
         <source>Ctrl++</source>
         <comment>View|Zoom in</comment>
         <translation>Ctrl++</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="983"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="988"/>
         <source>Ctrl+-</source>
         <comment>View|Zoom out</comment>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="830"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="835"/>
         <source>Find next occurrence of text in page</source>
         <translation>Искать далее на странице</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="832"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="837"/>
         <source>&lt;b&gt;Find next&lt;/b&gt;&lt;p&gt;Find the next occurrence of text in the current page.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Искать далее&lt;/b&gt;&lt;p&gt;Искать далее на текущей странице.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="846"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="851"/>
         <source>Find previous occurrence of text in page</source>
         <translation>Искать на странице назад</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="848"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="853"/>
         <source>&lt;b&gt;Find previous&lt;/b&gt;&lt;p&gt;Find the previous occurrence of text in the current page.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Искать назад&lt;/b&gt;&lt;p&gt;Искать назад на текущей странице.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="629"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="634"/>
         <source>Print Preview</source>
         <translation>Предварительный просмотр печати</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="634"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="639"/>
         <source>Print preview of the displayed help</source>
         <translation>Предварительный просмотр печати помощи</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="636"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="641"/>
         <source>&lt;b&gt;Print Preview&lt;/b&gt;&lt;p&gt;Print preview of the displayed help text.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Предварительный просмотр печати&lt;/b&gt;&lt;p&gt;Предварительный просмотр печати помощи.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1062"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1067"/>
         <source>Show next tab</source>
         <translation>Показать следующую закладку</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1062"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1067"/>
         <source>Ctrl+Alt+Tab</source>
         <translation>Ctrl+Alt+Tab</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1072"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1077"/>
         <source>Show previous tab</source>
         <translation>Показать предыдущую закладку</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1072"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1077"/>
         <source>Shift+Ctrl+Alt+Tab</source>
         <translation>Shift+Ctrl+Alt+Tab</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1082"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1087"/>
         <source>Switch between tabs</source>
         <translation>Переключиться между закладками</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1082"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1087"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1363"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1368"/>
         <source>Clear icons database</source>
         <translation>Очистить базу данных иконок</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1368"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1373"/>
         <source>Clear the database of favicons</source>
         <translation>Очистить базу данных иконок</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1370"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1375"/>
         <source>&lt;b&gt;Clear icons database&lt;/b&gt;&lt;p&gt;Clears the database of favicons of previously visited URLs.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Очистить базу данных иконок&lt;/b&gt;&lt;p&gt;Очистить базу данных иконок ранее посещённых WEB сайтов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1092"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1097"/>
         <source>Preferences</source>
         <translation>Предпочтения</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1092"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1097"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Предпочтения...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1096"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1101"/>
         <source>Set the prefered configuration</source>
         <translation>Установите предпочтительную конфигурацию</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1098"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1103"/>
         <source>&lt;b&gt;Preferences&lt;/b&gt;&lt;p&gt;Set the configuration items of the application with your prefered values.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Предпочтения&lt;/b&gt;
 &lt;p&gt;Настройте Eric по своему вкусу.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="190"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="192"/>
         <source>Contents</source>
         <translation>Содержимое</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="665"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="670"/>
         <source>Close all help windows</source>
         <translation>Закрыть все окна просмотрщиков помощи</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1241"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1246"/>
         <source>Sync with Table of Contents</source>
         <translation>Синхронизировать с содержанием</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1246"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1251"/>
         <source>Synchronizes the table of contents with current page</source>
         <translation>Синхронизировать содержание с текущей страницей</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1248"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1253"/>
         <source>&lt;b&gt;Sync with Table of Contents&lt;/b&gt;&lt;p&gt;Synchronizes the table of contents with current page.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Синхронизировать с содержанием&lt;/b&gt;&lt;p&gt;Синхронизировать содержание с текущей страницей.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1257"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1262"/>
         <source>Table of Contents</source>
         <translation>Содержание</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1261"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1266"/>
         <source>Shows the table of contents window</source>
         <translation>Показывает окно с содержанием</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1263"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1268"/>
         <source>&lt;b&gt;Table of Contents&lt;/b&gt;&lt;p&gt;Shows the table of contents window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Содержание&lt;/b&gt;&lt;p&gt;Показывает окно с содержанием.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1300"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1305"/>
         <source>Manage QtHelp Documents</source>
         <translation>Управлять документацией Qt4</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1304"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1309"/>
         <source>Shows a dialog to manage the QtHelp documentation set</source>
         <translation>Показывает диалог управления документацией Qt4</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1306"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1311"/>
         <source>&lt;b&gt;Manage QtHelp Documents&lt;/b&gt;&lt;p&gt;Shows a dialog to manage the QtHelp documentation set.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Управлять документацией Qt4&lt;/b&gt;&lt;p&gt;Показывает диалог управления документацией Qt4.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1736"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1741"/>
         <source>&amp;Window</source>
         <translation>&amp;Окно</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1805"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1810"/>
         <source>Filter</source>
         <translation>Фильтр</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1810"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1815"/>
         <source>Filtered by: </source>
         <translation>Фильтровать по:</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2706"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2711"/>
         <source>Could not find an associated content.</source>
         <translation>Невозможно найти соответствующее содержание.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1316"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1321"/>
         <source>Manage QtHelp Filters</source>
         <translation>Управлять фильтрами документации QtHelp</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1320"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1325"/>
         <source>Shows a dialog to manage the QtHelp filters</source>
         <translation>Показывает диалог управления фильтрами документации QtHelp</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1322"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1327"/>
         <source>&lt;b&gt;Manage QtHelp Filters&lt;/b&gt;&lt;p&gt;Shows a dialog to manage the QtHelp filters.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Управлять фильтрами документации QtHelp&lt;/b&gt;&lt;p&gt;Показывает диалог управления фильтрами документации QtHelp.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1271"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1276"/>
         <source>Index</source>
         <translation>Индекс</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1275"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1280"/>
         <source>Shows the index window</source>
         <translation>Показать окно индексов</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1277"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1282"/>
         <source>&lt;b&gt;Index&lt;/b&gt;&lt;p&gt;Shows the index window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Индекс&lt;/b&gt;&lt;p&gt;Показать окно индексов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1285"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1290"/>
         <source>Search</source>
         <translation>Поиск</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1289"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1294"/>
         <source>Shows the search window</source>
         <translation>Показать окно поиска</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1291"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1296"/>
         <source>&lt;b&gt;Search&lt;/b&gt;&lt;p&gt;Shows the search window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Поиск&lt;/b&gt;&lt;p&gt;Показать окно поиска.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1331"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1336"/>
         <source>Reindex Documentation</source>
         <translation>Переиндексировать документацию</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1335"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1340"/>
         <source>Reindexes the documentation set</source>
         <translation>Переиндексировать документацию</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1337"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1342"/>
         <source>&lt;b&gt;Reindex Documentation&lt;/b&gt;&lt;p&gt;Reindexes the documentation set.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Переиндексировать документацию&lt;/b&gt;&lt;p&gt;Переиндексировать документацию.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2829"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2834"/>
         <source>Updating search index</source>
         <translation>Обновление поискового индекса</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2899"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2904"/>
         <source>Looking for Documentation...</source>
         <translation>Идёт поиск помощи...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2934"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2939"/>
         <source>Unfiltered</source>
         <translation>Нефильтрованное</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2953"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2958"/>
         <source>Help Engine</source>
         <translation>Просмотрщик помощи</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="680"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="685"/>
         <source>Private Browsing</source>
         <translation>Личный просмотр</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="675"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="680"/>
         <source>Private &amp;Browsing</source>
         <translation>Личный &amp;просмотр</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="681"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="686"/>
         <source>&lt;b&gt;Private Browsing&lt;/b&gt;&lt;p&gt;Enables private browsing. In this mode no history is recorded anymore.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Личный просмотр&lt;/b&gt;&lt;p&gt;Разрешает режим личного просмотра. В этом режиме история не сохраняется.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2396"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2401"/>
         <source>Full Screen</source>
         <translation>Полный экран</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1051"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1056"/>
         <source>&amp;Full Screen</source>
         <translation>Полный &amp;экран</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1051"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1056"/>
         <source>F11</source>
         <translation>F11</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1300"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1305"/>
         <source>Manage QtHelp &amp;Documents</source>
         <translation>Управлять &amp;документацией QtHelp</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1316"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1321"/>
         <source>Manage QtHelp &amp;Filters</source>
         <translation>Управлять &amp;фильтрами документации QtHelp</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1331"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1336"/>
         <source>&amp;Reindex Documentation</source>
         <translation>&amp;Переиндексировать документацию</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1351"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1356"/>
         <source>Clear private data</source>
         <translation>Очистить личные данные</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1346"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1351"/>
         <source>&amp;Clear private data</source>
         <translation>&amp;Очистить личные данные</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1353"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1358"/>
         <source>&lt;b&gt;Clear private data&lt;/b&gt;&lt;p&gt;Clears the private data like browsing history, search history or the favicons database.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Очистить личные данные&lt;/b&gt;&lt;p&gt;Очистить личные данные: удалить историю просмотров, историю поиска или базу данных иконок.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1363"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1368"/>
         <source>Clear &amp;icons database</source>
         <translation>Очистить базу данных &amp;иконок</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1471"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1476"/>
         <source>Show the network monitor dialog</source>
         <translation>Показать диалог монитора сети</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1685"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1690"/>
         <source>&amp;Settings</source>
         <translation>&amp;Настройка</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1727"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1732"/>
         <source>&amp;Tools</source>
         <translation>&amp;Инструменты</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1035"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1040"/>
         <source>Show page source</source>
         <translation>Показать исходный текст страницы</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1035"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1040"/>
         <source>Ctrl+U</source>
         <translation>Ctrl+U</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1040"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1045"/>
         <source>Show the page source in an editor</source>
         <translation>Показать исходный текст страницы в редакторе</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1042"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1047"/>
         <source>&lt;b&gt;Show page source&lt;/b&gt;&lt;p&gt;Show the page source in an editor.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать исходный текст страницы&lt;/b&gt;&lt;p&gt;Показать исходный текст страницы в редакторе.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1107"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1112"/>
         <source>&amp;Languages...</source>
         <translation>&amp;Языки...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1112"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1117"/>
         <source>Configure the accepted languages for web pages</source>
         <translation>Настроить допустимые языки для WEB страниц</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1114"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1119"/>
         <source>&lt;b&gt;Languages&lt;/b&gt;&lt;p&gt;Configure the accepted languages for web pages.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Языки&lt;/b&gt;&lt;p&gt;Настроить допустимые языки для WEB страниц.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1107"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1112"/>
         <source>Languages</source>
         <translation>Языки</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1123"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1128"/>
         <source>Cookies</source>
         <translation>Cookies</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1123"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1128"/>
         <source>C&amp;ookies...</source>
         <translation>C&amp;ookies...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1127"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1132"/>
         <source>Configure cookies handling</source>
         <translation>Настройка cookies</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1129"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1134"/>
         <source>&lt;b&gt;Cookies&lt;/b&gt;&lt;p&gt;Configure cookies handling.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Cookies&lt;/b&gt;&lt;p&gt;Настройка cookies.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1817"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1822"/>
         <source>Settings</source>
         <translation>Настройка</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="999"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1004"/>
         <source>Zoom reset</source>
         <translation>Сбросить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="999"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1004"/>
         <source>Zoom &amp;reset</source>
         <translation>&amp;Сбросить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="999"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1004"/>
         <source>Ctrl+0</source>
         <comment>View|Zoom reset</comment>
         <translation>Ctrl+0</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1005"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1010"/>
         <source>Reset the zoom of the text</source>
         <translation>Сбросить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1017"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1022"/>
         <source>Zoom text only</source>
         <translation>Масштаб текста</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1017"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1022"/>
         <source>Zoom &amp;text only</source>
         <translation>Масштаб &amp;текста</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1022"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1027"/>
         <source>Zoom text only; pictures remain constant</source>
         <translation>Масштаб текста; Изображения остаются неизменными</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1024"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1029"/>
         <source>&lt;b&gt;Zoom text only&lt;/b&gt;&lt;p&gt;Zoom text only; pictures remain constant.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Масштаб текста&lt;/b&gt;&lt;p&gt;Масштаб текста; Изображения остаются неизменными.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1007"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1012"/>
         <source>&lt;b&gt;Zoom reset&lt;/b&gt;&lt;p&gt;Reset the zoom of the text. This sets the zoom factor to 100%.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сбросить масштаб&lt;/b&gt;&lt;p&gt;Сбросить масштаб текста, т.е. установить масштаб в 100%.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="470"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="475"/>
         <source>New &amp;Window</source>
         <translation>&amp;Новое окно</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="568"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="573"/>
         <source>Import Bookmarks</source>
         <translation>Импортировать закладки</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="568"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="573"/>
         <source>&amp;Import Bookmarks...</source>
         <translation>&amp;Импортировать закладки...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="572"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="577"/>
         <source>Import bookmarks from other browsers</source>
         <translation>Импортировать закладки из других браузеров</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="574"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="579"/>
         <source>&lt;b&gt;Import Bookmarks&lt;/b&gt;&lt;p&gt;Import bookmarks from other browsers.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Импортировать закладки&lt;/b&gt;&lt;p&gt;Импортировать закладки из других браузеров.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="583"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="588"/>
         <source>Export Bookmarks</source>
         <translation>Экспорт закладок</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="583"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="588"/>
         <source>&amp;Export Bookmarks...</source>
         <translation>&amp;Экспорт закладок...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="587"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="592"/>
         <source>Export the bookmarks into a file</source>
         <translation>Экспортировать закладки в файл</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="589"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="594"/>
         <source>&lt;b&gt;Export Bookmarks&lt;/b&gt;&lt;p&gt;Export the bookmarks into a file.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Экспорт закладок&lt;/b&gt;&lt;p&gt;Экспортировать закладки в файл.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="857"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="862"/>
         <source>Manage Bookmarks</source>
         <translation>Управлять закладками</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="857"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="862"/>
         <source>&amp;Manage Bookmarks...</source>
         <translation>&amp;Управлять закладками...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="857"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="862"/>
         <source>Ctrl+Shift+B</source>
         <comment>Help|Manage bookmarks</comment>
         <translation>Ctrl+Shift+B</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="862"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="867"/>
         <source>Open a dialog to manage the bookmarks.</source>
         <translation>Показать диалог управления закладками.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="864"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="869"/>
         <source>&lt;b&gt;Manage Bookmarks...&lt;/b&gt;&lt;p&gt;Open a dialog to manage the bookmarks.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Управлять закладками...&lt;/b&gt;&lt;p&gt;Показать диалог управления закладками.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="873"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="878"/>
         <source>Add &amp;Bookmark...</source>
         <translation>Добавить &amp;закладку...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="873"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="878"/>
         <source>Ctrl+D</source>
         <comment>Help|Add bookmark</comment>
         <translation>Ctrl+D</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="880"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="885"/>
         <source>Open a dialog to add a bookmark.</source>
         <translation>Показать диалог добавления закладки.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="882"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="887"/>
         <source>&lt;b&gt;Add Bookmark&lt;/b&gt;&lt;p&gt;Open a dialog to add the current URL as a bookmark.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Добавить закладку&lt;/b&gt;&lt;p&gt;Показать диалог добавления текущей страницы в закладки.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="890"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="895"/>
         <source>Add Folder</source>
         <translation>Добавить папку</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="890"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="895"/>
         <source>Add &amp;Folder...</source>
         <translation>Добавить &amp;папку...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="894"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="899"/>
         <source>Open a dialog to add a new bookmarks folder.</source>
         <translation>Показать диалог добавления новой папки закладок.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="896"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="901"/>
         <source>&lt;b&gt;Add Folder...&lt;/b&gt;&lt;p&gt;Open a dialog to add a new bookmarks folder.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Добавить папку&lt;/b&gt;&lt;p&gt;Показать диалог добавления новой папки закладок.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="905"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="910"/>
         <source>Bookmark All Tabs</source>
         <translation>Создать закладки для всех открытых страниц</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="905"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="910"/>
         <source>Bookmark All Tabs...</source>
         <translation>Создать закладки для всех открытых страниц...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="909"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="914"/>
         <source>Bookmark all open tabs.</source>
         <translation>Создать закладки для всех открытых страниц.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="911"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="916"/>
         <source>&lt;b&gt;Bookmark All Tabs...&lt;/b&gt;&lt;p&gt;Open a dialog to add a new bookmarks folder for all open tabs.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Создать закладки для всех открытых страниц...&lt;/b&gt;&lt;p&gt;Показать диалог добавления папки для закладок.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2189"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2194"/>
         <source>Saved Tabs</source>
         <translation>Сохраненные закладки</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="761"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="766"/>
         <source>F5</source>
         <comment>Go|Reload</comment>
         <translation>F5</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="778"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="783"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="778"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="783"/>
         <source>&amp;Stop</source>
         <translation>Ст&amp;оп</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="778"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="783"/>
         <source>Ctrl+.</source>
         <comment>Go|Stop</comment>
         <translation>Ctrl+.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="778"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="783"/>
         <source>Esc</source>
         <comment>Go|Stop</comment>
         <translation>Esc</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="785"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="790"/>
         <source>Stop loading</source>
         <translation>Остановить загрузку</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="786"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="791"/>
         <source>&lt;b&gt;Stop&lt;/b&gt;&lt;p&gt;Stops loading of the current tab.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Стоп&lt;/b&gt;&lt;p&gt;Остановить загрузку.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="518"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="523"/>
         <source>&amp;Save As...</source>
         <translation>Сохранить &amp;как...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="518"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="523"/>
         <source>Shift+Ctrl+S</source>
         <comment>File|Save As</comment>
         <translation>Shift+Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="524"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="529"/>
         <source>Save the current page to disk</source>
         <translation>Сохранить текущую страницу в файл</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="526"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="531"/>
         <source>&lt;b&gt;Save As...&lt;/b&gt;&lt;p&gt;Saves the current page to disk.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сохранить как...&lt;/b&gt;&lt;p&gt;Сохранить текущую страницу в файл.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1379"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1384"/>
         <source>Configure Search Engines</source>
         <translation>Настройка поисковиков</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1384"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1389"/>
         <source>Configure the available search engines</source>
         <translation>Настроить все поисковики</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1386"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1391"/>
         <source>&lt;b&gt;Configure Search Engines...&lt;/b&gt;&lt;p&gt;Opens a dialog to configure the available search engines.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Настроить все поисковики...&lt;/b&gt;&lt;p&gt;Открыть диалог для настройки поисковиков.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1396"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1401"/>
         <source>Manage Saved Passwords</source>
         <translation>Менеджировать сохранённые пароли</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1396"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1401"/>
         <source>Manage Saved Passwords...</source>
         <translation>Менеджировать сохранённые пароли...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1402"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1407"/>
         <source>Manage the saved passwords</source>
         <translation>Менеджировать сохранённые пароли</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1404"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1409"/>
         <source>&lt;b&gt;Manage Saved Passwords...&lt;/b&gt;&lt;p&gt;Opens a dialog to manage the saved passwords.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Менеджировать сохранённые пароли...&lt;/b&gt;Открыть диалог для менеджирования сохранённых паролей&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1412"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1417"/>
         <source>Ad Block</source>
         <translation>Ad Block</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1412"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1417"/>
         <source>&amp;Ad Block...</source>
         <translation>&amp;Ad Block...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1418"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1423"/>
         <source>Configure AdBlock subscriptions and rules</source>
         <translation>Настроить AdBlock подписки и правила</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1420"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1425"/>
         <source>&lt;b&gt;Ad Block...&lt;/b&gt;&lt;p&gt;Opens a dialog to configure AdBlock subscriptions and rules.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Ad Block...&lt;/b&gt;&lt;p&gt;Показать диалог для настройки AdBlock подписок и правил.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="613"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="618"/>
         <source>Print as PDF</source>
         <translation>Печать как PDF</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="618"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="623"/>
         <source>Print the displayed help as PDF</source>
         <translation>Печатать текущий раздел помощи как PDF</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="620"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="625"/>
         <source>&lt;b&gt;Print as PDF&lt;/b&gt;&lt;p&gt;Print the displayed help text as a PDF file.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Печать как PDF&lt;/b&gt;&lt;p&gt;Печатать текущий раздел помощи как PDF&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1153"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1158"/>
         <source>Offline Storage</source>
         <translation>Автономное хранилище</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1153"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1158"/>
         <source>Offline &amp;Storage...</source>
         <translation>Автономное &amp;хранилище...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1158"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1163"/>
         <source>Configure offline storage</source>
         <translation>Настройка автономного хранилища</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1160"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1165"/>
         <source>&lt;b&gt;Offline Storage&lt;/b&gt;&lt;p&gt;Opens a dialog to configure offline storage.&lt;/p&gt;</source>
         <translation>Offline Storage&lt;b&gt;&lt;/b&gt;&lt;p&gt;Настройка автономного хранилища.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1379"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1384"/>
         <source>Configure Search &amp;Engines...</source>
         <translation>Настройка &amp;поисковиков...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2426"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2431"/>
         <source>&lt;b&gt;Are you sure you want to turn on private browsing?&lt;/b&gt;&lt;p&gt;When private browsing is turned on, web pages are not added to the history, searches are not added to the list of recent searches and web site icons and cookies are not stored. HTML5 offline storage will be deactivated. Until you close the window, you can still click the Back and Forward buttons to return to the web pages you have opened.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Подтвердите включение закрытого режима.&lt;/b&gt;&lt;p&gt;В закрытом режиме посещённые WEB страницы не сохраняются в истории, поиски не сохраняються в списке последних поисков, иконки сайтов и cookies так же не сохраняются. HTML5 автономное хранилище будет выключено. Пока текущее окно не закрыто, переход вперёд и назад на просмотренные уже страницы всё же будет работать.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1641"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1646"/>
         <source>Text Encoding</source>
         <translation>Кодировка текста</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3468"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3473"/>
         <source>ISO</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3469"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3474"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3470"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3475"/>
         <source>ISCII</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3471"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3476"/>
         <source>Unicode</source>
         <translation>Юникод</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3472"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3477"/>
         <source>Other</source>
         <translation>Другое</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3473"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3478"/>
         <source>IBM</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3495"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3500"/>
         <source>Default Encoding</source>
         <translation>Кодировка по умолчанию</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1482"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1487"/>
         <source>Downloads</source>
         <translation>Загрузки</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1486"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1491"/>
         <source>Shows the downloads window</source>
         <translation>Показать окно загрузки</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1488"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1493"/>
         <source>&lt;b&gt;Downloads&lt;/b&gt;&lt;p&gt;Shows the downloads window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Загрузки&lt;/b&gt;&lt;p&gt;Показать окно загрузки.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1897"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1902"/>
         <source>VirusTotal</source>
         <translation>VirusTotal</translation>
     </message>
@@ -19590,403 +19608,403 @@ URL: {1}</source>
         <translation type="obsolete">Поиск в  VirusTotal</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1901"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1906"/>
         <source>Scan current site</source>
         <translation>Проверить текущий сервер</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3733"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3738"/>
         <source>VirusTotal Scan</source>
         <translation>Проверка VirusTotal</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3733"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3738"/>
         <source>&lt;p&gt;The VirusTotal scan could not be scheduled.&lt;p&gt;
 &lt;p&gt;Reason: {0}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запланировать проверку VirusTotal.&lt;p&gt;
 &lt;p&gt;Причина: {0}&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1497"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1502"/>
         <source>RSS Feeds Dialog</source>
         <translation>Каналы RSS</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1497"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1502"/>
         <source>&amp;RSS Feeds Dialog...</source>
         <translation>Каналы &amp;RSS...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1497"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1502"/>
         <source>Ctrl+Shift+F</source>
         <comment>Help|RSS Feeds Dialog</comment>
         <translation>Ctrl+Shift+F</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1503"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1508"/>
         <source>Open a dialog showing the configured RSS feeds.</source>
         <translation>Показать сконфигурированные каналы RSS.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1505"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1510"/>
         <source>&lt;b&gt;RSS Feeds Dialog...&lt;/b&gt;&lt;p&gt;Open a dialog to show the configured RSS feeds. It can be used to mange the feeds and to show their contents.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Каналы RSS...&lt;/b&gt;&lt;p&gt;Показывает сконфигурированные каналы RSS. Позволяет изменить их настройки.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1515"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1520"/>
         <source>Siteinfo Dialog</source>
         <translation>Информация о сервере</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1515"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1520"/>
         <source>&amp;Siteinfo Dialog...</source>
         <translation>&amp;Информация о сервере...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1515"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1520"/>
         <source>Ctrl+Shift+I</source>
         <comment>Help|Siteinfo Dialog</comment>
         <translation>Ctrl+Shift+I</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1521"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1526"/>
         <source>Open a dialog showing some information about the current site.</source>
         <translation>Открыть диалог с информацией о текущем сервере.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1523"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1528"/>
         <source>&lt;b&gt;Siteinfo Dialog...&lt;/b&gt;&lt;p&gt;Opens a dialog showing some information about the current site.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Информация о сервере...&lt;/b&gt;&lt;p&gt;Открыть диалог с информацией о текущем сервере.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1829"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1834"/>
         <source>Tools</source>
         <translation>Инструменты</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="967"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="972"/>
         <source>Zoom In</source>
         <comment>View|Zoom in</comment>
         <translation>Увеличить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="983"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="988"/>
         <source>Zoom Out</source>
         <comment>View|Zoom out</comment>
         <translation>Уменьшить масштаб</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1466"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1471"/>
         <source>Network Monitor</source>
         <translation>Монитор сети</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1466"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1471"/>
         <source>&amp;Network Monitor...</source>
         <translation>Мо&amp;нитор сети...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1473"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1478"/>
         <source>&lt;b&gt;Network Monitor...&lt;/b&gt;&lt;p&gt;Shows the network monitor dialog.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сетевой монитор...&lt;/b&gt;&lt;p&gt;Открыть диалог сетевого монитора.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2403"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2408"/>
         <source>Restore Window</source>
         <translation>Восстановить окно</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1532"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1537"/>
         <source>Manage User Agent Settings</source>
         <translation>Настройка агента пользователя</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1532"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1537"/>
         <source>Manage &amp;User Agent Settings</source>
         <translation>Настройка &amp;агента пользователя</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1536"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1541"/>
         <source>Shows a dialog to manage the User Agent settings</source>
         <translation>Показывает диалог настройки агента пользователя</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1538"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1543"/>
         <source>&lt;b&gt;Manage User Agent Settings&lt;/b&gt;&lt;p&gt;Shows a dialog to manage the User Agent settings.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Настройка агента пользователя&lt;/b&gt;&lt;p&gt;Показывает диалог настройки агента пользователя.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1714"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1719"/>
         <source>Global User Agent</source>
         <translation>Глобальный агент пользователя</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="518"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="523"/>
         <source>Save As</source>
         <translation>Сохранить как</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="534"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="539"/>
         <source>Save Page Screen</source>
         <translation>Сохранение страницы</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="534"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="539"/>
         <source>Save Page Screen...</source>
         <translation>Сохранение страницы...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="539"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="544"/>
         <source>Save the current page as a screen shot</source>
         <translation>Сохраненить изображение текущей страницы</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="541"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="546"/>
         <source>&lt;b&gt;Save Page Screen...&lt;/b&gt;&lt;p&gt;Saves the current page as a screen shot.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сохранение страницы...&lt;/b&gt;&lt;p&gt;Сохраненить изображение текущей страницы.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1547"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1552"/>
         <source>Synchronize data</source>
         <translation>Синхронизация данных</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1547"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1552"/>
         <source>&amp;Synchronize Data...</source>
         <translation>&amp;Синхронизация данных...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1552"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1557"/>
         <source>Shows a dialog to synchronize data via the network</source>
         <translation>Показывает диалог синхронизации данных через сеть</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1554"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1559"/>
         <source>&lt;b&gt;Synchronize Data...&lt;/b&gt;&lt;p&gt;This shows a dialog to synchronize data via the network.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Синхронизация данных...&lt;/b&gt;&lt;p&gt;Показывает диалог синхронизации данных через сеть.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1429"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1434"/>
         <source>ClickToFlash</source>
         <translation>ClickToFlash</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1429"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1434"/>
         <source>&amp;ClickToFlash...</source>
         <translation>&amp;ClickToFlash...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1435"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1440"/>
         <source>Configure ClickToFlash whitelist</source>
         <translation>Настройка белого списка ClickToFlash</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1437"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1442"/>
         <source>&lt;b&gt;ClickToFlash...&lt;/b&gt;&lt;p&gt;Opens a dialog to configure the ClickToFlash whitelist.&lt;/p&gt;</source>
         <translation>&lt;b&gt;ClickToFlash...&lt;/b&gt;&lt;p&gt;Показать диалог для редактирования белого списка ClickToFlash.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1169"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1174"/>
         <source>Personal Information</source>
         <translation>Личная информация</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1169"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1174"/>
         <source>Personal Information...</source>
         <translation>Личная информация...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1175"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1180"/>
         <source>Configure personal information for completing form fields</source>
         <translation>Настройка Вашей личной информации, которая будет использована на веб страницах</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1177"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1182"/>
         <source>&lt;b&gt;Personal Information...&lt;/b&gt;&lt;p&gt;Opens a dialog to configure the personal information used for completing form fields.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Личная информация...&lt;/b&gt;&lt;p&gt;Настройка Вашей личной информации, которая будет использована на веб страницах.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1187"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1192"/>
         <source>GreaseMonkey Scripts</source>
         <translation>GreaseMonkey скрипты</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1187"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1192"/>
         <source>GreaseMonkey Scripts...</source>
         <translation>GreaseMonkey скрипты...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1193"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1198"/>
         <source>Configure the GreaseMonkey Scripts</source>
         <translation>Конфигурация GreaseMonkey скриптов</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1195"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1200"/>
         <source>&lt;b&gt;GreaseMonkey Scripts...&lt;/b&gt;&lt;p&gt;Opens a dialog to configure the available GreaseMonkey Scripts.&lt;/p&gt;</source>
         <translation>&lt;b&gt;GreaseMonkey скрипты...&lt;/b&gt;&lt;p&gt;Конфигурация GreaseMonkey скриптов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1448"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1453"/>
         <source>Manage SSL Certificates</source>
         <translation>Менеджер SLL сертификатов</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1448"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1453"/>
         <source>Manage SSL Certificates...</source>
         <translation>Менеджер SLL сертификатов...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1454"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1459"/>
         <source>Manage the saved SSL certificates</source>
         <translation>Менеджер сохранённых SLL сертификатов</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1456"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1461"/>
         <source>&lt;b&gt;Manage SSL Certificates...&lt;/b&gt;&lt;p&gt;Opens a dialog to manage the saved SSL certificates.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Менеджер SLL сертификатов...&lt;/b&gt;&lt;p&gt;Менеджер сохранённых SLL сертификатов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1205"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1210"/>
         <source>Edit Message Filters</source>
         <translation>Редактировать фильтры сообщений</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1205"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1210"/>
         <source>Edit Message Filters...</source>
         <translation>Редактировать фильтры сообщений...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1210"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1215"/>
         <source>Edit the message filters used to suppress unwanted messages</source>
         <translation>Редактировать фильтры нежелательных сообщений</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1212"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1217"/>
         <source>&lt;b&gt;Edit Message Filters&lt;/b&gt;&lt;p&gt;Opens a dialog to edit the message filters used to suppress unwanted messages been shown in an error window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Редактировать фильтры сообщений&lt;/b&gt;&lt;p&gt;Редактировать фильтры нежелательных сообщений об ошибках.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="549"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="554"/>
         <source>Save Visible Page Screen</source>
         <translation>Сохранение текущей страницы</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="549"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="554"/>
         <source>Save Visible Page Screen...</source>
         <translation>Сохранение текущей страницы...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="554"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="559"/>
         <source>Save the visible part of the current page as a screen shot</source>
         <translation>Сохраненить изображение текущей страницы</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="557"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="562"/>
         <source>&lt;b&gt;Save Visible Page Screen...&lt;/b&gt;&lt;p&gt;Saves the visible part of the current page as a screen shot.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сохранение текущей страницы...&lt;/b&gt;&lt;p&gt;Сохраненить изображение текущей страницы.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2909"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2914"/>
         <source>eric6 Web Browser</source>
         <translation>WEB просмотрщик встроенный в Eric</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="698"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="703"/>
         <source>Quit the eric6 Web Browser</source>
         <translation>Выйти из Web просмотрщика</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="699"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="704"/>
         <source>&lt;b&gt;Quit&lt;/b&gt;&lt;p&gt;Quit the eric6 Web Browser.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Выход&lt;/b&gt;&lt;p&gt;Выйти из Web просмотрщика.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2095"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2100"/>
         <source>&lt;b&gt;eric6 Web Browser - {0}&lt;/b&gt;&lt;p&gt;The eric6 Web Browser is a combined help file and HTML browser. It is part of the eric6 development toolset.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Eric Web просмотрщик - {0}&lt;/b&gt;&lt;p&gt;Eric Web просмотрщик позволяет просматривать HTML файлы и файлы документации. Я вляется частью инструментов разработчика.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3768"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3773"/>
         <source>IP Address Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3778"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3783"/>
         <source>Domain Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3759"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3764"/>
         <source>Enter a valid IPv4 address in dotted quad notation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3768"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3773"/>
         <source>The given IP address is not in dotted quad notation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3778"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3783"/>
         <source>Enter a valid domain name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1223"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1228"/>
         <source>Edit HTML5 Feature Permissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1223"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1228"/>
         <source>Edit HTML5 Feature Permissions...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1138"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1143"/>
         <source>Flash Cookies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1138"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1143"/>
         <source>&amp;Flash Cookies...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1142"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1147"/>
         <source>Manage flash cookies</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1144"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1149"/>
         <source>&lt;b&gt;Flash Cookies&lt;/b&gt;&lt;p&gt;Show a dialog to manage the flash cookies.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1228"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1233"/>
         <source>Edit the remembered HTML5 feature permissions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1230"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1235"/>
         <source>&lt;b&gt;Edit HTML5 Feature Permissions&lt;/b&gt;&lt;p&gt;Opens a dialog to edit the remembered HTML5 feature permissions.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1564"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1569"/>
         <source>Manage Saved Zoom Values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1564"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1569"/>
         <source>Manage Saved Zoom Values...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1570"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1575"/>
         <source>Manage the saved zoom values</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="1572"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="1577"/>
         <source>&lt;b&gt;Manage Saved Zoom Values...&lt;/b&gt;&lt;p&gt;Opens a dialog to manage the saved zoom values.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36335,12 +36353,12 @@ Destination:
         <translation>&lt;p&gt;Ошибка скачивания файла из {0}.&lt;/p&gt;&lt;p&gt;Ошибка: {1}&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginManager.py" line="1181"/>
+        <location filename="../PluginManager/PluginManager.py" line="1183"/>
         <source>New plugin versions available</source>
         <translation>Новые версии доступны для загрузки</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginManager.py" line="1181"/>
+        <location filename="../PluginManager/PluginManager.py" line="1183"/>
         <source>&lt;p&gt;There are new plug-ins or plug-in updates available. Use the plug-in repository dialog to get them.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Имеются новые плагины или обновления. Воспользуйтесь диалогом репозитория плагинов для их загрузки.&lt;/p&gt;</translation>
     </message>
@@ -36599,54 +36617,54 @@ Destination:
         <translation>Закрыть и установить</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="324"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="351"/>
         <source>Download Plugin Files</source>
         <translation>Скачать файлы плагинов</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="324"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="351"/>
         <source>The requested plugins were downloaded.</source>
         <translation>Запрашиваемые плагины скачаны.</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="375"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="402"/>
         <source>Read plugins repository file</source>
         <translation>Прочитать файл репозитория плагинов</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="375"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="402"/>
         <source>&lt;p&gt;The plugins repository file &lt;b&gt;{0}&lt;/b&gt; could not be read. Select Update&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно прочитать файл репозитория &lt;b&gt;{0}&lt;/b&gt;. Выберите обновление&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="383"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="410"/>
         <source>No plugin repository file available.
 Select Update.</source>
         <translation>Нет доступного файла репозитория.
 Выберите обновление.</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="435"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="472"/>
         <source>Error downloading file</source>
         <translation>Ошибка скачивания файла</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="435"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="472"/>
         <source>&lt;p&gt;Could not download the requested file from {0}.&lt;/p&gt;&lt;p&gt;Error: {1}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Ошибка скачивания файла из {0}.&lt;/p&gt;&lt;p&gt;Ошибка: {1}&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="512"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="551"/>
         <source>Stable</source>
         <translation>Стабильный</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="519"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="558"/>
         <source>Unstable</source>
         <translation>Нестабильный</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="526"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="565"/>
         <source>Unknown</source>
         <translation>Неизвестно</translation>
     </message>
@@ -36656,12 +36674,12 @@ Select Update.</source>
         <translation>Загрузить и установить</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="367"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="394"/>
         <source>Plugins Repository URL Changed</source>
         <translation>URL репозитория плагинов изменился</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="367"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="394"/>
         <source>The URL of the Plugins Repository has changed. Select the &quot;Update&quot; button to get the new repository file.</source>
         <translation>URL репозитория плагинов изменился. Нажмите кнопку &quot;Обновить&quot; чтобы загрузить новый файл репозитория.</translation>
     </message>
@@ -36686,50 +36704,65 @@ Select Update.</source>
         <translation>Почистить загруженные файлы</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="540"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="579"/>
         <source>up-to-date</source>
         <translation>новых изменений нет</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="543"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="582"/>
         <source>new download available</source>
         <translation>имеются обновления для загрузки</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="546"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="585"/>
         <source>update installable</source>
         <translation>Обновления готовы к установке</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="549"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="588"/>
         <source>updated download available</source>
         <translation>имеется обновление</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="719"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="758"/>
         <source>Cleanup of Plugin Downloads</source>
         <translation>Почистить загруженные плагины</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="719"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="758"/>
         <source>&lt;p&gt;The plugin download &lt;b&gt;{0}&lt;/b&gt; could not be deleted.&lt;/p&gt;&lt;p&gt;Reason: {1}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно удалить обновление для плагина &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Причина: {1}&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="155"/>
+        <source>Network Status: online</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="157"/>
+        <source>Network Status: offline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="447"/>
+        <source>Computer is offline.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>PluginRepositoryWindow</name>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="806"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="845"/>
         <source>Process Generation Error</source>
         <translation>Ошибка при запуске процесса</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="806"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="845"/>
         <source>&lt;p&gt;Could not start the process.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить процесс.&lt;br&gt;Убедитесь, что он доступен как &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../PluginManager/PluginRepositoryDialog.py" line="806"/>
+        <location filename="../PluginManager/PluginRepositoryDialog.py" line="845"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -36844,22 +36877,22 @@ Select Update.</source>
 <context>
     <name>PreviewProcessingThread</name>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="376"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="427"/>
         <source>&lt;p&gt;No preview available for this type of file.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Предварительный просмотр недоступен для этого типа файла.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="540"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="591"/>
         <source>&lt;p&gt;Markdown preview requires the &lt;b&gt;python-markdown&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager or see &lt;a href=&quot;http://pythonhosted.org/Markdown/install.html&quot;&gt;installation instructions.&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;Для предварительного просмотра Markdown файлов необходим пакет &lt;b&gt;python-markdown&lt;/b&gt;. Установите его с помощью менеджера пакетов или ознакомтесь с инструкцией по установке &lt;a href=&quot;http://pythonhosted.org/Markdown/install.html&quot;&gt;installation instructions.&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="515"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="566"/>
         <source>&lt;p&gt;ReStructuredText preview requires the &lt;b&gt;python-docutils&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager, &apos;pip install docutils&apos; or see &lt;a href=&quot;http://pypi.python.org/pypi/docutils&quot;&gt;this page.&lt;/a&gt;&lt;/p&gt;</source>
         <translation>&lt;p&gt;Для предварительного просмотра ReStructuredText файлов необходим пакет &lt;b&gt;python-docutils&lt;/b&gt;. Установите его с помощью менеджера пакетов: &apos;pip install docutils&apos; или ознакомтесь с &lt;a href=&quot;http://pypi.python.org/pypi/docutils&quot;&gt;этой страницей.&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="453"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="504"/>
         <source>&lt;p&gt;ReStructuredText preview requires the &lt;b&gt;sphinx&lt;/b&gt; package.&lt;br/&gt;Install it with your package manager,&apos;pip install Sphinx&apos; or see &lt;a href=&quot;http://pypi.python.org/pypi/Sphinx&quot;&gt;this page.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Alternatively you may disable Sphinx usage on the Editor, Filehandling configuration page.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Для предварительного просмотра ReStructuredText файлов необходим пакет &lt;b&gt;sphinx&lt;/b&gt;. Установите его с помощью менеджера пакетов: &apos;pip install Sphinx&apos; или ознакомтесь с &lt;a href=&quot;http://pypi.python.org/pypi/Sphinx&quot;&gt;этой страницей.&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Также вы можете отключить использование Sphinx на странице редактора конфигурации, Filehandling.&lt;/p&gt;</translation>
     </message>
@@ -36897,12 +36930,12 @@ Select Update.</source>
         <translation>&lt;p&gt;Предварительный просмотр недоступен для этого типа файла.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="219"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="222"/>
         <source>Preview - {0}</source>
         <translation>Предварительный просмотр - {0}</translation>
     </message>
     <message>
-        <location filename="../UI/Previewers/PreviewerHTML.py" line="221"/>
+        <location filename="../UI/Previewers/PreviewerHTML.py" line="224"/>
         <source>Preview</source>
         <translation>Предварительный просмотр</translation>
     </message>
@@ -58429,135 +58462,135 @@ Double clicking on an entry will show the respective traceback.&lt;/p&gt;</sourc
 <context>
     <name>UserInterface</name>
     <message>
-        <location filename="../UI/UserInterface.py" line="1376"/>
+        <location filename="../UI/UserInterface.py" line="1377"/>
         <source>Log-Viewer</source>
         <translation>Просмотрщик журнала</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1186"/>
+        <location filename="../UI/UserInterface.py" line="1187"/>
         <source>{0} - Passive Mode</source>
         <translation>{0} - пассивный режим</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1193"/>
+        <location filename="../UI/UserInterface.py" line="1194"/>
         <source>{0} - {1} - Passive Mode</source>
         <translation>{0} - {1} - пассивный режим</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1220"/>
+        <location filename="../UI/UserInterface.py" line="1221"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1220"/>
+        <location filename="../UI/UserInterface.py" line="1221"/>
         <source>&amp;Quit</source>
         <translation>&amp;Выход</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1226"/>
+        <location filename="../UI/UserInterface.py" line="1227"/>
         <source>Quit the IDE</source>
         <translation>Выход из IDE</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1227"/>
+        <location filename="../UI/UserInterface.py" line="1228"/>
         <source>&lt;b&gt;Quit the IDE&lt;/b&gt;&lt;p&gt;This quits the IDE. Any unsaved changes may be saved first. Any Python program being debugged will be stopped and the preferences will be written to disc.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Выход из IDE&lt;/b&gt;
 &lt;p&gt;Перед выходом все изменения могут быть сохранены. Отлаживаемая программа (если есть) будет остановлена, и настройки будут сохранены на диск.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1581"/>
+        <location filename="../UI/UserInterface.py" line="1582"/>
         <source>What&apos;s This?</source>
         <translation>Что это?</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1581"/>
+        <location filename="../UI/UserInterface.py" line="1582"/>
         <source>&amp;What&apos;s This?</source>
         <translation>&amp;Что это?</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1587"/>
+        <location filename="../UI/UserInterface.py" line="1588"/>
         <source>Context sensitive help</source>
         <translation>Контекстная помощь</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1588"/>
+        <location filename="../UI/UserInterface.py" line="1589"/>
         <source>&lt;b&gt;Display context sensitive help&lt;/b&gt;&lt;p&gt;In What&apos;s This? mode, the mouse cursor shows an arrow with a question mark, and you can click on the interface elements to get a short description of what they do and how to use them. In dialogs, this feature can be accessed using the context help button in the titlebar.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать контекстную помощь&lt;/b&gt;
 &lt;p&gt;В режиме контекстной помощи курсор мыши выглядит как стрелка со знаком вопроса, и, щёлкнув по элементу интерфейса, Вы можете просмотреть краткую помощь о его роли и его использовании. В диалогах можно воспользоваться кнопкой контекстной помощи в заголовке окна.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1600"/>
+        <location filename="../UI/UserInterface.py" line="1601"/>
         <source>Helpviewer</source>
         <translation>Просмотрщик помощи</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1600"/>
+        <location filename="../UI/UserInterface.py" line="1601"/>
         <source>&amp;Helpviewer...</source>
         <translation>Просмотрщик помо&amp;щи...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1606"/>
+        <location filename="../UI/UserInterface.py" line="1607"/>
         <source>Open the helpviewer window</source>
         <translation>Открыть просмотрщик помощи</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1628"/>
+        <location filename="../UI/UserInterface.py" line="1629"/>
         <source>Show Versions</source>
         <translation>Показать версию</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1628"/>
+        <location filename="../UI/UserInterface.py" line="1629"/>
         <source>Show &amp;Versions</source>
         <translation>Показать &amp;версию</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1632"/>
+        <location filename="../UI/UserInterface.py" line="1633"/>
         <source>Display version information</source>
         <translation>Информация о версии</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1634"/>
+        <location filename="../UI/UserInterface.py" line="1635"/>
         <source>&lt;b&gt;Show Versions&lt;/b&gt;&lt;p&gt;Display version information.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать версию&lt;/b&gt;&lt;p&gt;Информация о версии.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2613"/>
+        <location filename="../UI/UserInterface.py" line="2614"/>
         <source>Unittest</source>
         <translation>Unittest</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1706"/>
+        <location filename="../UI/UserInterface.py" line="1707"/>
         <source>&amp;Unittest...</source>
         <translation>&amp;Unittest...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1711"/>
+        <location filename="../UI/UserInterface.py" line="1712"/>
         <source>Start unittest dialog</source>
         <translation>Запустить unittest</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1959"/>
+        <location filename="../UI/UserInterface.py" line="1960"/>
         <source>Preferences</source>
         <translation>Предпочтения</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1959"/>
+        <location filename="../UI/UserInterface.py" line="1960"/>
         <source>&amp;Preferences...</source>
         <translation>&amp;Предпочтения...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1964"/>
+        <location filename="../UI/UserInterface.py" line="1965"/>
         <source>Set the prefered configuration</source>
         <translation>Установите предпочтительную конфигурацию</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1966"/>
+        <location filename="../UI/UserInterface.py" line="1967"/>
         <source>&lt;b&gt;Preferences&lt;/b&gt;&lt;p&gt;Set the configuration items of the application with your prefered values.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Предпочтения&lt;/b&gt;
 &lt;p&gt;Настройте Eric по своему вкусу.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2489"/>
+        <location filename="../UI/UserInterface.py" line="2490"/>
         <source>&amp;Window</source>
         <translation>&amp;Окно</translation>
     </message>
@@ -58567,1953 +58600,1958 @@ Double clicking on an entry will show the respective traceback.&lt;/p&gt;</sourc
         <translation type="obsolete">&amp;Сервис</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2450"/>
+        <location filename="../UI/UserInterface.py" line="2451"/>
         <source>Wi&amp;zards</source>
         <translation>&amp;Мастера</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2539"/>
+        <location filename="../UI/UserInterface.py" line="2540"/>
         <source>&amp;Help</source>
         <translation>&amp;Помощь</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2612"/>
+        <location filename="../UI/UserInterface.py" line="2613"/>
         <source>Tools</source>
         <translation>Сервис</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4386"/>
+        <location filename="../UI/UserInterface.py" line="4390"/>
         <source>Help</source>
         <translation>Помощь</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2614"/>
+        <location filename="../UI/UserInterface.py" line="2615"/>
         <source>Settings</source>
         <translation>Настройка</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2514"/>
+        <location filename="../UI/UserInterface.py" line="2515"/>
         <source>&amp;Toolbars</source>
         <translation>&amp;Панели инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4512"/>
+        <location filename="../UI/UserInterface.py" line="4516"/>
         <source>Problem</source>
         <translation>Проблема</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4687"/>
+        <location filename="../UI/UserInterface.py" line="4691"/>
         <source>Process Generation Error</source>
         <translation>Ошибка при запуске процесса</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2064"/>
+        <location filename="../UI/UserInterface.py" line="2065"/>
         <source>Keyboard Shortcuts</source>
         <translation>Горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2064"/>
+        <location filename="../UI/UserInterface.py" line="2065"/>
         <source>Keyboard &amp;Shortcuts...</source>
         <translation>Горячие &amp;клавиши...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2069"/>
+        <location filename="../UI/UserInterface.py" line="2070"/>
         <source>Set the keyboard shortcuts</source>
         <translation>Задать горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2071"/>
+        <location filename="../UI/UserInterface.py" line="2072"/>
         <source>&lt;b&gt;Keyboard Shortcuts&lt;/b&gt;&lt;p&gt;Set the keyboard shortcuts of the application with your prefered values.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Горячие клавиши&lt;/b&gt;&lt;p&gt;Задайте горячие клавиши на свой вкус.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2445"/>
+        <location filename="../UI/UserInterface.py" line="2446"/>
         <source>E&amp;xtras</source>
         <translation>До&amp;полнительно</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3022"/>
+        <location filename="../UI/UserInterface.py" line="3026"/>
         <source>Report Bug</source>
         <translation>Сообщение об ошибке</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1679"/>
+        <location filename="../UI/UserInterface.py" line="1680"/>
         <source>Report &amp;Bug...</source>
         <translation>Сообщить об &amp;ошибке...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1683"/>
+        <location filename="../UI/UserInterface.py" line="1684"/>
         <source>Report a bug</source>
         <translation>Сообщить об ошибке</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1684"/>
+        <location filename="../UI/UserInterface.py" line="1685"/>
         <source>&lt;b&gt;Report Bug...&lt;/b&gt;&lt;p&gt;Opens a dialog to report a bug.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сообщить об ошибке...&lt;/b&gt;&lt;p&gt;Открывает диалог для сообщения об ошибке.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5426"/>
+        <location filename="../UI/UserInterface.py" line="5430"/>
         <source>Export Keyboard Shortcuts</source>
         <translation>Экспортировать горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2079"/>
+        <location filename="../UI/UserInterface.py" line="2080"/>
         <source>&amp;Export Keyboard Shortcuts...</source>
         <translation>&amp;Экспортировать горячие клавиши...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2084"/>
+        <location filename="../UI/UserInterface.py" line="2085"/>
         <source>Export the keyboard shortcuts</source>
         <translation>Экспортировать горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2086"/>
+        <location filename="../UI/UserInterface.py" line="2087"/>
         <source>&lt;b&gt;Export Keyboard Shortcuts&lt;/b&gt;&lt;p&gt;Export the keyboard shortcuts of the application.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Экспортировать горячие клавиши&lt;/b&gt;
 &lt;p&gt;Экспортировать горячие клавиши приложения.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5450"/>
+        <location filename="../UI/UserInterface.py" line="5454"/>
         <source>Import Keyboard Shortcuts</source>
         <translation>Импортировать горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2093"/>
+        <location filename="../UI/UserInterface.py" line="2094"/>
         <source>&amp;Import Keyboard Shortcuts...</source>
         <translation>&amp;Импортировать горячие клавиши...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2098"/>
+        <location filename="../UI/UserInterface.py" line="2099"/>
         <source>Import the keyboard shortcuts</source>
         <translation>Импортировать горячие клавиши</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2100"/>
+        <location filename="../UI/UserInterface.py" line="2101"/>
         <source>&lt;b&gt;Import Keyboard Shortcuts&lt;/b&gt;&lt;p&gt;Import the keyboard shortcuts of the application.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Импортировать горячие клавиши&lt;/b&gt;
 &lt;p&gt;Импортировать горячие клавиши приложения.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="231"/>
+        <location filename="../UI/UserInterface.py" line="232"/>
         <source>Generating Main User Interface...</source>
         <translation>Создание главного пользовательского интерфейса...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="263"/>
+        <location filename="../UI/UserInterface.py" line="264"/>
         <source>Setting up connections...</source>
         <translation>Установка соединений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="496"/>
+        <location filename="../UI/UserInterface.py" line="497"/>
         <source>Initializing Actions...</source>
         <translation>Инициализация действий...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="498"/>
+        <location filename="../UI/UserInterface.py" line="499"/>
         <source>Initializing Menus...</source>
         <translation>Инициализация меню...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="500"/>
+        <location filename="../UI/UserInterface.py" line="501"/>
         <source>Initializing Toolbars...</source>
         <translation>Инициализация панелей инструментов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="502"/>
+        <location filename="../UI/UserInterface.py" line="503"/>
         <source>Initializing Statusbar...</source>
         <translation>Инициализация строки статуса...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="462"/>
+        <location filename="../UI/UserInterface.py" line="463"/>
         <source>Initializing Tools...</source>
         <translation>Инициализация инструментов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1712"/>
+        <location filename="../UI/UserInterface.py" line="1713"/>
         <source>&lt;b&gt;Unittest&lt;/b&gt;&lt;p&gt;Perform unit tests. The dialog gives you the ability to select and run a unittest suite.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Unittest&lt;/b&gt;
 &lt;p&gt;Провести тесты. Диалог даёт возможность выбрать и провести набор тестов с помощью Unittest.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1720"/>
+        <location filename="../UI/UserInterface.py" line="1721"/>
         <source>Unittest Restart</source>
         <translation>Перезапустить Uniitest</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1725"/>
+        <location filename="../UI/UserInterface.py" line="1726"/>
         <source>Restart last unittest</source>
         <translation>Перезапустить последний Uniitest</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1726"/>
+        <location filename="../UI/UserInterface.py" line="1727"/>
         <source>&lt;b&gt;Restart Unittest&lt;/b&gt;&lt;p&gt;Restart the unittest performed last.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Перезапустить Uniitest&lt;/b&gt;
 &lt;p&gt;Перезапустить последний проведённый тест.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1750"/>
+        <location filename="../UI/UserInterface.py" line="1751"/>
         <source>Unittest Script</source>
         <translation>Unittest на сценарии</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1755"/>
+        <location filename="../UI/UserInterface.py" line="1756"/>
         <source>Run unittest with current script</source>
         <translation>Выполнить Uniitest с текущим сценарием</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1757"/>
+        <location filename="../UI/UserInterface.py" line="1758"/>
         <source>&lt;b&gt;Unittest Script&lt;/b&gt;&lt;p&gt;Run unittest with current script.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сценарий Unittest&lt;/b&gt;&lt;p&gt;Выполнить Uniitest с текущим сценарием.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4134"/>
+        <location filename="../UI/UserInterface.py" line="4138"/>
         <source>Unittest Project</source>
         <translation>Uniitest на проекте</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1770"/>
+        <location filename="../UI/UserInterface.py" line="1771"/>
         <source>Run unittest with current project</source>
         <translation>Выполнить Uniitest с текущим проектом</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1772"/>
+        <location filename="../UI/UserInterface.py" line="1773"/>
         <source>&lt;b&gt;Unittest Project&lt;/b&gt;&lt;p&gt;Run unittest with current project.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сценарий Unittest&lt;/b&gt;&lt;p&gt;Выполнить Uniitest с текущим проектом.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2428"/>
+        <location filename="../UI/UserInterface.py" line="2429"/>
         <source>&amp;Unittest</source>
         <translation>&amp;Unittest</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4134"/>
+        <location filename="../UI/UserInterface.py" line="4138"/>
         <source>There is no main script defined for the current project. Aborting</source>
         <translation>Для текущего проекта не определён главный сценарий. Отмена</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1720"/>
+        <location filename="../UI/UserInterface.py" line="1721"/>
         <source>&amp;Restart Unittest...</source>
         <translation>&amp;Перезапустить Uniitest...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1750"/>
+        <location filename="../UI/UserInterface.py" line="1751"/>
         <source>Unittest &amp;Script...</source>
         <translation>Unittest на &amp;сценарии...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1765"/>
+        <location filename="../UI/UserInterface.py" line="1766"/>
         <source>Unittest &amp;Project...</source>
         <translation>Uniitest на &amp;проекте...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1860"/>
+        <location filename="../UI/UserInterface.py" line="1861"/>
         <source>Compare Files</source>
         <translation>Сравнить файлы</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1860"/>
+        <location filename="../UI/UserInterface.py" line="1861"/>
         <source>&amp;Compare Files...</source>
         <translation>&amp;Сравнить файлы...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1878"/>
+        <location filename="../UI/UserInterface.py" line="1879"/>
         <source>Compare two files</source>
         <translation>Сравнить два файла</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1866"/>
+        <location filename="../UI/UserInterface.py" line="1867"/>
         <source>&lt;b&gt;Compare Files&lt;/b&gt;&lt;p&gt;Open a dialog to compare two files.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сравнение файлов&lt;/b&gt;
 &lt;p&gt;Открыть диалог для сравнения двух файлов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1873"/>
+        <location filename="../UI/UserInterface.py" line="1874"/>
         <source>Compare Files side by side</source>
         <translation>Сравнить файлы с параллальным отображением (side by side)</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1879"/>
+        <location filename="../UI/UserInterface.py" line="1880"/>
         <source>&lt;b&gt;Compare Files side by side&lt;/b&gt;&lt;p&gt;Open a dialog to compare two files and show the result side by side.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Сравнить файлы с параллальным отображением (side by side)&lt;/b&gt;
 &lt;p&gt;Открыть диалог, в котором показаны различия между файлами в две колонки.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5850"/>
+        <location filename="../UI/UserInterface.py" line="5854"/>
         <source>Drop Error</source>
         <translation>Ошибка Drag&amp;&amp;Drop</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="529"/>
+        <location filename="../UI/UserInterface.py" line="530"/>
         <source>Initializing Single Application Server...</source>
         <translation>Инициализируется сервер уникального приложения...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1197"/>
+        <location filename="../UI/UserInterface.py" line="1198"/>
         <source>{0} - {1} - {2} - Passive Mode</source>
         <translation>{0} - {1} - {2} - пассивный режим</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1359"/>
+        <location filename="../UI/UserInterface.py" line="1360"/>
         <source>File-Browser</source>
         <translation>Просмотрщик файлов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1256"/>
+        <location filename="../UI/UserInterface.py" line="1257"/>
         <source>Edit Profile</source>
         <translation>Профиль редактирования</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1262"/>
+        <location filename="../UI/UserInterface.py" line="1263"/>
         <source>Activate the edit view profile</source>
         <translation>Активизировать профиль редактирования</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1264"/>
+        <location filename="../UI/UserInterface.py" line="1265"/>
         <source>&lt;b&gt;Edit Profile&lt;/b&gt;&lt;p&gt;Activate the &quot;Edit View Profile&quot;. Windows being shown, if this profile is active, may be configured with the &quot;View Profile Configuration&quot; dialog.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Профиль редактирования&lt;/b&gt;&lt;p&gt;Активизировать &quot;профиль редактирования&quot;. Окна, отображаемые в этом профиле, можно настроить в диалоге &quot;Конфигурация профилей&quot;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1273"/>
+        <location filename="../UI/UserInterface.py" line="1274"/>
         <source>Debug Profile</source>
         <translation>Профиль отладки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1279"/>
+        <location filename="../UI/UserInterface.py" line="1280"/>
         <source>Activate the debug view profile</source>
         <translation>Активизировать профиль отладки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1281"/>
+        <location filename="../UI/UserInterface.py" line="1282"/>
         <source>&lt;b&gt;Debug Profile&lt;/b&gt;&lt;p&gt;Activate the &quot;Debug View Profile&quot;. Windows being shown, if this profile is active, may be configured with the &quot;View Profile Configuration&quot; dialog.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Профиль отладки&lt;/b&gt;&lt;p&gt;Активизировать &quot;профиль отладки&quot;. Окна, отображаемые в этом профиле, можно настроить в диалоге &quot;Конфигурация профилей&quot;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2032"/>
+        <location filename="../UI/UserInterface.py" line="2033"/>
         <source>View Profiles</source>
         <translation>Профили</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2032"/>
+        <location filename="../UI/UserInterface.py" line="2033"/>
         <source>&amp;View Profiles...</source>
         <translation>&amp;Профили...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2037"/>
+        <location filename="../UI/UserInterface.py" line="2038"/>
         <source>Configure view profiles</source>
         <translation>Конфигурация профилей</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2039"/>
+        <location filename="../UI/UserInterface.py" line="2040"/>
         <source>&lt;b&gt;View Profiles&lt;/b&gt;&lt;p&gt;Configure the view profiles. With this dialog you may set the visibility of the various windows for the predetermined view profiles.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Профили&lt;/b&gt;&lt;p&gt;Конфигурация профилей. С помощью этого диалога вы можете устанавливать видимость разных окон для заданных профилей.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4512"/>
+        <location filename="../UI/UserInterface.py" line="4516"/>
         <source>&lt;p&gt;The file &lt;b&gt;{0}&lt;/b&gt; does not exist or is zero length.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Файл &lt;b&gt;{0}&lt;/b&gt; либо не существует, либо нулевой длины.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4240"/>
+        <location filename="../UI/UserInterface.py" line="4244"/>
         <source>&lt;p&gt;Could not start Qt-Designer.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить Qt-Designer.&lt;br&gt;Убедитесь, что он доступен в &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4307"/>
+        <location filename="../UI/UserInterface.py" line="4311"/>
         <source>&lt;p&gt;Could not start Qt-Linguist.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить Qt-Linguist.&lt;br&gt;Убедитесь, что он доступен в &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4358"/>
+        <location filename="../UI/UserInterface.py" line="4362"/>
         <source>&lt;p&gt;Could not start Qt-Assistant.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить Qt-Assistant.&lt;br&gt;Убедитесь, что он доступен в &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4687"/>
+        <location filename="../UI/UserInterface.py" line="4691"/>
         <source>&lt;p&gt;Could not start the tool entry &lt;b&gt;{0}&lt;/b&gt;.&lt;br&gt;Ensure that it is available as &lt;b&gt;{1}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить инструмент &lt;b&gt;{0}&lt;/b&gt;.&lt;br&gt;Убедитесь, что он доступен в &lt;b&gt;{1}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5850"/>
+        <location filename="../UI/UserInterface.py" line="5854"/>
         <source>&lt;p&gt;&lt;b&gt;{0}&lt;/b&gt; is not a file.&lt;/p&gt;</source>
         <translation>&lt;p&gt;&lt;b&gt;{0}&lt;/b&gt; не является файлом&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1833"/>
+        <location filename="../UI/UserInterface.py" line="1834"/>
         <source>UI Previewer</source>
         <translation>Педпросмотр UI</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1833"/>
+        <location filename="../UI/UserInterface.py" line="1834"/>
         <source>&amp;UI Previewer...</source>
         <translation>Педпросмотр &amp;UI...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1838"/>
+        <location filename="../UI/UserInterface.py" line="1839"/>
         <source>Start the UI Previewer</source>
         <translation>Запустить UI Previewer</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1839"/>
+        <location filename="../UI/UserInterface.py" line="1840"/>
         <source>&lt;b&gt;UI Previewer&lt;/b&gt;&lt;p&gt;Start the UI Previewer.&lt;/p&gt;</source>
         <translation>&lt;b&gt;UI Previewer&lt;/b&gt;&lt;p&gt;Запустить the UI Previewer.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4468"/>
+        <location filename="../UI/UserInterface.py" line="4472"/>
         <source>&lt;p&gt;Could not start UI Previewer.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить UI Previewer.&lt;br&gt;Убедитесь, что он находится в &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1846"/>
+        <location filename="../UI/UserInterface.py" line="1847"/>
         <source>Translations Previewer</source>
         <translation>Предпросмотр переводов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1846"/>
+        <location filename="../UI/UserInterface.py" line="1847"/>
         <source>&amp;Translations Previewer...</source>
         <translation>&amp;Предпросмотр переводов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1851"/>
+        <location filename="../UI/UserInterface.py" line="1852"/>
         <source>Start the Translations Previewer</source>
         <translation>Запустить предпросмотр переводов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1853"/>
+        <location filename="../UI/UserInterface.py" line="1854"/>
         <source>&lt;b&gt;Translations Previewer&lt;/b&gt;&lt;p&gt;Start the Translations Previewer.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Предпросмотр переводов&lt;/b&gt;&lt;p&gt;Запустить предпросмотр переводов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4523"/>
+        <location filename="../UI/UserInterface.py" line="4527"/>
         <source>&lt;p&gt;Could not start Translation Previewer.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить предпросмотр переводов.&lt;br&gt;Убедитесь, что он находится в &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1343"/>
+        <location filename="../UI/UserInterface.py" line="1344"/>
         <source>Shell</source>
         <translation>Оболочка</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1343"/>
+        <location filename="../UI/UserInterface.py" line="1344"/>
         <source>&amp;Shell</source>
         <translation>&amp;Оболочка</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2003"/>
+        <location filename="../UI/UserInterface.py" line="2004"/>
         <source>Reload APIs</source>
         <translation>Перезагрузить API</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2003"/>
+        <location filename="../UI/UserInterface.py" line="2004"/>
         <source>Reload &amp;APIs</source>
         <translation>Перезагрузить &amp;API</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2007"/>
+        <location filename="../UI/UserInterface.py" line="2008"/>
         <source>Reload the API information</source>
         <translation>Перезагрузить информацию об API</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2009"/>
+        <location filename="../UI/UserInterface.py" line="2010"/>
         <source>&lt;b&gt;Reload APIs&lt;/b&gt;&lt;p&gt;Reload the API information.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Перезагрузить API&lt;/b&gt;&lt;p&gt;Перезагрузить информацию об API.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1394"/>
+        <location filename="../UI/UserInterface.py" line="1395"/>
         <source>Task-Viewer</source>
         <translation>Просмотрщик задач</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5584"/>
+        <location filename="../UI/UserInterface.py" line="5588"/>
         <source>Save tasks</source>
         <translation>Сохранить задачи</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5584"/>
+        <location filename="../UI/UserInterface.py" line="5588"/>
         <source>&lt;p&gt;The tasks file &lt;b&gt;{0}&lt;/b&gt; could not be written.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно сохранить файл с задачами: &lt;b&gt;{0}&lt;/b&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5613"/>
+        <location filename="../UI/UserInterface.py" line="5617"/>
         <source>Read tasks</source>
         <translation>Прочитать задачи</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5613"/>
+        <location filename="../UI/UserInterface.py" line="5617"/>
         <source>&lt;p&gt;The tasks file &lt;b&gt;{0}&lt;/b&gt; could not be read.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно прочитать файл с задачами: &lt;b&gt;{0}&lt;/b&gt;&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4386"/>
+        <location filename="../UI/UserInterface.py" line="4390"/>
         <source>Currently no custom viewer is selected. Please use the preferences dialog to specify one.</source>
         <translation>Специальный просмотрщик не выбран.
 Используйте диалог с настройками для его выбора.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4400"/>
+        <location filename="../UI/UserInterface.py" line="4404"/>
         <source>&lt;p&gt;Could not start custom viewer.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить специальный просмотрщик.&lt;br&gt;Убедитесь, что он находится в &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5143"/>
+        <location filename="../UI/UserInterface.py" line="5147"/>
         <source>Documentation Missing</source>
         <translation>Документация отсутствует</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5143"/>
+        <location filename="../UI/UserInterface.py" line="5147"/>
         <source>&lt;p&gt;The documentation starting point &quot;&lt;b&gt;{0}&lt;/b&gt;&quot; could not be found.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Корень документации &quot;&lt;b&gt;{0}&lt;/b&gt;&quot; не найден.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3022"/>
+        <location filename="../UI/UserInterface.py" line="3026"/>
         <source>Email address or mail server address is empty. Please configure your Email settings in the Preferences Dialog.</source>
         <translation>Почтовый адрес или адрес почтового сервера пуст. Настройте электронную почту в диалоге конфигурации.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1412"/>
+        <location filename="../UI/UserInterface.py" line="1413"/>
         <source>Template-Viewer</source>
         <translation>Просмотрщик шаблонов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1290"/>
+        <location filename="../UI/UserInterface.py" line="1291"/>
         <source>Alt+Shift+P</source>
         <translation>Alt+Shift+P</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1325"/>
+        <location filename="../UI/UserInterface.py" line="1326"/>
         <source>Alt+Shift+D</source>
         <translation>Alt+Shift+D</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1343"/>
+        <location filename="../UI/UserInterface.py" line="1344"/>
         <source>Alt+Shift+S</source>
         <translation>Alt+Shift+S</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1359"/>
+        <location filename="../UI/UserInterface.py" line="1360"/>
         <source>Alt+Shift+F</source>
         <translation>Alt+Shift+F</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1394"/>
+        <location filename="../UI/UserInterface.py" line="1395"/>
         <source>Alt+Shift+T</source>
         <translation>Alt+Shift+T</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1307"/>
+        <location filename="../UI/UserInterface.py" line="1308"/>
         <source>Alt+Shift+M</source>
         <translation>Alt+Shift+M</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2141"/>
+        <location filename="../UI/UserInterface.py" line="2142"/>
         <source>Activate current editor</source>
         <translation>Активизировать текущий редактор</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2141"/>
+        <location filename="../UI/UserInterface.py" line="2142"/>
         <source>Alt+Shift+E</source>
         <translation>Alt+Shift+E</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2151"/>
+        <location filename="../UI/UserInterface.py" line="2152"/>
         <source>Ctrl+Alt+Tab</source>
         <translation>Ctrl+Alt+Tab</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2160"/>
+        <location filename="../UI/UserInterface.py" line="2161"/>
         <source>Shift+Ctrl+Alt+Tab</source>
         <translation>Shift+Ctrl+Alt+Tab</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1376"/>
+        <location filename="../UI/UserInterface.py" line="1377"/>
         <source>Alt+Shift+G</source>
         <translation>Alt+Shift+G</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2248"/>
+        <location filename="../UI/UserInterface.py" line="2249"/>
         <source>Qt4 Documentation</source>
         <translation>Документация Qt4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2248"/>
+        <location filename="../UI/UserInterface.py" line="2249"/>
         <source>Qt&amp;4 Documentation</source>
         <translation>Документация Qt&amp;4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2252"/>
+        <location filename="../UI/UserInterface.py" line="2253"/>
         <source>Open Qt4 Documentation</source>
         <translation>Открыть документацию Qt4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2362"/>
+        <location filename="../UI/UserInterface.py" line="2363"/>
         <source>Eric API Documentation</source>
         <translation>Документация API Eric</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2362"/>
+        <location filename="../UI/UserInterface.py" line="2363"/>
         <source>&amp;Eric API Documentation</source>
         <translation>Документация API &amp;Eric</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2366"/>
+        <location filename="../UI/UserInterface.py" line="2367"/>
         <source>Open Eric API Documentation</source>
         <translation>Открыть документацию API Eric</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4420"/>
+        <location filename="../UI/UserInterface.py" line="4424"/>
         <source>&lt;p&gt;Could not start the help viewer.&lt;br&gt;Ensure that it is available as &lt;b&gt;hh&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить просмотрщик помощи.&lt;br&gt;Убедитесь, что он доступен под именем &lt;b&gt;hh&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="474"/>
+        <location filename="../UI/UserInterface.py" line="475"/>
         <source>Registering Objects...</source>
         <translation>Регистрация объектов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1290"/>
+        <location filename="../UI/UserInterface.py" line="1291"/>
         <source>Project-Viewer</source>
         <translation>Просмотрщик проекта</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1325"/>
+        <location filename="../UI/UserInterface.py" line="1326"/>
         <source>Debug-Viewer</source>
         <translation>Просмотрщик отладки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1220"/>
+        <location filename="../UI/UserInterface.py" line="1221"/>
         <source>Ctrl+Q</source>
         <comment>File|Quit</comment>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1290"/>
+        <location filename="../UI/UserInterface.py" line="1291"/>
         <source>&amp;Project-Viewer</source>
         <translation>&amp;Просмотрщик проекта</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1581"/>
+        <location filename="../UI/UserInterface.py" line="1582"/>
         <source>Shift+F1</source>
         <translation>Shift+F1</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1600"/>
+        <location filename="../UI/UserInterface.py" line="1601"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1644"/>
+        <location filename="../UI/UserInterface.py" line="1645"/>
         <source>Check for Updates</source>
         <translation>Проверить наличие обновлений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1641"/>
+        <location filename="../UI/UserInterface.py" line="1642"/>
         <source>Check for &amp;Updates...</source>
         <translation>Проверить наличие &amp;обновлений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2278"/>
+        <location filename="../UI/UserInterface.py" line="2279"/>
         <source>PyQt4 Documentation</source>
         <translation>Документация PyQt4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2282"/>
+        <location filename="../UI/UserInterface.py" line="2283"/>
         <source>Open PyQt4 Documentation</source>
         <translation>Открыть документацию Qt4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2458"/>
+        <location filename="../UI/UserInterface.py" line="2459"/>
         <source>Select Tool Group</source>
         <translation>Выберите группу инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2466"/>
+        <location filename="../UI/UserInterface.py" line="2467"/>
         <source>Se&amp;ttings</source>
         <translation>&amp;Настройка</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2616"/>
+        <location filename="../UI/UserInterface.py" line="2617"/>
         <source>Profiles</source>
         <translation>Профили</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3336"/>
+        <location filename="../UI/UserInterface.py" line="3340"/>
         <source>&amp;Builtin Tools</source>
         <translation>&amp;Встроенные инструменты</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4671"/>
+        <location filename="../UI/UserInterface.py" line="4675"/>
         <source>Starting process &apos;{0} {1}&apos;.
 </source>
         <translation>Запускается процесс &apos;{0} {1}&apos;.
 </translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4763"/>
+        <location filename="../UI/UserInterface.py" line="4767"/>
         <source>Process &apos;{0}&apos; has exited.
 </source>
         <translation>Процесс &apos;{0}&apos; завершился.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5128"/>
+        <location filename="../UI/UserInterface.py" line="5132"/>
         <source>Documentation</source>
         <translation>Документация</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4963"/>
+        <location filename="../UI/UserInterface.py" line="4967"/>
         <source>&lt;p&gt;The PyQt4 documentation starting point has not been configured.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Корень документации PyQt4 не найден.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6175"/>
+        <location filename="../UI/UserInterface.py" line="6197"/>
         <source>Error during updates check</source>
         <translation>Ошибка при проверке обновлений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6155"/>
+        <location filename="../UI/UserInterface.py" line="6177"/>
         <source>Update available</source>
         <translation>Обновления доступны</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2971"/>
+        <location filename="../UI/UserInterface.py" line="2975"/>
         <source>&lt;h3&gt;Version Numbers&lt;/h3&gt;&lt;table&gt;</source>
         <translation>&lt;h3&gt;Номера версий&lt;/h3&gt;&lt;table&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6213"/>
+        <location filename="../UI/UserInterface.py" line="6235"/>
         <source>&lt;/table&gt;</source>
         <translation>&lt;/table&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3380"/>
+        <location filename="../UI/UserInterface.py" line="3384"/>
         <source>Configure Tool Groups ...</source>
         <translation>Настроить группы Инструментов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3384"/>
+        <location filename="../UI/UserInterface.py" line="3388"/>
         <source>Configure current Tool Group ...</source>
         <translation>Настроить текущую группу Инструментов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2021"/>
+        <location filename="../UI/UserInterface.py" line="2022"/>
         <source>Show external tools</source>
         <translation>Показать внешние инструменты</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2016"/>
+        <location filename="../UI/UserInterface.py" line="2017"/>
         <source>Show external &amp;tools</source>
         <translation>Показать &amp;внешние инструменты</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6175"/>
+        <location filename="../UI/UserInterface.py" line="6197"/>
         <source>Could not perform updates check.</source>
         <translation>Невозможно запустить проверку обновлений.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5995"/>
+        <location filename="../UI/UserInterface.py" line="6009"/>
         <source>&amp;Cancel</source>
         <translation>От&amp;мена</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6004"/>
+        <location filename="../UI/UserInterface.py" line="6018"/>
         <source>Trying host {0}</source>
         <translation>Пробую узел {0}</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6240"/>
+        <location filename="../UI/UserInterface.py" line="6262"/>
         <source>First time usage</source>
         <translation>Первое использование</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="225"/>
+        <location filename="../UI/UserInterface.py" line="226"/>
         <source>Initializing Plugin Manager...</source>
         <translation>Инициализируется менеджер расширений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2525"/>
+        <location filename="../UI/UserInterface.py" line="2526"/>
         <source>P&amp;lugins</source>
         <translation>&amp;Расширения</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2617"/>
+        <location filename="../UI/UserInterface.py" line="2618"/>
         <source>Plugins</source>
         <translation>Расширения</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2178"/>
+        <location filename="../UI/UserInterface.py" line="2179"/>
         <source>Plugin Infos</source>
         <translation>Информация о расширениях</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2182"/>
+        <location filename="../UI/UserInterface.py" line="2183"/>
         <source>Show Plugin Infos</source>
         <translation>Показать информацию о расширениях</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2183"/>
+        <location filename="../UI/UserInterface.py" line="2184"/>
         <source>&lt;b&gt;Plugin Infos...&lt;/b&gt;&lt;p&gt;This opens a dialog, that show some information about loaded plugins.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Информация о расширениях...&lt;/b&gt;
 &lt;p&gt;Открывает диалог, отображающий информацию о загруженных расширениях.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2178"/>
+        <location filename="../UI/UserInterface.py" line="2179"/>
         <source>&amp;Plugin Infos...</source>
         <translation>Ин&amp;формация о подключаемых модулях...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2209"/>
+        <location filename="../UI/UserInterface.py" line="2210"/>
         <source>Uninstall Plugin</source>
         <translation>Убрать подключаемый модуль</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2204"/>
+        <location filename="../UI/UserInterface.py" line="2205"/>
         <source>&amp;Uninstall Plugin...</source>
         <translation>У&amp;брать подключаемый модуль...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2210"/>
+        <location filename="../UI/UserInterface.py" line="2211"/>
         <source>&lt;b&gt;Uninstall Plugin...&lt;/b&gt;&lt;p&gt;This opens a dialog to uninstall a plugin.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Убрать подключаемый модуль...&lt;/b&gt;&lt;p&gt;Открывает диалог деинсталляции нового подключаемого модуля.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3352"/>
+        <location filename="../UI/UserInterface.py" line="3356"/>
         <source>&amp;Plugin Tools</source>
         <translation>Инструменты для &amp;плагинов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3503"/>
+        <location filename="../UI/UserInterface.py" line="3507"/>
         <source>&amp;Show all</source>
         <translation>Показать &amp;всё</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3505"/>
+        <location filename="../UI/UserInterface.py" line="3509"/>
         <source>&amp;Hide all</source>
         <translation>Ск&amp;рыть всё</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="538"/>
+        <location filename="../UI/UserInterface.py" line="539"/>
         <source>Activating Plugins...</source>
         <translation>Активация подключаемых модулей...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1652"/>
+        <location filename="../UI/UserInterface.py" line="1653"/>
         <source>Show downloadable versions</source>
         <translation>Показать версии, доступные для загрузки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1652"/>
+        <location filename="../UI/UserInterface.py" line="1653"/>
         <source>Show &amp;downloadable versions...</source>
         <translation>Показать версии, доступные для &amp;загрузки...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1656"/>
+        <location filename="../UI/UserInterface.py" line="1657"/>
         <source>Show the versions available for download</source>
         <translation>Показать версии, доступные для загрузки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6199"/>
+        <location filename="../UI/UserInterface.py" line="6221"/>
         <source>&lt;h3&gt;Available versions&lt;/h3&gt;&lt;table&gt;</source>
         <translation>&lt;h3&gt;Доступные версии&lt;/h3&gt;&lt;table&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2217"/>
+        <location filename="../UI/UserInterface.py" line="2218"/>
         <source>Plugin Repository</source>
         <translation>Репозиторий плагинов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2217"/>
+        <location filename="../UI/UserInterface.py" line="2218"/>
         <source>Plugin &amp;Repository...</source>
         <translation>&amp;Репозиторий плагинов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2222"/>
+        <location filename="../UI/UserInterface.py" line="2223"/>
         <source>Show Plugins available for download</source>
         <translation>Показать плагины, доступные для загрузки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2224"/>
+        <location filename="../UI/UserInterface.py" line="2225"/>
         <source>&lt;b&gt;Plugin Repository...&lt;/b&gt;&lt;p&gt;This opens a dialog, that shows a list of plugins available on the Internet.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Репозиторий плагинов...&lt;/b&gt;&lt;p&gt;Открывает диалог, который показывает список плагинов, доступных для скачивания с интернета.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2196"/>
+        <location filename="../UI/UserInterface.py" line="2197"/>
         <source>Install Plugins</source>
         <translation>Установить плагины</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2191"/>
+        <location filename="../UI/UserInterface.py" line="2192"/>
         <source>&amp;Install Plugins...</source>
         <translation>&amp;Установить плагины...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2197"/>
+        <location filename="../UI/UserInterface.py" line="2198"/>
         <source>&lt;b&gt;Install Plugins...&lt;/b&gt;&lt;p&gt;This opens a dialog to install or update plugins.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Установить плагины...&lt;/b&gt;&lt;p&gt;Открывает диалог для установки или обновления плагинов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1905"/>
+        <location filename="../UI/UserInterface.py" line="1906"/>
         <source>Mini Editor</source>
         <translation>Мини-редактор</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1900"/>
+        <location filename="../UI/UserInterface.py" line="1901"/>
         <source>Mini &amp;Editor...</source>
         <translation>Мини-&amp;редактор...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1906"/>
+        <location filename="../UI/UserInterface.py" line="1907"/>
         <source>&lt;b&gt;Mini Editor&lt;/b&gt;&lt;p&gt;Open a dialog with a simplified editor.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Мини-редактор&lt;/b&gt;&lt;p&gt;Открывает диалог с упрощённым редактором.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2049"/>
+        <location filename="../UI/UserInterface.py" line="2050"/>
         <source>Toolbars</source>
         <translation>Панели инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2049"/>
+        <location filename="../UI/UserInterface.py" line="2050"/>
         <source>Tool&amp;bars...</source>
         <translation>Панели &amp;инструментов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2054"/>
+        <location filename="../UI/UserInterface.py" line="2055"/>
         <source>Configure toolbars</source>
         <translation>Настроить панели инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2055"/>
+        <location filename="../UI/UserInterface.py" line="2056"/>
         <source>&lt;b&gt;Toolbars&lt;/b&gt;&lt;p&gt;Configure the toolbars. With this dialog you may change the actions shown on the various toolbars and define your own toolbars.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Панели инструментов&lt;/b&gt;&lt;p&gt;Настроить панели инструментов. В этом диалоге Вы можете изменить имеющиеся панели инструментов, а так же создать новые.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="548"/>
+        <location filename="../UI/UserInterface.py" line="549"/>
         <source>Restoring Toolbarmanager...</source>
         <translation>Восстановление менеджера панелей инструментов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2874"/>
+        <location filename="../UI/UserInterface.py" line="2878"/>
         <source>External Tools/{0}</source>
         <translation>Внешние инструменты/{0}</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4632"/>
+        <location filename="../UI/UserInterface.py" line="4636"/>
         <source>External Tools</source>
         <translation>Внешние инструменты</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4623"/>
+        <location filename="../UI/UserInterface.py" line="4627"/>
         <source>No tool entry found for external tool &apos;{0}&apos; in tool group &apos;{1}&apos;.</source>
         <translation>Запись для внешней программы &apos;{0}&apos; не найдена в группе &apos;{1}&apos;.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4632"/>
+        <location filename="../UI/UserInterface.py" line="4636"/>
         <source>No toolgroup entry &apos;{0}&apos; found.</source>
         <translation>Запись для группы &apos;{0}&apos; не найдена.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1307"/>
+        <location filename="../UI/UserInterface.py" line="1308"/>
         <source>Multiproject-Viewer</source>
         <translation>Просмотрщик мултипроекта</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1307"/>
+        <location filename="../UI/UserInterface.py" line="1308"/>
         <source>&amp;Multiproject-Viewer</source>
         <translation>Просмотрщик &amp;мултипроекта</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5631"/>
+        <location filename="../UI/UserInterface.py" line="5635"/>
         <source>Save session</source>
         <translation>Сохранить сессию</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5631"/>
+        <location filename="../UI/UserInterface.py" line="5635"/>
         <source>&lt;p&gt;The session file &lt;b&gt;{0}&lt;/b&gt; could not be written.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Не могу записать файл сессии &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5662"/>
+        <location filename="../UI/UserInterface.py" line="5666"/>
         <source>Read session</source>
         <translation>Загрузить сессию</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5662"/>
+        <location filename="../UI/UserInterface.py" line="5666"/>
         <source>&lt;p&gt;The session file &lt;b&gt;{0}&lt;/b&gt; could not be read.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Не могу прочитать файл сессии &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2776"/>
+        <location filename="../UI/UserInterface.py" line="2777"/>
         <source>&lt;p&gt;This part of the status bar displays the current editors encoding.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса показывает текущую кодировку редактора.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2790"/>
+        <location filename="../UI/UserInterface.py" line="2791"/>
         <source>&lt;p&gt;This part of the status bar displays an indication of the current editors files writability.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса указывает на возможность записи открытого в редакторе файла.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1691"/>
+        <location filename="../UI/UserInterface.py" line="1692"/>
         <source>Request Feature</source>
         <translation>Послать запрос</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1691"/>
+        <location filename="../UI/UserInterface.py" line="1692"/>
         <source>Request &amp;Feature...</source>
         <translation>Послать &amp;запрос...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1695"/>
+        <location filename="../UI/UserInterface.py" line="1696"/>
         <source>Send a feature request</source>
         <translation>Послать запрос</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1697"/>
+        <location filename="../UI/UserInterface.py" line="1698"/>
         <source>&lt;b&gt;Request Feature...&lt;/b&gt;&lt;p&gt;Opens a dialog to send a feature request.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Послать запрос...&lt;/b&gt;&lt;p&gt;Показать диалог создания запроса.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2769"/>
+        <location filename="../UI/UserInterface.py" line="2770"/>
         <source>&lt;p&gt;This part of the status bar displays the current editors language.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса показывает язык текущего окна редактора.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2797"/>
+        <location filename="../UI/UserInterface.py" line="2798"/>
         <source>&lt;p&gt;This part of the status bar displays the line number of the current editor.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса показывает номер текущей строки в редакторе.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2804"/>
+        <location filename="../UI/UserInterface.py" line="2805"/>
         <source>&lt;p&gt;This part of the status bar displays the cursor position of the current editor.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса показывает текущую позицию курсора в редакторе.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1455"/>
+        <location filename="../UI/UserInterface.py" line="1456"/>
         <source>Horizontal Toolbox</source>
         <translation>Горизонтальная панель инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1455"/>
+        <location filename="../UI/UserInterface.py" line="1456"/>
         <source>&amp;Horizontal Toolbox</source>
         <translation>&amp;Горизонтальная панель инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1459"/>
+        <location filename="../UI/UserInterface.py" line="1460"/>
         <source>Toggle the Horizontal Toolbox window</source>
         <translation>Переключить горизонтальную панель инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1461"/>
+        <location filename="../UI/UserInterface.py" line="1462"/>
         <source>&lt;b&gt;Toggle the Horizontal Toolbox window&lt;/b&gt;&lt;p&gt;If the Horizontal Toolbox window is hidden then display it. If it is displayed then close it.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Переключить горизонтальную панель инструментов&lt;/b&gt;&lt;p&gt;Показать/скрыть горизонтальную панель инструментов&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3302"/>
+        <location filename="../UI/UserInterface.py" line="3306"/>
         <source>Restart application</source>
         <translation>Перезапустить приложение</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3302"/>
+        <location filename="../UI/UserInterface.py" line="3306"/>
         <source>The application needs to be restarted. Do it now?</source>
         <translation>Необходимо перезапустить приложение. Сделать это сейчас?</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1412"/>
+        <location filename="../UI/UserInterface.py" line="1413"/>
         <source>Alt+Shift+A</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2534"/>
+        <location filename="../UI/UserInterface.py" line="2535"/>
         <source>Configure...</source>
         <translation>Настроить...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2783"/>
+        <location filename="../UI/UserInterface.py" line="2784"/>
         <source>&lt;p&gt;This part of the status bar displays the current editors eol setting.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса показывает режим конца строки в текущем редакторе.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2169"/>
+        <location filename="../UI/UserInterface.py" line="2170"/>
         <source>Switch between tabs</source>
         <translation>Переключиться между закладками</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2169"/>
+        <location filename="../UI/UserInterface.py" line="2170"/>
         <source>Ctrl+1</source>
         <translation>Ctrl+1</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1975"/>
+        <location filename="../UI/UserInterface.py" line="1976"/>
         <source>Export Preferences</source>
         <translation>Экспорт предпочтений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1975"/>
+        <location filename="../UI/UserInterface.py" line="1976"/>
         <source>E&amp;xport Preferences...</source>
         <translation>&amp;Экспорт предпочтений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1980"/>
+        <location filename="../UI/UserInterface.py" line="1981"/>
         <source>Export the current configuration</source>
         <translation>Экспорт текущих настроек</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1982"/>
+        <location filename="../UI/UserInterface.py" line="1983"/>
         <source>&lt;b&gt;Export Preferences&lt;/b&gt;&lt;p&gt;Export the current configuration to a file.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Экспорт предпочтений&lt;/b&gt;&lt;p&gt;Экспорт текущих предпочтений в файл.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1989"/>
+        <location filename="../UI/UserInterface.py" line="1990"/>
         <source>Import Preferences</source>
         <translation>Импорт предпочтений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1989"/>
+        <location filename="../UI/UserInterface.py" line="1990"/>
         <source>I&amp;mport Preferences...</source>
         <translation>&amp;Импорт предпочтений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1994"/>
+        <location filename="../UI/UserInterface.py" line="1995"/>
         <source>Import a previously exported configuration</source>
         <translation>Импорт сохранённых ранее настроек</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1996"/>
+        <location filename="../UI/UserInterface.py" line="1997"/>
         <source>&lt;b&gt;Import Preferences&lt;/b&gt;&lt;p&gt;Import a previously exported configuration.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Импорт настроек&lt;/b&gt;&lt;p&gt;Импорт сохранённых ранее настроек.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2151"/>
+        <location filename="../UI/UserInterface.py" line="2152"/>
         <source>Show next</source>
         <translation>Показать следующую закладку</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2160"/>
+        <location filename="../UI/UserInterface.py" line="2161"/>
         <source>Show previous</source>
         <translation>Показать предыдущую закладку</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1469"/>
+        <location filename="../UI/UserInterface.py" line="1470"/>
         <source>Left Sidebar</source>
         <translation>Левая док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1469"/>
+        <location filename="../UI/UserInterface.py" line="1470"/>
         <source>&amp;Left Sidebar</source>
         <translation>&amp;Левая док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1473"/>
+        <location filename="../UI/UserInterface.py" line="1474"/>
         <source>Toggle the left sidebar window</source>
         <translation>Показать/скрыть левую док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1474"/>
+        <location filename="../UI/UserInterface.py" line="1475"/>
         <source>&lt;b&gt;Toggle the left sidebar window&lt;/b&gt;&lt;p&gt;If the left sidebar window is hidden then display it. If it is displayed then close it.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать/скрыть левую док-панель&lt;/b&gt;
 &lt;p&gt;Если левая док-панель скрыта, показать её. Иначе - закрыть.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1496"/>
+        <location filename="../UI/UserInterface.py" line="1497"/>
         <source>Bottom Sidebar</source>
         <translation>Нижняя док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1496"/>
+        <location filename="../UI/UserInterface.py" line="1497"/>
         <source>&amp;Bottom Sidebar</source>
         <translation>&amp;Нижняя док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1500"/>
+        <location filename="../UI/UserInterface.py" line="1501"/>
         <source>Toggle the bottom sidebar window</source>
         <translation>Показать/скрыть нижнюю док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1502"/>
+        <location filename="../UI/UserInterface.py" line="1503"/>
         <source>&lt;b&gt;Toggle the bottom sidebar window&lt;/b&gt;&lt;p&gt;If the bottom sidebar window is hidden then display it. If it is displayed then close it.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать/скрыть нижнюю док-панель&lt;/b&gt;
 &lt;p&gt;Если нижняя док-панель скрыта, показать её. Иначе - закрыть.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1325"/>
+        <location filename="../UI/UserInterface.py" line="1326"/>
         <source>&amp;Debug-Viewer</source>
         <translation>&amp;Просмотрщик отладки</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1887"/>
+        <location filename="../UI/UserInterface.py" line="1888"/>
         <source>SQL Browser</source>
         <translation>Просмотрщик SQL</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1887"/>
+        <location filename="../UI/UserInterface.py" line="1888"/>
         <source>SQL &amp;Browser...</source>
         <translation>&amp;Просмотрщик SQL...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1892"/>
+        <location filename="../UI/UserInterface.py" line="1893"/>
         <source>Browse a SQL database</source>
         <translation>Просмотреть SQL базу данных</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1893"/>
+        <location filename="../UI/UserInterface.py" line="1894"/>
         <source>&lt;b&gt;SQL Browser&lt;/b&gt;&lt;p&gt;Browse a SQL database.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Просмотрщик SQL&lt;/b&gt;&lt;p&gt;Просмотреть SQL базу данных.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4544"/>
+        <location filename="../UI/UserInterface.py" line="4548"/>
         <source>&lt;p&gt;Could not start SQL Browser.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить просмотрщик SQL.&lt;br&gt;Убедитесь, что он доступен как &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1930"/>
+        <location filename="../UI/UserInterface.py" line="1931"/>
         <source>Icon Editor</source>
         <translation>Редактор иконок</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1930"/>
+        <location filename="../UI/UserInterface.py" line="1931"/>
         <source>&amp;Icon Editor...</source>
         <translation>Редактор &amp;иконок...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4333"/>
+        <location filename="../UI/UserInterface.py" line="4337"/>
         <source>Qt 3 support</source>
         <translation>Поддержка Qt3</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5128"/>
+        <location filename="../UI/UserInterface.py" line="5132"/>
         <source>&lt;p&gt;The PySide documentation starting point has not been configured.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Корень документации PySide не найден.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2383"/>
+        <location filename="../UI/UserInterface.py" line="2384"/>
         <source>PySide Documentation</source>
         <translation>Документация PySide</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2383"/>
+        <location filename="../UI/UserInterface.py" line="2384"/>
         <source>Py&amp;Side Documentation</source>
         <translation>Документация Py&amp;Side</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2387"/>
+        <location filename="../UI/UserInterface.py" line="2388"/>
         <source>Open PySide Documentation</source>
         <translation>Открыть документацию PySide</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="838"/>
+        <location filename="../UI/UserInterface.py" line="839"/>
         <source>Cooperation</source>
         <translation>Кооперация</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1510"/>
+        <location filename="../UI/UserInterface.py" line="1511"/>
         <source>Alt+Shift+O</source>
         <translation>Alt+Shift+O</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="895"/>
+        <location filename="../UI/UserInterface.py" line="896"/>
         <source>Symbols</source>
         <translation>Символы</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1545"/>
+        <location filename="../UI/UserInterface.py" line="1546"/>
         <source>Alt+Shift+Y</source>
         <translation>Alt+Shift+Y</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="903"/>
+        <location filename="../UI/UserInterface.py" line="904"/>
         <source>Numbers</source>
         <translation>Числа</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1563"/>
+        <location filename="../UI/UserInterface.py" line="1564"/>
         <source>Alt+Shift+B</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5450"/>
+        <location filename="../UI/UserInterface.py" line="5454"/>
         <source>Keyboard shortcut file (*.e4k)</source>
         <translation>Файл горячих клавиш (*.e4k)</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2320"/>
+        <location filename="../UI/UserInterface.py" line="2321"/>
         <source>Python 3 Documentation</source>
         <translation>Документация Pyton 3</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2320"/>
+        <location filename="../UI/UserInterface.py" line="2321"/>
         <source>Python &amp;3 Documentation</source>
         <translation>Документация Pyton &amp;3</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2324"/>
+        <location filename="../UI/UserInterface.py" line="2325"/>
         <source>Open Python 3 Documentation</source>
         <translation>Открыть документацию Python 3</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2338"/>
+        <location filename="../UI/UserInterface.py" line="2339"/>
         <source>Python 2 Documentation</source>
         <translation>Документация Pyton 2</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2338"/>
+        <location filename="../UI/UserInterface.py" line="2339"/>
         <source>Python &amp;2 Documentation</source>
         <translation>Документация Pyton &amp;2</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2342"/>
+        <location filename="../UI/UserInterface.py" line="2343"/>
         <source>Open Python 2 Documentation</source>
         <translation>Открыть документацию Python 2</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2344"/>
+        <location filename="../UI/UserInterface.py" line="2345"/>
         <source>&lt;b&gt;Python 2 Documentation&lt;/b&gt;&lt;p&gt;Display the Python 2 documentation. If no documentation directory is configured, the location of the Python 2 documentation is assumed to be the doc directory underneath the location of the configured Python 2 executable on Windows and &lt;i&gt;/usr/share/doc/packages/python/html/python-docs-html&lt;/i&gt; on Unix. Set PYTHON2DOCDIR in your environment to override this. &lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация Pyton 2&lt;/b&gt;&lt;p&gt;Показать Pyton 2 документацию. Если местонахождение документации не было настроено, то искать в подкаталоге &lt;i&gt;doc&lt;/i&gt; каталога где находится исполняемый файл Python 2 под Windows и в подкаталоге &lt;i&gt;/usr/share/doc/packages/python/html/python-docs-html&lt;/i&gt; под UNIX. Местонахождение документации можно задать с помощью переменной окружения PYTHON2DOCDIR.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6065"/>
+        <location filename="../UI/UserInterface.py" line="6087"/>
         <source>Error getting versions information</source>
         <translation>Ошибка при получении информации о версии</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6058"/>
+        <location filename="../UI/UserInterface.py" line="6080"/>
         <source>The versions information could not be downloaded. Please go online and try again.</source>
         <translation>Невозможно загрузить информацию о версии. Пожалуйста попоробуйте ещё раз.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5243"/>
+        <location filename="../UI/UserInterface.py" line="5247"/>
         <source>Open Browser</source>
         <translation>Запустить просмотрщик</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5243"/>
+        <location filename="../UI/UserInterface.py" line="5247"/>
         <source>Could not start a web browser</source>
         <translation>Невозможно запустить просмотрщик</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6065"/>
+        <location filename="../UI/UserInterface.py" line="6087"/>
         <source>The versions information could not be downloaded for the last 7 days. Please go online and try again.</source>
         <translation>Невозможно загрузить информацию о версии в течении последних 7 дней. Пожалуйста попоробуйте ещё раз.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="553"/>
+        <location filename="../UI/UserInterface.py" line="554"/>
         <source>Setting View Profile...</source>
         <translation>Установка профилей...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="557"/>
+        <location filename="../UI/UserInterface.py" line="558"/>
         <source>Reading Tasks...</source>
         <translation>Чтение задач...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="561"/>
+        <location filename="../UI/UserInterface.py" line="562"/>
         <source>Reading Templates...</source>
         <translation>Чтение шаблонов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="565"/>
+        <location filename="../UI/UserInterface.py" line="566"/>
         <source>Starting Debugger...</source>
         <translation>Запуск отладчика...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1237"/>
+        <location filename="../UI/UserInterface.py" line="1238"/>
         <source>New Window</source>
         <translation>Новое окно</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1237"/>
+        <location filename="../UI/UserInterface.py" line="1238"/>
         <source>New &amp;Window</source>
         <translation>&amp;Новое окно</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1237"/>
+        <location filename="../UI/UserInterface.py" line="1238"/>
         <source>Ctrl+Shift+N</source>
         <comment>File|New Window</comment>
         <translation>Ctrl+Shift+N</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1734"/>
+        <location filename="../UI/UserInterface.py" line="1735"/>
         <source>Unittest Rerun Failed</source>
         <translation>Перезапуск тестов провалился</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1734"/>
+        <location filename="../UI/UserInterface.py" line="1735"/>
         <source>Rerun Failed Tests...</source>
         <translation>Перезапустить провалившиеся тесты...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1739"/>
+        <location filename="../UI/UserInterface.py" line="1740"/>
         <source>Rerun failed tests of the last run</source>
         <translation>Перезапустить провалившиеся в последней попытке тесты</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1741"/>
+        <location filename="../UI/UserInterface.py" line="1742"/>
         <source>&lt;b&gt;Rerun Failed Tests&lt;/b&gt;&lt;p&gt;Rerun all tests that failed during the last unittest run.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Перезапустить провалившиеся тесты&lt;/b&gt;&lt;p&gt;Перезапустить все провалившиеся в последней попытке тесты.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1873"/>
+        <location filename="../UI/UserInterface.py" line="1874"/>
         <source>Compare &amp;Files side by side...</source>
         <translation>Сравнить &amp;файлы с параллальным отображением...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1944"/>
+        <location filename="../UI/UserInterface.py" line="1945"/>
         <source>Snapshot</source>
         <translation>Снимок</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1944"/>
+        <location filename="../UI/UserInterface.py" line="1945"/>
         <source>&amp;Snapshot...</source>
         <translation>&amp;Снимок...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1949"/>
+        <location filename="../UI/UserInterface.py" line="1950"/>
         <source>Take snapshots of a screen region</source>
         <translation>Сделать снимок области экрана</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1951"/>
+        <location filename="../UI/UserInterface.py" line="1952"/>
         <source>&lt;b&gt;Snapshot&lt;/b&gt;&lt;p&gt;This opens a dialog to take snapshots of a screen region.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Снимок&lt;/b&gt;&lt;p&gt;Сделать снимок области экрана.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4602"/>
+        <location filename="../UI/UserInterface.py" line="4606"/>
         <source>&lt;p&gt;Could not start Snapshot tool.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Невозможно запустить программу для создания снимка экрана.&lt;br&gt;Убедитесь что она установлена как &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6259"/>
+        <location filename="../UI/UserInterface.py" line="6281"/>
         <source>Select Workspace Directory</source>
         <translation>Задайте рабочий каталог</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1430"/>
+        <location filename="../UI/UserInterface.py" line="1431"/>
         <source>Left Toolbox</source>
         <translation>Левая панель инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1442"/>
+        <location filename="../UI/UserInterface.py" line="1443"/>
         <source>Right Toolbox</source>
         <translation>Правая панель инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1296"/>
+        <location filename="../UI/UserInterface.py" line="1297"/>
         <source>Switch the input focus to the Project-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика проекта.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1298"/>
+        <location filename="../UI/UserInterface.py" line="1299"/>
         <source>&lt;b&gt;Activate Project-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Project-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать просмотрщик проекта&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика проекта.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1313"/>
+        <location filename="../UI/UserInterface.py" line="1314"/>
         <source>Switch the input focus to the Multiproject-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика проектов.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1315"/>
+        <location filename="../UI/UserInterface.py" line="1316"/>
         <source>&lt;b&gt;Activate Multiproject-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Multiproject-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать просмотрщик проектов&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика проектов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1331"/>
+        <location filename="../UI/UserInterface.py" line="1332"/>
         <source>Switch the input focus to the Debug-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика отладочной иформации.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1333"/>
+        <location filename="../UI/UserInterface.py" line="1334"/>
         <source>&lt;b&gt;Activate Debug-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Debug-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать окно отладки&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика отладочной иформации.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1349"/>
+        <location filename="../UI/UserInterface.py" line="1350"/>
         <source>Switch the input focus to the Shell window.</source>
         <translation>Переключить направление ввода на командное окно.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1351"/>
+        <location filename="../UI/UserInterface.py" line="1352"/>
         <source>&lt;b&gt;Activate Shell&lt;/b&gt;&lt;p&gt;This switches the input focus to the Shell window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать командное окно&lt;/b&gt;&lt;p&gt;Переключить направление ввода на командное окно.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1359"/>
+        <location filename="../UI/UserInterface.py" line="1360"/>
         <source>&amp;File-Browser</source>
         <translation>&amp;Просмотрщик файлов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1365"/>
+        <location filename="../UI/UserInterface.py" line="1366"/>
         <source>Switch the input focus to the File-Browser window.</source>
         <translation>Переключить направление ввода на окно просмотрщика файлов.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1367"/>
+        <location filename="../UI/UserInterface.py" line="1368"/>
         <source>&lt;b&gt;Activate File-Browser&lt;/b&gt;&lt;p&gt;This switches the input focus to the File-Browser window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать окно просмотрщика файлов&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика файлов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1376"/>
+        <location filename="../UI/UserInterface.py" line="1377"/>
         <source>Lo&amp;g-Viewer</source>
         <translation>Просмотрщик &amp;журнала</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1382"/>
+        <location filename="../UI/UserInterface.py" line="1383"/>
         <source>Switch the input focus to the Log-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика журнала.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1384"/>
+        <location filename="../UI/UserInterface.py" line="1385"/>
         <source>&lt;b&gt;Activate Log-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Log-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать окно просмотрщика журнала&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика журнала.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1394"/>
+        <location filename="../UI/UserInterface.py" line="1395"/>
         <source>&amp;Task-Viewer</source>
         <translation>Просмотрщик &amp;задач</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1400"/>
+        <location filename="../UI/UserInterface.py" line="1401"/>
         <source>Switch the input focus to the Task-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика задач.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1412"/>
+        <location filename="../UI/UserInterface.py" line="1413"/>
         <source>Templ&amp;ate-Viewer</source>
         <translation>Просмотрщик &amp;шаблонов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1418"/>
+        <location filename="../UI/UserInterface.py" line="1419"/>
         <source>Switch the input focus to the Template-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика шаблонов.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1420"/>
+        <location filename="../UI/UserInterface.py" line="1421"/>
         <source>&lt;b&gt;Activate Template-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Template-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать окно просмотрщика шаблонов&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика шаблонов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1430"/>
+        <location filename="../UI/UserInterface.py" line="1431"/>
         <source>&amp;Left Toolbox</source>
         <translation>&amp;Левая окно инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1433"/>
+        <location filename="../UI/UserInterface.py" line="1434"/>
         <source>Toggle the Left Toolbox window</source>
         <translation>Показать/скрыть левое окно инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1434"/>
+        <location filename="../UI/UserInterface.py" line="1435"/>
         <source>&lt;b&gt;Toggle the Left Toolbox window&lt;/b&gt;&lt;p&gt;If the Left Toolbox window is hidden then display it. If it is displayed then close it.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать/скрыть левое окно инструментов&lt;/b&gt;&lt;p&gt;Если левое окно инструментов видно, то скрыть его, если скрыто то показать.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1442"/>
+        <location filename="../UI/UserInterface.py" line="1443"/>
         <source>&amp;Right Toolbox</source>
         <translation>&amp;Правая окно инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1446"/>
+        <location filename="../UI/UserInterface.py" line="1447"/>
         <source>Toggle the Right Toolbox window</source>
         <translation>Показать/скрыть правое окно инструментов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1447"/>
+        <location filename="../UI/UserInterface.py" line="1448"/>
         <source>&lt;b&gt;Toggle the Right Toolbox window&lt;/b&gt;&lt;p&gt;If the Right Toolbox window is hidden then display it. If it is displayed then close it.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать/скрыть правое окно инструментов&lt;/b&gt;&lt;p&gt;Если правое окно инструментов видно, то скрыть его, если скрыто то показать.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1482"/>
+        <location filename="../UI/UserInterface.py" line="1483"/>
         <source>Right Sidebar</source>
         <translation>Правая док-панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1482"/>
+        <location filename="../UI/UserInterface.py" line="1483"/>
         <source>&amp;Right Sidebar</source>
         <translation>&amp;Правая панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1486"/>
+        <location filename="../UI/UserInterface.py" line="1487"/>
         <source>Toggle the right sidebar window</source>
         <translation>Показать/скрыть правую панель</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1488"/>
+        <location filename="../UI/UserInterface.py" line="1489"/>
         <source>&lt;b&gt;Toggle the right sidebar window&lt;/b&gt;&lt;p&gt;If the right sidebar window is hidden then display it. If it is displayed then close it.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать/скрыть правую панель&lt;/b&gt;&lt;p&gt;Если правая панель скрыта, показать её. Иначе - закрыть.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1510"/>
+        <location filename="../UI/UserInterface.py" line="1511"/>
         <source>Cooperation-Viewer</source>
         <translation>Просмотрщик кооперации</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1510"/>
+        <location filename="../UI/UserInterface.py" line="1511"/>
         <source>Co&amp;operation-Viewer</source>
         <translation>Просмотрщик ко&amp;операции</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1516"/>
+        <location filename="../UI/UserInterface.py" line="1517"/>
         <source>Switch the input focus to the Cooperation-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика шкооперации.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1518"/>
+        <location filename="../UI/UserInterface.py" line="1519"/>
         <source>&lt;b&gt;Activate Cooperation-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Cooperation-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать просмотрщик кооперации&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика кооперации.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1545"/>
+        <location filename="../UI/UserInterface.py" line="1546"/>
         <source>Symbols-Viewer</source>
         <translation>Просмотрщик символов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1545"/>
+        <location filename="../UI/UserInterface.py" line="1546"/>
         <source>S&amp;ymbols-Viewer</source>
         <translation>Просмотрщик с&amp;имволов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1551"/>
+        <location filename="../UI/UserInterface.py" line="1552"/>
         <source>Switch the input focus to the Symbols-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика символов.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1553"/>
+        <location filename="../UI/UserInterface.py" line="1554"/>
         <source>&lt;b&gt;Activate Symbols-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Symbols-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать просмотрщик символов&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика символов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1563"/>
+        <location filename="../UI/UserInterface.py" line="1564"/>
         <source>Numbers-Viewer</source>
         <translation>Просмотрщик чисел</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1563"/>
+        <location filename="../UI/UserInterface.py" line="1564"/>
         <source>Num&amp;bers-Viewer</source>
         <translation>Просмотрщик &amp;чисел</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1569"/>
+        <location filename="../UI/UserInterface.py" line="1570"/>
         <source>Switch the input focus to the Numbers-Viewer window.</source>
         <translation>Переключить направление ввода на окно просмотрщика чисел.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1571"/>
+        <location filename="../UI/UserInterface.py" line="1572"/>
         <source>&lt;b&gt;Activate Numbers-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Numbers-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать просмотрщик чисел&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика чисел.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2494"/>
+        <location filename="../UI/UserInterface.py" line="2495"/>
         <source>&amp;Windows</source>
         <translation>&amp;Окна</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1402"/>
+        <location filename="../UI/UserInterface.py" line="1403"/>
         <source>&lt;b&gt;Activate Task-Viewer&lt;/b&gt;&lt;p&gt;This switches the input focus to the Task-Viewer window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать окно просмотрщика задач&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно просмотрщика задач.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1528"/>
+        <location filename="../UI/UserInterface.py" line="1529"/>
         <source>IRC</source>
         <translation>IRC</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1528"/>
+        <location filename="../UI/UserInterface.py" line="1529"/>
         <source>&amp;IRC</source>
         <translation>&amp;IRC</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1528"/>
+        <location filename="../UI/UserInterface.py" line="1529"/>
         <source>Meta+Shift+I</source>
         <translation>Meta+Shift+I</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1534"/>
+        <location filename="../UI/UserInterface.py" line="1535"/>
         <source>Switch the input focus to the IRC window.</source>
         <translation>Переключить направление ввода на окно IRC.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1536"/>
+        <location filename="../UI/UserInterface.py" line="1537"/>
         <source>&lt;b&gt;Activate IRC&lt;/b&gt;&lt;p&gt;This switches the input focus to the IRC window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Активировать окно IRC&lt;/b&gt;&lt;p&gt;Переключить направление ввода на окно IRC.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1792"/>
+        <location filename="../UI/UserInterface.py" line="1793"/>
         <source>Qt-Designer</source>
         <translation>Qt-Дизайнер</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1792"/>
+        <location filename="../UI/UserInterface.py" line="1793"/>
         <source>Qt-&amp;Designer...</source>
         <translation>Qt-&amp;Дизайнер...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1797"/>
+        <location filename="../UI/UserInterface.py" line="1798"/>
         <source>Start Qt-Designer</source>
         <translation>Запустить Qt-Дизайнер</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1798"/>
+        <location filename="../UI/UserInterface.py" line="1799"/>
         <source>&lt;b&gt;Qt-Designer&lt;/b&gt;&lt;p&gt;Start Qt-Designer.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Qt-Дизайнер&lt;/b&gt;&lt;p&gt;Запустить Qt-Дизайнер.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1818"/>
+        <location filename="../UI/UserInterface.py" line="1819"/>
         <source>Qt-Linguist</source>
         <translation>Qt Переводчик</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1818"/>
+        <location filename="../UI/UserInterface.py" line="1819"/>
         <source>Qt-&amp;Linguist...</source>
         <translation>Qt &amp;Переводчик...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1823"/>
+        <location filename="../UI/UserInterface.py" line="1824"/>
         <source>Start Qt-Linguist</source>
         <translation>Запустить Qt-Переводчик</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1824"/>
+        <location filename="../UI/UserInterface.py" line="1825"/>
         <source>&lt;b&gt;Qt-Linguist&lt;/b&gt;&lt;p&gt;Start Qt-Linguist.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Qt-Переводчик&lt;/b&gt;&lt;p&gt;Запустить Qt-Переводчик.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2262"/>
+        <location filename="../UI/UserInterface.py" line="2263"/>
         <source>Qt5 Documentation</source>
         <translation>Документация Qt5</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2262"/>
+        <location filename="../UI/UserInterface.py" line="2263"/>
         <source>Qt&amp;5 Documentation</source>
         <translation>Документация Qt&amp;5</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2266"/>
+        <location filename="../UI/UserInterface.py" line="2267"/>
         <source>Open Qt5 Documentation</source>
         <translation>Открыть документацию Qt5</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2815"/>
+        <location filename="../UI/UserInterface.py" line="2816"/>
         <source>&lt;p&gt;This part of the status bar allows zooming the current editor, shell or terminal.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Эта часть строки статуса позволяет мвсштабировать текущее окно.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2108"/>
+        <location filename="../UI/UserInterface.py" line="2109"/>
         <source>Manage SSL Certificates</source>
         <translation>Менеджер SLL сертификатов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2108"/>
+        <location filename="../UI/UserInterface.py" line="2109"/>
         <source>Manage SSL Certificates...</source>
         <translation>Менеджер SLL сертификатов...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2113"/>
+        <location filename="../UI/UserInterface.py" line="2114"/>
         <source>Manage the saved SSL certificates</source>
         <translation>Менеджер сохранённых SLL сертификатов</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2115"/>
+        <location filename="../UI/UserInterface.py" line="2116"/>
         <source>&lt;b&gt;Manage SSL Certificates...&lt;/b&gt;&lt;p&gt;Opens a dialog to manage the saved SSL certificates.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Менеджер SLL сертификатов...&lt;/b&gt;&lt;p&gt;Менеджер сохранённых SLL сертификатов.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2124"/>
+        <location filename="../UI/UserInterface.py" line="2125"/>
         <source>Edit Message Filters</source>
         <translation>Редактировать фильтры сообщений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2124"/>
+        <location filename="../UI/UserInterface.py" line="2125"/>
         <source>Edit Message Filters...</source>
         <translation>Редактировать фильтры сообщений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2129"/>
+        <location filename="../UI/UserInterface.py" line="2130"/>
         <source>Edit the message filters used to suppress unwanted messages</source>
         <translation>Редактировать фильтры нежелательных сообщений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2131"/>
+        <location filename="../UI/UserInterface.py" line="2132"/>
         <source>&lt;b&gt;Edit Message Filters&lt;/b&gt;&lt;p&gt;Opens a dialog to edit the message filters used to suppress unwanted messages been shown in an error window.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Редактировать фильтры сообщений&lt;/b&gt;&lt;p&gt;Редактировать фильтры нежелательных сообщений об ошибках.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2278"/>
+        <location filename="../UI/UserInterface.py" line="2279"/>
         <source>PyQt&amp;4 Documentation</source>
         <translation>Документация PyQt&amp;4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2297"/>
+        <location filename="../UI/UserInterface.py" line="2298"/>
         <source>PyQt5 Documentation</source>
         <translation>Документация PyQt4</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2297"/>
+        <location filename="../UI/UserInterface.py" line="2298"/>
         <source>PyQt&amp;5 Documentation</source>
         <translation>Документация PyQt&amp;5</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2301"/>
+        <location filename="../UI/UserInterface.py" line="2302"/>
         <source>Open PyQt5 Documentation</source>
         <translation>Открыть документацию PyQt5</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5026"/>
+        <location filename="../UI/UserInterface.py" line="5030"/>
         <source>&lt;p&gt;The PyQt5 documentation starting point has not been configured.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Корень документации PyQt5 не задан.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2253"/>
+        <location filename="../UI/UserInterface.py" line="2254"/>
         <source>&lt;b&gt;Qt4 Documentation&lt;/b&gt;&lt;p&gt;Display the Qt4 Documentation. Dependent upon your settings, this will either show the help in Eric&apos;s internal help viewer, or execute a web browser or Qt Assistant. &lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация Qt4&lt;/b&gt;&lt;p&gt;Показать документацию Qt4. В зависимости от выбранных настроек документация будет показана во внутреннем просмотрщике, внешнем просмотрщике интернета или в Qt Помощнике.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2267"/>
+        <location filename="../UI/UserInterface.py" line="2268"/>
         <source>&lt;b&gt;Qt5 Documentation&lt;/b&gt;&lt;p&gt;Display the Qt5 Documentation. Dependent upon your settings, this will either show the help in Eric&apos;s internal help viewer, or execute a web browser or Qt Assistant. &lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация Qt5&lt;/b&gt;&lt;p&gt;Показать документацию Qt5. В зависимости от выбранных настроек документация будет показана во внутреннем просмотрщике, внешнем просмотрщике интернета или в Qt Помощнике.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2283"/>
+        <location filename="../UI/UserInterface.py" line="2284"/>
         <source>&lt;b&gt;PyQt4 Documentation&lt;/b&gt;&lt;p&gt;Display the PyQt4 Documentation. Dependent upon your settings, this will either show the help in Eric&apos;s internal help viewer, or execute a web browser or Qt Assistant. &lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация PyQt4&lt;/b&gt;&lt;p&gt;Показать документацию PyQt4. В зависимости от выбранных настроек документация будет показана во внутреннем просмотрщике, внешнем просмотрщике интернета или в Qt Помощнике.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2303"/>
+        <location filename="../UI/UserInterface.py" line="2304"/>
         <source>&lt;b&gt;PyQt5 Documentation&lt;/b&gt;&lt;p&gt;Display the PyQt5 Documentation. Dependent upon your settings, this will either show the help in Eric&apos;s internal help viewer, or execute a web browser or Qt Assistant. &lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация PyQt5&lt;/b&gt;&lt;p&gt;Показать документацию PyQt5. В зависимости от выбранных настроек документация будет показана во внутреннем просмотрщике, внешнем просмотрщике интернета или в Qt Помощнике.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2326"/>
+        <location filename="../UI/UserInterface.py" line="2327"/>
         <source>&lt;b&gt;Python 3 Documentation&lt;/b&gt;&lt;p&gt;Display the Python 3 documentation. If no documentation directory is configured, the location of the Python 3 documentation is assumed to be the doc directory underneath the location of the Python 3 executable on Windows and &lt;i&gt;/usr/share/doc/packages/python/html&lt;/i&gt; on Unix. Set PYTHON3DOCDIR in your environment to override this.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация Pyton 3&lt;/b&gt;&lt;p&gt;Показать Pyton 3 документацию. Если местонахождение документации не было настроено, то искать в подкаталоге &lt;i&gt;doc&lt;/i&gt; каталога где находится исполняемый файл Python 3 под Windows и в подкаталоге &lt;i&gt;/usr/share/doc/packages/python/html/python-docs-html&lt;/i&gt; под UNIX. Местонахождение документации можно задать с помощью переменной окружения PYTHON3DOCDIR.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2389"/>
+        <location filename="../UI/UserInterface.py" line="2390"/>
         <source>&lt;b&gt;PySide Documentation&lt;/b&gt;&lt;p&gt;Display the PySide Documentation. Dependent upon your settings, this will either show the help in Eric&apos;s internal help viewer, or execute a web browser or Qt Assistant. &lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация PySide&lt;/b&gt;&lt;p&gt;Показать документацию PySide. В зависимости от выбранных настроек документация будет показана во внутреннем просмотрщике, внешнем просмотрщике интернета или в Qt Помощнике.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5995"/>
+        <location filename="../UI/UserInterface.py" line="6009"/>
         <source>%v/%m</source>
         <translation>%v/%m</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1671"/>
+        <location filename="../UI/UserInterface.py" line="1672"/>
         <source>Show Error Log</source>
         <translation>Показать журнал ошибок</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1667"/>
+        <location filename="../UI/UserInterface.py" line="1668"/>
         <source>Show Error &amp;Log...</source>
         <translation>Показать &amp;журнал ошибок...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1672"/>
+        <location filename="../UI/UserInterface.py" line="1673"/>
         <source>&lt;b&gt;Show Error Log...&lt;/b&gt;&lt;p&gt;Opens a dialog showing the most recent error log.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать журнал ошибок...&lt;/b&gt;&lt;p&gt;Показать журнал ошибок.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="5999"/>
+        <location filename="../UI/UserInterface.py" line="6013"/>
         <source>Version Check</source>
         <translation>Проверить версию</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1243"/>
+        <location filename="../UI/UserInterface.py" line="1244"/>
         <source>Open a new eric6 instance</source>
         <translation>Запустить ещё одну копию Eric</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1245"/>
+        <location filename="../UI/UserInterface.py" line="1246"/>
         <source>&lt;b&gt;New Window&lt;/b&gt;&lt;p&gt;This opens a new instance of the eric6 IDE.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Новое окно&lt;/b&gt;&lt;p&gt;Запустить ещё одну копию Eric.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1608"/>
+        <location filename="../UI/UserInterface.py" line="1609"/>
         <source>&lt;b&gt;Helpviewer&lt;/b&gt;&lt;p&gt;Display the eric6 web browser. This window will show HTML help files and help from Qt help collections. It has the capability to navigate to links, set bookmarks, print the displayed help and some more features. You may use it to browse the internet as well&lt;/p&gt;&lt;p&gt;If called with a word selected, this word is search in the Qt help collection.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Просмотрщик помощи&lt;/b&gt;&lt;p&gt;Открыть Eric просмотрщик Web. Это окно будет показывать HTML файлы помощи. Оно поддерживает навигацию по ссылкам, закладки, печать и некоторые другие функции. Его можно использовать для просмотра интернета.&lt;/p&gt;&lt;p&gt;Если перед открытием просмотрщика помощи был подсвечен какой-либо текст, то будет произведён поиск этого текста в коллекции помощи Qt.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1645"/>
+        <location filename="../UI/UserInterface.py" line="1646"/>
         <source>&lt;b&gt;Check for Updates...&lt;/b&gt;&lt;p&gt;Checks the internet for updates of eric6.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Проверить наличие обновлений...&lt;/b&gt;&lt;p&gt;Проверить наличие обновлений Eric в интернет.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1658"/>
+        <location filename="../UI/UserInterface.py" line="1659"/>
         <source>&lt;b&gt;Show downloadable versions...&lt;/b&gt;&lt;p&gt;Shows the eric6 versions available for download from the internet.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать версии, доступные для загрузки...&lt;/b&gt;&lt;p&gt;Показывает версии Eric, которые можно скачать с интернета.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1914"/>
+        <location filename="../UI/UserInterface.py" line="1915"/>
         <source>eric6 Web Browser</source>
         <translation>Встроенный Web просмотрщик</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1914"/>
+        <location filename="../UI/UserInterface.py" line="1915"/>
         <source>eric6 &amp;Web Browser...</source>
         <translation>Встроенный &amp;Web просмотрщик...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1919"/>
+        <location filename="../UI/UserInterface.py" line="1920"/>
         <source>Start the eric6 Web Browser</source>
         <translation>Запустить встроенный Web просмотрщик</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1921"/>
+        <location filename="../UI/UserInterface.py" line="1922"/>
         <source>&lt;b&gt;eric6 Web Browser&lt;/b&gt;&lt;p&gt;Browse the Internet with the eric6 Web Browser.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Встроенный Web просмотрщик&lt;/b&gt;&lt;p&gt;Использовать WEB просмотрщик встроенный в Eric.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1935"/>
+        <location filename="../UI/UserInterface.py" line="1936"/>
         <source>Start the eric6 Icon Editor</source>
         <translation>Запустить редактор иконок</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="1937"/>
+        <location filename="../UI/UserInterface.py" line="1938"/>
         <source>&lt;b&gt;Icon Editor&lt;/b&gt;&lt;p&gt;Starts the eric6 Icon Editor for editing simple icons.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Редактор иконок&lt;/b&gt;&lt;p&gt;Запустить редактор иконок.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2023"/>
+        <location filename="../UI/UserInterface.py" line="2024"/>
         <source>&lt;b&gt;Show external tools&lt;/b&gt;&lt;p&gt;Opens a dialog to show the path and versions of all extenal tools used by eric6.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Показать внешние инструменты&lt;/b&gt;&lt;p&gt;Открывает диалог для отображения пути и версий внешних инструментов, используемых eric.&lt;/p&gt; {6.?}</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="2368"/>
+        <location filename="../UI/UserInterface.py" line="2369"/>
         <source>&lt;b&gt;Eric API Documentation&lt;/b&gt;&lt;p&gt;Display the Eric API documentation. The location for the documentation is the Documentation/Source subdirectory of the eric6 installation directory.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Документация Eric API&lt;/b&gt;&lt;p&gt;Показать документацию Eric API. Местонахождение документации - каталог Documentation/Source, расположенный в каталоге инсталляции eric.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="4333"/>
+        <location filename="../UI/UserInterface.py" line="4337"/>
         <source>Qt v.3 is not supported by eric6.</source>
         <translation>Qt3 не поддерживается в Eric.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6155"/>
+        <location filename="../UI/UserInterface.py" line="6177"/>
         <source>The update to &lt;b&gt;{0}&lt;/b&gt; of eric6 is available at &lt;b&gt;{1}&lt;/b&gt;. Would you like to get it?</source>
         <translation>На сайте &lt;b&gt;{1}&lt;/b&gt; доступно обновление Eric до версии &lt;b&gt;{0}&lt;/b&gt;. Загрузить?</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6168"/>
+        <location filename="../UI/UserInterface.py" line="6190"/>
         <source>Eric6 is up to date</source>
         <translation>Eric не требует обновлений</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6168"/>
+        <location filename="../UI/UserInterface.py" line="6190"/>
         <source>You are using the latest version of eric6</source>
         <translation>Вы используете самую последнюю версию Eric</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="6240"/>
+        <location filename="../UI/UserInterface.py" line="6262"/>
         <source>eric6 has not been configured yet. The configuration dialog will be started.</source>
         <translation>Eric ещё не сконфигурирован. Будет запущен диалог конфигурации.</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="540"/>
+        <location filename="../UI/UserInterface.py" line="541"/>
         <source>Generating Plugins Toolbars...</source>
         <translation>Создание панелей инструментов для расширений...</translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3355"/>
+        <location filename="../UI/UserInterface.py" line="3359"/>
         <source>&amp;User Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../UI/UserInterface.py" line="3427"/>
+        <location filename="../UI/UserInterface.py" line="3431"/>
         <source>No User Tools Configured</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../UI/UserInterface.py" line="6029"/>
+        <source>The versions information cannot not be downloaded because you are &lt;b&gt;offline&lt;/b&gt;. Please go online and try again.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

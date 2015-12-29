@@ -2,6 +2,8 @@ Change Log
 ----------
 Version 6.2.0:
 - bug fixes
+- General
+  -- added a status bar icon to show the online status to the main window
 - Debugger
   -- added a debugger interface registry to allow debuggers being
      implemented as plug-ins
@@ -11,6 +13,7 @@ Version 6.2.0:
 - Web Browser
   -- added capability to remember the zoom values for each site (incl. a
      dialog to manage these)
+  -- added a status bar icon to show the online status
 
 Version 6.1.0:
 - bug fixes

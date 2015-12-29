@@ -1102,7 +1102,7 @@ class PluginManager(QObject):
         Public method to check the availability of updates of plug-ins.
         """
         period = Preferences.getPluginManager("UpdatesCheckInterval")
-        if period == 0:
+        if period == 0 or not self.__ui.isOnline():
             return
         elif period in [1, 2, 3]:
             lastModified = QFileInfo(self.pluginRepositoryFile).lastModified()

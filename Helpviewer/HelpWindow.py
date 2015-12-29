@@ -44,6 +44,8 @@ from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui.E5Application import e5App
 from E5Gui.E5ZoomWidget import E5ZoomWidget
 
+from E5Network.E5NetworkIcon import E5NetworkIcon
+
 import Preferences
 from Preferences import Shortcuts
 
@@ -250,6 +252,9 @@ class HelpWindow(E5MainWindow):
                 self.__adBlockIcon.currentChanged)
             self.tabWidget.sourceChanged.connect(
                 self.__adBlockIcon.sourceChanged)
+            
+            self.networkIcon = E5NetworkIcon(self)
+            self.statusBar().addPermanentWidget(self.networkIcon)
             
             QDesktopServices.setUrlHandler("http", self.__linkActivated)
             QDesktopServices.setUrlHandler("https", self.__linkActivated)
