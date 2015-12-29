@@ -134,6 +134,8 @@ class UserInterface(E5MainWindow):
         name of the menu and a reference to the menu are given.
     @signal masterPasswordChanged(str, str) emitted after the master
         password has been changed with the old and the new password
+    @signal onlineStateChanged(online) emitted to indicate a change of the
+        network state
     """
     appendStderr = pyqtSignal(str)
     appendStdout = pyqtSignal(str)
@@ -141,6 +143,7 @@ class UserInterface(E5MainWindow):
     reloadAPIs = pyqtSignal()
     showMenu = pyqtSignal(str, QMenu)
     masterPasswordChanged = pyqtSignal(str, str)
+    onlineStateChanged = pyqtSignal(bool)
     
     maxFilePathLen = 100
     maxMenuFilePathLen = 75
@@ -2822,6 +2825,8 @@ class UserInterface(E5MainWindow):
         
         self.networkIcon = E5NetworkIcon(self.__statusBar)
         self.__statusBar.addPermanentWidget(self.networkIcon)
+        self.networkIcon.onlineStateChanged.connect(self.onlineStateChanged)
+        self.networkIcon.onlineStateChanged.connect(self.__onlineStateChanged)
     
     def __initExternalToolsActions(self):
         """
@@ -5794,7 +5799,8 @@ class UserInterface(E5MainWindow):
         """
         Public method to check the availability of updates of plug-ins.
         """
-        self.pluginManager.checkPluginUpdatesAvailable()
+        if self.isOnline():
+            self.pluginManager.checkPluginUpdatesAvailable()
     
     #################################################################
     ## Drag and Drop Support
@@ -5944,6 +5950,16 @@ class UserInterface(E5MainWindow):
         @rtype bool
         """
         return self.networkIcon.isOnline()
+    
+    def __onlineStateChanged(self, online):
+        """
+        Private slot handling changes in online state.
+        
+        @param online flag indicating the online state
+        @type bool
+        """
+        if online:
+            self.performVersionCheck(False)
 
     ##############################################
     ## Below are methods to check for new versions

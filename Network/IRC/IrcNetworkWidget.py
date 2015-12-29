@@ -9,11 +9,12 @@ Module implementing the network part of the IRC widget.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot, pyqtSignal, QPoint, QFileInfo, QUrl
+from PyQt5.QtCore import pyqtSlot, pyqtSignal, QPoint, QFileInfo, QUrl, QThread
 from PyQt5.QtGui import QDesktopServices
 from PyQt5.QtWidgets import QWidget, QApplication, QMenu
 
 from E5Gui import E5MessageBox, E5FileDialog
+from E5Gui.E5Application import e5App
 
 from .Ui_IrcNetworkWidget import Ui_IrcNetworkWidget
 
@@ -28,7 +29,7 @@ class IrcNetworkWidget(QWidget, Ui_IrcNetworkWidget):
     """
     Class implementing the network part of the IRC widget.
     
-    @signal connectNetwork(str,bool) emitted to connect or disconnect from
+    @signal connectNetwork(str,bool,bool) emitted to connect or disconnect from
         a network
     @signal editNetwork(str) emitted to edit a network configuration
     @signal joinChannel(str) emitted to join a channel
@@ -37,7 +38,7 @@ class IrcNetworkWidget(QWidget, Ui_IrcNetworkWidget):
     @signal away(bool) emitted to indicate the away status
     @signal autoConnected() emitted after an automatic connection was initiated
     """
-    connectNetwork = pyqtSignal(str, bool)
+    connectNetwork = pyqtSignal(str, bool, bool)
     editNetwork = pyqtSignal(str)
     joinChannel = pyqtSignal(str)
     nickChanged = pyqtSignal(str)
@@ -94,6 +95,17 @@ class IrcNetworkWidget(QWidget, Ui_IrcNetworkWidget):
         """
         Public method to perform the IRC auto connection.
         """
+        userInterface = e5App().getObject("UserInterface")
+        online = userInterface.isOnline()
+        self.connectButton.setEnabled(online)
+        userInterface.onlineStateChanged.connect(self.__onlineStateChanged)
+        if online:
+            self.__autoConnect()
+    
+    def __autoConnect(self):
+        """
+        Public method to perform the IRC auto connection.
+        """
         for networkName in self.__manager.getNetworkNames():
             if self.__manager.getNetwork(networkName).autoConnect():
                 row = self.networkCombo.findText(networkName)
@@ -101,6 +113,24 @@ class IrcNetworkWidget(QWidget, Ui_IrcNetworkWidget):
                 self.on_connectButton_clicked()
                 self.autoConnected.emit()
                 break
+    
+    @pyqtSlot(bool)
+    def __onlineStateChanged(self, online):
+        """
+        Private slot handling online state changes.
+        
+        @param online online state
+        @type bool
+        """
+        self.connectButton.setEnabled(online)
+        if online:
+            # delay a bit because the signal seems to be sent before the
+            # network interface is fully up
+            QThread.msleep(200)
+            self.__autoConnect()
+        else:
+            network = self.networkCombo.currentText()
+            self.connectNetwork.emit(network, online, True)
     
     @pyqtSlot()
     def __refreshNetworks(self):
@@ -129,7 +159,7 @@ class IrcNetworkWidget(QWidget, Ui_IrcNetworkWidget):
         Private slot to connect to a network.
         """
         network = self.networkCombo.currentText()
-        self.connectNetwork.emit(network, not self.__connected)
+        self.connectNetwork.emit(network, not self.__connected, False)
     
     @pyqtSlot()
     def on_awayButton_clicked(self):

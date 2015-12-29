@@ -9,7 +9,7 @@ Module implementing a statusbar icon tracking the network status.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtNetwork import QNetworkConfigurationManager
 
 from E5Gui.E5ClickableLabel import E5ClickableLabel
@@ -20,7 +20,12 @@ import UI.PixmapCache
 class E5NetworkIcon(E5ClickableLabel):
     """
     Class implementing a statusbar icon tracking the network status.
+    
+    @signal onlineStateChanged(online) emitted to indicate a change of the
+        network state
     """
+    onlineStateChanged = pyqtSignal(bool)
+    
     def __init__(self, parent=None):
         """
         Constructor
@@ -31,7 +36,8 @@ class E5NetworkIcon(E5ClickableLabel):
         super(E5NetworkIcon, self).__init__(parent)
         
         self.__networkManager = QNetworkConfigurationManager(self)
-        self.__onlineStateChanged(self.__networkManager.isOnline())
+        self.__online = self.__networkManager.isOnline()
+        self.__onlineStateChanged(self.__online)
         
         self.__networkManager.onlineStateChanged.connect(
             self.__onlineStateChanged)
@@ -58,6 +64,10 @@ class E5NetworkIcon(E5ClickableLabel):
             tooltip = tooltip.format(self.tr("Offline"))
         
         self.setToolTip(tooltip)
+        
+        if online != self.__online:
+            self.__online = online
+            self.onlineStateChanged.emit(online)
     
     def isOnline(self):
         """

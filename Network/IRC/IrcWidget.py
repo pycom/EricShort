@@ -171,13 +171,13 @@ class IrcWidget(QWidget, Ui_IrcWidget):
         """
         self.networkWidget.autoConnect()
 
-    def __connectNetwork(self, name, connect, silent=False):
+    def __connectNetwork(self, name, connect, silent):
         """
         Private slot to connect to or disconnect from the given network.
         
         @param name name of the network to connect to (string)
         @param connect flag indicating to connect (boolean)
-        @keyparam silent flag indicating a silent connect/disconnect (boolean)
+        @param silent flag indicating a silent connect/disconnect (boolean)
         """
         if connect:
             network = self.__ircNetworkManager.getNetwork(name)
@@ -927,7 +927,7 @@ class IrcWidget(QWidget, Ui_IrcWidget):
                     " for <b>{0}</b>. Disconnecting...")
                 .format(self.__userName),
                 filterMsg=False)
-            self.__connectNetwork("", False, silent=True)
+            self.__connectNetwork("", False, True)
             self.__nickName = ""
             self.__nickIndex = -1
             return

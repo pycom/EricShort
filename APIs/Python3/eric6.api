@@ -1680,6 +1680,7 @@ eric6.E5Network.E5Ftp.E5FtpProxyType.UserAtServer?7
 eric6.E5Network.E5NetworkHeaderDetailsDialog.E5NetworkHeaderDetailsDialog.setData?4(name, value)
 eric6.E5Network.E5NetworkHeaderDetailsDialog.E5NetworkHeaderDetailsDialog?1(parent=None)
 eric6.E5Network.E5NetworkIcon.E5NetworkIcon.isOnline?4()
+eric6.E5Network.E5NetworkIcon.E5NetworkIcon.onlineStateChanged?7
 eric6.E5Network.E5NetworkIcon.E5NetworkIcon?1(parent=None)
 eric6.E5Network.E5NetworkMonitor.E5NetworkMonitor._monitor?8
 eric6.E5Network.E5NetworkMonitor.E5NetworkMonitor.closeEvent?4(evt)
@@ -8642,6 +8643,7 @@ eric6.UI.UserInterface.UserInterface.masterPasswordChanged?7
 eric6.UI.UserInterface.UserInterface.maxFilePathLen?7
 eric6.UI.UserInterface.UserInterface.maxMenuFilePathLen?7
 eric6.UI.UserInterface.UserInterface.notificationsEnabled?4()
+eric6.UI.UserInterface.UserInterface.onlineStateChanged?7
 eric6.UI.UserInterface.UserInterface.performVersionCheck?4(manual=True, alternative=0, showVersions=False)
 eric6.UI.UserInterface.UserInterface.preferencesChanged?7
 eric6.UI.UserInterface.UserInterface.processArgs?4(args)

@@ -143,6 +143,8 @@ class PluginManager(QObject):
             self.__sslErrorHandler = E5SslErrorHandler(self)
             self.__networkManager.sslErrors.connect(self.__sslErrors)
         self.__replies = []
+        
+        self.__ui.onlineStateChanged.connect(self.__onlineStateChanged)
     
     def finalizeSetup(self):
         """
@@ -1052,7 +1054,7 @@ class PluginManager(QObject):
                 self.deactivatePlugin(name, True)
     
     ########################################################################
-    ## Methods creation of the plug-ins download directory
+    ## Methods for the creation of the plug-ins download directory
     ########################################################################
     
     def __checkPluginsDownloadDirectory(self):
@@ -1096,6 +1098,16 @@ class PluginManager(QObject):
     ########################################################################
     ## Methods for automatic plug-in update check below
     ########################################################################
+    
+    def __onlineStateChanged(self, online):
+        """
+        Private slot handling changes in online state.
+        
+        @param online flag indicating the online state
+        @type bool
+        """
+        if online:
+            self.checkPluginUpdatesAvailable()
     
     def checkPluginUpdatesAvailable(self):
         """
