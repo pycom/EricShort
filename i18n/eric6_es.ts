@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS><TS version="2.0" language="es" sourcelanguage="">
+<!DOCTYPE TS>
+<TS version="2.0" language="es">
 <context>
     <name>AboutDialog</name>
     <message>
@@ -542,7 +543,9 @@ Para seleccionarlo a través de un cuadro diálogo, presione el botón de la der
         <source>&lt;b&gt;Source Directory&lt;/b&gt;
 &lt;p&gt;Enter the name of the directory to add to the current project.
  You may select it with a dialog by pressing the button to the right.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Directorio de Origen&lt;/b&gt;
+&lt;p&gt;Introduzca el nombre del directorio a agregar al proyecto actual.
+Para seleccionarlo a través de un cuadro diálogo, presione el botón de la derecha &lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -706,7 +709,7 @@ el botón de la derecha.&lt;/p&gt;</translation>
     <message>
         <location filename="../Project/AddFileDialog.ui" line="48"/>
         <source>Enter the name of files to add separated by &quot;;&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Introduzcir los nombres de los archivos a añadir separados por &apos;;&apos;</translation>
     </message>
     <message>
         <location filename="../Project/AddFileDialog.ui" line="51"/>
@@ -714,7 +717,10 @@ el botón de la derecha.&lt;/p&gt;</translation>
 &lt;p&gt;Enter the name of files to add to the current project separated
 by &quot;;&quot;. You may select them with a dialog by pressing 
 the button to the right.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Archivos de origen&lt;/b&gt;
+&lt;p&gt;Introduzca el nombre de los archivos a añadir al proyecto actual separados
+por &quot;;&quot;. Puede seleccionarlos utilizando un diálogo haciendo click en 
+el botón de la derecha.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -1810,7 +1816,7 @@ the button to the right.&lt;/p&gt;</source>
     <message>
         <location filename="../Helpviewer/Bookmarks/BookmarksImportDialog.ui" line="141"/>
         <source>Enter the name of the bookmarks file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir el nombre del archivo o directorio de marcadores</translation>
     </message>
 </context>
 <context>
@@ -1930,8 +1936,8 @@ the button to the right.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Bookmarks/BookmarksMenu.py" line="145"/>
-        <source>Open in New &amp;Tab<byte value="x9"/>Ctrl+LMB</source>
-        <translation>Abrir en Nueva &amp;Pestaña<byte value="x9"/>Ctrl+LMB (botón izquierdo del ratón)</translation>
+        <source>Open in New &amp;Tab	Ctrl+LMB</source>
+        <translation>Abrir en Nueva &amp;Pestaña	Ctrl+LMB (botón izquierdo del ratón)</translation>
     </message>
     <message>
         <location filename="../Helpviewer/Bookmarks/BookmarksMenu.py" line="151"/>
@@ -2004,8 +2010,8 @@ the button to the right.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Bookmarks/BookmarksToolBar.py" line="93"/>
-        <source>Open in New &amp;Tab<byte value="x9"/>Ctrl+LMB</source>
-        <translation>Abrir en Nueva &amp;Pestaña<byte value="x9"/>Ctrl+LMB (botón izquierdo del ratón)</translation>
+        <source>Open in New &amp;Tab	Ctrl+LMB</source>
+        <translation>Abrir en Nueva &amp;Pestaña	Ctrl+LMB (botón izquierdo del ratón)</translation>
     </message>
     <message>
         <location filename="../Helpviewer/Bookmarks/BookmarksToolBar.py" line="104"/>
@@ -4083,7 +4089,7 @@ sobre una entrada, la abrirá en una ventana de edición posicionando el cursor 
     <message>
         <location filename="../UI/CompareDialog.ui" line="20"/>
         <source>Files to be compared:</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos a comparar:</translation>
     </message>
 </context>
 <context>
@@ -4885,7 +4891,7 @@ para visualizar la página de configuración.</translation>
     <message>
         <location filename="../Preferences/ConfigurationPages/CorbaPage.ui" line="46"/>
         <source>Enter the path to the IDL compiler.</source>
-        <translation type="unfinished">Intruduzca la ruta del compilador IDL.</translation>
+        <translation>Intruduzca la ruta del compilador IDL.</translation>
     </message>
     <message>
         <location filename="../Preferences/ConfigurationPages/CorbaPage.ui" line="53"/>
@@ -5057,12 +5063,12 @@ Not connected
     <message>
         <location filename="../Debugger/DebugServer.py" line="317"/>
         <source>Register Debugger Interface</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrar Interfaz de Depurador</translation>
     </message>
     <message>
         <location filename="../Debugger/DebugServer.py" line="317"/>
         <source>&lt;p&gt;The debugger interface &lt;b&gt;{0}&lt;/b&gt; has already been registered. Ignoring this request.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;La interfaz de depurador &lt;b&gt;{0}&lt;/b&gt; ya está registrada. Se ignorará esta solicitud.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -6882,7 +6888,7 @@ Not connected
     <message>
         <location filename="../UI/DiffDialog.ui" line="80"/>
         <source>Select Diff Kind</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar Tipo de Diff</translation>
     </message>
 </context>
 <context>
@@ -7911,17 +7917,17 @@ selección completa.&lt;/li&gt;
     <message>
         <location filename="../E5Network/E5NetworkIcon.py" line="52"/>
         <source>&lt;p&gt;Shows the network status&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Network:&lt;/b&gt; {0}&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;p&gt;Muestra el estado de la red&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Red:&lt;/b&gt; {0}&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../E5Network/E5NetworkIcon.py" line="56"/>
         <source>Connected</source>
-        <translation type="unfinished"></translation>
+        <translation>Conectada</translation>
     </message>
     <message>
         <location filename="../E5Network/E5NetworkIcon.py" line="58"/>
         <source>Offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuera de línea</translation>
     </message>
 </context>
 <context>
@@ -8005,32 +8011,32 @@ selección completa.&lt;/li&gt;
     <message>
         <location filename="../E5Gui/E5PathPicker.py" line="164"/>
         <source>Enter Path Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir Nombre de Ruta</translation>
     </message>
     <message>
         <location filename="../E5Gui/E5PathPicker.py" line="161"/>
         <source>Enter Path Names separated by &apos;;&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir Nombres de Ruta separados por &apos;;&apos;</translation>
     </message>
     <message>
         <location filename="../E5Gui/E5PathPicker.py" line="466"/>
         <source>Choose a file to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir un archivo para abrir</translation>
     </message>
     <message>
         <location filename="../E5Gui/E5PathPicker.py" line="468"/>
         <source>Choose files to open</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir archivos a abrir</translation>
     </message>
     <message>
         <location filename="../E5Gui/E5PathPicker.py" line="472"/>
         <source>Choose a file to save</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir un archivo para guardar</translation>
     </message>
     <message>
         <location filename="../E5Gui/E5PathPicker.py" line="474"/>
         <source>Choose a directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Elegir un directorio</translation>
     </message>
 </context>
 <context>
@@ -16335,14 +16341,14 @@ Razón: {0}</translation>
     <message>
         <location filename="../Preferences/ConfigurationPages/HelpAppearancePage.py" line="35"/>
         <source>Cascading Style Sheets (*.css);;All files (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>Hojas de estilos (*.css);; Todos los archivos (*)</translation>
     </message>
 </context>
 <context>
     <name>HelpBrowser</name>
     <message>
         <location filename="../Helpviewer/HelpBrowserWV.py" line="1183"/>
-        <source>Open Link in New Tab<byte value="x9"/>Ctrl+LMB</source>
+        <source>Open Link in New Tab	Ctrl+LMB</source>
         <translation>Abrir enlace en Nueva Pestaña Ctrl+LMB (botón izquierdo del ratón)</translation>
     </message>
     <message>
@@ -16806,12 +16812,12 @@ Razón: {0}</translation>
     <message>
         <location filename="../Helpviewer/HelpClearPrivateDataDialog.ui" line="179"/>
         <source>Select to delete all remembered zoom settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar para borrar todos los ajustes de zoom guardados</translation>
     </message>
     <message>
         <location filename="../Helpviewer/HelpClearPrivateDataDialog.ui" line="182"/>
         <source>&amp;Zoom Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajustes de &amp;Zoom</translation>
     </message>
 </context>
 <context>
@@ -17007,17 +17013,17 @@ Razón: {0}</translation>
     <message>
         <location filename="../Preferences/ConfigurationPages/HelpDocumentationPage.ui" line="37"/>
         <source>eric API Documentation</source>
-        <translation type="unfinished"></translation>
+        <translation>Documentación de API de Eric</translation>
     </message>
     <message>
         <location filename="../Preferences/ConfigurationPages/HelpDocumentationPage.ui" line="52"/>
         <source>Enter the eric documentation directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir el directorio con la documentación de eric</translation>
     </message>
     <message>
         <location filename="../Preferences/ConfigurationPages/HelpDocumentationPage.ui" line="59"/>
         <source>&lt;b&gt;Note&lt;/b&gt;: Leave empty to use the default location.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Nota&lt;/b&gt;: Dejar en blanco para la seleccionar ubicación por defecto.</translation>
     </message>
 </context>
 <context>
@@ -19898,22 +19904,22 @@ URL: {1}</translation>
     <message>
         <location filename="../Helpviewer/HelpWindow.py" line="1569"/>
         <source>Manage Saved Zoom Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestionar Valores de Zoom Guardados</translation>
     </message>
     <message>
         <location filename="../Helpviewer/HelpWindow.py" line="1569"/>
         <source>Manage Saved Zoom Values...</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestionar Valores de Zoom Guardados...</translation>
     </message>
     <message>
         <location filename="../Helpviewer/HelpWindow.py" line="1575"/>
         <source>Manage the saved zoom values</source>
-        <translation type="unfinished"></translation>
+        <translation>Gestionar los valores de zoom guardados</translation>
     </message>
     <message>
         <location filename="../Helpviewer/HelpWindow.py" line="1577"/>
         <source>&lt;b&gt;Manage Saved Zoom Values...&lt;/b&gt;&lt;p&gt;Opens a dialog to manage the saved zoom values.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Gestionar los Valores de Zoom Guardados...&lt;/b&gt;&lt;p&gt;Abre un diálogo para gestionar los valores de zoom almacenados.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -20369,7 +20375,7 @@ URL: {1}</translation>
     <message>
         <location filename="../Plugins/VcsPlugins/vcsMercurial/HgAddSubrepositoryDialog.ui" line="42"/>
         <source>Enter the path of the sub-repository relative to the project</source>
-        <translation type="unfinished">Seleccionar la ruta del sub-repositorio con un diálogo de selección de directorio</translation>
+        <translation>Seleccionar la ruta del sub-repositorio relativo al proyecto</translation>
     </message>
     <message>
         <location filename="../Plugins/VcsPlugins/vcsMercurial/HgAddSubrepositoryDialog.ui" line="49"/>
@@ -21886,13 +21892,14 @@ here. Los patrones válidos que se reconocen son:&lt;/p&gt;
     <message>
         <location filename="../Plugins/VcsPlugins/vcsMercurial/HgExportDialog.ui" line="41"/>
         <source>Enter the target name</source>
-        <translation type="unfinished">Introduzca el nombre de destino</translation>
+        <translation>Introduzca el nombre de destino</translation>
     </message>
     <message>
         <location filename="../Plugins/VcsPlugins/vcsMercurial/HgExportDialog.ui" line="44"/>
         <source>&lt;b&gt;Target name&lt;/b&gt;
 &lt;p&gt;Enter the new name in this field. The target must be the new name or an absolute path.&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Nombre de destino&lt;/b&gt;
+&lt;p&gt;Introducir el nuevo nombre en este campo. El destino será el nuevo nombre o una ruta absoluta.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -29375,7 +29382,7 @@ y se ubicará en este directorio.&lt;/p&gt;</translation>
     <message>
         <location filename="../Preferences/ConfigurationPages/InterfacePage.ui" line="193"/>
         <source>Enter the path of the style sheet file</source>
-        <translation type="unfinished"></translation>
+        <translation>Introducir la ruta del archivo de la hoja de estilos</translation>
     </message>
 </context>
 <context>
@@ -36598,17 +36605,17 @@ Seleccione Actualizar.</translation>
     <message>
         <location filename="../PluginManager/PluginRepositoryDialog.py" line="155"/>
         <source>Network Status: online</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado de la Red: en línea</translation>
     </message>
     <message>
         <location filename="../PluginManager/PluginRepositoryDialog.py" line="157"/>
         <source>Network Status: offline</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado de la Red: sin línea</translation>
     </message>
     <message>
         <location filename="../PluginManager/PluginRepositoryDialog.py" line="447"/>
         <source>Computer is offline.</source>
-        <translation type="unfinished"></translation>
+        <translation>El ordenador está sin línea.</translation>
     </message>
 </context>
 <context>
@@ -50855,7 +50862,7 @@ y se ubicará en este directorio.&lt;/p&gt;</translation>
     <message>
         <location filename="../Plugins/VcsPlugins/vcsSubversion/SvnNewProjectOptionsDialog.ui" line="126"/>
         <source>Select to indicate, that the repository has a standard layout (projectdir/trunk, projectdir/tags, projectdir/branches)</source>
-        <translation type="unfinished">Seleccionar la url del repositorio a traves de un diálogo de selección de directorio o del navegador de repositorios</translation>
+        <translation>Seleccionar para indicar que el repositorio tiene una disposición estándar (projectdir/trunk, projectdir/tags, projectdir/branches)</translation>
     </message>
     <message>
         <location filename="../Plugins/VcsPlugins/vcsSubversion/SvnNewProjectOptionsDialog.ui" line="129"/>
@@ -58106,17 +58113,17 @@ Un doble click en una entrada mostrará el trazado correspondiente.&lt;/p&gt;</t
     <message>
         <location filename="../PyUnit/UnittestDialog.ui" line="20"/>
         <source>Test Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Parámetros de Test</translation>
     </message>
     <message>
         <location filename="../PyUnit/UnittestDialog.ui" line="85"/>
         <source>Run Parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ejecutar Parámetros</translation>
     </message>
     <message>
         <location filename="../PyUnit/UnittestDialog.ui" line="127"/>
         <source>Progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Progreso</translation>
     </message>
 </context>
 <context>
@@ -60329,7 +60336,7 @@ Un doble click en una entrada mostrará el trazado correspondiente.&lt;/p&gt;</t
     <message>
         <location filename="../UI/UserInterface.py" line="6029"/>
         <source>The versions information cannot not be downloaded because you are &lt;b&gt;offline&lt;/b&gt;. Please go online and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>La información de versiones no se puede descargar porque está &lt;b&gt;sin línea&lt;/b&gt;. Por favor, póngase en línea e inténtelo de nuevo.</translation>
     </message>
 </context>
 <context>
@@ -65192,32 +65199,32 @@ puede estar entre -10 y +20, y es el incremento que se añade al tamaño de fuen
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesDialog.ui" line="14"/>
         <source>Saved Zoom Values</source>
-        <translation type="unfinished"></translation>
+        <translation>Valores de Zoom Guardados</translation>
     </message>
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesDialog.ui" line="55"/>
         <source>Enter search term</source>
-        <translation type="unfinished">Introduzca el término de búsqueda</translation>
+        <translation>Introducir término de búsqueda</translation>
     </message>
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesDialog.ui" line="87"/>
         <source>Press to remove the selected entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsar para eliminar las entradas seleccionadas</translation>
     </message>
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesDialog.ui" line="90"/>
         <source>&amp;Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina&amp;r</translation>
     </message>
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesDialog.ui" line="100"/>
         <source>Press to remove all entries</source>
-        <translation type="unfinished"></translation>
+        <translation>Pulsar para eliminar todas las entradas</translation>
     </message>
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesDialog.ui" line="103"/>
         <source>Remove &amp;All</source>
-        <translation type="unfinished">Eliminar &amp;Todas</translation>
+        <translation>Eliminar Tod&amp;as</translation>
     </message>
 </context>
 <context>
@@ -65225,12 +65232,12 @@ puede estar entre -10 y +20, y es el incremento que se añade al tamaño de fuen
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesModel.py" line="32"/>
         <source>Website</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitio Web</translation>
     </message>
     <message>
         <location filename="../Helpviewer/ZoomManager/ZoomValuesModel.py" line="33"/>
         <source>Zoom Value [%]</source>
-        <translation type="unfinished"></translation>
+        <translation>Valor de Zoom [%]</translation>
     </message>
 </context>
 <context>
