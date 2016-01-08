@@ -771,7 +771,8 @@ class DebugClientBase(object):
                 try:
                     value = eval(
                         arg, self.currentThread.getCurrentFrame().f_globals,
-                        self.currentThread.getFrameLocals(0))
+                        self.currentThread.getFrameLocals(self.framenr))
+                    self.currentThread.storeFrameLocals(self.framenr)
                 except Exception:
                     # Report the exception and the traceback
                     try:
@@ -801,10 +802,11 @@ class DebugClientBase(object):
             
             if cmd == DebugProtocol.RequestExec:
                 _globals = self.currentThread.getCurrentFrame().f_globals
-                _locals = self.currentThread.getFrameLocals(0)
+                _locals = self.currentThread.getFrameLocals(self.framenr)
                 try:
                     code = compile(arg + '\n', '<stdin>', 'single')
                     exec code in _globals, _locals
+                    self.currentThread.storeFrameLocals(self.framenr)
                 except Exception:
                     # Report the exception and the traceback
                     try:
@@ -994,6 +996,8 @@ class DebugClientBase(object):
                             _locals["sys"].stdout = __stdout
                         else:
                             exec code in _globals, _locals
+                        
+                        self.currentThread.storeFrameLocals(self.framenr)
                 except SystemExit, exc:
                     self.progTerminated(exc.code)
                 except Exception:
@@ -1356,12 +1360,11 @@ class DebugClientBase(object):
                 scope = -1
         elif scope:
             dict = f.f_globals
+        elif f.f_globals is f.f_locals:
+                scope = -1
         else:
             dict = f.f_locals
             
-            if f.f_globals is f.f_locals:
-                scope = -1
-                
         varlist = [scope]
         
         if scope != -1:
@@ -1401,12 +1404,11 @@ class DebugClientBase(object):
                 scope = -1
         elif scope:
             dict = f.f_globals
+        elif f.f_globals is f.f_locals:
+                scope = -1
         else:
             dict = f.f_locals
-            
-            if f.f_globals is f.f_locals:
-                scope = -1
-                
+        
         varlist = [scope, var]
         
         if scope != -1:
