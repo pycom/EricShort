@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE Project SYSTEM "Project-5.1.dtd">
 <!-- eric project file for project eric6 -->
-<!-- Copyright (C) 2015 Detlev Offenbach, detlev@die-offenbachs.de -->
+<!-- Copyright (C) 2016 Detlev Offenbach, detlev@die-offenbachs.de -->
 <Project version="5.1">
   <Language>en_US</Language>
   <ProjectWordList>Dictionaries/words.dic</ProjectWordList>
@@ -466,6 +466,11 @@
     <Source>Helpviewer/data/html_rc.py</Source>
     <Source>Helpviewer/data/icons_rc.py</Source>
     <Source>Helpviewer/data/javascript_rc.py</Source>
+    <Source>HexEdit/HexEditChunks.py</Source>
+    <Source>HexEdit/HexEditMainWindow.py</Source>
+    <Source>HexEdit/HexEditUndoStack.py</Source>
+    <Source>HexEdit/HexEditWidget.py</Source>
+    <Source>HexEdit/__init__.py</Source>
     <Source>IconEditor/IconEditorGrid.py</Source>
     <Source>IconEditor/IconEditorPalette.py</Source>
     <Source>IconEditor/IconEditorWindow.py</Source>
@@ -866,6 +871,7 @@
     <Source>QScintilla/Exporters/ExporterTEX.py</Source>
     <Source>QScintilla/Exporters/__init__.py</Source>
     <Source>QScintilla/GotoDialog.py</Source>
+    <Source>QScintilla/KeySequenceTranslator.py</Source>
     <Source>QScintilla/Lexers/Lexer.py</Source>
     <Source>QScintilla/Lexers/LexerBash.py</Source>
     <Source>QScintilla/Lexers/LexerBatch.py</Source>
@@ -1248,6 +1254,8 @@
     <Source>eric6_doc.py</Source>
     <Source>eric6_editor.py</Source>
     <Source>eric6_editor.pyw</Source>
+    <Source>eric6_hexeditor.py</Source>
+    <Source>eric6_hexeditor.pyw</Source>
     <Source>eric6_iconeditor.py</Source>
     <Source>eric6_iconeditor.pyw</Source>
     <Source>eric6_plugininstall.py</Source>

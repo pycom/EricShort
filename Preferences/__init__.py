@@ -1128,6 +1128,7 @@ class Prefs(object):
         "HelpViewerGeometry": QByteArray(),
         "HelpInspectorGeometry": QByteArray(),
         "IconEditorGeometry": QByteArray(),
+        "HexEditorGeometry": QByteArray(),
         "MainGeometry": QByteArray(),
         "MainMaximized": False,
     }
