@@ -56,7 +56,7 @@ class E5NetworkIcon(E5ClickableLabel):
             self.setPixmap(UI.PixmapCache.getPixmap("network-offline.png"))
         
         tooltip = self.tr("<p>Shows the network status<br/><br/>"
-                         "<b>Network:</b> {0}</p>")
+                          "<b>Network:</b> {0}</p>")
         
         if self.__networkManager.isOnline():
             tooltip = tooltip.format(self.tr("Connected"))
