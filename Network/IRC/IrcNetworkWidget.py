@@ -104,7 +104,7 @@ class IrcNetworkWidget(QWidget, Ui_IrcNetworkWidget):
     
     def __autoConnect(self):
         """
-        Public method to perform the IRC auto connection.
+        Private method to perform the IRC auto connection.
         """
         for networkName in self.__manager.getNetworkNames():
             if self.__manager.getNetwork(networkName).autoConnect():
