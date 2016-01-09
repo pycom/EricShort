@@ -278,6 +278,7 @@ class UserInterface(E5MainWindow):
         self.browser.pixmapEditFile.connect(self.__editPixmap)
         self.browser.pixmapFile.connect(self.__showPixmap)
         self.browser.svgFile.connect(self.__showSvg)
+        self.browser.binaryFile.connect(self.__openHexEditor)
         self.browser.unittestOpen.connect(self.__unittestScript)
         self.browser.trpreview.connect(self.__TRPreviewer)
         
@@ -344,6 +345,7 @@ class UserInterface(E5MainWindow):
         self.projectBrowser.poBrowser.pixmapEditFile.connect(self.__editPixmap)
         self.projectBrowser.poBrowser.pixmapFile.connect(self.__showPixmap)
         self.projectBrowser.poBrowser.svgFile.connect(self.__showSvg)
+        self.projectBrowser.poBrowser.binaryFile.connect(self.__openHexEditor)
         
         self.project.sourceFile.connect(self.viewmanager.openSourceFile)
         self.project.projectOpened.connect(self.viewmanager.projectOpened)
@@ -1908,6 +1910,20 @@ class UserInterface(E5MainWindow):
         self.miniEditorAct.triggered.connect(self.__openMiniEditor)
         self.actions.append(self.miniEditorAct)
 
+        self.hexEditorAct = E5Action(
+            self.tr('Hex Editor'),
+            UI.PixmapCache.getIcon("hexEditor.png"),
+            self.tr('&Hex Editor...'),
+            0, 0, self, 'hex_editor')
+        self.hexEditorAct.setStatusTip(self.tr(
+            'Start the eric6 Hex Editor'))
+        self.hexEditorAct.setWhatsThis(self.tr(
+            """<b>Hex Editor</b>"""
+            """<p>Starts the eric6 Hex Editor for editing binary files.</p>"""
+        ))
+        self.hexEditorAct.triggered.connect(self.__openHexEditor)
+        self.actions.append(self.hexEditorAct)
+
         if WEBKIT_AVAILABLE:
             self.webBrowserAct = E5Action(
                 self.tr('eric6 Web Browser'),
@@ -2645,6 +2661,7 @@ class UserInterface(E5MainWindow):
         toolstb.addAction(self.sqlBrowserAct)
         toolstb.addSeparator()
         toolstb.addAction(self.miniEditorAct)
+        toolstb.addAction(self.hexEditorAct)
         toolstb.addAction(self.iconEditorAct)
         toolstb.addAction(self.snapshotAct)
         if self.webBrowserAct:
@@ -3347,6 +3364,7 @@ class UserInterface(E5MainWindow):
         btMenu.addAction(self.compareAct)
         btMenu.addAction(self.sqlBrowserAct)
         btMenu.addAction(self.miniEditorAct)
+        btMenu.addAction(self.hexEditorAct)
         btMenu.addAction(self.iconEditorAct)
         btMenu.addAction(self.snapshotAct)
         if self.webBrowserAct:
@@ -4551,6 +4569,18 @@ class UserInterface(E5MainWindow):
                     '<p>Could not start SQL Browser.<br>'
                     'Ensure that it is available as <b>{0}</b>.</p>'
                 ).format(browser))
+        
+    @pyqtSlot()
+    @pyqtSlot(str)
+    def __openHexEditor(self, fn=""):
+        """
+        Private slot to open the hex editor window.
+        
+        @param fn filename of the file to show (string)
+        """
+        from HexEdit.HexEditMainWindow import HexEditMainWindow
+        dlg = HexEditMainWindow(fn, self, fromEric=True, project=self.project)
+        dlg.show()
         
     @pyqtSlot()
     @pyqtSlot(str)

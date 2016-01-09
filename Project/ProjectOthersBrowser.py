@@ -34,6 +34,7 @@ class ProjectOthersBrowser(ProjectBaseBrowser):
     @signal pixmapFile(str) emitted to open a pixmap file
     @signal pixmapEditFile(str) emitted to edit a pixmap file
     @signal svgFile(str) emitted to open a SVG file
+    @signal binaryFile(str) emitted to open a file as binary
     @signal closeSourceWindow(str) emitted after a file has been
         removed/deleted from the project
     @signal showMenu(str, QMenu) emitted when a menu is about to be shown.
@@ -74,6 +75,8 @@ class ProjectOthersBrowser(ProjectBaseBrowser):
         """
         ProjectBaseBrowser._createPopupMenus(self)
         
+        self.menu.addAction(
+            self.tr('Open in Hex Editor'), self._openHexEditor)
         self.editPixmapAct = self.menu.addAction(
             self.tr('Open in Icon Editor'), self._editPixmap)
         self.menu.addSeparator()
@@ -231,6 +234,16 @@ class ProjectOthersBrowser(ProjectBaseBrowser):
             if isinstance(itm, ProjectBrowserFileItem):
                 if itm.isPixmapFile():
                     self.pixmapEditFile.emit(itm.fileName())
+        
+    def _openHexEditor(self):
+        """
+        Protected slot to handle the open in hex editor popup menu entry.
+        """
+        itmList = self.getSelectedItems()
+        
+        for itm in itmList:
+            if isinstance(itm, ProjectBrowserFileItem):
+                self.binaryFile.emit(itm.fileName())
         
     def _openItem(self):
         """

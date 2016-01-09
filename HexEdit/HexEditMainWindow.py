@@ -28,7 +28,6 @@ import Preferences
 
 
 # TODO: implement a configuration page for the hex editor
-# TODO: implement an action in the eric IDE to open a hex editor
 class HexEditMainWindow(E5MainWindow):
     """
     Class implementing the web browser main window.

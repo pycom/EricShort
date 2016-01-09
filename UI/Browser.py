@@ -53,6 +53,7 @@ class Browser(QTreeView):
     @signal pixmapFile(str) emitted to open a pixmap file
     @signal pixmapEditFile(str) emitted to edit a pixmap file
     @signal svgFile(str) emitted to open a SVG file
+    @signal binaryFile(str) emitted to open a file as binary
     @signal unittestOpen(str) emitted to open a Python file for a unittest
     """
     sourceFile = pyqtSignal((str, ), (str, int), (str, list), (str, int, str))
@@ -64,6 +65,7 @@ class Browser(QTreeView):
     pixmapFile = pyqtSignal(str)
     pixmapEditFile = pyqtSignal(str)
     svgFile = pyqtSignal(str)
+    binaryFile = pyqtSignal(str)
     unittestOpen = pyqtSignal(str)
     
     def __init__(self, parent=None):
@@ -212,6 +214,9 @@ class Browser(QTreeView):
         self.menu = QMenu(self)
         self.menu.addAction(
             QCoreApplication.translate('Browser', 'Open'), self._openItem)
+        self.menu.addAction(
+            QCoreApplication.translate('Browser', 'Open in Hex Editor'),
+            self._openHexEditor)
         self.editPixmapAct = self.menu.addAction(
             QCoreApplication.translate('Browser', 'Open in Icon Editor'),
             self._editPixmap)
@@ -516,6 +521,16 @@ class Browser(QTreeView):
             if isinstance(itm, BrowserFileItem):
                 if itm.isPixmapFile():
                     self.pixmapEditFile.emit(itm.fileName())
+        
+    def _openHexEditor(self):
+        """
+        Protected slot to handle the open in hex editor popup menu entry.
+        """
+        itmList = self.getSelectedItems([BrowserFileItem])
+        
+        for itm in itmList:
+            if isinstance(itm, BrowserFileItem):
+                self.binaryFile.emit(itm.fileName())
         
     def _copyToClipboard(self):
         """
