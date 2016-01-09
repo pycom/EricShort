@@ -285,6 +285,8 @@ class IconEditorWindow(E5MainWindow):
         self.closeAllAct.triggered.connect(self.__closeAll)
         self.__actions.append(self.closeAllAct)
         
+        # TODO: add action to close all other windows
+        
         self.exitAct = E5Action(
             self.tr('Quit'),
             UI.PixmapCache.getIcon("exit.png"),
