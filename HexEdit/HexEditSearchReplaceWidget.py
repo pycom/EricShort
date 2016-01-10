@@ -7,6 +7,8 @@
 Module implementing a search and replace widget for the hex editor.
 """
 
+from __future__ import unicode_literals
+
 from PyQt5.QtCore import pyqtSlot, Qt, QByteArray
 from PyQt5.QtWidgets import QWidget
 
