@@ -88,11 +88,15 @@ class HexEditMainWindow(E5MainWindow):
         
         self.__class__.windows.append(self)
         
+        state = Preferences.getHexEditor("HexEditorState")
+        self.restoreState(state)
+        
         self.__editor.currentAddressChanged.connect(self.__showAddress)
         self.__editor.currentSizeChanged.connect(self.__showSize)
         self.__editor.dataChanged.connect(self.__modificationChanged)
         self.__editor.overwriteModeChanged.connect(self.__showEditMode)
         self.__editor.readOnlyChanged.connect(self.__showReadOnlyMode)
+        self.__editor.readOnlyChanged.connect(self.__modificationChanged)
         
         self.__project = project
         self.__lastOpenPath = ""
@@ -415,6 +419,7 @@ class HexEditMainWindow(E5MainWindow):
         ))
         self.readonlyAct.setChecked(False)
         self.readonlyAct.toggled[bool].connect(self.__editor.setReadOnly)
+        self.__editor.readOnlyChanged.connect(self.readonlyAct.setChecked)
         self.__actions.append(self.readonlyAct)
         
         self.searchAct = E5Action(
@@ -731,6 +736,9 @@ class HexEditMainWindow(E5MainWindow):
         @type QCloseEvent
         """
         if self.__maybeSave():
+            state = self.saveState()
+            Preferences.setHexEditor("HexEditorState", state)
+
             Preferences.setGeometry("HexEditorGeometry", self.saveGeometry())
             
             try:
@@ -1075,6 +1083,7 @@ class HexEditMainWindow(E5MainWindow):
         self.cutAct.setEnabled(not self.__editor.isReadOnly() and
                                self.__editor.hasSelection())
         self.pasteAct.setEnabled(not self.__editor.isReadOnly())
+        self.replaceAct.setEnabled(not self.__editor.isReadOnly())
     
     @pyqtSlot(bool)
     def __modificationChanged(self, m):

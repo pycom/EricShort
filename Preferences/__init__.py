@@ -1188,6 +1188,11 @@ class Prefs(object):
         
         "AskOnShutdown": True,
     }
+    
+    # defaults for Hex Editor
+    hexEditorDefaults = {
+        "HexEditorState": QByteArray(),
+    }
 
 
 def readToolGroups(prefClass=Prefs):
@@ -2942,6 +2947,29 @@ def setIrc(key, value, prefClass=Prefs):
     @param prefClass preferences class used as the storage area
     """
     prefClass.settings.setValue("IRC/" + key, value)
+    
+
+def getHexEditor(key, prefClass=Prefs):
+    """
+    Module function to retrieve the Hex Editor related settings.
+    
+    @param key the key of the value to get
+    @param prefClass preferences class used as the storage area
+    @return the requested user setting
+    """
+    return prefClass.settings.value(
+        "HexEditor/" + key, prefClass.hexEditorDefaults[key])
+    
+
+def setHexEditor(key, value, prefClass=Prefs):
+    """
+    Module function to store the Hex Editor related settings.
+    
+    @param key the key of the setting to be set
+    @param value the value to be set
+    @param prefClass preferences class used as the storage area
+    """
+    prefClass.settings.setValue("HexEditor/" + key, value)
 
 
 def getGeometry(key, prefClass=Prefs):
