@@ -94,7 +94,7 @@ class HexEditWidget(QAbstractScrollArea):
         self.__readOnly = False
         # set read only mode on/off
         self.__cursorPosition = 0
-        # absolute positioin of cursor, 1 Byte == 2 tics
+        # absolute position of cursor, 1 Byte == 2 tics
         
         self.__addrDigits = 0
         self.__blink = True
@@ -732,7 +732,7 @@ class HexEditWidget(QAbstractScrollArea):
         @return formatted representation of the selection
         @rtype str
         """
-        byteArray = self.__chunks.data(self.__getSelectionBegin(),
+        byteArray = self.__chunks.data(self.getSelectionBegin(),
                                        self.__getSelectionLength())
         return self.__toReadable(byteArray)
     
@@ -1039,7 +1039,7 @@ class HexEditWidget(QAbstractScrollArea):
         """
         if not self.__readOnly:
             byteArray = self.__toHex(self.__chunks.data(
-                self.__getSelectionBegin(), self.__getSelectionLength()))
+                self.getSelectionBegin(), self.__getSelectionLength()))
             idx = 32
             while idx < len(byteArray):
                 byteArray.insert(idx, "\n")
@@ -1048,20 +1048,20 @@ class HexEditWidget(QAbstractScrollArea):
             cb.setText(byteArray.decode(encoding="latin1"))
             if self.__overwriteMode:
                 length = self.__getSelectionLength()
-                self.replaceByteArray(self.__getSelectionBegin(), length,
+                self.replaceByteArray(self.getSelectionBegin(), length,
                                       bytearray(length))
             else:
-                self.remove(self.__getSelectionBegin(),
+                self.remove(self.getSelectionBegin(),
                             self.__getSelectionLength())
-            self.setCursorPosition(2 * self.__getSelectionBegin())
-            self.__resetSelection(2 * self.__getSelectionBegin())
+            self.setCursorPosition(2 * self.getSelectionBegin())
+            self.__resetSelection(2 * self.getSelectionBegin())
     
     def copy(self):
         """
         Public method to copy the selected bytes to the clipboard.
         """
         byteArray = self.__toHex(self.__chunks.data(
-            self.__getSelectionBegin(), self.__getSelectionLength()))
+            self.getSelectionBegin(), self.__getSelectionLength()))
         idx = 32
         while idx < len(byteArray):
             byteArray.insert(idx, "\n")
@@ -1083,7 +1083,7 @@ class HexEditWidget(QAbstractScrollArea):
                 self.insertByteArray(self.__bPosCurrent, byteArray)
             self.setCursorPosition(
                 self.__cursorPosition + 2 * len(byteArray))
-            self.__resetSelection(2 * self.__getSelectionBegin())
+            self.__resetSelection(2 * self.getSelectionBegin())
     
     def deleteByte(self):
         """
@@ -1091,7 +1091,7 @@ class HexEditWidget(QAbstractScrollArea):
         """
         if not self.__readOnly:
             if self.hasSelection():
-                self.__bPosCurrent = self.__getSelectionBegin()
+                self.__bPosCurrent = self.getSelectionBegin()
                 if self.__overwriteMode:
                     byteArray = bytearray(self.__getSelectionLength())
                     self.replaceByteArray(self.__bPosCurrent, len(byteArray),
@@ -1113,7 +1113,7 @@ class HexEditWidget(QAbstractScrollArea):
         """
         if not self.__readOnly:
             if self.hasSelection():
-                self.__bPosCurrent = self.__getSelectionBegin()
+                self.__bPosCurrent = self.getSelectionBegin()
                 self.setCursorPosition(2 * self.__bPosCurrent)
                 if self.__overwriteMode:
                     byteArray = bytearray(self.__getSelectionLength())
@@ -1222,12 +1222,12 @@ class HexEditWidget(QAbstractScrollArea):
                     if self.__overwriteMode:
                         length = self.__getSelectionLength()
                         self.replaceByteArray(
-                            self.__getSelectionBegin(), length,
+                            self.getSelectionBegin(), length,
                             bytearray(length))
                     else:
-                        self.remove(self.__getSelectionBegin(),
+                        self.remove(self.getSelectionBegin(),
                                     self.__getSelectionLength())
-                        self.__bPosCurrent = self.__getSelectionBegin()
+                        self.__bPosCurrent = self.getSelectionBegin()
                     self.setCursorPosition(2 * self.__bPosCurrent)
                     self.__resetSelection(2 * self.__bPosCurrent)
                 
@@ -1349,8 +1349,8 @@ class HexEditWidget(QAbstractScrollArea):
                     painter.setPen(colStandard)
                     
                     posBa = self.__bPosFirst + bPosLine + colIdx
-                    if self.__getSelectionBegin() <= posBa and \
-                            self.__getSelectionEnd() > posBa:
+                    if self.getSelectionBegin() <= posBa and \
+                            self.getSelectionEnd() > posBa:
                         c = self.__selectionBrush.color()
                         painter.setPen(self.__selectionPen)
                     elif self.__highlighting:
@@ -1478,18 +1478,18 @@ class HexEditWidget(QAbstractScrollArea):
         
         self.selectionAvailable.emit(True)
     
-    def __getSelectionBegin(self):
+    def getSelectionBegin(self):
         """
-        Private method to get the start of the selection.
+        Public method to get the start of the selection.
         
         @return selection start
         @rtype int
         """
         return self.__bSelectionBegin
     
-    def __getSelectionEnd(self):
+    def getSelectionEnd(self):
         """
-        Private method to get the end of the selection.
+        Public method to get the end of the selection.
         
         @return selection end
         @rtype int

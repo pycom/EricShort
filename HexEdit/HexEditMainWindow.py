@@ -13,13 +13,14 @@ import os
 
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFile, QFileInfo, QSize
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QWhatsThis, QLabel
+from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout
 
 from E5Gui.E5Action import E5Action
 from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui import E5FileDialog, E5MessageBox
 
 from .HexEditWidget import HexEditWidget
+from .HexEditSearchReplaceWidget import HexEditSearchReplaceWidget
 
 import UI.PixmapCache
 import UI.Config
@@ -59,7 +60,19 @@ class HexEditMainWindow(E5MainWindow):
                           Preferences.getUI("StyleSheet"))
         
         self.__editor = HexEditWidget()
-        self.setCentralWidget(self.__editor)
+        self.__searchWidget = HexEditSearchReplaceWidget(self.__editor, False)
+        self.__replaceWidget = HexEditSearchReplaceWidget(self.__editor, True)
+        cw = QWidget()
+        layout = QVBoxLayout(cw)
+        layout.setContentsMargins(1, 1, 1, 1)
+        layout.setSpacing(1)
+        layout.addWidget(self.__editor)
+        layout.addWidget(self.__searchWidget)
+        cw.setLayout(layout)
+        layout.addWidget(self.__replaceWidget)
+        self.__searchWidget.hide()
+        self.__replaceWidget.hide()
+        self.setCentralWidget(cw)
         
         g = Preferences.getGeometry("HexEditorGeometry")
         if g.isEmpty():
@@ -100,8 +113,6 @@ class HexEditMainWindow(E5MainWindow):
         
         self.__initFileActions()
         self.__initEditActions()
-##        self.__initViewActions()
-##        self.__initToolsActions()
         self.__initHelpActions()
         
     def __initFileActions(self):
@@ -406,6 +417,76 @@ class HexEditMainWindow(E5MainWindow):
         self.readonlyAct.toggled[bool].connect(self.__editor.setReadOnly)
         self.__actions.append(self.readonlyAct)
         
+        self.searchAct = E5Action(
+            self.tr('Search'),
+            UI.PixmapCache.getIcon("find.png"),
+            self.tr('&Search...'),
+            QKeySequence(self.tr("Ctrl+F", "Search|Search")),
+            0,
+            self, 'hexEditor_edit_search')
+        self.searchAct.setStatusTip(self.tr('Search for a text'))
+        self.searchAct.setWhatsThis(self.tr(
+            """<b>Search</b>"""
+            """<p>Search for some text in the current editor. A"""
+            """ dialog is shown to enter the searchtext and options"""
+            """ for the search.</p>"""
+        ))
+        self.searchAct.triggered.connect(self.__search)
+        self.__actions.append(self.searchAct)
+        
+        self.searchNextAct = E5Action(
+            self.tr('Search next'),
+            UI.PixmapCache.getIcon("findNext.png"),
+            self.tr('Search &next'),
+            QKeySequence(self.tr("F3", "Search|Search next")),
+            0,
+            self, 'hexEditor_edit_search_next')
+        self.searchNextAct.setStatusTip(self.tr(
+            'Search next occurrence of text'))
+        self.searchNextAct.setWhatsThis(self.tr(
+            """<b>Search next</b>"""
+            """<p>Search the next occurrence of some text in the current"""
+            """ editor. The previously entered searchtext and options are"""
+            """ reused.</p>"""
+        ))
+        self.searchNextAct.triggered.connect(self.__searchWidget.findPrevNext)
+        self.__actions.append(self.searchNextAct)
+        
+        self.searchPrevAct = E5Action(
+            self.tr('Search previous'),
+            UI.PixmapCache.getIcon("findPrev.png"),
+            self.tr('Search &previous'),
+            QKeySequence(self.tr("Shift+F3", "Search|Search previous")),
+            0,
+            self, 'hexEditor_edit_search_previous')
+        self.searchPrevAct.setStatusTip(self.tr(
+            'Search previous occurrence of text'))
+        self.searchPrevAct.setWhatsThis(self.tr(
+            """<b>Search previous</b>"""
+            """<p>Search the previous occurrence of some text in the current"""
+            """ editor. The previously entered searchtext and options are"""
+            """ reused.</p>"""
+        ))
+        self.searchPrevAct.triggered.connect(
+            lambda: self.__searchWidget.findPrevNext(True))
+        self.__actions.append(self.searchPrevAct)
+        
+        self.replaceAct = E5Action(
+            self.tr('Replace'),
+            self.tr('&Replace...'),
+            QKeySequence(self.tr("Ctrl+R", "Search|Replace")),
+            0,
+            self, 'hexEditor_edit_search_replace')
+        self.replaceAct.setStatusTip(self.tr('Replace some text'))
+        self.replaceAct.setWhatsThis(self.tr(
+            """<b>Replace</b>"""
+            """<p>Search for some text in the current editor and replace it."""
+            """ A dialog is shown to enter the searchtext, the replacement"""
+            """ text and options for the search and replace.</p>"""
+        ))
+        self.replaceAct.triggered.connect(self.__replace)
+        self.__actions.append(self.replaceAct)
+        
         self.redoAct.setEnabled(False)
         self.__editor.canRedoChanged.connect(self.redoAct.setEnabled)
         
@@ -508,6 +589,11 @@ class HexEditMainWindow(E5MainWindow):
         menu.addAction(self.deselectAllAct)
         menu.addAction(self.saveSelectionReadableAct)
         menu.addSeparator()
+        menu.addAction(self.searchAct)
+        menu.addAction(self.searchNextAct)
+        menu.addAction(self.searchPrevAct)
+        menu.addAction(self.replaceAct)
+        menu.addSeparator()
         menu.addAction(self.readonlyAct)
         
         mb.addSeparator()
@@ -544,6 +630,13 @@ class HexEditMainWindow(E5MainWindow):
         edittb.addAction(self.cutAct)
         edittb.addAction(self.copyAct)
         edittb.addAction(self.pasteAct)
+        
+        searchtb = self.addToolBar(self.tr("Find"))
+        searchtb.setObjectName("SearchToolBar")
+        searchtb.setIconSize(UI.Config.ToolBarIconSize)
+        searchtb.addAction(self.searchAct)
+        searchtb.addAction(self.searchNextAct)
+        searchtb.addAction(self.searchPrevAct)
         
         helptb = self.addToolBar(self.tr("Help"))
         helptb.setObjectName("HelpToolBar")
@@ -1014,3 +1107,17 @@ class HexEditMainWindow(E5MainWindow):
         Private slot called in to enter Whats This mode.
         """
         QWhatsThis.enterWhatsThisMode()
+        
+    def __search(self):
+        """
+        Private method to handle the search action.
+        """
+        self.__replaceWidget.hide()
+        self.__searchWidget.show()
+        
+    def __replace(self):
+        """
+        Private method to handle the replace action.
+        """
+        self.__searchWidget.hide()
+        self.__replaceWidget.show()

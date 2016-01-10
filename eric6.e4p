@@ -468,6 +468,7 @@
     <Source>Helpviewer/data/javascript_rc.py</Source>
     <Source>HexEdit/HexEditChunks.py</Source>
     <Source>HexEdit/HexEditMainWindow.py</Source>
+    <Source>HexEdit/HexEditSearchReplaceWidget.py</Source>
     <Source>HexEdit/HexEditUndoStack.py</Source>
     <Source>HexEdit/HexEditWidget.py</Source>
     <Source>HexEdit/__init__.py</Source>
@@ -1370,6 +1371,8 @@
     <Form>Helpviewer/WebPlugins/ClickToFlash/ClickToFlash.ui</Form>
     <Form>Helpviewer/WebPlugins/ClickToFlash/ClickToFlashWhitelistDialog.ui</Form>
     <Form>Helpviewer/ZoomManager/ZoomValuesDialog.ui</Form>
+    <Form>HexEdit/HexEditReplaceWidget.ui</Form>
+    <Form>HexEdit/HexEditSearchWidget.ui</Form>
     <Form>IconEditor/IconSizeDialog.ui</Form>
     <Form>MultiProject/AddProjectDialog.ui</Form>
     <Form>MultiProject/PropertiesDialog.ui</Form>
