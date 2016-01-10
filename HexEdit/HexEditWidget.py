@@ -100,6 +100,7 @@ class HexEditWidget(QAbstractScrollArea):
         self.__blink = True
         self.__bData = QBuffer()
         self.__cursorRect = QRect()
+        self.__cursorRectAscii = QRect()
         self.__dataShown = bytearray()
         self.__hexDataShown = bytearray()
         self.__lastEventSize = 0
@@ -328,6 +329,8 @@ class HexEditWidget(QAbstractScrollArea):
         # step 1: delete old cursor
         self.__blink = False
         self.viewport().update(self.__cursorRect)
+        if self.__asciiArea:
+            self.viewport().update(self.__cursorRectAscii)
         
         # step 2: check, if cursor is in range
         if self.__overwriteMode and pos > (self.__chunks.size() * 2 - 1):
@@ -356,9 +359,18 @@ class HexEditWidget(QAbstractScrollArea):
                 self.__pxCursorX, self.__pxCursorY - self.__pxCharHeight + 4,
                 self.__pxCursorWidth, self.__pxCharHeight)
         
-        # step 4: draw new cursor
+        # step 4: calculate position of ASCII cursor
+        x = self.__bPosCurrent % self.BYTES_PER_LINE
+        self.__cursorRectAscii = QRect(
+            self.__pxPosAsciiX + x * self.__pxCharWidth - 1,
+            self.__pxCursorY - self.__pxCharHeight + 4,
+            self.__pxCharWidth + 1, self.__pxCharHeight + 1)
+        
+        # step 5: draw new cursors
         self.__blink = True
         self.viewport().update(self.__cursorRect)
+        if self.__asciiArea:
+            self.viewport().update(self.__cursorRectAscii)
         self.currentAddressChanged.emit(self.__bPosCurrent)
     
     def data(self):
@@ -526,7 +538,7 @@ class HexEditWidget(QAbstractScrollArea):
         self.__pxGapAdrHex = self.__pxCharWidth
         self.__pxGapHexAscii = 2 * self.__pxCharWidth
         self.__pxCursorWidth = self.__pxCharHeight // 7
-        self.__pxSelectionSub = self.__pxCharHeight // 5
+        self.__pxSelectionSub = self.fontMetrics().descent()
         self.viewport().update()
     
     def dataAt(self, pos, count=-1):
@@ -1292,7 +1304,8 @@ class HexEditWidget(QAbstractScrollArea):
         """
         painter = QPainter(self.viewport())
         
-        if evt.rect() != self.__cursorRect:
+        if evt.rect() != self.__cursorRect and \
+                evt.rect() != self.__cursorRectAscii:
             pxOfsX = self.horizontalScrollBar().value()
             pxPosStartY = self.__pxCharHeight
             
@@ -1423,6 +1436,9 @@ class HexEditWidget(QAbstractScrollArea):
             else:
                 c = ""
             painter.drawText(self.__pxCursorX, self.__pxCursorY, c)
+        
+        if self.__asciiArea:
+            painter.drawRect(self.__cursorRectAscii)
         
         # emit event, if size has changed
         if self.__lastEventSize != self.__chunks.size():

@@ -18,6 +18,9 @@ from E5Gui import E5MessageBox
 import UI.PixmapCache
 
 
+# TODO: make the histories containing tuples with format index and text
+# TODO: add more format types (Dec, Oct, Bin)
+# TODO: add input validators to limit the find/replace input (use QRegExpValidator)
 class HexEditSearchReplaceWidget(QWidget):
     """
     Class implementing a search and replace widget for the hex editor.
