@@ -243,13 +243,14 @@ class HexEditSearchReplaceWidget(QWidget):
            not self.__ui.replaceSearchButton.isEnabled():
             return
         
+        fba, ftxt = self.__getContent(False)
         rba, rtxt = self.__getContent(True)
         
         ok = False
         if self.__editor.hasSelection():
             # we did a successful search before
             startIdx = self.__editor.getSelectionBegin()
-            self.__editor.replaceByteArray(startIdx, len(rba), rba)
+            self.__editor.replaceByteArray(startIdx, len(fba), rba)
             
             if searchNext:
                 ok = self.findPrevNext(self.__findBackwards)
@@ -274,7 +275,7 @@ class HexEditSearchReplaceWidget(QWidget):
         while idx >= 0:
             idx = self.__editor.indexOf(fba, idx)
             if idx >= 0:
-                self.__editor.replaceByteArray(idx, len(rba), rba)
+                self.__editor.replaceByteArray(idx, len(fba), rba)
                 idx += len(rba)
                 replacements += 1
         
