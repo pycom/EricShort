@@ -78,6 +78,7 @@ class ConfigurationWidget(QWidget):
     DefaultMode = 0
     HelpBrowserMode = 1
     TrayStarterMode = 2
+    HexEditorMode = 3
     
     def __init__(self, parent=None, fromEric=True, displayMode=DefaultMode,
                  expandedEntries=[]):
@@ -88,7 +89,7 @@ class ConfigurationWidget(QWidget):
         @keyparam fromEric flag indicating a dialog generation from within the
             eric6 ide (boolean)
         @keyparam displayMode mode of the configuration dialog
-            (DefaultMode, HelpBrowserMode, TrayStarterMode)
+            (DefaultMode, HelpBrowserMode, TrayStarterMode, HexEditorMode)
         @exception RuntimeError raised to indicate an invalid dialog mode
         @keyparam expandedEntries list of entries to be shown expanded
             (list of strings)
@@ -96,7 +97,8 @@ class ConfigurationWidget(QWidget):
         assert displayMode in (
             ConfigurationWidget.DefaultMode,
             ConfigurationWidget.HelpBrowserMode,
-            ConfigurationWidget.TrayStarterMode
+            ConfigurationWidget.TrayStarterMode,
+            ConfigurationWidget.HexEditorMode,
         )
         
         super(ConfigurationWidget, self).__init__(parent)
@@ -138,6 +140,9 @@ class ConfigurationWidget(QWidget):
                 "graphicsPage":
                 [self.tr("Graphics"), "preferences-graphics.png",
                  "GraphicsPage", None, None],
+                "hexEditorPage":
+                [self.tr("Hex Editor"), "hexEditor.png",
+                 "HexEditorPage", None, None],
                 "iconsPage":
                 [self.tr("Icons"), "preferences-icons.png",
                  "IconsPage", None, None],
@@ -395,6 +400,19 @@ class ConfigurationWidget(QWidget):
                  "TrayStarterPage", None, None],
             }
         
+        elif displayMode == ConfigurationWidget.HexEditorMode:
+            self.configItems = {
+                # key : [display string, pixmap name, dialog module name or
+                #        page creation function, parent key,
+                #        reference to configuration page (must always be last)]
+                # The dialog module must have the module function 'create' to
+                # create the configuration page. This must have the method
+                # 'save' to save the settings.
+                "hexEditorPage":
+                [self.tr("Hex Editor"), "hexEditor.png",
+                 "HexEditorPage", None, None],
+            }
+        
         else:
             raise RuntimeError("Illegal mode value: {0}".format(displayMode))
         
@@ -426,7 +444,13 @@ class ConfigurationWidget(QWidget):
         self.buttonBox.accepted.connect(self.accept)
         self.buttonBox.rejected.connect(self.rejected)
         
-        if displayMode != ConfigurationWidget.TrayStarterMode:
+        if displayMode in [ConfigurationWidget.HelpBrowserMode,
+                           ConfigurationWidget.TrayStarterMode,
+                           ConfigurationWidget.HexEditorMode]:
+            self.configListSearch.hide()
+        
+        if displayMode not in [ConfigurationWidget.TrayStarterMode,
+                               ConfigurationWidget.HexEditorMode]:
             self.__initLexers()
         
     def accept(self):
@@ -764,6 +788,7 @@ class ConfigurationWidget(QWidget):
             self.preferencesChanged.emit()
             if savedState is not None:
                 page.setState(savedState)
+            page.polishPage()
         
     @pyqtSlot()
     def on_resetButton_clicked(self):
@@ -828,6 +853,7 @@ class ConfigurationDialog(QDialog):
     DefaultMode = ConfigurationWidget.DefaultMode
     HelpBrowserMode = ConfigurationWidget.HelpBrowserMode
     TrayStarterMode = ConfigurationWidget.TrayStarterMode
+    HexEditorMode = ConfigurationWidget.HexEditorMode
     
     def __init__(self, parent=None, name=None, modal=False,
                  fromEric=True, displayMode=ConfigurationWidget.DefaultMode,
@@ -841,7 +867,7 @@ class ConfigurationDialog(QDialog):
         @keyparam fromEric flag indicating a dialog generation from within the
             eric6 ide (boolean)
         @keyparam displayMode mode of the configuration dialog
-            (DefaultMode, HelpBrowserMode, TrayStarterMode)
+            (DefaultMode, HelpBrowserMode, TrayStarterMode, HexEditorMode)
         @keyparam expandedEntries list of entries to be shown expanded
             (list of strings)
         """

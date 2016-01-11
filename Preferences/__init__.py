@@ -1192,7 +1192,23 @@ class Prefs(object):
     # defaults for Hex Editor
     hexEditorDefaults = {
         "HexEditorState": QByteArray(),
+        "AddressAreaWidth": 4,
+        "ShowAddressArea": True,
+        "ShowAsciiArea": True,
+        "OpenInOverwriteMode": True,
+        "OpenReadOnly": False,
+        "HighlightChanges": True,
+        "HighlightingBackGround": QColor(0xff, 0xff, 0x99, 0xff),
+        "HighlightingForeGround": QColor(Qt.black),
+        "SelectionBackGround": QColor("#308cc6"),
+        "SelectionForeGround": QColor(Qt.white),
+        "AddressAreaBackGround": QColor("#efedec"),
+        "AddressAreaForeGround": QColor(Qt.black),
     }
+    if isWindowsPlatform():
+        hexEditorDefaults["Font"] = "Courier,10,-1,5,50,0,0,0,0,0"
+    else:
+        hexEditorDefaults["Font"] = "Monospace,10,-1,5,50,0,0,0,0,0"
 
 
 def readToolGroups(prefClass=Prefs):
@@ -2957,8 +2973,26 @@ def getHexEditor(key, prefClass=Prefs):
     @param prefClass preferences class used as the storage area
     @return the requested user setting
     """
-    return prefClass.settings.value(
-        "HexEditor/" + key, prefClass.hexEditorDefaults[key])
+    if key in ["AddressAreaWidth"]:
+        return int(prefClass.settings.value(
+            "HexEditor/" + key, prefClass.hexEditorDefaults[key]))
+    elif key in ["ShowAddressArea", "ShowAsciiArea", "OpenInOverwriteMode",
+                 "OpenReadOnly", "HighlightChanges"]:
+        return toBool(prefClass.settings.value(
+            "HexEditor/" + key, prefClass.hexEditorDefaults[key]))
+    elif key in ["HighlightingBackGround", "HighlightingForeGround",
+                 "SelectionBackGround", "SelectionForeGround",
+                 "AddressAreaBackGround", "AddressAreaForeGround"]:
+        return QColor(prefClass.settings.value(
+            "HexEditor/" + key, prefClass.hexEditorDefaults[key]))
+    elif key in ["Font"]:
+        f = QFont()
+        f.fromString(prefClass.settings.value(
+            "HexEditor/" + key, prefClass.hexEditorDefaults[key]))
+        return f
+    else:
+        return prefClass.settings.value(
+            "HexEditor/" + key, prefClass.hexEditorDefaults[key])
     
 
 def setHexEditor(key, value, prefClass=Prefs):
@@ -2969,7 +3003,18 @@ def setHexEditor(key, value, prefClass=Prefs):
     @param value the value to be set
     @param prefClass preferences class used as the storage area
     """
-    prefClass.settings.setValue("HexEditor/" + key, value)
+    if key in ["HighlightingBackGround", "HighlightingForeGround",
+               "SelectionBackGround", "SelectionForeGround",
+               "AddressAreaBackGround", "AddressAreaForeGround"]:
+        if value.alpha() < 255:
+            val = "#{0:8x}".format(value.rgba())
+        else:
+            val = value.name()
+        prefClass.settings.setValue("HexEditor/" + key, val)
+    elif key in ["Font"]:
+        prefClass.settings.setValue("HexEditor/" + key, value.toString())
+    else:
+        prefClass.settings.setValue("HexEditor/" + key, value)
 
 
 def getGeometry(key, prefClass=Prefs):

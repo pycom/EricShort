@@ -21,7 +21,6 @@ from .HexEditUndoStack import HexEditUndoStack
 import Globals
 
 
-# TODO: implement cursor in ASCII area
 # TODO: implement editing in ASCII area
 
 
@@ -71,8 +70,9 @@ class HexEditWidget(QAbstractScrollArea):
         # Properties
         self.__addressArea = True
         # switch the address area on/off
-        self.__addressAreaColor = QColor()
-        # color of the address area
+        self.__addressAreaBrush = QBrush()
+        self.__addressAreaPen = QPen()
+        # background and pen of the address area
         self.__addressOffset = 0
         # offset into the shown address range
         self.__addressWidth = 4
@@ -137,9 +137,15 @@ class HexEditWidget(QAbstractScrollArea):
         else:
             self.setFont(QFont("Monospace", 10))
         
-        self.setAddressAreaColor(self.palette().alternateBase().color())
-        self.setHighlightColor(QColor(0xff, 0xff, 0x99, 0xff))
-        self.setSelectionColor(self.palette().highlight().color())
+        self.setAddressAreaColors(
+            self.palette().color(QPalette.WindowText),
+            self.palette().alternateBase().color())
+        self.setHighlightColors(
+            self.palette().color(QPalette.WindowText),
+            QColor(0xff, 0xff, 0x99, 0xff))
+        self.setSelectionColors(
+            self.palette().highlightedText().color(),
+            self.palette().highlight().color())
         
         self.__cursorTimer = QTimer()
         self.__cursorTimer.timeout.connect(self.__updateCursor)
@@ -211,23 +217,26 @@ class HexEditWidget(QAbstractScrollArea):
         self.setCursorPosition(self.__cursorPosition)
         self.viewport().update()
     
-    def addressAreaColor(self):
+    def addressAreaColors(self):
         """
-        Public method to get the address area color.
+        Public method to get the address area colors.
         
-        @return address area color
-        @rtype QColor
+        @return address area foreground and background colors
+        @rtype tuple of 2 QColor
         """
-        return QColor(self.__addressAreaColor)
+        return self.__addressAreaPen.color(), self.__addressAreaBrush.color()
     
-    def setAddressAreaColor(self, color):
+    def setAddressAreaColors(self, foreground, background):
         """
-        Public method to set the address area color.
+        Public method to set the address area colors.
         
-        @param color address area color
+        @param foreground address area foreground color
+        @type QColor
+        @param background address area background color
         @type QColor
         """
-        self.__addressAreaColor = QColor(color)
+        self.__addressAreaPen = QPen(foreground)
+        self.__addressAreaBrush = QBrush(background)
         self.viewport().update()
     
     def addressOffset(self):
@@ -436,25 +445,26 @@ class HexEditWidget(QAbstractScrollArea):
         self.__highlighting = on
         self.viewport().update()
     
-    def highlightingColor(self):
+    def highlightColors(self):
         """
-        Public method to get the highlighting color.
+        Public method to get the highlight colors.
         
-        @return highlighting color
-        @rtype QColor
+        @return highlight foreground and background colors
+        @rtype tuple of 2 QColor
         """
-        return self.__highlightingBrush.color()
+        return self.__highlightingPen.color(), self.__highlightingBrush.color()
     
-    def setHighlightColor(self, color):
+    def setHighlightColors(self, foreground, background):
         """
-        Public method to set the highlight color.
+        Public method to set the highlight colors.
         
-        @param color new highlight color
+        @param foreground highlight foreground color
+        @type QColor
+        @param background highlight background color
         @type QColor
         """
-        self.__highlightingBrush = QBrush(color)
-        self.__highlightingPen = QPen(
-            self.viewport().palette().color(QPalette.WindowText))
+        self.__highlightingPen = QPen(foreground)
+        self.__highlightingBrush = QBrush(background)
         self.viewport().update()
     
     def overwriteMode(self):
@@ -476,24 +486,26 @@ class HexEditWidget(QAbstractScrollArea):
         self.__overwriteMode = on
         self.overwriteModeChanged.emit(self.__overwriteMode)
     
-    def selectionColor(self):
+    def selectionColors(self):
         """
-        Public method to get the selection color.
+        Public method to get the selection colors.
         
-        @return selection color
-        @rtype QColor
+        @return selection foreground and background colors
+        @rtype tuple of 2 QColor
         """
-        return self.__selectionBrush.color()
+        return self.__selectionPen.color(), self.__selectionBrush.color()
     
-    def setSelectionColor(self, color):
+    def setSelectionColors(self, foreground, background):
         """
-        Public method to set the selection color.
+        Public method to set the selection colors.
         
-        @param color new selection color
+        @param foreground selection foreground color
+        @type QColor
+        @param background selection background color
         @type QColor
         """
-        self.__selectionBrush = QBrush(color)
-        self.__selectionPen = QPen(Qt.white)
+        self.__selectionPen = QPen(foreground)
+        self.__selectionBrush = QBrush(background)
         self.viewport().update()
     
     def isReadOnly(self):
@@ -539,6 +551,7 @@ class HexEditWidget(QAbstractScrollArea):
         self.__pxGapHexAscii = 2 * self.__pxCharWidth
         self.__pxCursorWidth = self.__pxCharHeight // 7
         self.__pxSelectionSub = self.fontMetrics().descent()
+        self.__adjust()
         self.viewport().update()
     
     def dataAt(self, pos, count=-1):
@@ -1317,7 +1330,7 @@ class HexEditWidget(QAbstractScrollArea):
                     QRect(-pxOfsX, evt.rect().top(),
                           self.__pxPosHexX - self.__pxGapAdrHex // 2 - pxOfsX,
                           self.height()),
-                    self.__addressAreaColor)
+                    self.__addressAreaBrush)
             if self.__asciiArea:
                 linePos = self.__pxPosAsciiX - (self.__pxGapHexAscii // 2)
                 painter.setPen(Qt.gray)
@@ -1329,6 +1342,7 @@ class HexEditWidget(QAbstractScrollArea):
             
             # paint the address area
             if self.__addressArea:
+                painter.setPen(self.__addressAreaPen)
                 address = ""
                 row = 0
                 pxPosY = self.__pxCharHeight
@@ -1417,10 +1431,10 @@ class HexEditWidget(QAbstractScrollArea):
                 # increment loop variables
                 row += 1
                 pxPosY += self.__pxCharHeight
-            
-            painter.setBackgroundMode(Qt.TransparentMode)
-            painter.setPen(
-                self.viewport().palette().color(QPalette.WindowText))
+        
+        painter.setBackgroundMode(Qt.TransparentMode)
+        painter.setPen(
+            self.viewport().palette().color(QPalette.WindowText))
             
         # paint cursor
         if self.__blink and not self.__readOnly and self.hasFocus():

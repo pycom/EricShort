@@ -797,6 +797,7 @@
     <Source>Preferences/ConfigurationPages/HelpViewersPage.py</Source>
     <Source>Preferences/ConfigurationPages/HelpVirusTotalPage.py</Source>
     <Source>Preferences/ConfigurationPages/HelpWebBrowserPage.py</Source>
+    <Source>Preferences/ConfigurationPages/HexEditorPage.py</Source>
     <Source>Preferences/ConfigurationPages/IconsPage.py</Source>
     <Source>Preferences/ConfigurationPages/IconsPreviewDialog.py</Source>
     <Source>Preferences/ConfigurationPages/InterfacePage.py</Source>
@@ -1554,6 +1555,7 @@
     <Form>Preferences/ConfigurationPages/HelpViewersPage.ui</Form>
     <Form>Preferences/ConfigurationPages/HelpVirusTotalPage.ui</Form>
     <Form>Preferences/ConfigurationPages/HelpWebBrowserPage.ui</Form>
+    <Form>Preferences/ConfigurationPages/HexEditorPage.ui</Form>
     <Form>Preferences/ConfigurationPages/IconsPage.ui</Form>
     <Form>Preferences/ConfigurationPages/IconsPreviewDialog.ui</Form>
     <Form>Preferences/ConfigurationPages/InterfacePage.ui</Form>

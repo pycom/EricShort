@@ -11,9 +11,11 @@ from __future__ import unicode_literals
 
 import os
 
-from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFile, QFileInfo, QSize
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFile, QFileInfo, QSize, \
+    QCoreApplication
 from PyQt5.QtGui import QKeySequence
-from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout, \
+    QDialog, QAction
 
 from E5Gui.E5Action import E5Action
 from E5Gui.E5MainWindow import E5MainWindow
@@ -28,7 +30,6 @@ import UI.Config
 import Preferences
 
 
-# TODO: implement a configuration page for the hex editor
 class HexEditMainWindow(E5MainWindow):
     """
     Class implementing the web browser main window.
@@ -52,10 +53,10 @@ class HexEditMainWindow(E5MainWindow):
         super(HexEditMainWindow, self).__init__(parent)
         self.setObjectName("eric6_hex_editor")
         
-        self.fromEric = fromEric
+        self.__fromEric = fromEric
         self.setWindowIcon(UI.PixmapCache.getIcon("hexEditor.png"))
         
-        if not self.fromEric:
+        if not self.__fromEric:
             self.setStyle(Preferences.getUI("Style"),
                           Preferences.getUI("StyleSheet"))
         
@@ -96,7 +97,11 @@ class HexEditMainWindow(E5MainWindow):
         self.__editor.dataChanged.connect(self.__modificationChanged)
         self.__editor.overwriteModeChanged.connect(self.__showEditMode)
         self.__editor.readOnlyChanged.connect(self.__showReadOnlyMode)
-        self.__editor.readOnlyChanged.connect(self.__modificationChanged)
+        self.__editor.readOnlyChanged.connect(self.__checkActions)
+        
+        self.preferencesChanged()
+        self.__editor.setOverwriteMode(
+            Preferences.getHexEditor("OpenInOverwriteMode"))
         
         self.__project = project
         self.__lastOpenPath = ""
@@ -118,6 +123,8 @@ class HexEditMainWindow(E5MainWindow):
         self.__initFileActions()
         self.__initEditActions()
         self.__initHelpActions()
+        if not self.__fromEric:
+            self.__initConfigActions()
         
     def __initFileActions(self):
         """
@@ -138,32 +145,20 @@ class HexEditMainWindow(E5MainWindow):
         self.newWindowAct.triggered.connect(self.__openHexFileNewWindow)
         self.__actions.append(self.newWindowAct)
         
+        # correct texts will be set later
         self.openAct = E5Action(
             self.tr('Open'),
             UI.PixmapCache.getIcon("open.png"),
             self.tr('&Open...'),
             QKeySequence(self.tr("Ctrl+O", "File|Open")),
             0, self, 'hexEditor_file_open')
-        self.openAct.setStatusTip(self.tr('Open a binary file for editing'))
-        self.openAct.setWhatsThis(self.tr(
-            """<b>Open File</b>"""
-            """<p>This opens a binary file for editing."""
-            """ It pops up a file selection dialog.</p>"""
-        ))
         self.openAct.triggered.connect(self.__openHexFile)
         self.__actions.append(self.openAct)
         
+        # correct texts will be set later
         self.openReadOnlyAct = E5Action(
-            self.tr('Open Read Only'),
-            self.tr('Open Read Only...'),
+            "", "",
             0, 0, self, 'hexEditor_file_open_read_only')
-        self.openReadOnlyAct.setStatusTip(self.tr(
-            'Open a binary file for viewing'))
-        self.openReadOnlyAct.setWhatsThis(self.tr(
-            """<b>Open Read Only</b>"""
-            """<p>This opens a binary file for viewing (i.e. in read only"""
-            """ mode). It pops up a file selection dialog.</p>"""
-        ))
         self.openReadOnlyAct.triggered.connect(self.__openHexFileReadOnly)
         self.__actions.append(self.openReadOnlyAct)
         
@@ -263,7 +258,7 @@ class HexEditMainWindow(E5MainWindow):
             """<b>Quit</b>"""
             """<p>Quit the hex editor.</p>"""
         ))
-        if not self.fromEric:
+        if not self.__fromEric:
             self.exitAct.triggered.connect(self.__closeAll)
         self.__actions.append(self.exitAct)
     
@@ -556,6 +551,68 @@ class HexEditMainWindow(E5MainWindow):
         self.whatsThisAct.triggered.connect(self.__whatsThis)
         self.__actions.append(self.whatsThisAct)
     
+    def __initConfigActions(self):
+        """
+        Private method to create the Settings actions.
+        """
+        self.prefAct = E5Action(
+            self.tr('Preferences'),
+            UI.PixmapCache.getIcon("configure.png"),
+            self.tr('&Preferences...'),
+            0, 0, self, 'hexEditor_settings_preferences')
+        self.prefAct.setStatusTip(self.tr(
+            'Set the prefered configuration'))
+        self.prefAct.setWhatsThis(self.tr(
+            """<b>Preferences</b>"""
+            """<p>Set the configuration items of the application"""
+            """ with your prefered values.</p>"""
+        ))
+        self.prefAct.triggered.connect(self.__showPreferences)
+        self.prefAct.setMenuRole(QAction.PreferencesRole)
+        self.__actions.append(self.prefAct)
+    
+    def __setReadOnlyActionTexts(self):
+        """
+        Private method to switch the 'Open Read Only' action between
+        'read only' and 'read write'.
+        """
+        if Preferences.getHexEditor("OpenReadOnly"):
+            self.openAct.setStatusTip(self.tr(
+                'Open a binary file for viewing'))
+            self.openAct.setWhatsThis(self.tr(
+                """<b>Open File</b>"""
+                """<p>This opens a binary file for viewing (i.e. in read"""
+                """ only mode). It pops up a file selection dialog.</p>"""
+            ))
+            
+            self.openReadOnlyAct.setText(self.tr('Open for Editing...'))
+            self.openReadOnlyAct.setIconText(self.tr('Open for Editing'))
+            self.openReadOnlyAct.setStatusTip(self.tr(
+                'Open a binary file for editing'))
+            self.openReadOnlyAct.setWhatsThis(self.tr(
+                """<b>Open for Editing</b>"""
+                """<p>This opens a binary file for editing."""
+                """ It pops up a file selection dialog.</p>"""
+            ))
+        else:
+            self.openAct.setStatusTip(self.tr(
+                'Open a binary file for editing'))
+            self.openAct.setWhatsThis(self.tr(
+                """<b>Open File</b>"""
+                """<p>This opens a binary file for editing."""
+                """ It pops up a file selection dialog.</p>"""
+            ))
+            
+            self.openReadOnlyAct.setText(self.tr('Open Read Only...'))
+            self.openReadOnlyAct.setIconText(self.tr('Open Read Only'))
+            self.openReadOnlyAct.setStatusTip(self.tr(
+                'Open a binary file for viewing'))
+            self.openReadOnlyAct.setWhatsThis(self.tr(
+                """<b>Open Read Only</b>"""
+                """<p>This opens a binary file for viewing (i.e. in read"""
+                """ only mode). It pops up a file selection dialog.</p>"""
+            ))
+    
     def __initMenus(self):
         """
         Private method to create the menus.
@@ -574,7 +631,7 @@ class HexEditMainWindow(E5MainWindow):
         menu.addSeparator()
         menu.addAction(self.closeAct)
         menu.addAction(self.closeOthersAct)
-        if self.fromEric:
+        if self.__fromEric:
             menu.addAction(self.closeAllAct)
         else:
             menu.addSeparator()
@@ -601,6 +658,11 @@ class HexEditMainWindow(E5MainWindow):
         menu.addSeparator()
         menu.addAction(self.readonlyAct)
         
+        if not self.__fromEric:
+            menu = mb.addMenu(self.tr("Se&ttings"))
+            menu.setTearOffEnabled(True)
+            menu.addAction(self.prefAct)
+        
         mb.addSeparator()
         
         menu = mb.addMenu(self.tr("&Help"))
@@ -623,7 +685,7 @@ class HexEditMainWindow(E5MainWindow):
         filetb.addAction(self.saveAsAct)
         filetb.addSeparator()
         filetb.addAction(self.closeAct)
-        if not self.fromEric:
+        if not self.__fromEric:
             filetb.addAction(self.exitAct)
         
         edittb = self.addToolBar(self.tr("Edit"))
@@ -642,6 +704,12 @@ class HexEditMainWindow(E5MainWindow):
         searchtb.addAction(self.searchAct)
         searchtb.addAction(self.searchNextAct)
         searchtb.addAction(self.searchPrevAct)
+        
+        if not self.__fromEric:
+            settingstb = self.addToolBar(self.tr("Settings"))
+            settingstb.setObjectName("SettingsToolBar")
+            settingstb.setIconSize(UI.Config.ToolBarIconSize)
+            settingstb.addAction(self.prefAct)
         
         helptb = self.addToolBar(self.tr("Help"))
         helptb.setObjectName("HelpToolBar")
@@ -742,13 +810,13 @@ class HexEditMainWindow(E5MainWindow):
             Preferences.setGeometry("HexEditorGeometry", self.saveGeometry())
             
             try:
-                if self.fromEric or len(self.__class__.windows) > 1:
+                if self.__fromEric or len(self.__class__.windows) > 1:
                     del self.__class__.windows[
                         self.__class__.windows.index(self)]
             except ValueError:
                 pass
             
-            if not self.fromEric:
+            if not self.__fromEric:
                 Preferences.syncPreferences()
             
             evt.accept()
@@ -772,7 +840,7 @@ class HexEditMainWindow(E5MainWindow):
         if fileName:
             he = HexEditMainWindow(fileName=fileName,
                                    parent=self.parent(),
-                                   fromEric=self.fromEric,
+                                   fromEric=self.__fromEric,
                                    project=self.__project)
             he.setRecentPaths("", self.__lastSavePath)
             he.show()
@@ -822,6 +890,8 @@ class HexEditMainWindow(E5MainWindow):
         self.__lastOpenPath = os.path.dirname(fileName)
         self.__editor.setData(data)
         self.__setCurrentFile(fileName)
+        
+        self.__editor.setReadOnly(Preferences.getHexEditor("OpenReadOnly"))
     
     def __openHexFile(self):
         """
@@ -846,7 +916,7 @@ class HexEditMainWindow(E5MainWindow):
         Private slot to open a binary file in read only mode.
         """
         self.__openHexFile()
-        self.__editor.setReadOnly(True)
+        self.__editor.setReadOnly(not Preferences.getHexEditor("OpenReadOnly"))
         self.__checkActions()
     
     def __saveHexFile(self):
@@ -1130,3 +1200,55 @@ class HexEditMainWindow(E5MainWindow):
         """
         self.__searchWidget.hide()
         self.__replaceWidget.show()
+    
+    def preferencesChanged(self):
+        """
+        Public method to (re-)read the various settings.
+        """
+        self.__editor.setAddressWidth(
+            Preferences.getHexEditor("AddressAreaWidth"))
+        self.__editor.setAddressArea(
+            Preferences.getHexEditor("ShowAddressArea"))
+        self.__editor.setAsciiArea(
+            Preferences.getHexEditor("ShowAsciiArea"))
+        self.__editor.setHighlighting(
+            Preferences.getHexEditor("HighlightChanges"))
+        self.__editor.setHighlightColors(
+            Preferences.getHexEditor("HighlightingForeGround"),
+            Preferences.getHexEditor("HighlightingBackGround"))
+        self.__editor.setSelectionColors(
+            Preferences.getHexEditor("SelectionForeGround"),
+            Preferences.getHexEditor("SelectionBackGround"))
+        self.__editor.setAddressAreaColors(
+            Preferences.getHexEditor("AddressAreaForeGround"),
+            Preferences.getHexEditor("AddressAreaBackGround"))
+        self.__editor.setFont(
+            Preferences.getHexEditor("Font"))
+        
+        self.__setReadOnlyActionTexts()
+    
+    def __showPreferences(self):
+        """
+        Private slot to set the preferences.
+        """
+        from Preferences.ConfigurationDialog import ConfigurationDialog
+        dlg = ConfigurationDialog(
+            None, 'Configuration', True, fromEric=True,
+            displayMode=ConfigurationDialog.HexEditorMode)
+        dlg.preferencesChanged.connect(
+            self.__preferencesChangedByLocalPreferencesDialog)
+        dlg.show()
+        dlg.showConfigurationPageByName("hexEditorPage")
+        dlg.exec_()
+        QCoreApplication.processEvents()
+        if dlg.result() == QDialog.Accepted:
+            dlg.setPreferences()
+            Preferences.syncPreferences()
+            self.__preferencesChangedByLocalPreferencesDialog()
+    
+    def __preferencesChangedByLocalPreferencesDialog(self):
+        """
+        Private slot to handle preferences changes by our local dialog.
+        """
+        for hexEditor in HexEditMainWindow.windows:
+            hexEditor.preferencesChanged()

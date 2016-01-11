@@ -5379,6 +5379,10 @@ class UserInterface(E5MainWindow):
             self.bottomSidebar.setDelay(delay)
             self.rightSidebar.setDelay(delay)
         
+        from HexEdit.HexEditMainWindow import HexEditMainWindow
+        for hexEditor in HexEditMainWindow.windows:
+            hexEditor.preferencesChanged()
+        
         self.preferencesChanged.emit()
     
     def __masterPasswordChanged(self, oldPassword, newPassword):
