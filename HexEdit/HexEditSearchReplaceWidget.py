@@ -9,7 +9,8 @@ Module implementing a search and replace widget for the hex editor.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot, Qt, QByteArray
+from PyQt5.QtCore import pyqtSlot, Qt, QByteArray, QRegExp
+from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QWidget
 
 from E5Gui.E5Action import E5Action
@@ -18,19 +19,20 @@ from E5Gui import E5MessageBox
 import UI.PixmapCache
 
 
-# TODO: make the histories containing tuples with format index and text
-# TODO: add more format types (Dec, Oct, Bin)
-# TODO: add input validators to limit the find/replace input (use QRegExpValidator)
+# TODO: add more format types (Dec, Oct, Bin, UTF-8)
+# TODO: change the text of the combo when the format changes
 class HexEditSearchReplaceWidget(QWidget):
     """
     Class implementing a search and replace widget for the hex editor.
     """
-    def __init__(self, editor, replace=False, parent=None):
+    def __init__(self, editor, mainWindow, replace=False, parent=None):
         """
         Constructor
         
         @param editor reference to the hex editor widget
         @type HexEditWidget
+        @param mainWindow reference to the main window
+        @type HexEditMainWindow
         @param replace flag indicating a replace widget
         @type bool
         @param parent reference to the parent widget
@@ -41,10 +43,15 @@ class HexEditSearchReplaceWidget(QWidget):
         self.__replace = replace
         self.__editor = editor
         
-        self.__findHistory = []
+        self.__formatAndValidators = [
+            (self.tr("Hex"), QRegExpValidator((QRegExp("[0-9a-f]*")))),
+            (self.tr("Text"), None),
+        ]
+        
+        self.__findHistory = mainWindow.getSRHistory("search")
         if replace:
             from .Ui_HexEditReplaceWidget import Ui_HexEditReplaceWidget
-            self.__replaceHistory = []
+            self.__replaceHistory = mainWindow.getSRHistory("replace")
             self.__ui = Ui_HexEditReplaceWidget()
         else:
             from .Ui_HexEditSearchWidget import Ui_HexEditSearchWidget
@@ -65,6 +72,11 @@ class HexEditSearchReplaceWidget(QWidget):
             self.__ui.replaceAllButton.setIcon(
                 UI.PixmapCache.getIcon("editReplaceAll.png"))
         
+        for format, validator in self.__formatAndValidators:
+            self.__ui.findFormatCombo.addItem(format)
+        if replace:
+            for format, validator in self.__formatAndValidators:
+                self.__ui.replaceFormatCombo.addItem(format)
         self.__ui.findtextCombo.setCompleter(None)
         self.__ui.findtextCombo.lineEdit().returnPressed.connect(
             self.__findByReturnPressed)
@@ -91,11 +103,25 @@ class HexEditSearchReplaceWidget(QWidget):
         
         self.__havefound = False
     
+    @pyqtSlot(int)
+    def on_findFormatCombo_currentIndexChanged(self, idx):
+        """
+        Private slot to handle a selection from the find format.
+        
+        @param idx index of the selected entry
+        @type int
+        """
+        if idx >= 0:
+            self.__ui.findtextCombo.setValidator(
+                self.__formatAndValidators[idx][1])
+    
+    @pyqtSlot(str)
     def on_findtextCombo_editTextChanged(self, txt):
         """
         Private slot to enable/disable the find buttons.
         
-        @param txt text of the find text combo (string)
+        @param txt text of the find text combo
+        @type str
         """
         if not txt:
             self.__ui.findNextButton.setEnabled(False)
@@ -115,6 +141,18 @@ class HexEditSearchReplaceWidget(QWidget):
                 self.__ui.replaceButton.setEnabled(False)
                 self.__ui.replaceSearchButton.setEnabled(False)
                 self.__ui.replaceAllButton.setEnabled(True)
+    
+    @pyqtSlot(int)
+    def on_findtextCombo_activated(self, idx):
+        """
+        Private slot to handle a selection from the find history.
+        
+        @param idx index of the selected entry
+        @type int
+        """
+        if idx >= 0:
+            formatIndex = self.__ui.findtextCombo.itemData(idx)
+            self.__ui.findFormatCombo.setCurrentIndex(formatIndex)
     
     def __getContent(self, replace=False):
         """
@@ -145,11 +183,13 @@ class HexEditSearchReplaceWidget(QWidget):
         
         # This moves any previous occurrence of this statement to the head
         # of the list and updates the combobox
-        if txt in history:
-            history.remove(txt)
-        history.insert(0, txt)
+        historyEntry = (idx, txt)
+        if historyEntry in history:
+            history.remove(historyEntry)
+        history.insert(0, historyEntry)
         textCombo.clear()
-        textCombo.addItems(history)
+        for index, text in history:
+            textCombo.addItem(text, index)
         
         return ba, txt
     
@@ -218,6 +258,30 @@ class HexEditSearchReplaceWidget(QWidget):
             self.findPrevNext(True)
         else:
             self.findPrevNext(False)
+    
+    @pyqtSlot(int)
+    def on_replaceFormatCombo_currentIndexChanged(self, idx):
+        """
+        Private slot to handle a selection from the replace format.
+        
+        @param idx index of the selected entry
+        @type int
+        """
+        if idx >= 0:
+            self.__ui.replacetextCombo.setValidator(
+                self.__formatAndValidators[idx][1])
+    
+    @pyqtSlot(int)
+    def on_replacetextCombo_activated(self, idx):
+        """
+        Private slot to handle a selection from the replace history.
+        
+        @param idx index of the selected entry
+        @type int
+        """
+        if idx >= 0:
+            formatIndex = self.__ui.replacetextCombo.itemData(idx)
+            self.__ui.replaceFormatCombo.setCurrentIndex(formatIndex)
 
     @pyqtSlot()
     def on_replaceButton_clicked(self):
@@ -239,7 +303,7 @@ class HexEditSearchReplaceWidget(QWidget):
         Private method to replace one occurrence of data.
         
         @param searchNext flag indicating to search for the next occurrence
-        (boolean).
+        @type bool
         """
         # Check enabled status due to dual purpose usage of this method
         if not self.__ui.replaceButton.isEnabled() and \
@@ -300,12 +364,16 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         Private method to display this widget in find mode.
         
-        @param text text to be shown in the findtext edit (string)
+        @param text hex encoded text to be shown in the findtext edit
+        @type str
         """
         self.__replace = False
         
         self.__ui.findtextCombo.clear()
-        self.__ui.findtextCombo.addItems(self.__findHistory)
+        for index, txt in self.__findHistory:
+            self.__ui.findtextCombo.addItem(txt, index)
+        self.__ui.findFormatCombo.setCurrentIndex(0)    # 0 is always Hex
+        self.on_findFormatCombo_currentIndexChanged(0)
         self.__ui.findtextCombo.setEditText(text)
         self.__ui.findtextCombo.lineEdit().selectAll()
         self.__ui.findtextCombo.setFocus()
@@ -318,19 +386,26 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         Private slot to display this widget in replace mode.
         
-        @param text text to be shown in the findtext edit
+        @param text hex encoded text to be shown in the findtext edit
+        @type str
         """
         self.__replace = True
         
         self.__ui.findtextCombo.clear()
-        self.__ui.findtextCombo.addItems(self.__findHistory)
+        for index, txt in self.__findHistory:
+            self.__ui.findtextCombo.addItem(txt, index)
+        self.__ui.findFormatCombo.setCurrentIndex(0)    # 0 is always Hex
+        self.on_findFormatCombo_currentIndexChanged(0)
         self.__ui.findtextCombo.setEditText(text)
         self.__ui.findtextCombo.lineEdit().selectAll()
         self.__ui.findtextCombo.setFocus()
         self.on_findtextCombo_editTextChanged(text)
         
         self.__ui.replacetextCombo.clear()
-        self.__ui.replacetextCombo.addItems(self.__replaceHistory)
+        for index, txt in self.__replaceHistory:
+            self.__ui.replacetextCombo.addItem(txt, index)
+        self.__ui.replaceFormatCombo.setCurrentIndex(0)    # 0 is always Hex
+        self.on_replaceFormatCombo_currentIndexChanged(0)
         self.__ui.replacetextCombo.setEditText('')
         
         self.__havefound = True
@@ -340,7 +415,8 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         Public slot to show the widget.
         
-        @param text text to be shown in the findtext edit (string)
+        @param text hex encoded text to be shown in the findtext edit
+        @type str
         """
         if self.__replace:
             self.__showReplace(text)
@@ -361,7 +437,8 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         Protected slot to handle key press events.
         
-        @param event reference to the key press event (QKeyEvent)
+        @param event reference to the key press event
+        @type QKeyEvent
         """
         if event.key() == Qt.Key_Escape:
             self.close()

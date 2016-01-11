@@ -750,6 +750,17 @@ class HexEditWidget(QAbstractScrollArea):
         if not modified and setCleanState:
             self.__undoStack.setClean()
     
+    def selectionToHexString(self):
+        """
+        Public method to get a hexadecimal representation of the selection.
+        
+        @return hexadecimal representation of the selection
+        @rtype str
+        """
+        byteArray = self.__chunks.data(self.getSelectionBegin(),
+                                       self.__getSelectionLength())
+        return self.__toHex(byteArray).decode(encoding="ascii")
+    
     def selectionToReadableString(self):
         """
         Public method to get a formatted representation of the selection.

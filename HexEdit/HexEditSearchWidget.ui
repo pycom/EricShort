@@ -54,16 +54,6 @@
      <property name="toolTip">
       <string>Select the data format of the find data field</string>
      </property>
-     <item>
-      <property name="text">
-       <string>Hex</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Text</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item>

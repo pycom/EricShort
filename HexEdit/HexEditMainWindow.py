@@ -53,6 +53,15 @@ class HexEditMainWindow(E5MainWindow):
         super(HexEditMainWindow, self).__init__(parent)
         self.setObjectName("eric6_hex_editor")
         
+        self.__srHistory = {
+            "search": [],
+            # list of recent searches (tuple of format type index and
+            # search term)
+            "replace": [],
+            # list of recent replaces (tuple of format type index and
+            # replace term
+        }
+        
         self.__fromEric = fromEric
         self.setWindowIcon(UI.PixmapCache.getIcon("hexEditor.png"))
         
@@ -61,8 +70,10 @@ class HexEditMainWindow(E5MainWindow):
                           Preferences.getUI("StyleSheet"))
         
         self.__editor = HexEditWidget()
-        self.__searchWidget = HexEditSearchReplaceWidget(self.__editor, False)
-        self.__replaceWidget = HexEditSearchReplaceWidget(self.__editor, True)
+        self.__searchWidget = HexEditSearchReplaceWidget(
+            self.__editor, self, False)
+        self.__replaceWidget = HexEditSearchReplaceWidget(
+            self.__editor, self, True)
         cw = QWidget()
         layout = QVBoxLayout(cw)
         layout.setContentsMargins(1, 1, 1, 1)
@@ -1192,14 +1203,22 @@ class HexEditMainWindow(E5MainWindow):
         Private method to handle the search action.
         """
         self.__replaceWidget.hide()
-        self.__searchWidget.show()
+        if self.__editor.hasSelection():
+            txt = self.__editor.selectionToHexString()
+        else:
+            txt = ""
+        self.__searchWidget.show(txt)
         
     def __replace(self):
         """
         Private method to handle the replace action.
         """
         self.__searchWidget.hide()
-        self.__replaceWidget.show()
+        if self.__editor.hasSelection():
+            txt = self.__editor.selectionToHexString()
+        else:
+            txt = ""
+        self.__replaceWidget.show(txt)
     
     def preferencesChanged(self):
         """
@@ -1252,3 +1271,16 @@ class HexEditMainWindow(E5MainWindow):
         """
         for hexEditor in HexEditMainWindow.windows:
             hexEditor.preferencesChanged()
+    
+    def getSRHistory(self, key):
+        """
+        Public method to get the search or replace history list.
+        
+        @param key name of list to return
+        @type str (must be 'search' or 'replace')
+        @return the requested history list
+        @type list of tuples of (int, str)
+        """
+        assert key in ['search', 'replace']
+        
+        return self.__srHistory[key]
