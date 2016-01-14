@@ -19,7 +19,7 @@ from E5Gui import E5MessageBox
 import UI.PixmapCache
 
 
-# TODO: add more format types (Dec, Oct, Bin, UTF-8)
+# TODO: add more format types (Dec, Oct, Bin)
 # TODO: change the text of the combo when the format changes
 class HexEditSearchReplaceWidget(QWidget):
     """
@@ -43,10 +43,16 @@ class HexEditSearchReplaceWidget(QWidget):
         self.__replace = replace
         self.__editor = editor
         
-        self.__formatAndValidators = [
-            (self.tr("Hex"), QRegExpValidator((QRegExp("[0-9a-f]*")))),
-            (self.tr("Text"), None),
-        ]
+        # keep this in sync with the logic in __getContent()
+        self.__formatAndValidators = {
+            "hex": (self.tr("Hex"), QRegExpValidator((QRegExp("[0-9a-f]*")))),
+            "text": (self.tr("Text"), None),        # text as latin-1
+            "utf-8": (self.tr("UTF-8"), None),      # text as utf-8
+        }
+        formatOrder = ["hex", "text", "utf-8"]
+        
+        self.__currentFindFormat = ""
+        self.__currentReplaceFormat = ""
         
         self.__findHistory = mainWindow.getSRHistory("search")
         if replace:
@@ -72,11 +78,14 @@ class HexEditSearchReplaceWidget(QWidget):
             self.__ui.replaceAllButton.setIcon(
                 UI.PixmapCache.getIcon("editReplaceAll.png"))
         
-        for format, validator in self.__formatAndValidators:
-            self.__ui.findFormatCombo.addItem(format)
+        for format in formatOrder:
+            formatStr, validator = self.__formatAndValidators[format]
+            self.__ui.findFormatCombo.addItem(formatStr, format)
         if replace:
-            for format, validator in self.__formatAndValidators:
-                self.__ui.replaceFormatCombo.addItem(format)
+            for format in formatOrder:
+                formatStr, validator = self.__formatAndValidators[format]
+                self.__ui.replaceFormatCombo.addItem(formatStr, format)
+        
         self.__ui.findtextCombo.setCompleter(None)
         self.__ui.findtextCombo.lineEdit().returnPressed.connect(
             self.__findByReturnPressed)
@@ -112,8 +121,18 @@ class HexEditSearchReplaceWidget(QWidget):
         @type int
         """
         if idx >= 0:
-            self.__ui.findtextCombo.setValidator(
-                self.__formatAndValidators[idx][1])
+            format = self.__ui.findFormatCombo.itemData(idx)
+            
+            if format != self.__currentFindFormat:
+                txt = self.__ui.findtextCombo.currentText()
+                newTxt = self.__convertText(
+                    self.__currentFindFormat, format, txt)
+                self.__currentFindFormat = format
+                
+                self.__ui.findtextCombo.setValidator(
+                    self.__formatAndValidators[format][1])
+                
+                self.__ui.findtextCombo.setEditText(newTxt)
     
     @pyqtSlot(str)
     def on_findtextCombo_editTextChanged(self, txt):
@@ -175,11 +194,16 @@ class HexEditSearchReplaceWidget(QWidget):
         
         txt = textCombo.currentText()
         idx = formatCombo.currentIndex()
-        if idx == 0:        # hex format
+        format = formatCombo.itemData(idx)
+        if format == "hex":        # hex format
             ba = bytearray(QByteArray.fromHex(
                 bytes(txt, encoding="ascii")))
-        else:
+        elif format == "text":
+            ba = bytearray(txt, encoding="latin-1")
+        elif format == "utf-8":
             ba = bytearray(txt, encoding="utf-8")
+        else:
+            ba = bytearray()
         
         # This moves any previous occurrence of this statement to the head
         # of the list and updates the combobox
@@ -268,8 +292,9 @@ class HexEditSearchReplaceWidget(QWidget):
         @type int
         """
         if idx >= 0:
+            format = self.__ui.replaceFormatCombo.itemData(idx)
             self.__ui.replacetextCombo.setValidator(
-                self.__formatAndValidators[idx][1])
+                self.__formatAndValidators[format][1])
     
     @pyqtSlot(int)
     def on_replacetextCombo_activated(self, idx):
@@ -442,3 +467,19 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         if event.key() == Qt.Key_Escape:
             self.close()
+    
+    def __convertText(self, oldFormat, newFormat, txt):
+        """
+        Private method to convert text from one format into another.
+        
+        @param oldFormat current format of the text
+        @type str
+        @param newFormat format to convert to
+        @type str
+        @param txt text to be converted
+        @type str
+        @return converted text
+        @rtype str
+        """
+        # TODO: implement the conversion method
+        return txt
