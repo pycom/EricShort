@@ -19,7 +19,6 @@ from E5Gui import E5MessageBox
 import UI.PixmapCache
 
 
-# TODO: add more format types (Dec, Oct, Bin)
 # TODO: change the text of the combo when the format changes
 class HexEditSearchReplaceWidget(QWidget):
     """
@@ -46,10 +45,13 @@ class HexEditSearchReplaceWidget(QWidget):
         # keep this in sync with the logic in __getContent()
         self.__formatAndValidators = {
             "hex": (self.tr("Hex"), QRegExpValidator((QRegExp("[0-9a-f]*")))),
+            "dec": (self.tr("Dec"), QRegExpValidator((QRegExp("[0-9]*")))),
+            "oct": (self.tr("Oct"), QRegExpValidator((QRegExp("[0-7]*")))),
+            "bin": (self.tr("Bin"), QRegExpValidator((QRegExp("[01]*")))),
             "text": (self.tr("Text"), None),        # text as latin-1
             "utf-8": (self.tr("UTF-8"), None),      # text as utf-8
         }
-        formatOrder = ["hex", "text", "utf-8"]
+        formatOrder = ["hex", "dec", "oct", "bin", "text", "utf-8"]
         
         self.__currentFindFormat = ""
         self.__currentReplaceFormat = ""
@@ -126,7 +128,7 @@ class HexEditSearchReplaceWidget(QWidget):
             if format != self.__currentFindFormat:
                 txt = self.__ui.findtextCombo.currentText()
                 newTxt = self.__convertText(
-                    self.__currentFindFormat, format, txt)
+                    txt, self.__currentFindFormat, format)
                 self.__currentFindFormat = format
                 
                 self.__ui.findtextCombo.setValidator(
@@ -171,7 +173,8 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         if idx >= 0:
             formatIndex = self.__ui.findtextCombo.itemData(idx)
-            self.__ui.findFormatCombo.setCurrentIndex(formatIndex)
+            if formatIndex is not None:
+                self.__ui.findFormatCombo.setCurrentIndex(formatIndex)
     
     def __getContent(self, replace=False):
         """
@@ -198,6 +201,12 @@ class HexEditSearchReplaceWidget(QWidget):
         if format == "hex":        # hex format
             ba = bytearray(QByteArray.fromHex(
                 bytes(txt, encoding="ascii")))
+        elif format == "dec":
+            ba = self.__int2bytearray(int(txt, 10))
+        elif format == "oct":
+            ba = self.__int2bytearray(int(txt, 8))
+        elif format == "bin":
+            ba = self.__int2bytearray(int(txt, 2))
         elif format == "text":
             ba = bytearray(txt, encoding="latin-1")
         elif format == "utf-8":
@@ -293,8 +302,17 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         if idx >= 0:
             format = self.__ui.replaceFormatCombo.itemData(idx)
-            self.__ui.replacetextCombo.setValidator(
-                self.__formatAndValidators[format][1])
+            
+            if format != self.__currentReplaceFormat:
+                txt = self.__ui.replacetextCombo.currentText()
+                newTxt = self.__convertText(
+                    txt, self.__currentReplaceFormat, format)
+                self.__currentReplaceFormat = format
+                
+                self.__ui.replacetextCombo.setValidator(
+                    self.__formatAndValidators[format][1])
+                
+                self.__ui.replacetextCombo.setEditText(newTxt)
     
     @pyqtSlot(int)
     def on_replacetextCombo_activated(self, idx):
@@ -306,7 +324,8 @@ class HexEditSearchReplaceWidget(QWidget):
         """
         if idx >= 0:
             formatIndex = self.__ui.replacetextCombo.itemData(idx)
-            self.__ui.replaceFormatCombo.setCurrentIndex(formatIndex)
+            if formatIndex is not None:
+                self.__ui.replaceFormatCombo.setCurrentIndex(formatIndex)
 
     @pyqtSlot()
     def on_replaceButton_clicked(self):
@@ -468,18 +487,49 @@ class HexEditSearchReplaceWidget(QWidget):
         if event.key() == Qt.Key_Escape:
             self.close()
     
-    def __convertText(self, oldFormat, newFormat, txt):
+    def __convertText(self, txt, oldFormat, newFormat):
         """
         Private method to convert text from one format into another.
         
+        @param txt text to be converted
+        @type str
         @param oldFormat current format of the text
         @type str
         @param newFormat format to convert to
-        @type str
-        @param txt text to be converted
         @type str
         @return converted text
         @rtype str
         """
         # TODO: implement the conversion method
         return txt
+    
+    def __int2bytearray(self, value):
+        """
+        Private method to convert an integer into a byte array.
+        
+        @param value value to be converted
+        @type int
+        @return byte array for the given value
+        @rtype bytearray
+        """
+        ba = bytearray()
+        while value > 0:
+            value, modulus = divmod(value, 256)
+            ba.insert(0, modulus)
+        
+        return ba
+    
+    def __bytearray2int(self, array):
+        """
+        Private method to convert a byte array to an integer value.
+        
+        @param array byte array to be converted
+        @type bytearray
+        @return integer value of the given array
+        @rtype int
+        """
+        value = 0
+        for b in array:
+            value = value * 256 + b
+        
+        return value
