@@ -1278,7 +1278,7 @@ class HexEditMainWindow(E5MainWindow):
         @param key name of list to return
         @type str (must be 'search' or 'replace')
         @return the requested history list
-        @type list of tuples of (int, str)
+        @rtype list of tuples of (int, str)
         """
         assert key in ['search', 'replace']
         

@@ -313,6 +313,13 @@ HelpWebBrowserPage ConfigurationPageBase Ui_HelpWebBrowserPage
 HelpWebPage QWebPage
 HelpWebSearchWidget E5ClearableLineEdit
 HelpWindow E5MainWindow
+HexEditCommand Enum
+HexEditMainWindow E5MainWindow
+HexEditSearchReplaceWidget QWidget
+HexEditUndoCommand QUndoCommand
+HexEditUndoStack QUndoStack
+HexEditWidget QAbstractScrollArea
+HexEditorPage ConfigurationPageBase Ui_HexEditorPage
 Hg VersionControl
 HgAddSubrepositoryDialog QDialog Ui_HgAddSubrepositoryDialog
 HgAnnotateDialog QDialog Ui_HgAnnotateDialog

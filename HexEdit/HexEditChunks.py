@@ -100,7 +100,7 @@ class HexEditChunks(object):
         @param maxSize maximum amount of bytes to get
         @type int
         @param highlighted reference to a byte array storing highlighting info
-        @byte bytearray
+        @type bytearray
         @return retrieved data
         @rtype bytearray
         """
