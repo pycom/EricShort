@@ -320,7 +320,7 @@
       <item>
        <widget class="QPushButton" name="monospacedFontButton">
         <property name="toolTip">
-         <string>Press to select the font to be used as the monospaced font</string>
+         <string>Press to select the font to be used (this must be a monospaced font)</string>
         </property>
         <property name="text">
          <string>Monospaced Font</string>
@@ -333,7 +333,7 @@
          <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
-         <string>01 23 45 67 89 ab cd ef 70 81 92 a3 b4 c5 d6 e7 f9</string>
+         <string notr="true">01 23 45 67 89 ab cd ef 70 81 92 a3 b4 c5 d6 e7 f9</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignHCenter</set>

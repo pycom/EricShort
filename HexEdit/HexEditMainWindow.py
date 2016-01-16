@@ -30,6 +30,7 @@ import UI.Config
 import Preferences
 
 
+# TODO: füge Goto Aktion inkl. Eingabewidget hinzu
 class HexEditMainWindow(E5MainWindow):
     """
     Class implementing the web browser main window.
@@ -435,12 +436,11 @@ class HexEditMainWindow(E5MainWindow):
             QKeySequence(self.tr("Ctrl+F", "Search|Search")),
             0,
             self, 'hexEditor_edit_search')
-        self.searchAct.setStatusTip(self.tr('Search for a text'))
+        self.searchAct.setStatusTip(self.tr('Search for data'))
         self.searchAct.setWhatsThis(self.tr(
             """<b>Search</b>"""
-            """<p>Search for some text in the current editor. A"""
-            """ dialog is shown to enter the searchtext and options"""
-            """ for the search.</p>"""
+            """<p>Search for some data. A dialog is shown to enter the"""
+            """ data to search for in various formats.</p>"""
         ))
         self.searchAct.triggered.connect(self.__search)
         self.__actions.append(self.searchAct)
@@ -453,12 +453,11 @@ class HexEditMainWindow(E5MainWindow):
             0,
             self, 'hexEditor_edit_search_next')
         self.searchNextAct.setStatusTip(self.tr(
-            'Search next occurrence of text'))
+            'Search next occurrence'))
         self.searchNextAct.setWhatsThis(self.tr(
             """<b>Search next</b>"""
-            """<p>Search the next occurrence of some text in the current"""
-            """ editor. The previously entered searchtext and options are"""
-            """ reused.</p>"""
+            """<p>Search the next occurrence of some data. The previously"""
+            """ entered search data are reused.</p>"""
         ))
         self.searchNextAct.triggered.connect(self.__searchWidget.findPrevNext)
         self.__actions.append(self.searchNextAct)
@@ -471,12 +470,11 @@ class HexEditMainWindow(E5MainWindow):
             0,
             self, 'hexEditor_edit_search_previous')
         self.searchPrevAct.setStatusTip(self.tr(
-            'Search previous occurrence of text'))
+            'Search previous occurrence'))
         self.searchPrevAct.setWhatsThis(self.tr(
             """<b>Search previous</b>"""
-            """<p>Search the previous occurrence of some text in the current"""
-            """ editor. The previously entered searchtext and options are"""
-            """ reused.</p>"""
+            """<p>Search the previous occurrence of some data. The"""
+            """ previously entered search data are reused.</p>"""
         ))
         self.searchPrevAct.triggered.connect(
             lambda: self.__searchWidget.findPrevNext(True))
@@ -488,12 +486,12 @@ class HexEditMainWindow(E5MainWindow):
             QKeySequence(self.tr("Ctrl+R", "Search|Replace")),
             0,
             self, 'hexEditor_edit_search_replace')
-        self.replaceAct.setStatusTip(self.tr('Replace some text'))
+        self.replaceAct.setStatusTip(self.tr('Replace data'))
         self.replaceAct.setWhatsThis(self.tr(
             """<b>Replace</b>"""
-            """<p>Search for some text in the current editor and replace it."""
-            """ A dialog is shown to enter the searchtext, the replacement"""
-            """ text and options for the search and replace.</p>"""
+            """<p>Search for some data and replace it."""
+            """ A dialog is shown to enter the data to search for and the"""
+            """ replacement data in various formats.</p>"""
         ))
         self.replaceAct.triggered.connect(self.__replace)
         self.__actions.append(self.replaceAct)
@@ -772,7 +770,8 @@ class HexEditMainWindow(E5MainWindow):
         @param address address of the cursor
         @type int
         """
-        self.__sbAddress.setText(self.tr("Address: {0:#x}").format(address))
+        self.__sbAddress.setText(self.tr("Address: {0:#{1}x}").format(
+            address, self.__editor.addressWidth()))
     
     @pyqtSlot(bool)
     def __showReadOnlyMode(self, on):

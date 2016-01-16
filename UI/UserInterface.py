@@ -1919,7 +1919,8 @@ class UserInterface(E5MainWindow):
             'Start the eric6 Hex Editor'))
         self.hexEditorAct.setWhatsThis(self.tr(
             """<b>Hex Editor</b>"""
-            """<p>Starts the eric6 Hex Editor for editing binary files.</p>"""
+            """<p>Starts the eric6 Hex Editor for viewing or editing"""
+            """ binary files.</p>"""
         ))
         self.hexEditorAct.triggered.connect(self.__openHexEditor)
         self.actions.append(self.hexEditorAct)
