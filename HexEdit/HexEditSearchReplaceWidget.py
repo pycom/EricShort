@@ -8,6 +8,10 @@ Module implementing a search and replace widget for the hex editor.
 """
 
 from __future__ import unicode_literals
+try:
+    str = unicode       # __IGNORE_EXCEPTION__
+except NameError:
+    pass
 
 from PyQt5.QtCore import pyqtSlot, Qt, QByteArray, QRegExp
 from PyQt5.QtGui import QRegExpValidator
@@ -19,7 +23,6 @@ from E5Gui import E5MessageBox
 import UI.PixmapCache
 
 
-# TODO: change the text of the combo when the format changes
 class HexEditSearchReplaceWidget(QWidget):
     """
     Class implementing a search and replace widget for the hex editor.
@@ -48,10 +51,12 @@ class HexEditSearchReplaceWidget(QWidget):
             "dec": (self.tr("Dec"), QRegExpValidator((QRegExp("[0-9]*")))),
             "oct": (self.tr("Oct"), QRegExpValidator((QRegExp("[0-7]*")))),
             "bin": (self.tr("Bin"), QRegExpValidator((QRegExp("[01]*")))),
-            "text": (self.tr("Text"), None),        # text as latin-1
-            "utf-8": (self.tr("UTF-8"), None),      # text as utf-8
+            "iso-8859-1": (self.tr("Text"), None),
+            # text as latin-1/iso-8859-1
+            "utf-8": (self.tr("UTF-8"), None),
+            # text as utf-8
         }
-        formatOrder = ["hex", "dec", "oct", "bin", "text", "utf-8"]
+        formatOrder = ["hex", "dec", "oct", "bin", "iso-8859-1", "utf-8"]
         
         self.__currentFindFormat = ""
         self.__currentReplaceFormat = ""
@@ -198,21 +203,7 @@ class HexEditSearchReplaceWidget(QWidget):
         txt = textCombo.currentText()
         idx = formatCombo.currentIndex()
         format = formatCombo.itemData(idx)
-        if format == "hex":        # hex format
-            ba = bytearray(QByteArray.fromHex(
-                bytes(txt, encoding="ascii")))
-        elif format == "dec":
-            ba = self.__int2bytearray(int(txt, 10))
-        elif format == "oct":
-            ba = self.__int2bytearray(int(txt, 8))
-        elif format == "bin":
-            ba = self.__int2bytearray(int(txt, 2))
-        elif format == "text":
-            ba = bytearray(txt, encoding="latin-1")
-        elif format == "utf-8":
-            ba = bytearray(txt, encoding="utf-8")
-        else:
-            ba = bytearray()
+        ba = self.__text2bytearray(txt, format)
         
         # This moves any previous occurrence of this statement to the head
         # of the list and updates the combobox
@@ -500,12 +491,18 @@ class HexEditSearchReplaceWidget(QWidget):
         @return converted text
         @rtype str
         """
-        # TODO: implement the conversion method
+        if oldFormat and newFormat:
+            # step 1: convert the text to a byte array using the old format
+            byteArray = self.__text2bytearray(txt, oldFormat)
+            
+            # step 2: convert the byte array to text using the new format
+            txt = self.__bytearray2text(byteArray, newFormat)
+        
         return txt
     
     def __int2bytearray(self, value):
         """
-        Private method to convert an integer into a byte array.
+        Private method to convert an integer to a byte array.
         
         @param value value to be converted
         @type int
@@ -533,3 +530,60 @@ class HexEditSearchReplaceWidget(QWidget):
             value = value * 256 + b
         
         return value
+    
+    def __text2bytearray(self, txt, format):
+        """
+        Private method to convert a text to a byte array.
+        
+        @param txt text to be converted
+        @type str
+        @param format format of the text
+        @type str
+        @return converted text
+        @rtype bytearray
+        """
+        assert format in self.__formatAndValidators.keys()
+        
+        if format == "hex":             # hex format
+            ba = bytearray(QByteArray.fromHex(
+                bytes(txt, encoding="ascii")))
+        elif format == "dec":           # decimal format
+            ba = self.__int2bytearray(int(txt, 10))
+        elif format == "oct":           # octal format
+            ba = self.__int2bytearray(int(txt, 8))
+        elif format == "bin":           # binary format
+            ba = self.__int2bytearray(int(txt, 2))
+        elif format == "iso-8859-1":    # latin-1/iso-8859-1 text
+            ba = bytearray(txt, encoding="iso-8859-1")
+        elif format == "utf-8":         # utf-8 text
+            ba = bytearray(txt, encoding="utf-8")
+        
+        return ba
+    
+    def __bytearray2text(self, array, format):
+        """
+        Private method to convert a byte array to a text.
+        
+        @param array byte array to be converted
+        @type bytearray
+        @param format format of the text
+        @type str
+        @return formatted text
+        @rtype str
+        """
+        assert format in self.__formatAndValidators.keys()
+        
+        if format == "hex":             # hex format
+            txt = "{0:x}".format(self.__bytearray2int(array))
+        elif format == "dec":           # decimal format
+            txt = "{0:d}".format(self.__bytearray2int(array))
+        elif format == "oct":           # octal format
+            txt = "{0:o}".format(self.__bytearray2int(array))
+        elif format == "bin":           # binary format
+            txt = "{0:b}".format(self.__bytearray2int(array))
+        elif format == "iso-8859-1":    # latin-1/iso-8859-1 text
+            txt = str(array, encoding="iso-8859-1")
+        elif format == "utf-8":         # utf-8 text
+            txt = str(array, encoding="utf-8", errors="replace")
+        
+        return txt
