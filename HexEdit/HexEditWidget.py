@@ -1622,7 +1622,10 @@ class HexEditWidget(QAbstractScrollArea):
                 if (i + j) < len(byteArray):
                     hexStr += " {0:02x}".format(byteArray[i + j])
                     by = byteArray[i + j]
-                    if by < 0x20 or by > 0x7e:
+                    if is_Py2 and (by < 0x20 or by > 0x7e):
+                        ch = "."
+                    elif not is_Py2 and \
+                            (by < 0x20 or (by > 0x7e and by < 0xa0)):
                         ch = "."
                     else:
                         ch = chr(by)
