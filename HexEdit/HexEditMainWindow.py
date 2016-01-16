@@ -15,7 +15,7 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFile, QFileInfo, QSize, \
     QCoreApplication
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout, \
-    QDialog, QAction
+    QDialog, QAction, QFrame
 
 from E5Gui.E5Action import E5Action
 from E5Gui.E5MainWindow import E5MainWindow
@@ -105,6 +105,7 @@ class HexEditMainWindow(E5MainWindow):
         self.restoreState(state)
         
         self.__editor.currentAddressChanged.connect(self.__showAddress)
+        self.__editor.selectionAvailable.connect(self.__showSelectionInfo)
         self.__editor.currentSizeChanged.connect(self.__showSize)
         self.__editor.dataChanged.connect(self.__modificationChanged)
         self.__editor.overwriteModeChanged.connect(self.__showEditMode)
@@ -732,28 +733,21 @@ class HexEditMainWindow(E5MainWindow):
         self.__statusBar = self.statusBar()
         self.__statusBar.setSizeGripEnabled(True)
         
-        self.__sbEditMode = QLabel(self.__statusBar)
-        self.__statusBar.addPermanentWidget(self.__sbEditMode)
-        self.__sbEditMode.setWhatsThis(self.tr(
-            """<p>This part of the status bar displays the edit mode.</p>"""
-        ))
-        
-        self.__sbReadOnly = QLabel(self.__statusBar)
-        self.__statusBar.addPermanentWidget(self.__sbReadOnly)
-        self.__sbReadOnly.setWhatsThis(self.tr(
-            """<p>This part of the status bar displays the read"""
-            """ only mode.</p>"""
-        ))
-
         self.__sbAddress = QLabel(self.__statusBar)
         self.__statusBar.addPermanentWidget(self.__sbAddress)
         self.__sbAddress.setWhatsThis(self.tr(
             """<p>This part of the status bar displays the cursor"""
             """ address.</p>"""
         ))
+        self.__sbAddress.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
         
-        self.__showEditMode(self.__editor.overwriteMode())
-        self.__showReadOnlyMode(self.__editor.isReadOnly())
+        self.__sbSelection = QLabel(self.__statusBar)
+        self.__statusBar.addPermanentWidget(self.__sbSelection)
+        self.__sbSelection.setWhatsThis(self.tr(
+            """<p>This part of the status bar displays some selection"""
+            """ information.</p>"""
+        ))
+        self.__sbSelection.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
         
         self.__sbSize = QLabel(self.__statusBar)
         self.__statusBar.addPermanentWidget(self.__sbSize)
@@ -761,6 +755,25 @@ class HexEditMainWindow(E5MainWindow):
             """<p>This part of the status bar displays the size of the"""
             """ binary data.</p>"""
         ))
+        self.__sbSize.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
+        
+        self.__sbEditMode = QLabel(self.__statusBar)
+        self.__statusBar.addPermanentWidget(self.__sbEditMode)
+        self.__sbEditMode.setWhatsThis(self.tr(
+            """<p>This part of the status bar displays the edit mode.</p>"""
+        ))
+        self.__sbEditMode.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
+        
+        self.__sbReadOnly = QLabel(self.__statusBar)
+        self.__statusBar.addPermanentWidget(self.__sbReadOnly)
+        self.__sbReadOnly.setWhatsThis(self.tr(
+            """<p>This part of the status bar displays the read"""
+            """ only mode.</p>"""
+        ))
+        self.__sbReadOnly.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
+
+        self.__showEditMode(self.__editor.overwriteMode())
+        self.__showReadOnlyMode(self.__editor.isReadOnly())
     
     @pyqtSlot(int)
     def __showAddress(self, address):
@@ -770,8 +783,30 @@ class HexEditMainWindow(E5MainWindow):
         @param address address of the cursor
         @type int
         """
-        self.__sbAddress.setText(self.tr("Address: {0:#{1}x}").format(
+        self.__sbAddress.setText(self.tr("Address: 0x{0:0{1}x}").format(
             address, self.__editor.addressWidth()))
+    
+    @pyqtSlot(bool)
+    def __showSelectionInfo(self, avail):
+        """
+        Private slot to show selection information.
+        
+        @param avail flag indicating the availability of a selection.
+        @type bool
+        """
+        if avail:
+            start = self.__editor.getSelectionBegin()
+            end = self.__editor.getSelectionEnd()
+            slen = self.__editor.getSelectionLength()
+            self.__sbSelection.setText(
+                self.tr("Selection: 0x{0:0{2}x} - 0x{1:0{2}x} ({3:n} Bytes)", 
+                        "0: start, 1: end, 2: address width,"
+                        " 3: selection length")
+                .format(start, end, self.__editor.addressWidth(), slen)
+            )
+        else:
+            self.__sbSelection.setText(
+                self.tr("Selection: -", "no selection available"))
     
     @pyqtSlot(bool)
     def __showReadOnlyMode(self, on):
