@@ -9,6 +9,9 @@ Module implementing an editor for binary data.
 
 from __future__ import unicode_literals
 
+import sys
+is_Py2 = sys.version_info[0] == 2
+
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QByteArray, QTimer, QRect, \
     QBuffer, QIODevice
 from PyQt5.QtGui import QBrush, QPen, QColor, QFont, QPalette, QKeySequence, \
@@ -19,9 +22,6 @@ from .HexEditChunks import HexEditChunks
 from .HexEditUndoStack import HexEditUndoStack
 
 import Globals
-
-
-# TODO: implement editing in ASCII area
 
 
 class HexEditWidget(QAbstractScrollArea):
@@ -1422,7 +1422,10 @@ class HexEditWidget(QAbstractScrollArea):
                     # render ascii value
                     if self.__asciiArea:
                         by = self.__dataShown[bPosLine + colIdx]
-                        if by < 0x20 or by > 0x7e:
+                        if is_Py2 and (by < 0x20 or by > 0x7e):
+                            ch = "."
+                        elif not is_Py2 and \
+                                (by < 0x20 or (by > 0x7e and by < 0xa0)):
                             ch = "."
                         else:
                             ch = chr(by)
