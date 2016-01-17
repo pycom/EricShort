@@ -11,13 +11,12 @@ from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot, pyqtSignal
 from PyQt5.QtNetwork import QNetworkConfigurationManager
-
-from E5Gui.E5ClickableLabel import E5ClickableLabel
+from PyQt5.QtWidgets import QLabel
 
 import UI.PixmapCache
 
 
-class E5NetworkIcon(E5ClickableLabel):
+class E5NetworkIcon(QLabel):
     """
     Class implementing a statusbar icon tracking the network status.
     
