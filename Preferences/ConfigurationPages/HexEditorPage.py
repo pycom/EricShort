@@ -18,6 +18,11 @@ from .Ui_HexEditorPage import Ui_HexEditorPage
 
 import Preferences
 
+try:
+    MonospacedFontsOption = QFontDialog.MonospacedFonts
+except AttributeError:
+    MonospacedFontsOption = QFontDialog.FontDialogOptions(0x10)
+
 
 class HexEditorPage(ConfigurationPageBase, Ui_HexEditorPage):
     """
@@ -98,7 +103,7 @@ class HexEditorPage(ConfigurationPageBase, Ui_HexEditorPage):
         """
         self.monospacedFont = self.selectFont(
             self.monospacedFontSample, self.monospacedFont,
-            options=QFontDialog.MonospacedFonts)
+            options=MonospacedFontsOption)
     
     def polishPage(self):
         """

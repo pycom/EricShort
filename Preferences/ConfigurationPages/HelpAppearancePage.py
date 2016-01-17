@@ -19,6 +19,11 @@ from .Ui_HelpAppearancePage import Ui_HelpAppearancePage
 
 import Preferences
 
+try:
+    MonospacedFontsOption = QFontDialog.MonospacedFonts
+except AttributeError:
+    MonospacedFontsOption = QFontDialog.FontDialogOptions(0x10)
+
 
 class HelpAppearancePage(ConfigurationPageBase, Ui_HelpAppearancePage):
     """
@@ -124,9 +129,9 @@ class HelpAppearancePage(ConfigurationPageBase, Ui_HelpAppearancePage):
         """
         Private method used to select the fixed-width font.
         """
-        self.fixedFont = \
-            self.selectFont(self.fixedFontSample, self.fixedFont, True,
-            options=QFontDialog.MonospacedFonts)
+        self.fixedFont = self.selectFont(
+            self.fixedFontSample, self.fixedFont, True,
+            options=MonospacedFontsOption)
     
 
 def create(dlg):

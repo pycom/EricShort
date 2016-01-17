@@ -17,6 +17,11 @@ from .Ui_ShellPage import Ui_ShellPage
 
 import Preferences
 
+try:
+    MonospacedFontsOption = QFontDialog.MonospacedFonts
+except AttributeError:
+    MonospacedFontsOption = QFontDialog.FontDialogOptions(0x10)
+
 
 class ShellPage(ConfigurationPageBase, Ui_ShellPage):
     """
@@ -93,7 +98,7 @@ class ShellPage(ConfigurationPageBase, Ui_ShellPage):
         """
         self.monospacedFont = self.selectFont(
             self.monospacedFontSample, self.monospacedFont,
-            options=QFontDialog.MonospacedFonts)
+            options=MonospacedFontsOption)
         
     @pyqtSlot()
     def on_linenumbersFontButton_clicked(self):
@@ -102,7 +107,7 @@ class ShellPage(ConfigurationPageBase, Ui_ShellPage):
         """
         self.marginsFont = self.selectFont(
             self.marginsFontSample, self.marginsFont,
-            options=QFontDialog.MonospacedFonts)
+            options=MonospacedFontsOption)
         
     def polishPage(self):
         """

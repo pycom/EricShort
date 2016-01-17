@@ -19,6 +19,11 @@ from .Ui_EditorStylesPage import Ui_EditorStylesPage
 
 import Preferences
 
+try:
+    MonospacedFontsOption = QFontDialog.MonospacedFonts
+except AttributeError:
+    MonospacedFontsOption = QFontDialog.FontDialogOptions(0x10)
+
 
 class EditorStylesPage(ConfigurationPageBase, Ui_EditorStylesPage):
     """
@@ -348,7 +353,7 @@ class EditorStylesPage(ConfigurationPageBase, Ui_EditorStylesPage):
         """
         self.marginsFont = self.selectFont(
             self.marginsFontSample, self.marginsFont,
-            options=QFontDialog.MonospacedFonts)
+            options=MonospacedFontsOption)
         
     @pyqtSlot()
     def on_defaultFontButton_clicked(self):
@@ -366,7 +371,7 @@ class EditorStylesPage(ConfigurationPageBase, Ui_EditorStylesPage):
         """
         self.monospacedFont = self.selectFont(
             self.monospacedFontSample, self.monospacedFont,
-            options=QFontDialog.MonospacedFonts)
+            options=MonospacedFontsOption)
         
     def polishPage(self):
         """

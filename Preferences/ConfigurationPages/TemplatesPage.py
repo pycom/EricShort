@@ -17,6 +17,11 @@ from .Ui_TemplatesPage import Ui_TemplatesPage
 
 import Preferences
 
+try:
+    MonospacedFontsOption = QFontDialog.MonospacedFonts
+except AttributeError:
+    MonospacedFontsOption = QFontDialog.FontDialogOptions(0x10)
+
 
 class TemplatesPage(ConfigurationPageBase, Ui_TemplatesPage):
     """
@@ -69,7 +74,7 @@ class TemplatesPage(ConfigurationPageBase, Ui_TemplatesPage):
         """
         self.editorFont = self.selectFont(
             self.editorFontSample, self.editorFont,
-            options=QFontDialog.MonospacedFonts)
+            options=MonospacedFontsOption)
     
 
 def create(dlg):

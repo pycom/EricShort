@@ -117,7 +117,7 @@ class ConfigurationPageBase(QWidget):
             (QFontDialog.FontDialogOptions)
         @return selected font (QFont)
         """
-        font, ok = QFontDialog.getFont(fontVar, self, options=options)
+        font, ok = QFontDialog.getFont(fontVar, self, "", options)
         if ok:
             fontSample.setFont(font)
             if showFontInfo:
