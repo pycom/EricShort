@@ -7884,17 +7884,17 @@ se zobrazenými položkami.&lt;/p&gt;
 <context>
     <name>E5NetworkIcon</name>
     <message>
-        <location filename="../E5Network/E5NetworkIcon.py" line="58"/>
+        <location filename="../E5Network/E5NetworkIcon.py" line="57"/>
         <source>&lt;p&gt;Shows the network status&lt;br/&gt;&lt;br/&gt;&lt;b&gt;Network:&lt;/b&gt; {0}&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Network/E5NetworkIcon.py" line="62"/>
+        <location filename="../E5Network/E5NetworkIcon.py" line="61"/>
         <source>Connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Network/E5NetworkIcon.py" line="64"/>
+        <location filename="../E5Network/E5NetworkIcon.py" line="63"/>
         <source>Offline</source>
         <translation type="unfinished"></translation>
     </message>
@@ -19943,548 +19943,548 @@ URL: {1}</source>
 <context>
     <name>HexEditMainWindow</name>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="151"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="152"/>
         <source>New Window</source>
         <translation type="unfinished">Nové okno</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="151"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="152"/>
         <source>New &amp;Window</source>
         <translation type="unfinished">&amp;Nové okno</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="156"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="157"/>
         <source>Open a binary file for editing in a new hex editor window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="158"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="159"/>
         <source>&lt;b&gt;New Window&lt;/b&gt;&lt;p&gt;This opens a binary file for editing in a new hex editor window.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="167"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="168"/>
         <source>Open</source>
         <translation type="unfinished">Otevřít</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="167"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="168"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">&amp;Otevřít...</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="167"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="168"/>
         <source>Ctrl+O</source>
         <comment>File|Open</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="183"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="184"/>
         <source>Save</source>
         <translation type="unfinished">Uložit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="183"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="184"/>
         <source>&amp;Save</source>
         <translation type="unfinished">&amp;Uložit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="183"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="184"/>
         <source>Ctrl+S</source>
         <comment>File|Save</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="189"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="190"/>
         <source>Save the current binary file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="190"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="191"/>
         <source>&lt;b&gt;Save File&lt;/b&gt;&lt;p&gt;Save the contents of the hex editor window.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="197"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="198"/>
         <source>Save As</source>
         <translation type="unfinished">Uložit jako</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="197"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="198"/>
         <source>Save &amp;As...</source>
         <translation type="unfinished">Uložit j&amp;ako...</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="197"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="198"/>
         <source>Shift+Ctrl+S</source>
         <comment>File|Save As</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="203"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="204"/>
         <source>Save the current binary data to a new file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="205"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="206"/>
         <source>&lt;b&gt;Save As...&lt;/b&gt;&lt;p&gt;Saves the current binary data to a new file.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="212"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="213"/>
         <source>Save As Readable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="212"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="213"/>
         <source>Save As &amp;Readable...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="216"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="217"/>
         <source>Save the current binary data to a new file in a readable format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="219"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="220"/>
         <source>&lt;b&gt;Save As Readable...&lt;/b&gt;&lt;p&gt;Saves the current binary data to a new file in a readable format.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="227"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="228"/>
         <source>Close</source>
         <translation type="unfinished">Zavřít</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="227"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="228"/>
         <source>&amp;Close</source>
         <translation type="unfinished">&amp;Zavřít</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="227"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="228"/>
         <source>Ctrl+W</source>
         <comment>File|Close</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="233"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="234"/>
         <source>Close the current hex editor window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="235"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="236"/>
         <source>&lt;b&gt;Close&lt;/b&gt;&lt;p&gt;Closes the current hex editor window.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="242"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="243"/>
         <source>Close All</source>
         <translation type="unfinished">Zavřít vše</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="242"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="243"/>
         <source>Close &amp;All</source>
         <translation type="unfinished">Z&amp;avřít vše</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="246"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="247"/>
         <source>Close all hex editor windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="248"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="249"/>
         <source>&lt;b&gt;Close All&lt;/b&gt;&lt;p&gt;Closes all hex editor windows.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="255"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="256"/>
         <source>Close Others</source>
         <translation type="unfinished">Zavřít ostatní</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="259"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="260"/>
         <source>Close all hex other editor windows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="261"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="262"/>
         <source>&lt;b&gt;Close Others&lt;/b&gt;&lt;p&gt;Closes all other hex editor windows.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="268"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="269"/>
         <source>Quit</source>
         <translation type="unfinished">Konec</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="268"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="269"/>
         <source>&amp;Quit</source>
         <translation type="unfinished">&amp;Konec</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="268"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="269"/>
         <source>Ctrl+Q</source>
         <comment>File|Quit</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="274"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="275"/>
         <source>Quit the hex editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="275"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="276"/>
         <source>&lt;b&gt;Quit&lt;/b&gt;&lt;p&gt;Quit the hex editor.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="287"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="288"/>
         <source>Undo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="287"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="288"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">&amp;Vrátit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="287"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="288"/>
         <source>Ctrl+Z</source>
         <comment>Edit|Undo</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="287"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="288"/>
         <source>Alt+Backspace</source>
         <comment>Edit|Undo</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="294"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="295"/>
         <source>Undo the last change</source>
         <translation type="unfinished">Vrátit poslední změnu</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="295"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="296"/>
         <source>&lt;b&gt;Undo&lt;/b&gt;&lt;p&gt;Undo the last change done.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;b&gt;Vrátit&lt;/b&gt;&lt;p&gt;Vrátit poslední změnu.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="302"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="303"/>
         <source>Redo</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="302"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="303"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">&amp;Znovu použít</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="302"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="303"/>
         <source>Ctrl+Shift+Z</source>
         <comment>Edit|Redo</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="308"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="309"/>
         <source>Redo the last change</source>
         <translation type="unfinished">Znovu použít poslední změnu</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="309"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="310"/>
         <source>&lt;b&gt;Redo&lt;/b&gt;&lt;p&gt;Redo the last change done.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;b&gt;Znovu použít&lt;/b&gt;&lt;p&gt;Znovu použít poslední změnu.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="322"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="323"/>
         <source>Revert to last saved state</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="316"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="317"/>
         <source>Re&amp;vert to last saved state</source>
         <translation type="unfinished">Vrátit se k &amp;poslednímu uloženému stavu</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="316"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="317"/>
         <source>Ctrl+Y</source>
         <comment>Edit|Revert</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="323"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="324"/>
         <source>&lt;b&gt;Revert to last saved state&lt;/b&gt;&lt;p&gt;Undo all changes up to the last saved state of the editor.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="331"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="332"/>
         <source>Cut</source>
         <translation type="unfinished">Vyjmout</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="331"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="332"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">Vyjmou&amp;t</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="331"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="332"/>
         <source>Ctrl+X</source>
         <comment>Edit|Cut</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="331"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="332"/>
         <source>Shift+Del</source>
         <comment>Edit|Cut</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="338"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="339"/>
         <source>Cut the selection</source>
         <translation type="unfinished">Vyjmout výběr</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="339"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="340"/>
         <source>&lt;b&gt;Cut&lt;/b&gt;&lt;p&gt;Cut the selected binary area to the clipboard.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="346"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="347"/>
         <source>Copy</source>
         <translation type="unfinished">Kopírovat</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="346"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="347"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">&amp;Kopírovat</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="346"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="347"/>
         <source>Ctrl+C</source>
         <comment>Edit|Copy</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="346"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="347"/>
         <source>Ctrl+Ins</source>
         <comment>Edit|Copy</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="353"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="354"/>
         <source>Copy the selection</source>
         <translation type="unfinished">Kopírovat výběr</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="354"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="355"/>
         <source>&lt;b&gt;Copy&lt;/b&gt;&lt;p&gt;Copy the selected binary area to the clipboard.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="361"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="362"/>
         <source>Paste</source>
         <translation type="unfinished">Vložit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="361"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="362"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">V&amp;ložit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="361"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="362"/>
         <source>Ctrl+V</source>
         <comment>Edit|Paste</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="361"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="362"/>
         <source>Shift+Ins</source>
         <comment>Edit|Paste</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="368"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="369"/>
         <source>Paste the clipboard contents</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="369"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="370"/>
         <source>&lt;b&gt;Paste&lt;/b&gt;&lt;p&gt;Paste the clipboard contents.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="376"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="377"/>
         <source>Select All</source>
         <translation type="unfinished">Vybrat vše</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="376"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="377"/>
         <source>&amp;Select All</source>
         <translation type="unfinished">Vybrat vš&amp;e</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="376"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="377"/>
         <source>Ctrl+A</source>
         <comment>Edit|Select All</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="383"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="384"/>
         <source>Select the complete binary data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="385"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="386"/>
         <source>&lt;b&gt;Select All&lt;/b&gt;&lt;p&gt;Selects the complete binary data.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="392"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="393"/>
         <source>Deselect all</source>
         <translation type="unfinished">Zrušit celý výběr</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="392"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="393"/>
         <source>&amp;Deselect all</source>
         <translation type="unfinished">Z&amp;rušit celý výběr</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="392"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="393"/>
         <source>Alt+Ctrl+A</source>
         <comment>Edit|Deselect all</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="398"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="399"/>
         <source>Deselect all binary data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="399"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="400"/>
         <source>&lt;b&gt;Deselect All&lt;/b&gt;&lt;p&gt;Deselect all all binary data.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="406"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="407"/>
         <source>Save Selection Readable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="406"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="407"/>
         <source>Save Selection Readable...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="410"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="411"/>
         <source>Save the binary data of the current selection to a file in a readable format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="413"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="414"/>
         <source>&lt;b&gt;Save Selection Readable...&lt;/b&gt;&lt;p&gt;Saves the binary data of the current selection to a file in a readable format.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="422"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="423"/>
         <source>Set Read Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="426"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="427"/>
         <source>Change the edit mode to read only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="428"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="429"/>
         <source>&lt;b&gt;Set Read Only&lt;/b&gt;&lt;p&gt;This changes the edit mode to read only (i.e. to view mode).&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="438"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="439"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="438"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="439"/>
         <source>&amp;Search...</source>
         <translation type="unfinished">V&amp;yhledat...</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="438"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="439"/>
         <source>Ctrl+F</source>
         <comment>Search|Search</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="445"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="446"/>
         <source>Search for data</source>
         <translation type="unfinished">Hledat text</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="446"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="447"/>
         <source>&lt;b&gt;Search&lt;/b&gt;&lt;p&gt;Search for some data. A dialog is shown to enter the data to search for in various formats.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;b&gt;Hledat&lt;/b&gt;
 &lt;p&gt;Hledat text v aktuálním editoru. Zobrazí se dialogové okno, do kterého se zadá hledaný text a další nastavení.&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="454"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="455"/>
         <source>Search next</source>
         <translation type="unfinished">Hledat text</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="454"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="455"/>
         <source>Search &amp;next</source>
         <translation type="unfinished">Hledat &amp;další</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="454"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="455"/>
         <source>F3</source>
         <comment>Search|Search next</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="461"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="462"/>
         <source>Search next occurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="463"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="464"/>
         <source>&lt;b&gt;Search next&lt;/b&gt;&lt;p&gt;Search the next occurrence of some data. The previously entered search data are reused.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="471"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="472"/>
         <source>Search previous</source>
         <translation type="unfinished">Hledat předchozí</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="471"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="472"/>
         <source>Search &amp;previous</source>
         <translation type="unfinished">Hledat &amp;předchozí</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="471"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="472"/>
         <source>Shift+F3</source>
         <comment>Search|Search previous</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="480"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="481"/>
         <source>&lt;b&gt;Search previous&lt;/b&gt;&lt;p&gt;Search the previous occurrence of some data. The previously entered search data are reused.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;b&gt;Hledat předchozí&lt;/b&gt;&lt;p&gt;Hledá se předchozí výskyt hledaného textu v aktuálním editoru. Stále platí nastavení, která byla nastavena při zadání hledaného textu.&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="489"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="490"/>
         <source>Replace</source>
         <translation type="unfinished">Nahradit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="489"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="490"/>
         <source>&amp;Replace...</source>
         <translation type="unfinished">Nah&amp;radit...</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="489"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="490"/>
         <source>Ctrl+R</source>
         <comment>Search|Replace</comment>
         <translation type="unfinished"></translation>
@@ -20501,378 +20501,378 @@ URL: {1}</source>
 &lt;p&gt;Vyhledá va ktuálním editoru text a nahradí jej. Je zobrazeno dialogové okno, kde se zadá text, který se má nahradit, nový text a nastavení pro vyhledávání a nahrazení.&lt;p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="543"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="544"/>
         <source>About</source>
         <translation type="unfinished">O aplikaci</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="543"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="544"/>
         <source>&amp;About</source>
         <translation type="unfinished">O &amp;aplikaci</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="547"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="548"/>
         <source>Display information about this software</source>
         <translation type="unfinished">Zobrazit informace a tomto software</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="549"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="550"/>
         <source>&lt;b&gt;About&lt;/b&gt;&lt;p&gt;Display some information about this software.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;b&gt;O aplikaci&lt;/b&gt;&lt;p&gt;Zobrazí se informace o tomto software.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="555"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="556"/>
         <source>About Qt</source>
         <translation type="unfinished">O Qt</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="555"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="556"/>
         <source>About &amp;Qt</source>
         <translation type="unfinished">O &amp;Qt</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="559"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="560"/>
         <source>Display information about the Qt toolkit</source>
         <translation type="unfinished">Zobrazit informace o Qt toolkitu</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="561"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="562"/>
         <source>&lt;b&gt;About Qt&lt;/b&gt;&lt;p&gt;Display some information about the Qt toolkit.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="568"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="569"/>
         <source>What&apos;s This?</source>
         <translation type="unfinished">Co je to?</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="568"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="569"/>
         <source>&amp;What&apos;s This?</source>
         <translation type="unfinished">&amp;Co je to?</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="568"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="569"/>
         <source>Shift+F1</source>
         <comment>Help|What&apos;s This?&apos;</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="574"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="575"/>
         <source>Context sensitive help</source>
         <translation type="unfinished">Kontextově senzitivní nápověda</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="575"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="576"/>
         <source>&lt;b&gt;Display context sensitive help&lt;/b&gt;&lt;p&gt;In What&apos;s This? mode, the mouse cursor shows an arrow with a question mark, and you can click on the interface elements to get a short description of what they do and how to use them. In dialogs, this feature can be accessed using the context help button in the titlebar.&lt;/p&gt;</source>
         <translation type="unfinished">&lt;b&gt;Zobrazit kontextově senzitivní nápovědu&lt;/b&gt;&lt;p&gt;V režimu &quot;Co je to?&quot; se nad různými prvky aplikace u kurzoru zobrazí otazník. Když pak kliknete na tyto prvky, zobrazí se krátký popis co daný prvek znamená a jak jej použít. V dialogových oknech se tato funkce spustí tlačítkem kontextové nápovědy na horní liště.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="590"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="591"/>
         <source>Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="590"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="591"/>
         <source>&amp;Preferences...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="595"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="596"/>
         <source>Set the prefered configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="597"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="598"/>
         <source>&lt;b&gt;Preferences&lt;/b&gt;&lt;p&gt;Set the configuration items of the application with your prefered values.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="640"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="641"/>
         <source>Open a binary file for viewing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="614"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="615"/>
         <source>&lt;b&gt;Open File&lt;/b&gt;&lt;p&gt;This opens a binary file for viewing (i.e. in read only mode). It pops up a file selection dialog.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="620"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="621"/>
         <source>Open for Editing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="621"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="622"/>
         <source>Open for Editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="630"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="631"/>
         <source>Open a binary file for editing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="624"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="625"/>
         <source>&lt;b&gt;Open for Editing&lt;/b&gt;&lt;p&gt;This opens a binary file for editing. It pops up a file selection dialog.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="632"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="633"/>
         <source>&lt;b&gt;Open File&lt;/b&gt;&lt;p&gt;This opens a binary file for editing. It pops up a file selection dialog.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="638"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="639"/>
         <source>Open Read Only...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="639"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="640"/>
         <source>Open Read Only</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="642"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="643"/>
         <source>&lt;b&gt;Open Read Only&lt;/b&gt;&lt;p&gt;This opens a binary file for viewing (i.e. in read only mode). It pops up a file selection dialog.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="654"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="655"/>
         <source>&amp;File</source>
         <translation type="unfinished">S&amp;oubor</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="672"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="673"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">&amp;Edit</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="696"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="697"/>
         <source>Se&amp;ttings</source>
         <translation type="unfinished">Nas&amp;tavení</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="702"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="703"/>
         <source>&amp;Help</source>
         <translation type="unfinished">&amp;Nápověda</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="712"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="713"/>
         <source>File</source>
         <translation type="unfinished">Soubor</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="725"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="726"/>
         <source>Edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="735"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="736"/>
         <source>Find</source>
         <translation type="unfinished">Hledat</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="743"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="744"/>
         <source>Settings</source>
         <translation type="unfinished">Nastavení</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="748"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="749"/>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="786"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="787"/>
         <source>&lt;p&gt;This part of the status bar displays the edit mode.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="793"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="795"/>
         <source>&lt;p&gt;This part of the status bar displays the read only mode.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="762"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="763"/>
         <source>&lt;p&gt;This part of the status bar displays the cursor address.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="778"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="779"/>
         <source>&lt;p&gt;This part of the status bar displays the size of the binary data.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="843"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="846"/>
         <source>ro</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="843"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="846"/>
         <source>rw</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="853"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="864"/>
         <source>Overwrite</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="853"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="864"/>
         <source>Insert</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="864"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="883"/>
         <source>Size: {0:n}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="904"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="923"/>
         <source>Open binary file in new window</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1021"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1040"/>
         <source>All Files (*)</source>
         <translation type="unfinished">Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1141"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1160"/>
         <source>eric6 Hex Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="925"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="944"/>
         <source>The loaded file has unsaved changes.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="943"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="962"/>
         <source>The file &apos;{0}&apos; does not exist.</source>
         <translation type="unfinished">Soubor &apos;{0}&apos; neexistuje.</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="950"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="969"/>
         <source>Cannot read file &apos;{0}:
 {1}.</source>
         <translation type="unfinished">Nelze číst soubor &apos;{0}:{1}.</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="974"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="993"/>
         <source>Open binary file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1031"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1050"/>
         <source>Save binary file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1116"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1135"/>
         <source>&lt;p&gt;The file &lt;b&gt;{0}&lt;/b&gt; already exists. Overwrite it?&lt;/p&gt;</source>
         <translation type="unfinished">&lt;p&gt;Soubor &lt;b&gt;{0}&lt;/b&gt; již existuje.&lt;/p&gt;&lt;p&gt;Má se přepsat?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1141"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1160"/>
         <source>Cannot write file &apos;{0}:
 {1}.</source>
         <translation type="unfinished">Nelze zapsat do souboru &apos;{0}:
 {1}.</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1147"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1166"/>
         <source>File saved</source>
         <translation type="unfinished">Soubor uložen</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1116"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1135"/>
         <source>Save to readable file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1100"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1119"/>
         <source>Text Files (*.txt);;All Files (*)</source>
         <translation type="unfinished">Textové soubory (*.txt);;Všechny soubory (*)</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1100"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1119"/>
         <source>Text Files (*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1181"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1200"/>
         <source>Untitled</source>
         <translation type="unfinished">Beze jména</translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1185"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1204"/>
         <source>{0}[*] - {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1185"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1204"/>
         <source>Hex Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1242"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1261"/>
         <source>About eric6 Hex Editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="1242"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="1261"/>
         <source>The eric6 Hex Editor is a simple editor component to edit binary files.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="478"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="479"/>
         <source>Search previous occurrence</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="495"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="496"/>
         <source>Replace data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="496"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="497"/>
         <source>&lt;b&gt;Replace&lt;/b&gt;&lt;p&gt;Search for some data and replace it. A dialog is shown to enter the data to search for and the replacement data in various formats.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="770"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="771"/>
         <source>&lt;p&gt;This part of the status bar displays some selection information.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="810"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="813"/>
         <source>Address: 0x{0:0{1}x}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="832"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="835"/>
         <source>Selection: -</source>
         <comment>no selection available</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="825"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="828"/>
         <source>Selection: 0x{0:0{2}x} - 0x{1:0{2}x} ({3:n} Bytes)</source>
         <comment>0: start, 1: end, 2: address width, 3: selection length</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="513"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="514"/>
         <source>Goto Offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="505"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="506"/>
         <source>&amp;Goto Offset...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="514"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="515"/>
         <source>&lt;b&gt;Goto Offset&lt;/b&gt;&lt;p&gt;Go to a specific address. A dialog is shown to enter the movement data.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -58258,47 +58258,47 @@ be changed via the preferences dialog.&lt;/p&gt;
         <translation></translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="112"/>
+        <location filename="../Tools/TrayStarter.py" line="109"/>
         <source>Compare Files</source>
         <translation>Porovnání souborů</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="115"/>
+        <location filename="../Tools/TrayStarter.py" line="112"/>
         <source>Compare Files side by side</source>
         <translation>Porovnat soubory stranu proti straně</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="144"/>
+        <location filename="../Tools/TrayStarter.py" line="141"/>
         <source>Preferences</source>
         <translation>Nastavení</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="170"/>
+        <location filename="../Tools/TrayStarter.py" line="175"/>
         <source>Quit</source>
         <translation>Konec</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="255"/>
+        <location filename="../Tools/TrayStarter.py" line="260"/>
         <source>Process Generation Error</source>
         <translation>Chyba v procesu generování</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="255"/>
+        <location filename="../Tools/TrayStarter.py" line="260"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="133"/>
+        <location filename="../Tools/TrayStarter.py" line="130"/>
         <source>Install Plugin</source>
         <translation>Instalovat plugin</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="136"/>
+        <location filename="../Tools/TrayStarter.py" line="133"/>
         <source>Uninstall Plugin</source>
         <translation>Odinstalovat plugin</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="139"/>
+        <location filename="../Tools/TrayStarter.py" line="136"/>
         <source>Plugin Repository</source>
         <translation>Plugin repozitář</translation>
     </message>
@@ -58308,27 +58308,27 @@ be changed via the preferences dialog.&lt;/p&gt;
         <translation>Poslední multiprojekty</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="120"/>
+        <location filename="../Tools/TrayStarter.py" line="117"/>
         <source>SQL Browser</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="255"/>
+        <location filename="../Tools/TrayStarter.py" line="260"/>
         <source>&lt;p&gt;Could not start the process.&lt;br&gt;Ensure that it is available as &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Nemohu spustit proces.&lt;br&gt;Ověřte jestli je dostupný jako &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="128"/>
+        <location filename="../Tools/TrayStarter.py" line="125"/>
         <source>Icon Editor</source>
         <translation type="unfinished">Editor ikon</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="125"/>
+        <location filename="../Tools/TrayStarter.py" line="122"/>
         <source>Snapshot</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="155"/>
+        <location filename="../Tools/TrayStarter.py" line="160"/>
         <source>Configure Tray Starter</source>
         <translation type="unfinished"></translation>
     </message>
@@ -58338,19 +58338,24 @@ be changed via the preferences dialog.&lt;/p&gt;
         <translation type="unfinished">Eric5 tray startér {6 ?}</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="107"/>
+        <location filename="../Tools/TrayStarter.py" line="155"/>
         <source>eric6 Web Browser</source>
         <translation type="unfinished">eric5 web prohlížeč {6 ?}</translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="147"/>
+        <location filename="../Tools/TrayStarter.py" line="146"/>
         <source>eric6 IDE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Tools/TrayStarter.py" line="150"/>
+        <location filename="../Tools/TrayStarter.py" line="149"/>
         <source>eric6 Mini Editor</source>
         <translation type="unfinished">eric5 Mini Editor {6 ?}</translation>
+    </message>
+    <message>
+        <location filename="../Tools/TrayStarter.py" line="152"/>
+        <source>eric6 Hex Editor</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -65667,7 +65672,7 @@ Dvojklik na položku zobrazí výpis zásobníku.&lt;/p&gt;</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../HexEdit/HexEditMainWindow.py" line="505"/>
+        <location filename="../HexEdit/HexEditMainWindow.py" line="506"/>
         <source>Ctrl+G</source>
         <comment>Search|Goto Offset</comment>
         <translation type="unfinished"></translation>

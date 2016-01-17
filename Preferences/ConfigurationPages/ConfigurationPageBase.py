@@ -104,7 +104,8 @@ class ConfigurationPageBase(QWidget):
             else:
                 prefMethod(key, self.__coloursDict[key][0])
         
-    def selectFont(self, fontSample, fontVar, showFontInfo=False):
+    def selectFont(self, fontSample, fontVar, showFontInfo=False,
+                   options=QFontDialog.FontDialogOptions(0)):
         """
         Public method used by the font selection buttons.
         
@@ -112,9 +113,11 @@ class ConfigurationPageBase(QWidget):
         @param fontVar reference to the variable containing the font (QFont)
         @param showFontInfo flag indicating to show some font info
             as the sample (boolean)
+        @param options options for the font dialog
+            (QFontDialog.FontDialogOptions)
         @return selected font (QFont)
         """
-        font, ok = QFontDialog.getFont(fontVar, self)
+        font, ok = QFontDialog.getFont(fontVar, self, options=options)
         if ok:
             fontSample.setFont(font)
             if showFontInfo:

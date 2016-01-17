@@ -8,10 +8,10 @@ Module implementing an editor for binary data.
 """
 
 from __future__ import unicode_literals
-
-import sys
-is_Py2 = sys.version_info[0] == 2
-# TODO: use unichr for Python2
+try:
+    chr = unichr       # __IGNORE_EXCEPTION__
+except NameError:
+    pass
 
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QByteArray, QTimer, QRect, \
     QBuffer, QIODevice
@@ -360,14 +360,7 @@ class HexEditWidget(QAbstractScrollArea):
         self.__pxCursorX = (
             (((x // 2) * 3) + (x % 2)) * self.__pxCharWidth + self.__pxPosHexX)
         
-        if self.__overwriteMode:
-            self.__cursorRect = QRect(
-                self.__pxCursorX, self.__pxCursorY + self.__pxCursorWidth,
-                self.__pxCharWidth, self.__pxCursorWidth)
-        else:
-            self.__cursorRect = QRect(
-                self.__pxCursorX, self.__pxCursorY - self.__pxCharHeight + 4,
-                self.__pxCursorWidth, self.__pxCharHeight)
+        self.__setHexCursorRect()
         
         # step 4: calculate position of ASCII cursor
         x = self.__bPosCurrent % self.BYTES_PER_LINE
@@ -382,6 +375,19 @@ class HexEditWidget(QAbstractScrollArea):
         if self.__asciiArea:
             self.viewport().update(self.__cursorRectAscii)
         self.currentAddressChanged.emit(self.__bPosCurrent)
+    
+    def __setHexCursorRect(self):
+        """
+        Private method to set the cursor.
+        """
+        if self.__overwriteMode:
+            self.__cursorRect = QRect(
+                self.__pxCursorX, self.__pxCursorY + self.__pxCursorWidth,
+                self.__pxCharWidth, self.__pxCursorWidth)
+        else:
+            self.__cursorRect = QRect(
+                self.__pxCursorX, self.__pxCursorY - self.__pxCharHeight + 4,
+                self.__pxCursorWidth, self.__pxCharHeight)
     
     def cursorBytePosition(self):
         """
@@ -537,6 +543,15 @@ class HexEditWidget(QAbstractScrollArea):
         """
         self.__overwriteMode = on
         self.overwriteModeChanged.emit(self.__overwriteMode)
+        
+        # step 1: delete old cursor
+        self.__blink = False
+        self.viewport().update(self.__cursorRect)
+        # step 2: change the cursor rectangle
+        self.__setHexCursorRect()
+        # step 3: draw new cursors
+        self.__blink = True
+        self.viewport().update(self.__cursorRect)
     
     def selectionColors(self):
         """
@@ -1474,10 +1489,7 @@ class HexEditWidget(QAbstractScrollArea):
                     # render ascii value
                     if self.__asciiArea:
                         by = self.__dataShown[bPosLine + colIdx]
-                        if is_Py2 and (by < 0x20 or by > 0x7e):
-                            ch = "."
-                        elif not is_Py2 and \
-                                (by < 0x20 or (by > 0x7e and by < 0xa0)):
+                        if by < 0x20 or (by > 0x7e and by < 0xa0):
                             ch = "."
                         else:
                             ch = chr(by)
@@ -1674,10 +1686,7 @@ class HexEditWidget(QAbstractScrollArea):
                 if (i + j) < len(byteArray):
                     hexStr += " {0:02x}".format(byteArray[i + j])
                     by = byteArray[i + j]
-                    if is_Py2 and (by < 0x20 or by > 0x7e):
-                        ch = "."
-                    elif not is_Py2 and \
-                            (by < 0x20 or (by > 0x7e and by < 0xa0)):
+                    if by < 0x20 or (by > 0x7e and by < 0xa0):
                         ch = "."
                     else:
                         ch = chr(by)

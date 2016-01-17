@@ -11,6 +11,7 @@ Module implementing the Hex Editor configuration page.
 from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QFontDialog
 
 from .ConfigurationPageBase import ConfigurationPageBase
 from .Ui_HexEditorPage import Ui_HexEditorPage
@@ -96,7 +97,8 @@ class HexEditorPage(ConfigurationPageBase, Ui_HexEditorPage):
         Private method used to select the font to be used.
         """
         self.monospacedFont = self.selectFont(
-            self.monospacedFontSample, self.monospacedFont)
+            self.monospacedFontSample, self.monospacedFont,
+            options=QFontDialog.MonospacedFonts)
     
     def polishPage(self):
         """

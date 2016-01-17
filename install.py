@@ -527,7 +527,7 @@ def cleanUp():
         "eric6_plugininstall", "eric6_pluginuninstall",
         "eric6_pluginrepository", "eric6_sqlbrowser",
         "eric6_webbrowser", "eric6_iconeditor",
-        "eric6_snap",
+        "eric6_snap", "eric6_hexeditor",
     ]
     if includePythonVariant:
         marker = PythonMarkers[sys.version_info.major]
@@ -631,12 +631,13 @@ def installEric():
     for name in ["eric6_api", "eric6_doc"]:
         wnames.append(createPyWrapper(cfg['ericDir'], name, False))
     for name in ["eric6_compare", "eric6_configure", "eric6_diff",
-                 "eric6_editor", "eric6_iconeditor", "eric6_plugininstall",
-                 "eric6_pluginrepository", "eric6_pluginuninstall",
-                 "eric6_qregexp", "eric6_qregularexpression", "eric6_re",
-                 "eric6_snap", "eric6_sqlbrowser", "eric6_tray",
-                 "eric6_trpreviewer", "eric6_uipreviewer", "eric6_unittest",
-                 "eric6_webbrowser", "eric6"]:
+                 "eric6_editor", "eric6_hexeditor", "eric6_iconeditor",
+                 "eric6_plugininstall", "eric6_pluginrepository",
+                 "eric6_pluginuninstall", "eric6_qregexp",
+                 "eric6_qregularexpression", "eric6_re", "eric6_snap",
+                 "eric6_sqlbrowser", "eric6_tray", "eric6_trpreviewer",
+                 "eric6_uipreviewer", "eric6_unittest", "eric6_webbrowser",
+                 "eric6"]:
         wnames.append(createPyWrapper(cfg['ericDir'], name))
     
     # set install prefix, if not None

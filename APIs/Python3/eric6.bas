@@ -170,7 +170,7 @@ E5MessageBoxWizardDialog QDialog Ui_E5MessageBoxWizardDialog
 E5ModelMenu QMenu
 E5ModelToolBar QToolBar
 E5NetworkHeaderDetailsDialog QDialog Ui_E5NetworkHeaderDetailsDialog
-E5NetworkIcon E5ClickableLabel
+E5NetworkIcon QLabel
 E5NetworkMonitor QDialog Ui_E5NetworkMonitor
 E5NetworkProxyFactory QNetworkProxyFactory
 E5PassivePopup QFrame

@@ -104,9 +104,6 @@ class TrayStarter(QSystemTrayIcon):
         self.__menu.addAction(
             UI.PixmapCache.getIcon("unittest.png"),
             self.tr("Unittest"), self.__startUnittest)
-        self.__menu.addAction(
-            UI.PixmapCache.getIcon("ericWeb.png"),
-            self.tr("eric6 Web Browser"), self.__startHelpViewer)
         self.__menu.addSeparator()
         
         self.__menu.addAction(
@@ -144,12 +141,20 @@ class TrayStarter(QSystemTrayIcon):
         self.__menu.addAction(
             UI.PixmapCache.getIcon("configure.png"),
             self.tr('Preferences'), self.__startPreferences)
+        self.__menu.addSeparator()
+        
         self.__menu.addAction(
             UI.PixmapCache.getIcon("erict.png"),
             self.tr("eric6 IDE"), self.__startEric)
         self.__menu.addAction(
             UI.PixmapCache.getIcon("editor.png"),
             self.tr("eric6 Mini Editor"), self.__startMiniEditor)
+        self.__menu.addAction(
+            UI.PixmapCache.getIcon("hexEditor.png"),
+            self.tr("eric6 Hex Editor"), self.__startHexEditor)
+        self.__menu.addAction(
+            UI.PixmapCache.getIcon("ericWeb.png"),
+            self.tr("eric6 Web Browser"), self.__startHelpViewer)
         self.__menu.addSeparator()
         
         self.__menu.addAction(
@@ -362,6 +367,12 @@ class TrayStarter(QSystemTrayIcon):
         Private slot to start the eric6 Python re editor dialog.
         """
         self.__startProc("eric6_re.py")
+    
+    def __startHexEditor(self):
+        """
+        Private slot to start the eric6 hex editor dialog.
+        """
+        self.__startProc("eric6_hexeditor.py")
 
     def __showRecentProjectsMenu(self):
         """

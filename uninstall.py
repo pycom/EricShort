@@ -132,7 +132,7 @@ def uninstallEric():
         "eric6_plugininstall", "eric6_pluginuninstall",
         "eric6_pluginrepository", "eric6_sqlbrowser",
         "eric6_webbrowser", "eric6_iconeditor",
-        "eric6_snap",
+        "eric6_snap", "eric6_hexeditor",
     ]
     if includePythonVariant:
         marker = PythonMarkers[sys.version_info.major]

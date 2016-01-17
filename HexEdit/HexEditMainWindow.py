@@ -20,6 +20,7 @@ from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout, \
 from E5Gui.E5Action import E5Action
 from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui import E5FileDialog, E5MessageBox
+from E5Gui.E5ClickableLabel import E5ClickableLabel
 
 from .HexEditWidget import HexEditWidget
 from .HexEditSearchReplaceWidget import HexEditSearchReplaceWidget
@@ -779,20 +780,22 @@ class HexEditMainWindow(E5MainWindow):
         ))
         self.__sbSize.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
         
-        self.__sbEditMode = QLabel(self.__statusBar)
+        self.__sbEditMode = E5ClickableLabel(self.__statusBar)
         self.__statusBar.addPermanentWidget(self.__sbEditMode)
         self.__sbEditMode.setWhatsThis(self.tr(
             """<p>This part of the status bar displays the edit mode.</p>"""
         ))
         self.__sbEditMode.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
+        self.__sbEditMode.clicked.connect(self.__toggleEditMode)
         
-        self.__sbReadOnly = QLabel(self.__statusBar)
+        self.__sbReadOnly = E5ClickableLabel(self.__statusBar)
         self.__statusBar.addPermanentWidget(self.__sbReadOnly)
         self.__sbReadOnly.setWhatsThis(self.tr(
             """<p>This part of the status bar displays the read"""
             """ only mode.</p>"""
         ))
         self.__sbReadOnly.setFrameStyle(QFrame.StyledPanel | QFrame.Plain)
+        self.__sbReadOnly.clicked.connect(self.__toggleReadOnlyMode)
 
         self.__showEditMode(self.__editor.overwriteMode())
         self.__showReadOnlyMode(self.__editor.isReadOnly())
@@ -840,6 +843,14 @@ class HexEditMainWindow(E5MainWindow):
         """
         self.__sbReadOnly.setText(self.tr("ro") if on else self.tr("rw"))
     
+    @pyqtSlot()
+    def __toggleReadOnlyMode(self):
+        """
+        Private slot to toggle the read only mode upon a click on the status
+        bar label.
+        """
+        self.__editor.setReadOnly(not self.__editor.isReadOnly())
+    
     @pyqtSlot(bool)
     def __showEditMode(self, overwrite):
         """
@@ -850,6 +861,14 @@ class HexEditMainWindow(E5MainWindow):
         """
         self.__sbEditMode.setText(
             self.tr("Overwrite") if overwrite else self.tr("Insert"))
+    
+    @pyqtSlot()
+    def __toggleEditMode(self):
+        """
+        Private slot to toggle the edit mode upon a click on the status bar
+        label.
+        """
+        self.__editor.setOverwriteMode(not self.__editor.overwriteMode())
     
     @pyqtSlot(int)
     def __showSize(self, size):
