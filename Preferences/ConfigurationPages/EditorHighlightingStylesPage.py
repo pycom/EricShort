@@ -21,6 +21,7 @@ from E5Gui import E5MessageBox, E5FileDialog
 import Preferences
 
 
+# TODO: add a button to show only monospaced fonts
 class EditorHighlightingStylesPage(ConfigurationPageBase,
                                    Ui_EditorHighlightingStylesPage):
     """
