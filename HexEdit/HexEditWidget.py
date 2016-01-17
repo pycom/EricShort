@@ -11,6 +11,7 @@ from __future__ import unicode_literals
 
 import sys
 is_Py2 = sys.version_info[0] == 2
+# TODO: use unichr for Python2
 
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QByteArray, QTimer, QRect, \
     QBuffer, QIODevice
@@ -381,6 +382,57 @@ class HexEditWidget(QAbstractScrollArea):
         if self.__asciiArea:
             self.viewport().update(self.__cursorRectAscii)
         self.currentAddressChanged.emit(self.__bPosCurrent)
+    
+    def cursorBytePosition(self):
+        """
+        Public method to get the cursor position in bytes.
+        
+        @return cursor position in bytes
+        @rtype int
+        """
+        return self.__bPosCurrent
+    
+    def setCursorBytePosition(self, pos):
+        """
+        Public method to set the cursor position in bytes.
+        
+        @param pos cursor position in bytes
+        @type int
+        """
+        self.setCursorPosition(pos * 2)
+    
+    def goto(self, offset, fromCursor=False, backwards=False,
+             extendSelection=False):
+        """
+        Public method to move the cursor.
+        
+        @param offset offset to move to
+        @type int
+        @param fromCursor flag indicating a move relative to the current cursor
+        @type bool
+        @param backwards flag indicating a backwards move
+        @type bool
+        @param extendSelection flag indicating to extend the selection
+        @type bool
+        """
+        if fromCursor:
+            if backwards:
+                newPos = self.cursorBytePosition() - offset
+            else:
+                newPos = self.cursorBytePosition() + offset
+        else:
+            if backwards:
+                newPos = self.__chunks.size() - offset
+            else:
+                newPos = offset
+        
+        self.setCursorBytePosition(newPos)
+        if extendSelection:
+            self.__setSelection(self.__cursorPosition)
+        else:
+            self.__resetSelection(self.__cursorPosition)
+        
+        self.__refresh()
     
     def data(self):
         """
@@ -1451,7 +1503,7 @@ class HexEditWidget(QAbstractScrollArea):
             self.viewport().palette().color(QPalette.WindowText))
             
         # paint cursor
-        if self.__blink and not self.__readOnly and self.hasFocus():
+        if self.__blink and not self.__readOnly and self.isActiveWindow():
             painter.fillRect(
                 self.__cursorRect, self.palette().color(QPalette.WindowText))
         else:

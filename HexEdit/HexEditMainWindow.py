@@ -23,6 +23,7 @@ from E5Gui import E5FileDialog, E5MessageBox
 
 from .HexEditWidget import HexEditWidget
 from .HexEditSearchReplaceWidget import HexEditSearchReplaceWidget
+from .HexEditGotoWidget import HexEditGotoWidget
 
 import UI.PixmapCache
 import UI.Config
@@ -30,7 +31,6 @@ import UI.Config
 import Preferences
 
 
-# TODO: füge Goto Aktion inkl. Eingabewidget hinzu
 class HexEditMainWindow(E5MainWindow):
     """
     Class implementing the web browser main window.
@@ -75,16 +75,19 @@ class HexEditMainWindow(E5MainWindow):
             self.__editor, self, False)
         self.__replaceWidget = HexEditSearchReplaceWidget(
             self.__editor, self, True)
+        self.__gotoWidget = HexEditGotoWidget(self.__editor)
         cw = QWidget()
         layout = QVBoxLayout(cw)
         layout.setContentsMargins(1, 1, 1, 1)
         layout.setSpacing(1)
         layout.addWidget(self.__editor)
         layout.addWidget(self.__searchWidget)
+        layout.addWidget(self.__gotoWidget)
         cw.setLayout(layout)
         layout.addWidget(self.__replaceWidget)
         self.__searchWidget.hide()
         self.__replaceWidget.hide()
+        self.__gotoWidget.hide()
         self.setCentralWidget(cw)
         
         g = Preferences.getGeometry("HexEditorGeometry")
@@ -497,6 +500,23 @@ class HexEditMainWindow(E5MainWindow):
         self.replaceAct.triggered.connect(self.__replace)
         self.__actions.append(self.replaceAct)
         
+        self.gotoAct = E5Action(
+            self.tr('Goto Offset'),
+            UI.PixmapCache.getIcon("goto.png"),
+            self.tr('&Goto Offset...'),
+            QKeySequence(QCoreApplication.translate(
+                'ViewManager', "Ctrl+G", "Search|Goto Offset")),
+            0,
+            self, 'hexEditor_edit_goto')
+        self.gotoAct.setStatusTip(self.tr('Goto Offset'))
+        self.gotoAct.setWhatsThis(self.tr(
+            """<b>Goto Offset</b>"""
+            """<p>Go to a specific address. A dialog is shown to enter"""
+            """ the movement data.</p>"""
+        ))
+        self.gotoAct.triggered.connect(self.__goto)
+        self.__actions.append(self.gotoAct)
+        
         self.redoAct.setEnabled(False)
         self.__editor.canRedoChanged.connect(self.redoAct.setEnabled)
         
@@ -666,6 +686,8 @@ class HexEditMainWindow(E5MainWindow):
         menu.addAction(self.searchPrevAct)
         menu.addAction(self.replaceAct)
         menu.addSeparator()
+        menu.addAction(self.gotoAct)
+        menu.addSeparator()
         menu.addAction(self.readonlyAct)
         
         if not self.__fromEric:
@@ -799,7 +821,7 @@ class HexEditMainWindow(E5MainWindow):
             end = self.__editor.getSelectionEnd()
             slen = self.__editor.getSelectionLength()
             self.__sbSelection.setText(
-                self.tr("Selection: 0x{0:0{2}x} - 0x{1:0{2}x} ({3:n} Bytes)", 
+                self.tr("Selection: 0x{0:0{2}x} - 0x{1:0{2}x} ({3:n} Bytes)",
                         "0: start, 1: end, 2: address width,"
                         " 3: selection length")
                 .format(start, end, self.__editor.addressWidth(), slen)
@@ -1237,6 +1259,7 @@ class HexEditMainWindow(E5MainWindow):
         Private method to handle the search action.
         """
         self.__replaceWidget.hide()
+        self.__gotoWidget.hide()
         if self.__editor.hasSelection():
             txt = self.__editor.selectionToHexString()
         else:
@@ -1248,11 +1271,20 @@ class HexEditMainWindow(E5MainWindow):
         Private method to handle the replace action.
         """
         self.__searchWidget.hide()
+        self.__gotoWidget.hide()
         if self.__editor.hasSelection():
             txt = self.__editor.selectionToHexString()
         else:
             txt = ""
         self.__replaceWidget.show(txt)
+    
+    def __goto(self):
+        """
+        Private method to handle the goto action.
+        """
+        self.__searchWidget.hide()
+        self.__replaceWidget.hide()
+        self.__gotoWidget.show()
     
     def preferencesChanged(self):
         """

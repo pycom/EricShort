@@ -314,6 +314,7 @@ HelpWebPage QWebPage
 HelpWebSearchWidget E5ClearableLineEdit
 HelpWindow E5MainWindow
 HexEditCommand Enum
+HexEditGotoWidget QWidget Ui_HexEditGotoWidget
 HexEditMainWindow E5MainWindow
 HexEditSearchReplaceWidget QWidget
 HexEditUndoCommand QUndoCommand

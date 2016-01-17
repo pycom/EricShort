@@ -98,8 +98,8 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>findtextCombo</tabstop>
   <tabstop>findFormatCombo</tabstop>
+  <tabstop>findtextCombo</tabstop>
   <tabstop>findPrevButton</tabstop>
   <tabstop>findNextButton</tabstop>
   <tabstop>closeButton</tabstop>
