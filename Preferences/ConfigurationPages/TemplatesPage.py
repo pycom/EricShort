@@ -10,6 +10,7 @@ Module implementing the Templates configuration page.
 from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QFontDialog
 
 from .ConfigurationPageBase import ConfigurationPageBase
 from .Ui_TemplatesPage import Ui_TemplatesPage
@@ -67,7 +68,8 @@ class TemplatesPage(ConfigurationPageBase, Ui_TemplatesPage):
         Private method used to select the font to be used by the code editor.
         """
         self.editorFont = self.selectFont(
-            self.editorFontSample, self.editorFont)
+            self.editorFontSample, self.editorFont,
+            options=QFontDialog.MonospacedFonts)
     
 
 def create(dlg):

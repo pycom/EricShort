@@ -10,6 +10,7 @@ Module implementing the Shell configuration page.
 from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QFontDialog
 
 from .ConfigurationPageBase import ConfigurationPageBase
 from .Ui_ShellPage import Ui_ShellPage
@@ -90,16 +91,18 @@ class ShellPage(ConfigurationPageBase, Ui_ShellPage):
         Private method used to select the font to be used as the monospaced
         font.
         """
-        self.monospacedFont = \
-            self.selectFont(self.monospacedFontSample, self.monospacedFont)
+        self.monospacedFont = self.selectFont(
+            self.monospacedFontSample, self.monospacedFont,
+            options=QFontDialog.MonospacedFonts)
         
     @pyqtSlot()
     def on_linenumbersFontButton_clicked(self):
         """
         Private method used to select the font for the editor margins.
         """
-        self.marginsFont = self.selectFont(self.marginsFontSample,
-                                           self.marginsFont)
+        self.marginsFont = self.selectFont(
+            self.marginsFontSample, self.marginsFont,
+            options=QFontDialog.MonospacedFonts)
         
     def polishPage(self):
         """

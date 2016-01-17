@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QColor, QPalette
-from PyQt5.QtWidgets import QColorDialog
+from PyQt5.QtWidgets import QColorDialog, QFontDialog
 from PyQt5.Qsci import QsciScintilla
 
 from .ConfigurationPageBase import ConfigurationPageBase
@@ -347,7 +347,8 @@ class EditorStylesPage(ConfigurationPageBase, Ui_EditorStylesPage):
         Private method used to select the font for the editor margins.
         """
         self.marginsFont = self.selectFont(
-            self.marginsFontSample, self.marginsFont)
+            self.marginsFontSample, self.marginsFont,
+            options=QFontDialog.MonospacedFonts)
         
     @pyqtSlot()
     def on_defaultFontButton_clicked(self):
@@ -364,7 +365,8 @@ class EditorStylesPage(ConfigurationPageBase, Ui_EditorStylesPage):
         font.
         """
         self.monospacedFont = self.selectFont(
-            self.monospacedFontSample, self.monospacedFont)
+            self.monospacedFontSample, self.monospacedFont,
+            options=QFontDialog.MonospacedFonts)
         
     def polishPage(self):
         """

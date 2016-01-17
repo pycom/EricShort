@@ -10,6 +10,7 @@ Module implementing the Help Viewers configuration page.
 from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtWidgets import QFontDialog
 
 from E5Gui.E5PathPicker import E5PathPickerModes
 
@@ -124,7 +125,8 @@ class HelpAppearancePage(ConfigurationPageBase, Ui_HelpAppearancePage):
         Private method used to select the fixed-width font.
         """
         self.fixedFont = \
-            self.selectFont(self.fixedFontSample, self.fixedFont, True)
+            self.selectFont(self.fixedFontSample, self.fixedFont, True,
+            options=QFontDialog.MonospacedFonts)
     
 
 def create(dlg):
