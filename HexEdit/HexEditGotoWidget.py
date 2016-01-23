@@ -16,6 +16,7 @@ from PyQt5.QtWidgets import QWidget
 from .Ui_HexEditGotoWidget import Ui_HexEditGotoWidget
 
 import UI.PixmapCache
+import Globals
 
 
 class HexEditGotoWidget(QWidget, Ui_HexEditGotoWidget):
@@ -36,9 +37,9 @@ class HexEditGotoWidget(QWidget, Ui_HexEditGotoWidget):
         
         self.__editor = editor
         
-        # keep this in sync with the logic in __getContent()
+        # keep this in sync with the logic in on_gotoButton_clicked()
         self.__formatAndValidators = {
-            "hex": (self.tr("Hex"), QRegExpValidator((QRegExp("[0-9a-f]*")))),
+            "hex": (self.tr("Hex"), QRegExpValidator((QRegExp("[0-9a-f:]*")))),
             "dec": (self.tr("Dec"), QRegExpValidator((QRegExp("[0-9]*")))),
         }
         formatOrder = ["hex", "dec"]
@@ -100,7 +101,9 @@ class HexEditGotoWidget(QWidget, Ui_HexEditGotoWidget):
         """
         format = self.formatCombo.itemData(self.formatCombo.currentIndex())
         if format == "hex":
-            offset = int(self.offsetEdit.text(), 16)
+            offset = self.offsetEdit.text().replace(":", "")
+            # get rid of ':' address separators
+            offset = int(offset, 16)
         else:
             offset = int(self.offsetEdit.text(), 10)
         
@@ -115,8 +118,19 @@ class HexEditGotoWidget(QWidget, Ui_HexEditGotoWidget):
         """
         Public slot to show the widget.
         """
+        self.offsetEdit.selectAll()
         self.offsetEdit.setFocus()
         super(HexEditGotoWidget, self).show()
+    
+    def reset(self):
+        """
+        Public slot to reset the input widgets.
+        """
+        self.offsetEdit.clear()
+        self.formatCombo.setCurrentIndex(0)
+        self.cursorCheckBox.setChecked(False)
+        self.backCheckBox.setChecked(False)
+        self.selectionCheckBox.setChecked(False)
 
     def keyPressEvent(self, event):
         """
@@ -141,9 +155,10 @@ class HexEditGotoWidget(QWidget, Ui_HexEditGotoWidget):
         @return converted text
         @rtype str
         """
-        if oldFormat and newFormat:
+        if txt and oldFormat and newFormat and oldFormat != newFormat:
             # step 1: convert the text to an integer using the old format
             if oldFormat == "hex":
+                txt = txt.replace(":", "")  # get rid of ':' address separators
                 index = int(txt, 16)
             else:
                 index = int(txt, 10)
@@ -151,6 +166,7 @@ class HexEditGotoWidget(QWidget, Ui_HexEditGotoWidget):
             # step 2: convert the integer to text using the new format
             if newFormat == "hex":
                 txt = "{0:x}".format(index)
+                txt = Globals.strGroup(txt, ":", 4)
             else:
                 txt = "{0:d}".format(index)
         

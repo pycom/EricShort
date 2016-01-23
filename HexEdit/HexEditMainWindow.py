@@ -987,6 +987,8 @@ class HexEditMainWindow(E5MainWindow):
         self.__setCurrentFile(fileName)
         
         self.__editor.setReadOnly(Preferences.getHexEditor("OpenReadOnly"))
+        
+        self.__gotoWidget.reset()
     
     def __openHexFile(self):
         """

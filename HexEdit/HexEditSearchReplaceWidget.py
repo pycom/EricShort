@@ -491,7 +491,7 @@ class HexEditSearchReplaceWidget(QWidget):
         @return converted text
         @rtype str
         """
-        if oldFormat and newFormat:
+        if txt and oldFormat and newFormat and oldFormat != newFormat:
             # step 1: convert the text to a byte array using the old format
             byteArray = self.__text2bytearray(txt, oldFormat)
             
