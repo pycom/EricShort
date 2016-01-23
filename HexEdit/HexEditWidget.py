@@ -57,18 +57,14 @@ class HexEditWidget(QAbstractScrollArea):
     HEXCHARS_PER_LINE = 47
     BYTES_PER_LINE = 16
     
-    def __init__(self, parent=None, embedded=False):
+    def __init__(self, parent=None):
         """
         Constructor
         
         @param parent refernce to the parent widget
         @type QWidget
-        @param embedded flag indicating an eric embedded hex editor
-        @type bool
         """
         super(HexEditWidget, self).__init__(parent)
-        
-        self.__embedded = embedded
         
         # Properties
         self.__addressArea = True
@@ -887,73 +883,6 @@ class HexEditWidget(QAbstractScrollArea):
         self.setCursorPosition(self.__chunks.pos() * 2)
         self.__refresh()
     
-    def editorCommand(self, cmd):
-        """
-        Public method to execute an editor command sent by the eric
-        view manager.
-        
-        @param cmd QScintilla command
-        @type int
-        """
-        if self.__embedded:
-            from PyQt5.Qsci import QsciScintilla
-            
-            # Cursor movements
-            if cmd == QsciScintilla.SCI_CHARLEFT:
-                self.moveCursorToPreviousChar()
-            elif cmd == QsciScintilla.SCI_CHARRIGHT:
-                self.moveCursorToNextChar()
-            elif cmd == QsciScintilla.SCI_LINEEND:
-                self.moveCursorToEndOfLine()
-            elif cmd == QsciScintilla.SCI_VCHOME:
-                self.moveCursorToStartOfLine()
-            elif cmd == QsciScintilla.SCI_LINEUP:
-                self.moveCursorToPreviousLine()
-            elif cmd == QsciScintilla.SCI_LINEDOWN:
-                self.moveCursorToNextLine()
-            elif cmd == QsciScintilla.SCI_PAGEDOWN:
-                self.moveCursorToNextPage()
-            elif cmd == QsciScintilla.SCI_PAGEUP:
-                self.moveCursorToPreviousPage()
-            elif cmd == QsciScintilla.SCI_DOCUMENTEND:
-                self.moveCursorToEndOfDocument()
-            elif cmd == QsciScintilla.SCI_DOCUMENTSTART:
-                self.moveCursorToStartOfDocument()
-            
-            # Selection commands
-            elif cmd == QsciScintilla.SCI_CHARRIGHTEXTEND:
-                self.selectNextChar()
-            elif cmd == QsciScintilla.SCI_CHARLEFTEXTEND:
-                self.selectPreviousChar()
-            elif cmd == QsciScintilla.SCI_LINEENDEXTEND:
-                self.selectToEndOfLine()
-            elif cmd == QsciScintilla.SCI_VCHOMEEXTEND:
-                self.selectToStartOfLine()
-            elif cmd == QsciScintilla.SCI_LINEUPEXTEND:
-                self.selectPreviousLine()
-            elif cmd == QsciScintilla.SCI_LINEDOWNEXTEND:
-                self.selectNextLine()
-            elif cmd == QsciScintilla.SCI_PAGEDOWNEXTEND:
-                self.selectNextPage()
-            elif cmd == QsciScintilla.SCI_PAGEUPEXTEND:
-                self.selectPreviousPage()
-            elif cmd == QsciScintilla.SCI_DOCUMENTENDEXTEND:
-                self.selectEndOfDocument()
-            elif cmd == QsciScintilla.SCI_DOCUMENTSTARTEXTEND:
-                self.selectStartOfDocument()
-            elif cmd == QsciScintilla.SCI_EDITTOGGLEOVERTYPE:
-                self.setOverwriteMode(not self.overwriteMode())
-                self.setCursorPosition(self.__cursorPosition)
-            
-            # Edit commands
-            if not self.__readOnly:
-                if cmd == QsciScintilla.SCI_CLEAR:
-                    self.deleteByte()
-                elif cmd == QsciScintilla.SCI_DELETEBACK:
-                    self.deleteByteBack()
-        
-            self.__refresh()
-    
     ####################################################
     ## Cursor movement commands
     ####################################################
@@ -1254,114 +1183,119 @@ class HexEditWidget(QAbstractScrollArea):
         @param evt reference to the key event
         @type QKeyEvent
         """
-        if not self.__embedded:
-            # Cursor movements
-            if evt.matches(QKeySequence.MoveToNextChar):
-                self.moveCursorToNextChar()
-            elif evt.matches(QKeySequence.MoveToPreviousChar):
-                self.moveCursorToPreviousChar()
-            elif evt.matches(QKeySequence.MoveToEndOfLine):
-                self.moveCursorToEndOfLine()
-            elif evt.matches(QKeySequence.MoveToStartOfLine):
-                self.moveCursorToStartOfLine()
-            elif evt.matches(QKeySequence.MoveToPreviousLine):
-                self.moveCursorToPreviousLine()
-            elif evt.matches(QKeySequence.MoveToNextLine):
-                self.moveCursorToNextLine()
-            elif evt.matches(QKeySequence.MoveToNextPage):
-                self.moveCursorToNextPage()
-            elif evt.matches(QKeySequence.MoveToPreviousPage):
-                self.moveCursorToPreviousPage()
-            elif evt.matches(QKeySequence.MoveToEndOfDocument):
-                self.moveCursorToEndOfDocument()
-            elif evt.matches(QKeySequence.MoveToStartOfDocument):
-                self.moveCursorToStartOfDocument()
-            
-            # Selection commands
-            elif evt.matches(QKeySequence.SelectAll):
-                self.selectAll()
-            elif evt.matches(QKeySequence.SelectNextChar):
-                self.selectNextChar()
-            elif evt.matches(QKeySequence.SelectPreviousChar):
-                self.selectPreviousChar()
-            elif evt.matches(QKeySequence.SelectEndOfLine):
-                self.selectToEndOfLine()
-            elif evt.matches(QKeySequence.SelectStartOfLine):
-                self.selectToStartOfLine()
-            elif evt.matches(QKeySequence.SelectPreviousLine):
-                self.selectPreviousLine()
-            elif evt.matches(QKeySequence.SelectNextLine):
-                self.selectNextLine()
-            elif evt.matches(QKeySequence.SelectNextPage):
-                self.selectNextPage()
-            elif evt.matches(QKeySequence.SelectPreviousPage):
-                self.selectPreviousPage()
-            elif evt.matches(QKeySequence.SelectEndOfDocument):
-                self.selectEndOfDocument()
-            elif evt.matches(QKeySequence.SelectStartOfDocument):
-                self.selectStartOfDocument()
-            
-            # Edit commands
-            elif evt.matches(QKeySequence.Copy):
-                self.copy()
-            elif evt.key() == Qt.Key_Insert and \
-                    evt.modifiers() == Qt.NoModifier:
-                self.setOverwriteMode(not self.overwriteMode())
-                self.setCursorPosition(self.__cursorPosition)
-            
-            if not self.__readOnly:
-                if evt.matches(QKeySequence.Cut):
-                    self.cut()
-                elif evt.matches(QKeySequence.Paste):
-                    self.paste()
-                elif evt.matches(QKeySequence.Delete):
-                    self.deleteByte()
-                elif evt.key() == Qt.Key_Backspace and \
-                        evt.modifiers() == Qt.NoModifier:
-                    self.deleteByteBack()
-                elif evt.matches(QKeySequence.Undo):
-                    self.undo()
-                elif evt.matches(QKeySequence.Redo):
-                    self.redo()
+        # Cursor movements
+        if evt.matches(QKeySequence.MoveToNextChar):
+            self.moveCursorToNextChar()
+        elif evt.matches(QKeySequence.MoveToPreviousChar):
+            self.moveCursorToPreviousChar()
+        elif evt.matches(QKeySequence.MoveToEndOfLine):
+            self.moveCursorToEndOfLine()
+        elif evt.matches(QKeySequence.MoveToStartOfLine):
+            self.moveCursorToStartOfLine()
+        elif evt.matches(QKeySequence.MoveToPreviousLine):
+            self.moveCursorToPreviousLine()
+        elif evt.matches(QKeySequence.MoveToNextLine):
+            self.moveCursorToNextLine()
+        elif evt.matches(QKeySequence.MoveToNextPage):
+            self.moveCursorToNextPage()
+        elif evt.matches(QKeySequence.MoveToPreviousPage):
+            self.moveCursorToPreviousPage()
+        elif evt.matches(QKeySequence.MoveToEndOfDocument):
+            self.moveCursorToEndOfDocument()
+        elif evt.matches(QKeySequence.MoveToStartOfDocument):
+            self.moveCursorToStartOfDocument()
         
-        if not self.__readOnly and \
-            QApplication.keyboardModifiers() in [
-                Qt.NoModifier, Qt.KeypadModifier]:
-            # some hex input
-            key = evt.text()
-            if key and key in "0123456789abcdef":
-                if self.hasSelection():
-                    if self.__overwriteMode:
-                        length = self.getSelectionLength()
-                        self.replaceByteArray(
-                            self.getSelectionBegin(), length,
-                            bytearray(length))
-                    else:
-                        self.remove(self.getSelectionBegin(),
-                                    self.getSelectionLength())
-                        self.__bPosCurrent = self.getSelectionBegin()
-                    self.setCursorPosition(2 * self.__bPosCurrent)
-                    self.__resetSelection(2 * self.__bPosCurrent)
-                
-                # if in insert mode, insert a byte
-                if not self.__overwriteMode:
-                    if (self.__cursorPosition % 2) == 0:
-                        self.insert(self.__bPosCurrent, 0)
-                
-                # change content
-                if self.__chunks.size() > 0:
-                    hexValue = self.__toHex(
-                        self.__chunks.data(self.__bPosCurrent, 1))
-                    if (self.__cursorPosition % 2) == 0:
-                        hexValue[0] = ord(key)
-                    else:
-                        hexValue[1] = ord(key)
-                    self.replace(self.__bPosCurrent,
-                                 self.__fromHex(hexValue)[0])
+        # Selection commands
+        elif evt.matches(QKeySequence.SelectAll):
+            self.selectAll()
+        elif evt.matches(QKeySequence.SelectNextChar):
+            self.selectNextChar()
+        elif evt.matches(QKeySequence.SelectPreviousChar):
+            self.selectPreviousChar()
+        elif evt.matches(QKeySequence.SelectEndOfLine):
+            self.selectToEndOfLine()
+        elif evt.matches(QKeySequence.SelectStartOfLine):
+            self.selectToStartOfLine()
+        elif evt.matches(QKeySequence.SelectPreviousLine):
+            self.selectPreviousLine()
+        elif evt.matches(QKeySequence.SelectNextLine):
+            self.selectNextLine()
+        elif evt.matches(QKeySequence.SelectNextPage):
+            self.selectNextPage()
+        elif evt.matches(QKeySequence.SelectPreviousPage):
+            self.selectPreviousPage()
+        elif evt.matches(QKeySequence.SelectEndOfDocument):
+            self.selectEndOfDocument()
+        elif evt.matches(QKeySequence.SelectStartOfDocument):
+            self.selectStartOfDocument()
+        
+        # Edit commands
+        elif evt.matches(QKeySequence.Copy):
+            self.copy()
+        elif evt.key() == Qt.Key_Insert and \
+                evt.modifiers() == Qt.NoModifier:
+            self.setOverwriteMode(not self.overwriteMode())
+            self.setCursorPosition(self.__cursorPosition)
+        
+        elif not self.__readOnly:
+            if evt.matches(QKeySequence.Cut):
+                self.cut()
+            elif evt.matches(QKeySequence.Paste):
+                self.paste()
+            elif evt.matches(QKeySequence.Delete):
+                self.deleteByte()
+            elif evt.key() == Qt.Key_Backspace and \
+                    evt.modifiers() == Qt.NoModifier:
+                self.deleteByteBack()
+            elif evt.matches(QKeySequence.Undo):
+                self.undo()
+            elif evt.matches(QKeySequence.Redo):
+                self.redo()
+            
+            elif QApplication.keyboardModifiers() in [
+                    Qt.NoModifier, Qt.KeypadModifier]:
+                # some hex input
+                key = evt.text()
+                if key and key in "0123456789abcdef":
+                    if self.hasSelection():
+                        if self.__overwriteMode:
+                            length = self.getSelectionLength()
+                            self.replaceByteArray(
+                                self.getSelectionBegin(), length,
+                                bytearray(length))
+                        else:
+                            self.remove(self.getSelectionBegin(),
+                                        self.getSelectionLength())
+                            self.__bPosCurrent = self.getSelectionBegin()
+                        self.setCursorPosition(2 * self.__bPosCurrent)
+                        self.__resetSelection(2 * self.__bPosCurrent)
                     
-                    self.setCursorPosition(self.__cursorPosition + 1)
-                    self.__resetSelection(self.__cursorPosition)
-        # TODO: handle pressing keyboard modifier only by not calling __referesh
+                    # if in insert mode, insert a byte
+                    if not self.__overwriteMode:
+                        if (self.__cursorPosition % 2) == 0:
+                            self.insert(self.__bPosCurrent, 0)
+                    
+                    # change content
+                    if self.__chunks.size() > 0:
+                        hexValue = self.__toHex(
+                            self.__chunks.data(self.__bPosCurrent, 1))
+                        if (self.__cursorPosition % 2) == 0:
+                            hexValue[0] = ord(key)
+                        else:
+                            hexValue[1] = ord(key)
+                        self.replace(self.__bPosCurrent,
+                                     self.__fromHex(hexValue)[0])
+                        
+                        self.setCursorPosition(self.__cursorPosition + 1)
+                        self.__resetSelection(self.__cursorPosition)
+                    else:
+                        return
+                else:
+                    return
+            else:
+                return
+        else:
+            return
         
         self.__refresh()
     
