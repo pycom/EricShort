@@ -248,6 +248,35 @@ def findPythonInterpreters(pyVersion):
 
 
 ###############################################################################
+## functions for extended string handling
+###############################################################################
+
+
+def strGroup(txt, sep, groupLen=4):
+    """
+    Module function to group a string into sub-strings separated by a
+    separator.
+    
+    @param txt text to be grouped
+    @type str
+    @param sep separator string
+    @type str
+    @param groupLen length of each group
+    @type int
+    @return result string
+    @rtype str
+    """
+    l=[]
+    
+    while len(txt) // groupLen != 0:
+        l.insert(0, txt[-groupLen:])
+        txt = txt[:-groupLen]
+    if len(txt) > 0:
+        l.insert(0, txt)
+    return sep.join(l)
+
+
+###############################################################################
 ## functions for converting QSetting return types to valid types
 ###############################################################################
 

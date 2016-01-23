@@ -12,7 +12,7 @@ from __future__ import unicode_literals
 import os
 
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFile, QFileInfo, QSize, \
-    QCoreApplication
+    QCoreApplication, QLocale
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout, \
     QDialog, QAction, QFrame
@@ -21,6 +21,8 @@ from E5Gui.E5Action import E5Action
 from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui import E5FileDialog, E5MessageBox
 from E5Gui.E5ClickableLabel import E5ClickableLabel
+
+from Globals import strGroup
 
 from .HexEditWidget import HexEditWidget
 from .HexEditSearchReplaceWidget import HexEditSearchReplaceWidget
@@ -648,6 +650,7 @@ class HexEditMainWindow(E5MainWindow):
         """
         Private method to create the menus.
         """
+        # TODO: add "Open recent menu"
         mb = self.menuBar()
         
         menu = mb.addMenu(self.tr('&File'))
@@ -808,8 +811,9 @@ class HexEditMainWindow(E5MainWindow):
         @param address address of the cursor
         @type int
         """
-        self.__sbAddress.setText(self.tr("Address: 0x{0:0{1}x}").format(
-            address, self.__editor.addressWidth()))
+        txt = "{0:0{1}x}".format(address, self.__editor.addressWidth())
+        txt = strGroup(txt, ":", 4)
+        self.__sbAddress.setText(self.tr("Address: {0}").format(txt))
     
     @pyqtSlot(bool)
     def __showSelectionInfo(self, avail):
@@ -820,14 +824,18 @@ class HexEditMainWindow(E5MainWindow):
         @type bool
         """
         if avail:
-            start = self.__editor.getSelectionBegin()
-            end = self.__editor.getSelectionEnd()
+            addrWidth = self.__editor.addressWidth()
+            start = "{0:0{1}x}".format(self.__editor.getSelectionBegin(),
+                                       addrWidth)
+            start = strGroup(start, ":", 4)
+            end = "{0:0{1}x}".format(self.__editor.getSelectionEnd(),
+                                     addrWidth)
+            end = strGroup(end, ":", 4)
             slen = self.__editor.getSelectionLength()
             self.__sbSelection.setText(
-                self.tr("Selection: 0x{0:0{2}x} - 0x{1:0{2}x} ({3:n} Bytes)",
-                        "0: start, 1: end, 2: address width,"
-                        " 3: selection length")
-                .format(start, end, self.__editor.addressWidth(), slen)
+                self.tr("Selection: {0} - {1} ({2} Bytes)",
+                        "0: start, 1: end, 2: selection length")
+                .format(start, end, QLocale().toString(slen))
             )
         else:
             self.__sbSelection.setText(
@@ -878,7 +886,8 @@ class HexEditMainWindow(E5MainWindow):
         @param size size of the binary data
         @type int
         """
-        self.__sbSize.setText(self.tr("Size: {0:n}").format(size))
+        self.__sbSize.setText(
+            self.tr("Size: {0}").format(QLocale().toString(size)))
     
     def closeEvent(self, evt):
         """

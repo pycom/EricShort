@@ -1914,6 +1914,7 @@ eric6.Globals.setConfigDir?4(d)
 eric6.Globals.settingsNameGlobal?7
 eric6.Globals.settingsNameOrganization?7
 eric6.Globals.settingsNameRecent?7
+eric6.Globals.strGroup?4(txt, sep, groupLen=4)
 eric6.Globals.toBool?4(value)
 eric6.Globals.toByteArray?4(value)
 eric6.Globals.toDict?4(value)

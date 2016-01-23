@@ -7,11 +7,13 @@
 Module implementing an editor for binary data.
 """
 
-from __future__ import unicode_literals
+from __future__ import unicode_literals, division
 try:
     chr = unichr       # __IGNORE_EXCEPTION__
 except NameError:
     pass
+
+import math
 
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QByteArray, QTimer, QRect, \
     QBuffer, QIODevice
@@ -98,6 +100,7 @@ class HexEditWidget(QAbstractScrollArea):
         # absolute position of cursor, 1 Byte == 2 tics
         
         self.__addrDigits = 0
+        self.__addrSeparators = 0
         self.__blink = True
         self.__bData = QBuffer()
         self.__cursorRect = QRect()
@@ -263,8 +266,10 @@ class HexEditWidget(QAbstractScrollArea):
     
     def addressWidth(self):
         """
-        Public method to get the minimum width of the address area in
+        Public method to get the width of the address area in
         characters.
+        
+        Note: The address area width is always a multiple of four.
         
         @return minimum width of the address area
         @rtype int
@@ -283,6 +288,7 @@ class HexEditWidget(QAbstractScrollArea):
         if size > 0x10:
             n += 1
             size //= 0x10
+        n = int(math.ceil(n / 4)) * 4
         
         if n > self.__addressWidth:
             return n
@@ -293,10 +299,13 @@ class HexEditWidget(QAbstractScrollArea):
         """
         Public method to set the width of the address area.
         
+        Note: The address area width is always a multiple of four.
+        The given value will be adjusted as required.
+        
         @param width width of the address area in characters
         @type int
         """
-        self.__addressWidth = width
+        self.__addressWidth = int(math.ceil(width / 4)) * 4
         self.__adjust()
         self.setCursorPosition(self.__cursorPosition)
         self.viewport().update()
@@ -1352,6 +1361,7 @@ class HexEditWidget(QAbstractScrollArea):
                     
                     self.setCursorPosition(self.__cursorPosition + 1)
                     self.__resetSelection(self.__cursorPosition)
+        # TODO: handle pressing keyboard modifier only by not calling __referesh
         
         self.__refresh()
     
@@ -1428,6 +1438,7 @@ class HexEditWidget(QAbstractScrollArea):
                     address = "{0:0{1}x}".format(
                         self.__bPosFirst + row * self.BYTES_PER_LINE,
                         self.__addrDigits)
+                    address = Globals.strGroup(address, ":", 4)
                     painter.drawText(self.__pxPosAdrX - pxOfsX, pxPosY,
                                      address)
                     # increment loop variables
@@ -1702,8 +1713,11 @@ class HexEditWidget(QAbstractScrollArea):
         # recalculate graphics
         if self.__addressArea:
             self.__addrDigits = self.addressWidth()
-            self.__pxPosHexX = self.__pxGapAdr + \
-                self.__addrDigits * self.__pxCharWidth + self.__pxGapAdrHex
+            self.__addrSeparators = self.__addrDigits // 4 - 1
+            self.__pxPosHexX = (
+                self.__pxGapAdr +
+                (self.__addrDigits + self.__addrSeparators) * 
+                self.__pxCharWidth + self.__pxGapAdrHex)
         else:
             self.__pxPosHexX = self.__pxGapAdrHex
         self.__pxPosAdrX = self.__pxGapAdr
