@@ -264,7 +264,7 @@ class HexEditMainWindow(E5MainWindow):
             self.tr('Close Others'),
             0, 0, self, 'hexEditor_file_close_others')
         self.closeOthersAct.setStatusTip(self.tr(
-            'Close all hex other editor windows'))
+            'Close all other hex editor windows'))
         self.closeOthersAct.setWhatsThis(self.tr(
             """<b>Close Others</b>"""
             """<p>Closes all other hex editor windows.</p>"""

@@ -13,6 +13,8 @@ Version 6.2.0:
 - Hex Editor
   -- added a nice little hex editor tool (usable as a standalone tool
      as well)
+- Icon Editor
+  -- added capability to close all other icon editor windows
 - Web Browser
   -- added capability to remember the zoom values for each site (incl. a
      dialog to manage these)

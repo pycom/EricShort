@@ -285,7 +285,18 @@ class IconEditorWindow(E5MainWindow):
         self.closeAllAct.triggered.connect(self.__closeAll)
         self.__actions.append(self.closeAllAct)
         
-        # TODO: add action to close all other windows
+        self.closeOthersAct = E5Action(
+            self.tr('Close Others'),
+            self.tr('Close Others'),
+            0, 0, self, 'iconEditor_file_close_others')
+        self.closeOthersAct.setStatusTip(self.tr(
+            'Close all other icon editor windows'))
+        self.closeOthersAct.setWhatsThis(self.tr(
+            """<b>Close Others</b>"""
+            """<p>Closes all other icon editor windows.</p>"""
+        ))
+        self.closeOthersAct.triggered.connect(self.__closeOthers)
+        self.__actions.append(self.closeOthersAct)
         
         self.exitAct = E5Action(
             self.tr('Quit'),
@@ -816,6 +827,7 @@ class IconEditorWindow(E5MainWindow):
         menu.addAction(self.saveAsAct)
         menu.addSeparator()
         menu.addAction(self.closeAct)
+        menu.addAction(self.closeOthersAct)
         if self.fromEric:
             menu.addAction(self.closeAllAct)
         else:
@@ -1107,12 +1119,18 @@ class IconEditorWindow(E5MainWindow):
     
     def __closeAll(self):
         """
+        Private slot to close all windows.
+        """
+        self.__closeOthers()
+        self.close()
+    
+    def __closeOthers(self):
+        """
         Private slot to close all other windows.
         """
         for win in self.__class__.windows[:]:
             if win != self:
                 win.close()
-        self.close()
     
     def __loadIconFile(self, fileName):
         """
