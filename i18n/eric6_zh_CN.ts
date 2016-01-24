@@ -32810,223 +32810,258 @@ the repository and be placed in this directory.&lt;/p&gt;</source>
 <context>
     <name>LexerPygments</name>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="157"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="180"/>
         <source>Default</source>
         <translation>默认</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="158"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="181"/>
         <source>Comment</source>
         <translation>注释</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="159"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="182"/>
         <source>Preprocessor</source>
         <translation>预处理器</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="160"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="183"/>
         <source>Keyword</source>
         <translation>关键字</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="161"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="184"/>
         <source>Pseudo Keyword</source>
         <translation>虚拟键盘</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="162"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="185"/>
         <source>Type Keyword</source>
         <translation>输入键盘</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="163"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="186"/>
         <source>Operator</source>
         <translation>运算符</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="164"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="187"/>
         <source>Word</source>
         <translation>单词</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="165"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="188"/>
         <source>Builtin</source>
         <translation>内建</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="166"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="189"/>
         <source>Function or method name</source>
         <translation>函数或方法的名称</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="167"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="190"/>
         <source>Class name</source>
         <translation>类名称</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="168"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="191"/>
         <source>Namespace</source>
         <translation>命名空间</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="169"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="192"/>
         <source>Exception</source>
         <translation>异常</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="170"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="193"/>
         <source>Identifier</source>
         <translation>标识符</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="171"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="194"/>
         <source>Constant</source>
         <translation>常量</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="172"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="195"/>
         <source>Label</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="173"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="196"/>
         <source>Entity</source>
         <translation>实体</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="174"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="197"/>
         <source>Attribute</source>
         <translation>属性</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="175"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="198"/>
         <source>Tag</source>
         <translation>标签</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="176"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="199"/>
         <source>Decorator</source>
         <translation>Decorator</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="177"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="200"/>
         <source>String</source>
         <translation>字符串</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="178"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="201"/>
         <source>Documentation string</source>
         <translation>文档字符串</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="179"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="202"/>
         <source>Scalar</source>
         <translation>Scalar</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="180"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="203"/>
         <source>Escape</source>
         <translation>Escape</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="181"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="204"/>
         <source>Regular expression</source>
         <translation>正则表达式</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="182"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="205"/>
         <source>Symbol</source>
         <translation>符号</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="183"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="206"/>
         <source>Other string</source>
         <translation>其它字符串</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="184"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="207"/>
         <source>Number</source>
         <translation>号码</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="185"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="208"/>
         <source>Heading</source>
         <translation>标题</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="186"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="209"/>
         <source>Subheading</source>
         <translation>子标题</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="187"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="210"/>
         <source>Deleted</source>
         <translation>已删除</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="188"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="211"/>
         <source>Inserted</source>
         <translation>已插入</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="189"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="212"/>
         <source>Generic error</source>
         <translation>一般错误</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="190"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="213"/>
         <source>Emphasized text</source>
         <translation>强调的文本</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="191"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="214"/>
         <source>Strong text</source>
         <translation>Strong 文本</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="192"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="215"/>
         <source>Prompt</source>
         <translation>提示符</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="193"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="216"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="194"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="217"/>
         <source>Traceback</source>
         <translation>追踪</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="195"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="218"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="196"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="219"/>
         <source>Comment block</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="197"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="220"/>
         <source>Property</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="198"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="221"/>
         <source>Character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="199"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="222"/>
         <source>Here document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Lexers/LexerPygments.py" line="200"/>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="223"/>
         <source>Punctuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="224"/>
+        <source>Hashbang</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="225"/>
+        <source>Reserved Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="226"/>
+        <source>Literal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="227"/>
+        <source>Double quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="228"/>
+        <source>Single quoted string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="229"/>
+        <source>Backtick string</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../QScintilla/Lexers/LexerPygments.py" line="230"/>
+        <source>Whitespace</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

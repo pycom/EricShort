@@ -65,74 +65,97 @@ PYGMENTS_PROPERTY = 48
 PYGMENTS_CHAR = 49
 PYGMENTS_HEREDOC = 50
 PYGMENTS_PUNCTUATION = 51
+# added with Pygments 2.1
+PYGMENTS_HASHBANG = 52
+PYGMENTS_RESERVEDKEYWORD = 53
+PYGMENTS_LITERAL = 54
+PYGMENTS_DOUBLESTRING = 55
+PYGMENTS_SINGLESTRING = 56
+PYGMENTS_BACKTICKSTRING = 57
+PYGMENTS_WHITESPACE = 58
 
 #-----------------------------------------------------------------------------#
 
 TOKEN_MAP = {
     Token.Comment: PYGMENTS_COMMENT,
-    Token.Comment.Preproc: PYGMENTS_PREPROCESSOR,
+    Token.Comment.Hashbang: PYGMENTS_HASHBANG,
     Token.Comment.Multiline: PYGMENTS_MULTILINECOMMENT,
+    Token.Comment.Preproc: PYGMENTS_PREPROCESSOR,
+    Token.Comment.PreprocFile: PYGMENTS_PREPROCESSOR,
     Token.Comment.Single: PYGMENTS_COMMENT,
     Token.Comment.Special: PYGMENTS_COMMENT,
+    
+    Token.Error: PYGMENTS_ERROR,
+    
+    Token.Generic.Deleted: PYGMENTS_DELETED,
+    Token.Generic.Emph: PYGMENTS_EMPHASIZE,
+    Token.Generic.Error: PYGMENTS_GENERIC_ERROR,
+    Token.Generic.Heading: PYGMENTS_HEADING,
+    Token.Generic.Inserted: PYGMENTS_INSERTED,
+    Token.Generic.Output: PYGMENTS_OUTPUT,
+    Token.Generic.Prompt: PYGMENTS_PROMPT,
+    Token.Generic.Strong: PYGMENTS_STRONG,
+    Token.Generic.Subheading: PYGMENTS_SUBHEADING,
+    Token.Generic.Traceback: PYGMENTS_TRACEBACK,
 
     Token.Keyword: PYGMENTS_KEYWORD,
-    Token.Keyword.Pseudo: PYGMENTS_PSEUDOKEYWORD,
-    Token.Keyword.Type: PYGMENTS_TYPEKEYWORD,
+    Token.Keyword.Constant: PYGMENTS_KEYWORD,
+    Token.Keyword.Declaration: PYGMENTS_KEYWORD,
     Token.Keyword.Namespace: PYGMENTS_KEYWORD,
+    Token.Keyword.Pseudo: PYGMENTS_PSEUDOKEYWORD,
+    Token.Keyword.Reserved:PYGMENTS_RESERVEDKEYWORD,
+    Token.Keyword.Type: PYGMENTS_TYPEKEYWORD,
 
-    Token.Operator: PYGMENTS_OPERATOR,
-    Token.Operator.Word: PYGMENTS_WORD,
+    Token.Literal: PYGMENTS_LITERAL,
+    Token.Literal.Date: PYGMENTS_LITERAL,
 
     Token.Name: PYGMENTS_DEFAULT,
+    Token.Name.Attribute: PYGMENTS_ATTRIBUTE,
     Token.Name.Builtin: PYGMENTS_BUILTIN,
     Token.Name.Builtin.Pseudo: PYGMENTS_BUILTIN,
-    Token.Name.Function: PYGMENTS_FUNCTION,
     Token.Name.Class: PYGMENTS_CLASS,
-    Token.Name.Namespace: PYGMENTS_NAMESPACE,
+    Token.Name.Constant: PYGMENTS_CONSTANT,
+    Token.Name.Decorator: PYGMENTS_DECORATOR,
+    Token.Name.Entity: PYGMENTS_ENTITY,
     Token.Name.Exception: PYGMENTS_EXCEPTION,
+    Token.Name.Function: PYGMENTS_FUNCTION,
+    Token.Name.Label: PYGMENTS_LABEL,
+    Token.Name.Namespace: PYGMENTS_NAMESPACE,
+    Token.Name.Other: PYGMENTS_VARIABLE,
+    Token.Name.Property: PYGMENTS_PROPERTY,
+    Token.Name.Tag: PYGMENTS_TAG,
     Token.Name.Variable: PYGMENTS_VARIABLE,
     Token.Name.Variable.Class: PYGMENTS_VARIABLE,
     Token.Name.Variable.Global: PYGMENTS_VARIABLE,
     Token.Name.Variable.Instance: PYGMENTS_VARIABLE,
-    Token.Name.Constant: PYGMENTS_CONSTANT,
-    Token.Name.Label: PYGMENTS_LABEL,
-    Token.Name.Entity: PYGMENTS_ENTITY,
-    Token.Name.Attribute: PYGMENTS_ATTRIBUTE,
-    Token.Name.Tag: PYGMENTS_TAG,
-    Token.Name.Decorator: PYGMENTS_DECORATOR,
-    Token.Name.Property: PYGMENTS_PROPERTY,
 
-    Token.String: PYGMENTS_STRING,
-    Token.String.Char: PYGMENTS_CHAR,
-    Token.String.Doc: PYGMENTS_DOCSTRING,
-    Token.String.Interpol: PYGMENTS_SCALAR,
-    Token.String.Escape: PYGMENTS_ESCAPE,
-    Token.String.Regex: PYGMENTS_REGEX,
-    Token.String.Symbol: PYGMENTS_SYMBOL,
-    Token.String.Other: PYGMENTS_OTHER,
-    Token.String.Heredoc: PYGMENTS_HEREDOC,
-    
     Token.Number: PYGMENTS_NUMBER,
+    Token.Number.Bin: PYGMENTS_NUMBER,
     Token.Number.Float: PYGMENTS_NUMBER,
     Token.Number.Hex: PYGMENTS_NUMBER,
     Token.Number.Integer: PYGMENTS_NUMBER,
     Token.Number.Integer.Long: PYGMENTS_NUMBER,
     Token.Number.Oct: PYGMENTS_NUMBER,
 
+    Token.Operator: PYGMENTS_OPERATOR,
+    Token.Operator.Word: PYGMENTS_WORD,
+
     Token.Punctuation: PYGMENTS_PUNCTUATION,
 
-    Token.Generic.Heading: PYGMENTS_HEADING,
-    Token.Generic.Subheading: PYGMENTS_SUBHEADING,
-    Token.Generic.Deleted: PYGMENTS_DELETED,
-    Token.Generic.Inserted: PYGMENTS_INSERTED,
-    Token.Generic.Error: PYGMENTS_GENERIC_ERROR,
-    Token.Generic.Emph: PYGMENTS_EMPHASIZE,
-    Token.Generic.Strong: PYGMENTS_STRONG,
-    Token.Generic.Prompt: PYGMENTS_PROMPT,
-    Token.Generic.Output: PYGMENTS_OUTPUT,
-    Token.Generic.Traceback: PYGMENTS_TRACEBACK,
-
-    Token.Error: PYGMENTS_ERROR,
+    Token.String: PYGMENTS_STRING,
+    Token.String.Backtick: PYGMENTS_BACKTICKSTRING,
+    Token.String.Char: PYGMENTS_CHAR,
+    Token.String.Doc: PYGMENTS_DOCSTRING,
+    Token.String.Double: PYGMENTS_DOUBLESTRING,
+    Token.String.Escape: PYGMENTS_ESCAPE,
+    Token.String.Heredoc: PYGMENTS_HEREDOC,
+    Token.String.Interpol: PYGMENTS_SCALAR,
+    Token.String.Other: PYGMENTS_OTHER,
+    Token.String.Regex: PYGMENTS_REGEX,
+    Token.String.Single: PYGMENTS_SINGLESTRING,
+    Token.String.Symbol: PYGMENTS_SYMBOL,
+    
+    Token.Whitespace: PYGMENTS_WHITESPACE,
 }
 
 #-----------------------------------------------------------------------------#
@@ -198,6 +221,13 @@ class LexerPygments(LexerContainer):
             PYGMENTS_CHAR: self.tr("Character"),
             PYGMENTS_HEREDOC: self.tr("Here document"),
             PYGMENTS_PUNCTUATION: self.tr("Punctuation"),
+            PYGMENTS_HASHBANG: self.tr("Hashbang"),
+            PYGMENTS_RESERVEDKEYWORD: self.tr("Reserved Keyword"),
+            PYGMENTS_LITERAL: self.tr("Literal"),
+            PYGMENTS_DOUBLESTRING: self.tr("Double quoted string"),
+            PYGMENTS_SINGLESTRING: self.tr("Single quoted string"),
+            PYGMENTS_BACKTICKSTRING: self.tr("Backtick string"),
+            PYGMENTS_WHITESPACE: self.tr("Whitespace"),
         }
         
         self.defaultColors = {
@@ -242,18 +272,27 @@ class LexerPygments(LexerContainer):
             PYGMENTS_CHAR: QColor("#7F007F"),
             PYGMENTS_HEREDOC: QColor("#7F007F"),
             PYGMENTS_PUNCTUATION: QColor("#000000"),
+            PYGMENTS_HASHBANG: QColor("#00C000"),
+            PYGMENTS_RESERVEDKEYWORD: QColor("#A90D91"),
+            PYGMENTS_LITERAL: QColor("#1C01CE"),
+            PYGMENTS_DOUBLESTRING: QColor("#7F007F"),
+            PYGMENTS_SINGLESTRING: QColor("#7F007F"),
+            PYGMENTS_BACKTICKSTRING: QColor("#FFFF00"),
+            PYGMENTS_WHITESPACE: QColor("#BBBBBB"),
         }
         
         self.defaultPapers = {
             PYGMENTS_ERROR: QColor("#FF0000"),
             PYGMENTS_MULTILINECOMMENT: QColor("#A8FFA8"),
             PYGMENTS_HEREDOC: QColor("#DDD0DD"),
+            PYGMENTS_BACKTICKSTRING: QColor("#a08080"),
         }
         
         self.defaultEolFills = {
             PYGMENTS_ERROR: True,
             PYGMENTS_MULTILINECOMMENT: True,
             PYGMENTS_HEREDOC: True,
+            PYGMENTS_BACKTICKSTRING: True,
         }
     
     def language(self):

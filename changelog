@@ -19,6 +19,8 @@ Version 6.2.0:
   -- added capability to remember the zoom values for each site (incl. a
      dialog to manage these)
   -- added a status bar icon to show the online status
+- Third Party packages
+  -- updated Pygments to 2.1
 
 Version 6.1.0:
 - bug fixes

@@ -1018,6 +1018,7 @@
     <Source>ThirdParty/Pygments/pygments/formatters/bbcode.py</Source>
     <Source>ThirdParty/Pygments/pygments/formatters/html.py</Source>
     <Source>ThirdParty/Pygments/pygments/formatters/img.py</Source>
+    <Source>ThirdParty/Pygments/pygments/formatters/irc.py</Source>
     <Source>ThirdParty/Pygments/pygments/formatters/latex.py</Source>
     <Source>ThirdParty/Pygments/pygments/formatters/other.py</Source>
     <Source>ThirdParty/Pygments/pygments/formatters/rtf.py</Source>
@@ -1029,6 +1030,7 @@
     <Source>ThirdParty/Pygments/pygments/lexers/_asy_builtins.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/_cl_builtins.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/_cocoa_builtins.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/_csound_builtins.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/_lasso_builtins.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/_lua_builtins.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/_mapping.py</Source>
@@ -1045,6 +1047,7 @@
     <Source>ThirdParty/Pygments/pygments/lexers/algebra.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/ambient.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/apl.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/archetype.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/asm.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/automation.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/basic.py</Source>
@@ -1055,6 +1058,7 @@
     <Source>ThirdParty/Pygments/pygments/lexers/compiled.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/configs.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/console.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/csound.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/css.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/d.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/dalvik.py</Source>
@@ -1065,8 +1069,10 @@
     <Source>ThirdParty/Pygments/pygments/lexers/dylan.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/ecl.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/eiffel.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/elm.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/erlang.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/esoteric.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/ezhil.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/factor.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/fantom.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/felix.py</Source>
@@ -1074,11 +1080,13 @@
     <Source>ThirdParty/Pygments/pygments/lexers/foxpro.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/functional.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/go.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/grammar_notation.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/graph.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/graphics.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/haskell.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/haxe.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/hdl.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/hexdump.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/html.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/idl.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/igor.py</Source>
@@ -1086,6 +1094,7 @@
     <Source>ThirdParty/Pygments/pygments/lexers/installers.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/int_fiction.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/iolang.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/j.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/javascript.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/julia.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/jvm.py</Source>
@@ -1096,23 +1105,29 @@
     <Source>ThirdParty/Pygments/pygments/lexers/matlab.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/ml.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/modeling.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/modula2.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/nimrod.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/nit.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/nix.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/oberon.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/objective.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/ooc.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/other.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/parasail.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/parsers.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/pascal.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/pawn.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/perl.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/php.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/praat.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/prolog.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/python.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/qvt.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/r.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/rdf.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/rebol.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/resource.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/roboconf.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/robotframework.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/ruby.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/rust.py</Source>
@@ -1122,6 +1137,7 @@
     <Source>ThirdParty/Pygments/pygments/lexers/snobol.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/special.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/sql.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/supercollider.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/tcl.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/templates.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/testing.py</Source>
@@ -1129,9 +1145,11 @@
     <Source>ThirdParty/Pygments/pygments/lexers/textedit.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/textfmts.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/theorem.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/trafficscript.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/urbi.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/web.py</Source>
     <Source>ThirdParty/Pygments/pygments/lexers/webmisc.py</Source>
+    <Source>ThirdParty/Pygments/pygments/lexers/x10.py</Source>
     <Source>ThirdParty/Pygments/pygments/modeline.py</Source>
     <Source>ThirdParty/Pygments/pygments/plugin.py</Source>
     <Source>ThirdParty/Pygments/pygments/regexopt.py</Source>
@@ -1139,6 +1157,9 @@
     <Source>ThirdParty/Pygments/pygments/sphinxext.py</Source>
     <Source>ThirdParty/Pygments/pygments/style.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/__init__.py</Source>
+    <Source>ThirdParty/Pygments/pygments/styles/algol.py</Source>
+    <Source>ThirdParty/Pygments/pygments/styles/algol_nu.py</Source>
+    <Source>ThirdParty/Pygments/pygments/styles/arduino.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/autumn.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/borland.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/bw.py</Source>
@@ -1148,6 +1169,7 @@
     <Source>ThirdParty/Pygments/pygments/styles/friendly.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/fruity.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/igor.py</Source>
+    <Source>ThirdParty/Pygments/pygments/styles/lovelace.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/manni.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/monokai.py</Source>
     <Source>ThirdParty/Pygments/pygments/styles/murphy.py</Source>
