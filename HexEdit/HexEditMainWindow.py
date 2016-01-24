@@ -15,14 +15,14 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFile, QFileInfo, QSize, \
     QCoreApplication, QLocale
 from PyQt5.QtGui import QKeySequence
 from PyQt5.QtWidgets import QWhatsThis, QLabel, QWidget, QVBoxLayout, \
-    QDialog, QAction, QFrame
+    QDialog, QAction, QFrame, QMenu
 
 from E5Gui.E5Action import E5Action
 from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui import E5FileDialog, E5MessageBox
 from E5Gui.E5ClickableLabel import E5ClickableLabel
 
-from Globals import strGroup
+from Globals import strGroup, recentNameHexFiles
 
 from .HexEditWidget import HexEditWidget
 from .HexEditSearchReplaceWidget import HexEditSearchReplaceWidget
@@ -32,6 +32,7 @@ import UI.PixmapCache
 import UI.Config
 
 import Preferences
+import Utilities
 
 
 class HexEditMainWindow(E5MainWindow):
@@ -43,6 +44,8 @@ class HexEditMainWindow(E5MainWindow):
     editorClosed = pyqtSignal()
     
     windows = []
+    
+    maxMenuFilePathLen = 75
     
     def __init__(self, fileName="", parent=None, fromEric=False, project=None):
         """
@@ -125,6 +128,9 @@ class HexEditMainWindow(E5MainWindow):
         self.__project = project
         self.__lastOpenPath = ""
         self.__lastSavePath = ""
+        
+        self.__recent = []
+        self.__loadRecent()
         
         self.__setCurrentFile("")
         if fileName:
@@ -650,14 +656,15 @@ class HexEditMainWindow(E5MainWindow):
         """
         Private method to create the menus.
         """
-        # TODO: add "Open recent menu"
         mb = self.menuBar()
         
         menu = mb.addMenu(self.tr('&File'))
         menu.setTearOffEnabled(True)
+        self.__recentMenu = QMenu(self.tr('Open &Recent Files'), menu)
         menu.addAction(self.newWindowAct)
         menu.addAction(self.openAct)
         menu.addAction(self.openReadOnlyAct)
+        self.__menuRecentAct = menu.addMenu(self.__recentMenu)
         menu.addSeparator()
         menu.addAction(self.saveAct)
         menu.addAction(self.saveAsAct)
@@ -670,6 +677,9 @@ class HexEditMainWindow(E5MainWindow):
         else:
             menu.addSeparator()
             menu.addAction(self.exitAct)
+        menu.aboutToShow.connect(self.__showFileMenu)
+        self.__recentMenu.aboutToShow.connect(self.__showRecentMenu)
+        self.__recentMenu.triggered.connect(self.__openRecentHexFile)
         
         menu = mb.addMenu(self.tr("&Edit"))
         menu.setTearOffEnabled(True)
@@ -913,6 +923,8 @@ class HexEditMainWindow(E5MainWindow):
             
             if not self.__fromEric:
                 Preferences.syncPreferences()
+            
+            self.__saveRecent()
             
             evt.accept()
             self.editorClosed.emit()
@@ -1204,6 +1216,8 @@ class HexEditMainWindow(E5MainWindow):
         @type str
         """
         self.__fileName = fileName
+        # insert filename into list of recently opened files
+        self.__addToRecentList(fileName)
         
         if not self.__fileName:
             shownName = self.tr("Untitled")
@@ -1380,3 +1394,92 @@ class HexEditMainWindow(E5MainWindow):
         assert key in ['search', 'replace']
         
         return self.__srHistory[key]
+    
+    @pyqtSlot()
+    def __showFileMenu(self):
+        """
+        Private slot to modify the file menu before being shown.
+        """
+        self.__menuRecentAct.setEnabled(len(self.__recent) > 0)
+    
+    @pyqtSlot()
+    def __showRecentMenu(self):
+        """
+        Private slot to set up the recent files menu.
+        """
+        self.__loadRecent()
+        
+        self.__recentMenu.clear()
+        
+        idx = 1
+        for rs in self.__recent:
+            if idx < 10:
+                formatStr = '&{0:d}. {1}'
+            else:
+                formatStr = '{0:d}. {1}'
+            act = self.__recentMenu.addAction(
+                formatStr.format(
+                    idx,
+                    Utilities.compactPath(
+                        rs, HexEditMainWindow.maxMenuFilePathLen)))
+            act.setData(rs)
+            act.setEnabled(QFileInfo(rs).exists())
+            idx += 1
+        
+        self.__recentMenu.addSeparator()
+        self.__recentMenu.addAction(self.tr('&Clear'), self.__clearRecent)
+    
+    @pyqtSlot(QAction)
+    def __openRecentHexFile(self, act):
+        """
+        Private method to open a file from the list of recently opened files.
+        
+        @param act reference to the action that triggered (QAction)
+        """
+        fileName = act.data()
+        if fileName and self.__maybeSave():
+            self.__loadHexFile(fileName)
+            self.__editor.setReadOnly(Preferences.getHexEditor("OpenReadOnly"))
+            self.__checkActions()
+    
+    @pyqtSlot()
+    def __clearRecent(self):
+        """
+        Private method to clear the list of recently opened files.
+        """
+        self.__recent = []
+    
+    def __loadRecent(self):
+        """
+        Private method to load the list of recently opened files.
+        """
+        self.__recent = []
+        Preferences.Prefs.rsettings.sync()
+        rs = Preferences.Prefs.rsettings.value(recentNameHexFiles)
+        if rs is not None:
+            for f in Preferences.toList(rs):
+                if QFileInfo(f).exists():
+                    self.__recent.append(f)
+        
+    def __saveRecent(self):
+        """
+        Private method to save the list of recently opened files.
+        """
+        Preferences.Prefs.rsettings.setValue(recentNameHexFiles, self.__recent)
+        Preferences.Prefs.rsettings.sync()
+    
+    def __addToRecentList(self, fileName):
+        """
+        Private method to add a file name to the list of recently opened files.
+        
+        @param fileName name of the file to be added
+        """
+        if fileName:
+            for recent in self.__recent[:]:
+                if Utilities.samepath(fileName, recent):
+                    self.__recent.remove(recent)
+            self.__recent.insert(0, fileName)
+            maxRecent = Preferences.getHexEditor("RecentNumber")
+            if len(self.__recent) > maxRecent:
+                self.__recent = self.__recent[:maxRecent]
+            self.__saveRecent()

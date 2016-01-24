@@ -1907,6 +1907,7 @@ eric6.Globals.isLinuxPlatform?4()
 eric6.Globals.isMacPlatform?4()
 eric6.Globals.isWindowsPlatform?4()
 eric6.Globals.recentNameFiles?7
+eric6.Globals.recentNameHexFiles?7
 eric6.Globals.recentNameHosts?7
 eric6.Globals.recentNameMultiProject?7
 eric6.Globals.recentNameProject?7
@@ -3554,6 +3555,7 @@ eric6.HexEdit.HexEditGotoWidget.HexEditGotoWidget?1(editor, parent=None)
 eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.closeEvent?4(evt)
 eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.editorClosed?7
 eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.getSRHistory?4(key)
+eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.maxMenuFilePathLen?7
 eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.preferencesChanged?4()
 eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.setRecentPaths?4(openPath, savePath)
 eric6.HexEdit.HexEditMainWindow.HexEditMainWindow.windows?7

@@ -49,6 +49,8 @@ class HexEditorPage(ConfigurationPageBase, Ui_HexEditorPage):
             "ShowAsciiArea"))
         self.highlightingCheckBox.setChecked(Preferences.getHexEditor(
             "HighlightChanges"))
+        self.recentFilesSpinBox.setValue(Preferences.getHexEditor(
+            "RecentNumber"))
         
         # font
         self.monospacedFont = Preferences.getHexEditor("Font")
@@ -92,6 +94,8 @@ class HexEditorPage(ConfigurationPageBase, Ui_HexEditorPage):
             "HighlightChanges", self.highlightingCheckBox.isChecked())
         Preferences.setHexEditor(
             "Font", self.monospacedFont)
+        Preferences.setHexEditor(
+            "RecentNumber", self.recentFilesSpinBox.value())
         
         # colours
         self.saveColours(Preferences.setHexEditor)

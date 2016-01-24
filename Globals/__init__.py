@@ -27,6 +27,7 @@ settingsNameRecent = "eric6recent"
 recentNameMultiProject = "MultiProjects"
 recentNameProject = "Projects"
 recentNameFiles = "Files"
+recentNameHexFiles = "HexFiles"
 recentNameHosts = "Hosts6"
 
 configDir = None

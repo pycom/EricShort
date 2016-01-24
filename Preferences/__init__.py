@@ -1204,6 +1204,7 @@ class Prefs(object):
         "SelectionForeGround": QColor(Qt.white),
         "AddressAreaBackGround": QColor("#efedec"),
         "AddressAreaForeGround": QColor(Qt.black),
+        "RecentNumber": 9,
     }
     if isWindowsPlatform():
         hexEditorDefaults["Font"] = "Courier,10,-1,5,50,0,0,0,0,0"
@@ -2973,7 +2974,7 @@ def getHexEditor(key, prefClass=Prefs):
     @param prefClass preferences class used as the storage area
     @return the requested user setting
     """
-    if key in ["AddressAreaWidth"]:
+    if key in ["AddressAreaWidth", "RecentNumber"]:
         return int(prefClass.settings.value(
             "HexEditor/" + key, prefClass.hexEditorDefaults[key]))
     elif key in ["ShowAddressArea", "ShowAsciiArea", "OpenInOverwriteMode",
