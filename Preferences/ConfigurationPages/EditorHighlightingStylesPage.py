@@ -9,7 +9,7 @@ Module implementing the Editor Highlighting Styles configuration page.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot, Qt, QFileInfo, QFile, QIODevice
+from PyQt5.QtCore import pyqtSlot, Qt, QFileInfo, QFile, QIODevice, qVersion
 from PyQt5.QtGui import QPalette, QFont
 from PyQt5.QtWidgets import QColorDialog, QFontDialog, QInputDialog, QMenu
 
@@ -20,8 +20,13 @@ from E5Gui import E5MessageBox, E5FileDialog
 
 import Preferences
 
+try:
+    MonospacedFontsOption = QFontDialog.MonospacedFonts
+except AttributeError:
+    MonospacedFontsOption = QFontDialog.FontDialogOptions(0x10)
+NoFontsOption = QFontDialog.FontDialogOptions(0)
 
-# TODO: add a button to show only monospaced fonts
+
 class EditorHighlightingStylesPage(ConfigurationPageBase,
                                    Ui_EditorHighlightingStylesPage):
     """
@@ -41,6 +46,10 @@ class EditorHighlightingStylesPage(ConfigurationPageBase,
         super(EditorHighlightingStylesPage, self).__init__()
         self.setupUi(self)
         self.setObjectName("EditorHighlightingStylesPage")
+        
+        if qVersion() < "5.0.0":
+            self.monospacedButton.setChecked(False)
+            self.monospacedButton.hide()
         
         self.__fontButtonMenu = QMenu()
         act = self.__fontButtonMenu.addAction(self.tr("Font"))
@@ -265,7 +274,12 @@ class EditorHighlightingStylesPage(ConfigurationPageBase,
             else:
                 self.sampleText.setFont(font)
         
-        font, ok = QFontDialog.getFont(self.lexer.font(self.style))
+        if self.monospacedButton.isChecked():
+            options = MonospacedFontsOption
+        else:
+            options = NoFontsOption
+        font, ok = QFontDialog.getFont(self.lexer.font(self.style), self,
+                                       "", options)
         if ok:
             setSampleFont(font, familyOnly, sizeOnly)
             if doAll:

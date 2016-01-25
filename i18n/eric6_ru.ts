@@ -10930,32 +10930,32 @@ whole selection.&lt;/li&gt;
         <translation>Задайте тип заливки фона в конце строки.</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="339"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="353"/>
         <source>Fill to end of line</source>
         <translation>До конца строки</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="160"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="189"/>
         <source>Select the font for all styles.</source>
         <translation>Выбрать шрифт для всех стилей.</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="163"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="192"/>
         <source>All Fonts</source>
         <translation>Все шрифты</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="150"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="179"/>
         <source>Select the background colour for all styles</source>
         <translation>Задайте цвет фона для всех стилей</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="153"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="182"/>
         <source>All Background Colours</source>
         <translation>Все цвета фона</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="200"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="229"/>
         <source>Sample Text</source>
         <translation>Это пример</translation>
     </message>
@@ -10975,7 +10975,7 @@ whole selection.&lt;/li&gt;
         <translation>Выберите шрифт.</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="60"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="69"/>
         <source>Font</source>
         <translation>Шрифт</translation>
     </message>
@@ -10995,27 +10995,27 @@ whole selection.&lt;/li&gt;
         <translation>&lt;b&gt;Настроить подстветку синтаксиса&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="170"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="199"/>
         <source>Select the eol fill for all styles</source>
         <translation>Заливка до конца строки для всех стилей</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="173"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="202"/>
         <source>All Fill to end of line</source>
         <translation>Заливка до конца строки</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="337"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="351"/>
         <source>Enabled</source>
         <translation>Разрешена</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="338"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="352"/>
         <source>Disabled</source>
         <translation>Отключено</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="339"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="353"/>
         <source>Select fill to end of line for all styles</source>
         <translation>Заливка до конца строки для всех стилей</translation>
     </message>
@@ -11025,92 +11025,92 @@ whole selection.&lt;/li&gt;
         <translation>По умолчанию</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="187"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="216"/>
         <source>Press to set all styles to their default values</source>
         <translation>Установить значения по умолчанию для всех стилей</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="190"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="219"/>
         <source>All to Default</source>
         <translation>Всё по умолчанию</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="231"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="260"/>
         <source>Imports all styles of the currently selected language</source>
         <translation>Импортировать все стили для текущего языка</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="234"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="263"/>
         <source>Import styles</source>
         <translation>Импортировать стили</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="244"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="273"/>
         <source>Exports all styles of the currently selected language</source>
         <translation>Экспортировать все стили для текущего языка</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="247"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="276"/>
         <source>Export styles</source>
         <translation>Экспортировать стили</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="254"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="283"/>
         <source>Imports all styles of all languages</source>
         <translation>Импортировать все стили для всех языков</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="257"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="286"/>
         <source>Import all styles</source>
         <translation>Импортировать все стили</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="264"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="293"/>
         <source>Exports all styles of all languages</source>
         <translation>Экспортировать все стили для всех языков</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="267"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="296"/>
         <source>Export all styles</source>
         <translation>Экспортировать все стили</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="447"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="461"/>
         <source>Export Highlighting Styles</source>
         <translation>Экспорт стилей подсветки</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="447"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="461"/>
         <source>&lt;p&gt;The highlighting styles could not be exported to file &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Reason: {1}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Ошибка экспорта стилей подсветки в файл &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Причина: {1}&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="479"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="493"/>
         <source>Import Highlighting Styles</source>
         <translation>Импорт стилей подсветки</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="479"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="493"/>
         <source>&lt;p&gt;The highlighting styles could not be read from file &lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Reason: {1}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Ошибка импорта стилей подсветки из файла&lt;b&gt;{0}&lt;/b&gt;.&lt;/p&gt;&lt;p&gt;Причина: {1}&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="463"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="477"/>
         <source>Highlighting styles file (*.e4h)</source>
         <translation>Файлы стилей подсветки (*.e4h)</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="63"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="72"/>
         <source>Family and Size only</source>
         <translation>Только семейство и размер</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="66"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="75"/>
         <source>Family only</source>
         <translation>Только семейство</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="68"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.py" line="77"/>
         <source>Size only</source>
         <translation>Только размер</translation>
     </message>
@@ -11120,9 +11120,19 @@ whole selection.&lt;/li&gt;
         <translation>Установить стиль по умолчанию</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="213"/>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="242"/>
         <source>&lt;b&gt;Note:&lt;/b&gt; The tick in the list above indicates the entrie&apos;s &apos;fill to end of line&apos; setting.</source>
         <translation>&lt;b&gt;Примечание:&lt;/b&gt; Галочка в списке отражает значение параметра &quot;заполнение до конца строки».</translation>
+    </message>
+    <message>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="150"/>
+        <source>Press to show only monospaced fonts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Preferences/ConfigurationPages/EditorHighlightingStylesPage.ui" line="153"/>
+        <source>Monospaced Fonts Only</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
