@@ -72,21 +72,21 @@ class HelpDocumentationPage(ConfigurationPageBase, Ui_HelpDocumentationPage):
         
         # set initial values
         self.ericDocDirPicker.setText(
-            Preferences.getHelp("EricDocDir"))
+            Preferences.getHelp("EricDocDir"), toNative=False)
         self.python2DocDirPicker.setText(
-            Preferences.getHelp("Python2DocDir"))
+            Preferences.getHelp("Python2DocDir"), toNative=False)
         self.pythonDocDirPicker.setText(
-            Preferences.getHelp("PythonDocDir"))
+            Preferences.getHelp("PythonDocDir"), toNative=False)
         self.qt4DocDirPicker.setText(
-            Preferences.getHelp("Qt4DocDir"))
+            Preferences.getHelp("Qt4DocDir"), toNative=False)
         self.qt5DocDirPicker.setText(
-            Preferences.getHelp("Qt5DocDir"))
+            Preferences.getHelp("Qt5DocDir"), toNative=False)
         self.pyqt4DocDirPicker.setText(
-            Preferences.getHelp("PyQt4DocDir"))
+            Preferences.getHelp("PyQt4DocDir"), toNative=False)
         self.pyqt5DocDirPicker.setText(
-            Preferences.getHelp("PyQt5DocDir"))
+            Preferences.getHelp("PyQt5DocDir"), toNative=False)
         self.pysideDocDirPicker.setText(
-            Preferences.getHelp("PySideDocDir"))
+            Preferences.getHelp("PySideDocDir"), toNative=False)
         
     def save(self):
         """
@@ -94,28 +94,28 @@ class HelpDocumentationPage(ConfigurationPageBase, Ui_HelpDocumentationPage):
         """
         Preferences.setHelp(
             "EricDocDir",
-            self.ericDocDirPicker.text())
+            self.ericDocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "Python2DocDir",
-            self.python2DocDirPicker.text())
+            self.python2DocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "PythonDocDir",
-            self.pythonDocDirPicker.text())
+            self.pythonDocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "Qt4DocDir",
-            self.qt4DocDirPicker.text())
+            self.qt4DocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "Qt5DocDir",
-            self.qt5DocDirPicker.text())
+            self.qt5DocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "PyQt4DocDir",
-            self.pyqt4DocDirPicker.text())
+            self.pyqt4DocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "PyQt5DocDir",
-            self.pyqt5DocDirPicker.text())
+            self.pyqt5DocDirPicker.text(toNative=False))
         Preferences.setHelp(
             "PySideDocDir",
-            self.pysideDocDirPicker.text())
+            self.pysideDocDirPicker.text(toNative=False))
     
 
 def create(dlg):

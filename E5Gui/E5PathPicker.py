@@ -226,101 +226,135 @@ class E5PathPickerBase(QWidget):
         else:
             return self._editor.currentText()
     
-    def setText(self, path):
+    def setText(self, path, toNative=True):
         """
         Public method to set the current path.
         
         @param path path to be set
         @type str
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         """
         if self.__mode == E5PathPickerModes.OpenFilesMode:
             self._setEditorText(path)
         else:
-            path = Utilities.toNativeSeparators(path)
+            if toNative:
+                path = Utilities.toNativeSeparators(path)
             self._setEditorText(path)
             if self._completer:
                 self._completer.setRootPath(path)
     
-    def text(self):
+    def text(self, toNative=True):
         """
         Public method to get the current path.
         
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         @return current path
         @rtype str
         """
         if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return ";".join(
-                [Utilities.toNativeSeparators(path)
-                 for path in self._editorText().split(";")])
+            if toNative:
+                return ";".join(
+                    [Utilities.toNativeSeparators(path)
+                     for path in self._editorText().split(";")])
+            else:
+                return self._editorText()
         else:
-            return os.path.expanduser(
-                Utilities.toNativeSeparators(self._editorText()))
+            if toNative:
+                return os.path.expanduser(
+                    Utilities.toNativeSeparators(self._editorText()))
+            else:
+                return os.path.expanduser(self._editorText())
     
-    def setEditText(self, path):
+    def setEditText(self, path, toNative=True):
         """
         Public method to set the current path.
         
         @param path path to be set
         @type str
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         """
-        self.setText(path)
+        self.setText(path, toNative=toNative)
     
-    def currentText(self):
+    def currentText(self, toNative=True):
         """
         Public method to get the current path.
         
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         @return current path
         @rtype str
         """
-        return self.text()
+        return self.text(toNative=toNative)
     
-    def setPath(self, path):
+    def setPath(self, path, toNative=True):
         """
         Public method to set the current path.
         
         @param path path to be set
         @type str
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         """
-        self.setText(path)
+        self.setText(path, toNative=toNative)
     
-    def path(self):
+    def path(self, toNative=True):
         """
         Public method to get the current path.
         
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         @return current path
         @rtype str
         """
-        return self.text()
+        return self.text(toNative=toNative)
     
-    def paths(self):
+    def paths(self, toNative=True):
         """
         Public method to get the list of entered paths.
         
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         @return entered paths
         @rtype list of str
         """
         if self.__mode == E5PathPickerModes.OpenFilesMode:
-            return self.path().split(";")
+            return self.path(toNative=toNative).split(";")
         else:
-            return [self.path()]
+            return [self.path(toNative=toNative)]
     
-    def firstPath(self):
+    def firstPath(self, toNative=True):
         """
         Public method to get the first path of a list of entered paths.
         
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         @return first path
         @rtype str
         """
-        return self.paths()[0]
+        return self.paths(toNative=toNative)[0]
     
-    def lastPath(self):
+    def lastPath(self, toNative=True):
         """
         Public method to get the last path of a list of entered paths.
         
+        @param toNative flag indicating to convert the path into
+            a native format
+        @type bool
         @return last path
         @rtype str
         """
-        return self.paths()[-1]
+        return self.paths(toNative=toNative)[-1]
     
     def setEditorEnabled(self, enable):
         """
