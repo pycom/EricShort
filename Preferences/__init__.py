@@ -37,6 +37,10 @@ try:
     from PyQt5.QtWebKit import QWebSettings
 except ImportError:
     QWebSettings = None
+try:
+    from PyQt5.QtWebEngineWidgets import QWebEngineSettings
+except ImportError:
+    QWebEngineSettings = None
 from PyQt5.Qsci import QsciScintilla, QsciLexerPython
 
 from E5Gui import E5FileDialog
@@ -835,7 +839,7 @@ class Prefs(object):
         "StartupBehavior": 1,      # show speed dial
         "HomePage": "eric:home",
         "HistoryLimit": 30,
-        "DefaultScheme": "file://",
+        "DefaultScheme": "https://",
         "OfflineStorageDatabaseQuota": 50,     # 50 MB
         "UserAgent": "",
         "ShowPreview": True,
@@ -998,6 +1002,81 @@ class Prefs(object):
         cls.webSettingsIntitialized = True
     
     webSettingsIntitialized = False
+    
+    # defaults for the web browser settings
+    webBrowserDefaults = {
+        "SingleWebBrowserWindow": True,
+        "SaveGeometry": True,
+        "WebBrowserState": QByteArray(),
+        "StartupBehavior": 1,      # show speed dial
+        "HomePage": "eric:home",
+        "WarnOnMultipleClose": True,
+        "DefaultScheme": "https://",
+    }
+    
+    @classmethod
+    def initWebEngineSettingsDefaults(cls):
+        """
+        Class method to initialize the web engine settings related defaults.
+        """
+        if QWebEngineSettings is None:
+            return
+        
+        webEngineSettings = QWebEngineSettings.globalSettings()
+        fontFamily = webEngineSettings.fontFamily(
+            QWebEngineSettings.StandardFont)
+        fontSize = webEngineSettings.fontSize(
+            QWebEngineSettings.DefaultFontSize)
+        cls.webBrowserDefaults["StandardFont"] = \
+            QFont(fontFamily, fontSize).toString()
+        fontFamily = webEngineSettings.fontFamily(
+            QWebEngineSettings.FixedFont)
+        fontSize = webEngineSettings.fontSize(
+            QWebEngineSettings.DefaultFixedFontSize)
+        cls.webBrowserDefaults["FixedFont"] = \
+            QFont(fontFamily, fontSize).toString()
+        cls.webBrowserDefaults.update({
+            "AutoLoadImages": webEngineSettings.testAttribute(
+                QWebEngineSettings.AutoLoadImages),
+##            "UserStyleSheet": "",
+            "SaveUrlColor": QColor(248, 248, 210),
+##            "JavaEnabled":
+##            websettings.testAttribute(QWebSettings.JavaEnabled),
+            "JavaScriptEnabled": webEngineSettings.testAttribute(
+                QWebEngineSettings.JavascriptEnabled),
+            "JavaScriptCanOpenWindows": webEngineSettings.testAttribute(
+                QWebEngineSettings.JavascriptCanOpenWindows),
+##            "JavaScriptCanCloseWindows": webEngineSettings.testAttribute(
+##                QWebEngineSettings.JavascriptCanCloseWindows),
+            "JavaScriptCanAccessClipboard": webEngineSettings.testAttribute(
+                QWebEngineSettings.JavascriptCanAccessClipboard),
+##            "PluginsEnabled":
+##            websettings.testAttribute(QWebSettings.PluginsEnabled),
+##            "OfflineStorageDatabaseEnabled":
+##            websettings.testAttribute(
+##                QWebSettings.OfflineStorageDatabaseEnabled),
+            "LocalStorageEnabled": webEngineSettings.testAttribute(
+                QWebEngineSettings.LocalStorageEnabled),
+            "DefaultTextEncoding": webEngineSettings.defaultTextEncoding(),
+            "SpatialNavigationEnabled": webEngineSettings.testAttribute(
+                QWebEngineSettings.SpatialNavigationEnabled),
+            "LinksIncludedInFocusChain": webEngineSettings.testAttribute(
+                QWebEngineSettings.LinksIncludedInFocusChain),
+            "LocalContentCanAccessRemoteUrls": webEngineSettings.testAttribute(
+                QWebEngineSettings.LocalContentCanAccessRemoteUrls),
+            "LocalContentCanAccessFileUrls": webEngineSettings.testAttribute(
+                QWebEngineSettings.LocalContentCanAccessFileUrls),
+            "XSSAuditingEnabled": webEngineSettings.testAttribute(
+                QWebEngineSettings.XSSAuditingEnabled),
+            "ScrollAnimatorEnabled": webEngineSettings.testAttribute(
+                QWebEngineSettings.ScrollAnimatorEnabled),
+            "ErrorPageEnabled": webEngineSettings.testAttribute(
+                QWebEngineSettings.ErrorPageEnabled),
+        })
+        
+        cls.webEngineSettingsIntitialized = True
+    
+    webEngineSettingsIntitialized = False
 
     # defaults for system settings
     sysDefaults = {
@@ -1127,6 +1206,7 @@ class Prefs(object):
     geometryDefaults = {
         "HelpViewerGeometry": QByteArray(),
         "HelpInspectorGeometry": QByteArray(),
+        "WebBrowserGeometry": QByteArray(),
         "IconEditorGeometry": QByteArray(),
         "HexEditorGeometry": QByteArray(),
         "MainGeometry": QByteArray(),
@@ -2541,6 +2621,188 @@ def setHelp(key, value, prefClass=Prefs):
             "Help/" + key, pwConvert(value, encode=True))
     else:
         prefClass.settings.setValue("Help/" + key, value)
+
+
+def getWebBrowser(key, prefClass=Prefs):
+    """
+    Module function to retrieve the various web browser settings.
+    
+    @param key the key of the value to get
+    @param prefClass preferences class used as the storage area
+    @return the requested help setting
+    """
+    if not prefClass.webEngineSettingsIntitialized:
+        prefClass.initWebEngineSettingsDefaults()
+    
+    if key in ["StandardFont", "FixedFont"]:
+        f = QFont()
+        f.fromString(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
+        return f
+    elif key in ["SaveUrlColor"]:
+        col = prefClass.settings.value("WebBrowser/" + key)
+        if col is not None:
+            return QColor(col)
+        else:
+            return prefClass.webBrowserDefaults[key]
+##    elif key in ["WebSearchKeywords"]:
+##        # return a list of tuples of (keyword, engine name)
+##        keywords = []
+##        size = prefClass.settings.beginReadArray("Help/" + key)
+##        for index in range(size):
+##            prefClass.settings.setArrayIndex(index)
+##            keyword = prefClass.settings.value("Keyword")
+##            engineName = prefClass.settings.value("Engine")
+##            keywords.append((keyword, engineName))
+##        prefClass.settings.endArray()
+##        return keywords
+##    elif key in ["DownloadManagerDownloads"]:
+##        # return a list of tuples of (URL, save location, done flag, page url)
+##        downloads = []
+##        length = prefClass.settings.beginReadArray("Help/" + key)
+##        for index in range(length):
+##            prefClass.settings.setArrayIndex(index)
+##            url = prefClass.settings.value("URL")
+##            location = prefClass.settings.value("Location")
+##            done = toBool(prefClass.settings.value("Done"))
+##            pageUrl = prefClass.settings.value("PageURL")
+##            if pageUrl is None:
+##                pageUrl = QUrl()
+##            downloads.append((url, location, done, pageUrl))
+##        prefClass.settings.endArray()
+##        return downloads
+##    elif key == "RssFeeds":
+##        # return a list of tuples of (URL, title, icon)
+##        feeds = []
+##        length = prefClass.settings.beginReadArray("Help/" + key)
+##        for index in range(length):
+##            prefClass.settings.setArrayIndex(index)
+##            url = prefClass.settings.value("URL")
+##            title = prefClass.settings.value("Title")
+##            icon = prefClass.settings.value("Icon")
+##            feeds.append((url, title, icon))
+##        prefClass.settings.endArray()
+##        return feeds
+##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
+##        from Utilities.crypto import pwConvert
+##        return pwConvert(prefClass.settings.value(
+##            "Help/" + key, prefClass.helpDefaults[key]), encode=False)
+##    elif key == "HelpViewerType":
+##        # special treatment to adjust for missing QtWebKit
+##        value = int(prefClass.settings.value(
+##            "Help/" + key, prefClass.helpDefaults[key]))
+##        if QWebSettings is None:
+##            value = prefClass.helpDefaults[key]
+##        return value
+##    elif key in ["DiskCacheSize", "AcceptCookies",
+##                 "KeepCookiesUntil", "StartupBehavior", "HistoryLimit",
+##                 "OfflineStorageDatabaseQuota",
+##                 "OfflineWebApplicationCacheQuota", "CachePolicy",
+##                 "DownloadManagerRemovePolicy", "AdBlockUpdatePeriod",
+##                 "SearchLanguage", "SyncType", "SyncFtpPort",
+##                 "SyncFtpIdleTimeout", "SyncEncryptionKeyLength"]:
+    elif key in ["StartupBehavior",]:
+        return int(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
+##    elif key in ["SingleHelpWindow", "SaveGeometry", "WebSearchSuggestions",
+##                 "DiskCacheEnabled", "FilterTrackingCookies",
+##                 "PrintBackgrounds", "AdBlockEnabled", "AutoLoadImages",
+##                 "JavaEnabled", "JavaScriptEnabled",
+##                 "JavaScriptCanOpenWindows", "JavaScriptCanCloseWindows",
+##                 "JavaScriptCanAccessClipboard",
+##                 "PluginsEnabled", "DnsPrefetchEnabled",
+##                 "OfflineStorageDatabaseEnabled",
+##                 "OfflineWebApplicationCacheEnabled", "LocalStorageEnabled",
+##                 "ShowPreview", "AccessKeysEnabled", "VirusTotalEnabled",
+##                 "VirusTotalSecure", "DoNotTrack", "SendReferer",
+##                 "SpatialNavigationEnabled", "LinksIncludedInFocusChain",
+##                 "LocalContentCanAccessRemoteUrls",
+##                 "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
+##                 "SiteSpecificQuirksEnabled", "SyncEnabled", "SyncBookmarks",
+##                 "SyncHistory", "SyncPasswords", "SyncUserAgents",
+##                 "SyncSpeedDial", "SyncEncryptData",
+##                 "SyncEncryptPasswordsOnly",
+##                 "WarnOnMultipleClose", "ClickToFlashEnabled",
+##                 "FlashCookiesDeleteOnStartExit", "FlashCookieAutoRefresh",
+##                 "FlashCookieNotify",
+##                 ]:
+    elif key in ["SingleHelpWindow", "SaveGeometry", "JavaScriptEnabled",
+                 "JavaScriptCanOpenWindows", "JavaScriptCanAccessClipboard",
+                 "AutoLoadImages", "LocalStorageEnabled",
+                 "SpatialNavigationEnabled", "LinksIncludedInFocusChain",
+                 "LocalContentCanAccessRemoteUrls",
+                 "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
+                 "ScrollAnimatorEnabled", "ErrorPageEnabled",
+                 "WarnOnMultipleClose", 
+                 ]:
+        return toBool(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
+##    elif key in ["AdBlockSubscriptions", "AdBlockExceptions",
+##                 "ClickToFlashWhitelist", "SendRefererWhitelist",
+##                 "GreaseMonkeyDisabledScripts", "NoCacheHosts",
+##                 "FlashCookiesWhitelist", "FlashCookiesBlacklist",
+##                 ]:
+##        return toList(prefClass.settings.value(
+##            "Help/" + key, prefClass.helpDefaults[key]))
+    else:
+        return prefClass.settings.value("WebBrowser/" + key,
+                                        prefClass.webBrowserDefaults[key])
+    
+
+def setWebBrowser(key, value, prefClass=Prefs):
+    """
+    Module function to store the various web browser settings.
+    
+    @param key the key of the setting to be set
+    @param value the value to be set
+    @param prefClass preferences class used as the storage area
+    """
+    if key in ["StandardFont", "FixedFont"]:
+        prefClass.settings.setValue("WebBrowser/" + key, value.toString())
+##    elif key == "SaveUrlColor":
+##        prefClass.settings.setValue("Help/" + key, value.name())
+##    elif key == "WebSearchKeywords":
+##        # value is list of tuples of (keyword, engine name)
+##        prefClass.settings.remove("Help/" + key)
+##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
+##        index = 0
+##        for v in value:
+##            prefClass.settings.setArrayIndex(index)
+##            prefClass.settings.setValue("Keyword", v[0])
+##            prefClass.settings.setValue("Engine", v[1])
+##            index += 1
+##        prefClass.settings.endArray()
+##    elif key == "DownloadManagerDownloads":
+##        # value is list of tuples of (URL, save location, done flag, page url)
+##        prefClass.settings.remove("Help/" + key)
+##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
+##        index = 0
+##        for v in value:
+##            prefClass.settings.setArrayIndex(index)
+##            prefClass.settings.setValue("URL", v[0])
+##            prefClass.settings.setValue("Location", v[1])
+##            prefClass.settings.setValue("Done", v[2])
+##            prefClass.settings.setValue("PageURL", v[3])
+##            index += 1
+##        prefClass.settings.endArray()
+##    elif key == "RssFeeds":
+##        # value is list of tuples of (URL, title, icon)
+##        prefClass.settings.remove("Help/" + key)
+##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
+##        index = 0
+##        for v in value:
+##            prefClass.settings.setArrayIndex(index)
+##            prefClass.settings.setValue("URL", v[0])
+##            prefClass.settings.setValue("Title", v[1])
+##            prefClass.settings.setValue("Icon", v[2])
+##            index += 1
+##        prefClass.settings.endArray()
+##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
+##        from Utilities.crypto import pwConvert
+##        prefClass.settings.setValue(
+##            "Help/" + key, pwConvert(value, encode=True))
+    else:
+        prefClass.settings.setValue("WebBrowser/" + key, value)
     
 
 def getSystem(key, prefClass=Prefs):

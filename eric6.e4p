@@ -1264,12 +1264,20 @@
     <Source>ViewManager/BookmarkedFilesDialog.py</Source>
     <Source>ViewManager/ViewManager.py</Source>
     <Source>ViewManager/__init__.py</Source>
+    <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
+    <Source>WebBrowser/UrlBar/UrlBar.py</Source>
+    <Source>WebBrowser/UrlBar/__init__.py</Source>
+    <Source>WebBrowser/WebBrowserTabWidget.py</Source>
+    <Source>WebBrowser/WebBrowserWindow.py</Source>
+    <Source>WebBrowser/__init__.py</Source>
     <Source>__init__.py</Source>
     <Source>cleanupSource.py</Source>
     <Source>compileUiFiles.py</Source>
     <Source>eric6.py</Source>
     <Source>eric6.pyw</Source>
     <Source>eric6_api.py</Source>
+    <Source>eric6_browser.py</Source>
+    <Source>eric6_browser.pyw</Source>
     <Source>eric6_compare.py</Source>
     <Source>eric6_compare.pyw</Source>
     <Source>eric6_configure.py</Source>
@@ -1806,7 +1814,7 @@
     <Other>pixmaps</Other>
     <Other>pylint.rc</Other>
   </Others>
-  <MainScript>eric6.py</MainScript>
+  <MainScript>eric6_browser.py</MainScript>
   <Vcs>
     <VcsType>Mercurial</VcsType>
     <VcsOptions>

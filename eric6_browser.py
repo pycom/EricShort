@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-# Copyright (c) 2006 - 2016 Detlev Offenbach <detlev@die-offenbachs.de>
+# Copyright (c) 2002 - 2016 Detlev Offenbach <detlev@die-offenbachs.de>
 #
 
 """
-Eric6 Configure.
+Eric6 Web Browser.
 
-This is the main Python script to configure the eric6 IDE from the outside.
+This is the main Python script that performs the necessary initialization
+of the web browser and starts the Qt event loop. This is a standalone version
+of the integrated web browser. It is based on QtWebEngine.
 """
 
 from __future__ import unicode_literals
@@ -19,8 +21,23 @@ try:  # Only for Py2
 except (ImportError):
     pass
 
+try:
+    import sip
+    sip.setdestroyonexit(False)
+except AttributeError:
+    pass
+
 import sys
 import os
+
+# TODO: adjust this when done
+MIN_QT_VERSION = "5.5.0"
+
+from PyQt5.QtCore import qVersion
+if qVersion() < MIN_QT_VERSION:
+    print("You need at least Qt Version {0} to execute the web browser."
+          .format(MIN_QT_VERSION))
+    sys.exit(100)
 
 for arg in sys.argv[:]:
     if arg.startswith("--config="):
@@ -37,15 +54,13 @@ for arg in sys.argv[:]:
                           settingsDir)
         sys.argv.remove(arg)
 
-try:
-    from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
-except ImportError:
-    pass
-
 # make ThirdParty package available as a packages repository
 sys.path.insert(2, os.path.join(os.path.dirname(__file__),
                                 "ThirdParty", "Pygments"))
 
+from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
+
+import Globals
 from Globals import AppInfo
 
 from Toolbox import Startup
@@ -58,11 +73,24 @@ def createMainWidget(argv):
     @param argv list of commandline parameters (list of strings)
     @return reference to the main widget (QWidget)
     """
-    from Preferences.ConfigurationDialog import ConfigurationWindow
-    w = ConfigurationWindow()
-    w.show()
-    w.showConfigurationPageByName("empty")
-    return w
+    from WebBrowser.WebBrowserWindow import WebBrowserWindow
+    
+    searchWord = None
+    for arg in reversed(argv):
+        if arg.startswith("--search="):
+            searchWord = argv[1].split("=", 1)[1]
+            argv.remove(arg)
+        elif arg.startswith("--"):
+            argv.remove(arg)
+    
+    try:
+        home = argv[1]
+    except IndexError:
+        home = ""
+    
+    browser = WebBrowserWindow(home, '.', None, 'web_browser',
+                               searchWord=searchWord)
+    return browser
 
 
 def main():
@@ -72,17 +100,23 @@ def main():
     options = [
         ("--config=configDir",
          "use the given directory as the one containing the config files"),
+        ("--search=word", "search for the given word"),
         ("--settings=settingsDir",
          "use the given directory to store the settings files"),
     ]
     appinfo = AppInfo.makeAppInfo(sys.argv,
-                                  "Eric6 Configure",
-                                  "",
-                                  "Configuration editor for eric6",
+                                  "eric6 Web Browser",
+                                  "file",
+                                  "web browser",
                                   options)
+    
+    if not Globals.checkBlacklistedVersions():
+        sys.exit(100)
+    
     res = Startup.simpleAppStartup(sys.argv,
                                    appinfo,
-                                   createMainWidget)
+                                   createMainWidget,
+                                   installErrorHandler=True)
     sys.exit(res)
 
 if __name__ == '__main__':
