@@ -1264,10 +1264,13 @@
     <Source>ViewManager/BookmarkedFilesDialog.py</Source>
     <Source>ViewManager/ViewManager.py</Source>
     <Source>ViewManager/__init__.py</Source>
+    <Source>WebBrowser/SearchWidget.py</Source>
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
     <Source>WebBrowser/UrlBar/__init__.py</Source>
+    <Source>WebBrowser/WebBrowserPage.py</Source>
     <Source>WebBrowser/WebBrowserTabWidget.py</Source>
+    <Source>WebBrowser/WebBrowserView.py</Source>
     <Source>WebBrowser/WebBrowserWindow.py</Source>
     <Source>WebBrowser/__init__.py</Source>
     <Source>__init__.py</Source>
@@ -1667,6 +1670,7 @@
     <Form>VCS/CommandOptionsDialog.ui</Form>
     <Form>VCS/RepositoryInfoDialog.ui</Form>
     <Form>ViewManager/BookmarkedFilesDialog.ui</Form>
+    <Form>WebBrowser/SearchWidget.ui</Form>
   </Forms>
   <Translations>
     <Translation>i18n/eric6_cs.qm</Translation>
