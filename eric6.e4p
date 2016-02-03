@@ -1269,6 +1269,7 @@
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
     <Source>WebBrowser/UrlBar/__init__.py</Source>
     <Source>WebBrowser/WebBrowserPage.py</Source>
+    <Source>WebBrowser/WebBrowserTabBar.py</Source>
     <Source>WebBrowser/WebBrowserTabWidget.py</Source>
     <Source>WebBrowser/WebBrowserView.py</Source>
     <Source>WebBrowser/WebBrowserWindow.py</Source>

@@ -283,7 +283,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__searchWindow.escapePressed.connect(
 ##                    self.__activateCurrentBrowser)
             
-            state = Preferences.getHelp("WebBrowserState")
+            state = Preferences.getWebBrowser("WebBrowserState")
             self.restoreState(state)
             
 ##            self.__initHelpDb()
@@ -1762,14 +1762,14 @@ class WebBrowserWindow(E5MainWindow):
         
         menu = mb.addMenu(self.tr("&Window"))
         menu.setTearOffEnabled(True)
-        menu.addAction(self.showDownloadManagerAct)
+##        menu.addAction(self.showDownloadManagerAct)
 ##        if WebBrowserWindow.UseQtHelp:
 ##            menu.addSeparator()
 ##            menu.addAction(self.showTocAct)
 ##            menu.addAction(self.showIndexAct)
 ##            menu.addAction(self.showSearchAct)
-        
-        mb.addSeparator()
+##        
+##        mb.addSeparator()
         
         menu = mb.addMenu(self.tr('&Help'))
         menu.setTearOffEnabled(True)
@@ -2430,14 +2430,14 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.fullScreenAct.setIcon(
 ##                UI.PixmapCache.getIcon("windowRestore.png"))
 ##            self.fullScreenAct.setIconText(self.tr('Restore Window'))
-##    
-##    def __isFullScreen(self):
-##        """
-##        Private method to determine, if the window is in full screen mode.
-##        
-##        @return flag indicating full screen mode (boolean)
-##        """
-##        return self.windowState() & Qt.WindowFullScreen
+    
+    def __isFullScreen(self):
+        """
+        Private method to determine, if the window is in full screen mode.
+        
+        @return flag indicating full screen mode (boolean)
+        """
+        return self.windowState() & Qt.WindowFullScreen
     
     def __copy(self):
         """

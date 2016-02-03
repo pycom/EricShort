@@ -331,7 +331,7 @@ class WebBrowserView(QWebEngineView):
 ##        if self.url().toString() == "eric:home":
 ##            self.reload()
     
-    # TODO: eliminate requestData
+    # TODO: eliminate requestData, add param to get rid of __ctrlPressed
     def setSource(self, name, requestData=None):
         """
         Public method used to set the source to be displayed.
@@ -573,8 +573,8 @@ class WebBrowserView(QWebEngineView):
         """
         return self.selectedText() != ""
     
-    # FIXME: do this first
-    def findNextPrev(self, txt, case, backwards, wrap, highlightAll):
+    # TODO: adjust this to what Qt 5.6 is offering
+    def findNextPrev(self, txt, case, backwards, wrap, highlightAll, callback):
         """
         Public slot to find the next occurrence of a text.
         
@@ -584,224 +584,233 @@ class WebBrowserView(QWebEngineView):
         @param wrap flag indicating to wrap around (boolean)
         @param highlightAll flag indicating to highlight all occurrences
             (boolean)
-        @return flag indicating that a match was found (boolean)
+        @param callback reference to a function with a bool parameter
+        @type function(bool) or None
         """
-        findFlags = QWebPage.FindFlags()
+        
+        findFlags = QWebEnginePage.FindFlags()
         if case:
-            findFlags |= QWebPage.FindCaseSensitively
+            findFlags |= QWebEnginePage.FindCaseSensitively
         if backwards:
-            findFlags |= QWebPage.FindBackward
-        if wrap:
-            findFlags |= QWebPage.FindWrapsAroundDocument
-        try:
-            if highlightAll:
-                findFlags |= QWebPage.HighlightAllOccurrences
-        except AttributeError:
-            pass
+            findFlags |= QWebEnginePage.FindBackward
+##        if wrap:
+##            findFlags |= QWebPage.FindWrapsAroundDocument
+##        try:
+##            if highlightAll:
+##                findFlags |= QWebPage.HighlightAllOccurrences
+##        except AttributeError:
+##            pass
         
-        return self.findText(txt, findFlags)
+        if callback is None:
+            self.findText(txt, findFlags)
+        else:
+            self.findText(txt, findFlags, callback)
     
-    def __isMediaElement(self, element):
-        """
-        Private method to check, if the given element is a media element.
-        
-        @param element element to be checked (QWebElement)
-        @return flag indicating a media element (boolean)
-        """
-        return element.tagName().lower() in ["video", "audio"]
+    # TODO: re-enable once WebBrowserWebElement is done
+##    def __isMediaElement(self, element):
+##        """
+##        Private method to check, if the given element is a media element.
+##        
+##        @param element element to be checked (QWebElement)
+##        @return flag indicating a media element (boolean)
+##        """
+##        return element.tagName().lower() in ["video", "audio"]
     
     def contextMenuEvent(self, evt):
         """
         Protected method called to create a context menu.
         
-        This method is overridden from QWebView.
+        This method is overridden from QWebEngineView.
         
         @param evt reference to the context menu event object
             (QContextMenuEvent)
         """
-        from .UserAgent.UserAgentMenu import UserAgentMenu
+        # TODO: re-enable once User Agent is done
+##        from .UserAgent.UserAgentMenu import UserAgentMenu
         menu = QMenu(self)
         
-        frameAtPos = self.page().frameAt(evt.pos())
-        hit = self.page().mainFrame().hitTestContent(evt.pos())
-        if not hit.linkUrl().isEmpty():
-            menu.addAction(
-                UI.PixmapCache.getIcon("openNewTab.png"),
-                self.tr("Open Link in New Tab\tCtrl+LMB"),
-                self.__openLinkInNewTab).setData(hit.linkUrl())
-            menu.addSeparator()
-            menu.addAction(
-                UI.PixmapCache.getIcon("download.png"),
-                self.tr("Save Lin&k"), self.__downloadLink)
-            menu.addAction(
-                UI.PixmapCache.getIcon("bookmark22.png"),
-                self.tr("Bookmark this Link"), self.__bookmarkLink)\
-                .setData(hit.linkUrl())
-            menu.addSeparator()
-            menu.addAction(
-                UI.PixmapCache.getIcon("editCopy.png"),
-                self.tr("Copy Link to Clipboard"), self.__copyLink)
-            menu.addAction(
-                UI.PixmapCache.getIcon("mailSend.png"),
-                self.tr("Send Link"),
-                self.__sendLink).setData(hit.linkUrl())
-            if Preferences.getHelp("VirusTotalEnabled") and \
-               Preferences.getHelp("VirusTotalServiceKey") != "":
-                menu.addAction(
-                    UI.PixmapCache.getIcon("virustotal.png"),
-                    self.tr("Scan Link with VirusTotal"),
-                    self.__virusTotal).setData(hit.linkUrl())
+##        frameAtPos = self.page().frameAt(evt.pos())
+        # TODO: re-enable once WebHitTestResult is done
+##        hit = self.page().hitTestContent(evt.pos())
+##        if not hit.linkUrl().isEmpty():
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("openNewTab.png"),
+##                self.tr("Open Link in New Tab\tCtrl+LMB"),
+##                self.__openLinkInNewTab).setData(hit.linkUrl())
+##            menu.addSeparator()
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("download.png"),
+##                self.tr("Save Lin&k"), self.__downloadLink)
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("bookmark22.png"),
+##                self.tr("Bookmark this Link"), self.__bookmarkLink)\
+##                .setData(hit.linkUrl())
+##            menu.addSeparator()
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("editCopy.png"),
+##                self.tr("Copy Link to Clipboard"), self.__copyLink)
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("mailSend.png"),
+##                self.tr("Send Link"),
+##                self.__sendLink).setData(hit.linkUrl())
+##            if Preferences.getHelp("VirusTotalEnabled") and \
+##               Preferences.getHelp("VirusTotalServiceKey") != "":
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("virustotal.png"),
+##                    self.tr("Scan Link with VirusTotal"),
+##                    self.__virusTotal).setData(hit.linkUrl())
         
-        if not hit.imageUrl().isEmpty():
-            if not menu.isEmpty():
-                menu.addSeparator()
-            menu.addAction(
-                UI.PixmapCache.getIcon("openNewTab.png"),
-                self.tr("Open Image in New Tab"),
-                self.__openLinkInNewTab).setData(hit.imageUrl())
-            menu.addSeparator()
-            menu.addAction(
-                UI.PixmapCache.getIcon("download.png"),
-                self.tr("Save Image"), self.__downloadImage)
-            menu.addAction(
-                self.tr("Copy Image to Clipboard"), self.__copyImage)
-            menu.addAction(
-                UI.PixmapCache.getIcon("editCopy.png"),
-                self.tr("Copy Image Location to Clipboard"),
-                self.__copyLocation).setData(hit.imageUrl().toString())
-            menu.addAction(
-                UI.PixmapCache.getIcon("mailSend.png"),
-                self.tr("Send Image Link"),
-                self.__sendLink).setData(hit.imageUrl())
-            menu.addSeparator()
-            menu.addAction(
-                UI.PixmapCache.getIcon("adBlockPlus.png"),
-                self.tr("Block Image"), self.__blockImage)\
-                .setData(hit.imageUrl().toString())
-            if Preferences.getHelp("VirusTotalEnabled") and \
-               Preferences.getHelp("VirusTotalServiceKey") != "":
-                menu.addAction(
-                    UI.PixmapCache.getIcon("virustotal.png"),
-                    self.tr("Scan Image with VirusTotal"),
-                    self.__virusTotal).setData(hit.imageUrl())
+##        if not hit.imageUrl().isEmpty():
+##            if not menu.isEmpty():
+##                menu.addSeparator()
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("openNewTab.png"),
+##                self.tr("Open Image in New Tab"),
+##                self.__openLinkInNewTab).setData(hit.imageUrl())
+##            menu.addSeparator()
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("download.png"),
+##                self.tr("Save Image"), self.__downloadImage)
+##            menu.addAction(
+##                self.tr("Copy Image to Clipboard"), self.__copyImage)
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("editCopy.png"),
+##                self.tr("Copy Image Location to Clipboard"),
+##                self.__copyLocation).setData(hit.imageUrl().toString())
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("mailSend.png"),
+##                self.tr("Send Image Link"),
+##                self.__sendLink).setData(hit.imageUrl())
+##            menu.addSeparator()
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("adBlockPlus.png"),
+##                self.tr("Block Image"), self.__blockImage)\
+##                .setData(hit.imageUrl().toString())
+##            if Preferences.getHelp("VirusTotalEnabled") and \
+##               Preferences.getHelp("VirusTotalServiceKey") != "":
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("virustotal.png"),
+##                    self.tr("Scan Image with VirusTotal"),
+##                    self.__virusTotal).setData(hit.imageUrl())
         
-        element = hit.element()
-        if not element.isNull():
-            if self.__isMediaElement(element):
-                if not menu.isEmpty():
-                    menu.addSeparator()
-                
-                self.__clickedMediaElement = element
-                
-                paused = element.evaluateJavaScript("this.paused")
-                muted = element.evaluateJavaScript("this.muted")
-                videoUrl = QUrl(element.evaluateJavaScript("this.currentSrc"))
-                
-                if paused:
-                    menu.addAction(
-                        UI.PixmapCache.getIcon("mediaPlaybackStart.png"),
-                        self.tr("Play"), self.__pauseMedia)
-                else:
-                    menu.addAction(
-                        UI.PixmapCache.getIcon("mediaPlaybackPause.png"),
-                        self.tr("Pause"), self.__pauseMedia)
-                if muted:
-                    menu.addAction(
-                        UI.PixmapCache.getIcon("audioVolumeHigh.png"),
-                        self.tr("Unmute"), self.__muteMedia)
-                else:
-                    menu.addAction(
-                        UI.PixmapCache.getIcon("audioVolumeMuted.png"),
-                        self.tr("Mute"), self.__muteMedia)
-                menu.addSeparator()
-                menu.addAction(
-                    UI.PixmapCache.getIcon("editCopy.png"),
-                    self.tr("Copy Media Address to Clipboard"),
-                    self.__copyLocation).setData(videoUrl.toString())
-                menu.addAction(
-                    UI.PixmapCache.getIcon("mailSend.png"),
-                    self.tr("Send Media Address"), self.__sendLink)\
-                    .setData(videoUrl)
-                menu.addAction(
-                    UI.PixmapCache.getIcon("download.png"),
-                    self.tr("Save Media"), self.__downloadMedia)\
-                    .setData(videoUrl)
-            
-            if element.tagName().lower() in ["input", "textarea"]:
-                if menu.isEmpty():
-                    pageMenu = self.page().createStandardContextMenu()
-                    directionFound = False
-                    # used to detect double direction entry
-                    for act in pageMenu.actions():
-                        if act.isSeparator():
-                            menu.addSeparator()
-                            continue
-                        if act.menu():
-                            if self.pageAction(
-                                    QWebPage.SetTextDirectionDefault) in \
-                                    act.menu().actions():
-                                if directionFound:
-                                    act.setVisible(False)
-                                directionFound = True
-                            elif self.pageAction(QWebPage.ToggleBold) in \
-                                    act.menu().actions():
-                                act.setVisible(False)
-                        elif act == self.pageAction(QWebPage.InspectElement):
-                            # we have our own inspect entry
-                            act.setVisible(False)
-                        menu.addAction(act)
-                    pageMenu = None
+##        element = hit.element()
+##        if not element.isNull():
+##            if self.__isMediaElement(element):
+##                if not menu.isEmpty():
+##                    menu.addSeparator()
+##                
+##                self.__clickedMediaElement = element
+##                
+##                paused = element.evaluateJavaScript("this.paused")
+##                muted = element.evaluateJavaScript("this.muted")
+##                videoUrl = QUrl(element.evaluateJavaScript("this.currentSrc"))
+##                
+##                if paused:
+##                    menu.addAction(
+##                        UI.PixmapCache.getIcon("mediaPlaybackStart.png"),
+##                        self.tr("Play"), self.__pauseMedia)
+##                else:
+##                    menu.addAction(
+##                        UI.PixmapCache.getIcon("mediaPlaybackPause.png"),
+##                        self.tr("Pause"), self.__pauseMedia)
+##                if muted:
+##                    menu.addAction(
+##                        UI.PixmapCache.getIcon("audioVolumeHigh.png"),
+##                        self.tr("Unmute"), self.__muteMedia)
+##                else:
+##                    menu.addAction(
+##                        UI.PixmapCache.getIcon("audioVolumeMuted.png"),
+##                        self.tr("Mute"), self.__muteMedia)
+##                menu.addSeparator()
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("editCopy.png"),
+##                    self.tr("Copy Media Address to Clipboard"),
+##                    self.__copyLocation).setData(videoUrl.toString())
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("mailSend.png"),
+##                    self.tr("Send Media Address"), self.__sendLink)\
+##                    .setData(videoUrl)
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("download.png"),
+##                    self.tr("Save Media"), self.__downloadMedia)\
+##                    .setData(videoUrl)
+##            
+##            if element.tagName().lower() in ["input", "textarea"]:
+##                if menu.isEmpty():
+##                    pageMenu = self.page().createStandardContextMenu()
+##                    directionFound = False
+##                    # used to detect double direction entry
+##                    for act in pageMenu.actions():
+##                        if act.isSeparator():
+##                            menu.addSeparator()
+##                            continue
+##                        if act.menu():
+##                            if self.pageAction(
+##                                    QWebPage.SetTextDirectionDefault) in \
+##                                    act.menu().actions():
+##                                if directionFound:
+##                                    act.setVisible(False)
+##                                directionFound = True
+##                            elif self.pageAction(QWebPage.ToggleBold) in \
+##                                    act.menu().actions():
+##                                act.setVisible(False)
+##                        elif act == self.pageAction(QWebPage.InspectElement):
+##                            # we have our own inspect entry
+##                            act.setVisible(False)
+##                        menu.addAction(act)
+##                    pageMenu = None
         
         if not menu.isEmpty():
             menu.addSeparator()
         
-        self.__mw.personalInformationManager().createSubMenu(menu, self, hit)
+        # TODO: re-enable once PIM is done
+##        self.__mw.personalInformationManager().createSubMenu(menu, self, hit)
         
         menu.addAction(self.__mw.newTabAct)
         menu.addAction(self.__mw.newAct)
         menu.addSeparator()
-        menu.addAction(self.__mw.saveAsAct)
-        menu.addSeparator()
+##        menu.addAction(self.__mw.saveAsAct)
+##        menu.addSeparator()
         
-        if frameAtPos and self.page().mainFrame() != frameAtPos:
-            self.__clickedFrame = frameAtPos
-            fmenu = QMenu(self.tr("This Frame"))
-            frameUrl = self.__clickedFrame.url()
-            if frameUrl.isValid():
-                fmenu.addAction(
-                    self.tr("Show &only this frame"),
-                    self.__loadClickedFrame)
-                fmenu.addAction(
-                    UI.PixmapCache.getIcon("openNewTab.png"),
-                    self.tr("Show in new &tab"),
-                    self.__openLinkInNewTab).setData(self.__clickedFrame.url())
-                fmenu.addSeparator()
-            fmenu.addAction(
-                UI.PixmapCache.getIcon("print.png"),
-                self.tr("&Print"), self.__printClickedFrame)
-            fmenu.addAction(
-                UI.PixmapCache.getIcon("printPreview.png"),
-                self.tr("Print Preview"), self.__printPreviewClickedFrame)
-            fmenu.addAction(
-                UI.PixmapCache.getIcon("printPdf.png"),
-                self.tr("Print as PDF"), self.__printPdfClickedFrame)
-            fmenu.addSeparator()
-            fmenu.addAction(
-                UI.PixmapCache.getIcon("zoomIn.png"),
-                self.tr("Zoom &in"), self.__zoomInClickedFrame)
-            fmenu.addAction(
-                UI.PixmapCache.getIcon("zoomReset.png"),
-                self.tr("Zoom &reset"), self.__zoomResetClickedFrame)
-            fmenu.addAction(
-                UI.PixmapCache.getIcon("zoomOut.png"),
-                self.tr("Zoom &out"), self.__zoomOutClickedFrame)
-            fmenu.addSeparator()
-            fmenu.addAction(
-                self.tr("Show frame so&urce"),
-                self.__showClickedFrameSource)
-            
-            menu.addMenu(fmenu)
-            menu.addSeparator()
+##        if frameAtPos and self.page().mainFrame() != frameAtPos:
+##            self.__clickedFrame = frameAtPos
+##            fmenu = QMenu(self.tr("This Frame"))
+##            frameUrl = self.__clickedFrame.url()
+##            if frameUrl.isValid():
+##                fmenu.addAction(
+##                    self.tr("Show &only this frame"),
+##                    self.__loadClickedFrame)
+##                fmenu.addAction(
+##                    UI.PixmapCache.getIcon("openNewTab.png"),
+##                    self.tr("Show in new &tab"),
+##                    self.__openLinkInNewTab).setData(self.__clickedFrame.url())
+##                fmenu.addSeparator()
+##            fmenu.addAction(
+##                UI.PixmapCache.getIcon("print.png"),
+##                self.tr("&Print"), self.__printClickedFrame)
+##            fmenu.addAction(
+##                UI.PixmapCache.getIcon("printPreview.png"),
+##                self.tr("Print Preview"), self.__printPreviewClickedFrame)
+##            fmenu.addAction(
+##                UI.PixmapCache.getIcon("printPdf.png"),
+##                self.tr("Print as PDF"), self.__printPdfClickedFrame)
+##            fmenu.addSeparator()
+##            fmenu.addAction(
+##                UI.PixmapCache.getIcon("zoomIn.png"),
+##                self.tr("Zoom &in"), self.__zoomInClickedFrame)
+##            fmenu.addAction(
+##                UI.PixmapCache.getIcon("zoomReset.png"),
+##                self.tr("Zoom &reset"), self.__zoomResetClickedFrame)
+##            fmenu.addAction(
+##                UI.PixmapCache.getIcon("zoomOut.png"),
+##                self.tr("Zoom &out"), self.__zoomOutClickedFrame)
+##            fmenu.addSeparator()
+##            fmenu.addAction(
+##                self.tr("Show frame so&urce"),
+##                self.__showClickedFrameSource)
+##            
+##            menu.addMenu(fmenu)
+##            menu.addSeparator()
         
         menu.addAction(
             UI.PixmapCache.getIcon("bookmark22.png"),
@@ -810,10 +819,11 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Page Link"), self.__sendLink).setData(self.url())
         menu.addSeparator()
-        self.__userAgentMenu = UserAgentMenu(self.tr("User Agent"),
-                                             url=self.url())
-        menu.addMenu(self.__userAgentMenu)
-        menu.addSeparator()
+        # TODO: re-enable once User Agent is done
+##        self.__userAgentMenu = UserAgentMenu(self.tr("User Agent"),
+##                                             url=self.url())
+##        menu.addMenu(self.__userAgentMenu)
+##        menu.addSeparator()
         menu.addAction(self.__mw.backAct)
         menu.addAction(self.__mw.forwardAct)
         menu.addAction(self.__mw.homeAct)
@@ -831,43 +841,45 @@ class WebBrowserView(QWebEngineView):
         menu.addAction(self.__mw.findAct)
         menu.addSeparator()
         if self.selectedText():
-            self.__searchMenu = menu.addMenu(self.tr("Search with..."))
+            # TODO: re-enable once Open Search is done
+##            self.__searchMenu = menu.addMenu(self.tr("Search with..."))
+##            
+##            from .OpenSearch.OpenSearchEngineAction import \
+##                OpenSearchEngineAction
+##            engineNames = self.__mw.openSearchManager().allEnginesNames()
+##            for engineName in engineNames:
+##                engine = self.__mw.openSearchManager().engine(engineName)
+##                act = OpenSearchEngineAction(engine, self.__searchMenu)
+##                act.setData(engineName)
+##                self.__searchMenu.addAction(act)
+##            self.__searchMenu.triggered.connect(self.__searchRequested)
+##            
+##            menu.addSeparator()
             
-            from .OpenSearch.OpenSearchEngineAction import \
-                OpenSearchEngineAction
-            engineNames = self.__mw.openSearchManager().allEnginesNames()
-            for engineName in engineNames:
-                engine = self.__mw.openSearchManager().engine(engineName)
-                act = OpenSearchEngineAction(engine, self.__searchMenu)
-                act.setData(engineName)
-                self.__searchMenu.addAction(act)
-            self.__searchMenu.triggered.connect(self.__searchRequested)
-            
-            menu.addSeparator()
-            
-            from .HelpLanguagesDialog import HelpLanguagesDialog
-            languages = Preferences.toList(
-                Preferences.Prefs.settings.value(
-                    "Help/AcceptLanguages",
-                    HelpLanguagesDialog.defaultAcceptLanguages()))
-            if languages:
-                language = languages[0]
-                langCode = language.split("[")[1][:2]
-                googleTranslatorUrl = QUrl(
-                    "http://translate.google.com/#auto|{0}|{1}".format(
-                        langCode, self.selectedText()))
-                menu.addAction(
-                    UI.PixmapCache.getIcon("translate.png"),
-                    self.tr("Google Translate"), self.__openLinkInNewTab)\
-                    .setData(googleTranslatorUrl)
-                wiktionaryUrl = QUrl(
-                    "http://{0}.wiktionary.org/wiki/Special:Search?search={1}"
-                    .format(langCode, self.selectedText()))
-                menu.addAction(
-                    UI.PixmapCache.getIcon("wikipedia.png"),
-                    self.tr("Dictionary"), self.__openLinkInNewTab)\
-                    .setData(wiktionaryUrl)
-                menu.addSeparator()
+            # TODO: re-enable once Languages Dialog is done
+##            from .HelpLanguagesDialog import HelpLanguagesDialog
+##            languages = Preferences.toList(
+##                Preferences.Prefs.settings.value(
+##                    "Help/AcceptLanguages",
+##                    HelpLanguagesDialog.defaultAcceptLanguages()))
+##            if languages:
+##                language = languages[0]
+##                langCode = language.split("[")[1][:2]
+##                googleTranslatorUrl = QUrl(
+##                    "http://translate.google.com/#auto|{0}|{1}".format(
+##                        langCode, self.selectedText()))
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("translate.png"),
+##                    self.tr("Google Translate"), self.__openLinkInNewTab)\
+##                    .setData(googleTranslatorUrl)
+##                wiktionaryUrl = QUrl(
+##                    "http://{0}.wiktionary.org/wiki/Special:Search?search={1}"
+##                    .format(langCode, self.selectedText()))
+##                menu.addAction(
+##                    UI.PixmapCache.getIcon("wikipedia.png"),
+##                    self.tr("Dictionary"), self.__openLinkInNewTab)\
+##                    .setData(wiktionaryUrl)
+##                menu.addSeparator()
             
             guessedUrl = QUrl.fromUserInput(self.selectedText().strip())
             if self.__isUrlValid(guessedUrl):
@@ -875,18 +887,19 @@ class WebBrowserView(QWebEngineView):
                     self.tr("Go to web address"),
                     self.__openLinkInNewTab).setData(guessedUrl)
                 menu.addSeparator()
+##        
+##        element = hit.element()
+##        if not element.isNull() and \
+##           element.tagName().lower() == "input" and \
+##           element.attribute("type", "text") == "text":
+##            menu.addAction(self.tr("Add to web search toolbar"),
+##                           self.__addSearchEngine).setData(element)
+##            menu.addSeparator()
         
-        element = hit.element()
-        if not element.isNull() and \
-           element.tagName().lower() == "input" and \
-           element.attribute("type", "text") == "text":
-            menu.addAction(self.tr("Add to web search toolbar"),
-                           self.__addSearchEngine).setData(element)
-            menu.addSeparator()
-        
-        menu.addAction(
-            UI.PixmapCache.getIcon("webInspector.png"),
-            self.tr("Web Inspector..."), self.__webInspector)
+        # TODO: re-enable once Web Inspector is done
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("webInspector.png"),
+##            self.tr("Web Inspector..."), self.__webInspector)
         
         menu.exec_(evt.globalPos())
     
@@ -912,23 +925,25 @@ class WebBrowserView(QWebEngineView):
         if url.isEmpty():
             return
         
+        # TODO: check, if this can be done simpler
         self.__ctrlPressed = True
         self.setSource(url)
         self.__ctrlPressed = False
     
-    def __bookmarkLink(self):
-        """
-        Private slot to bookmark a link via the context menu.
-        """
-        act = self.sender()
-        url = act.data()
-        if url.isEmpty():
-            return
-        
-        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-        dlg = AddBookmarkDialog()
-        dlg.setUrl(bytes(url.toEncoded()).decode())
-        dlg.exec_()
+    # TODO: Bookmarks
+##    def __bookmarkLink(self):
+##        """
+##        Private slot to bookmark a link via the context menu.
+##        """
+##        act = self.sender()
+##        url = act.data()
+##        if url.isEmpty():
+##            return
+##        
+##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+##        dlg = AddBookmarkDialog()
+##        dlg.setUrl(bytes(url.toEncoded()).decode())
+##        dlg.exec_()
     
     def __sendLink(self):
         """
@@ -943,29 +958,29 @@ class WebBrowserView(QWebEngineView):
             data = data.toString()
         QDesktopServices.openUrl(QUrl("mailto:?body=" + data))
     
-    def __downloadLink(self):
-        """
-        Private slot to download a link and save it to disk.
-        """
-        self.pageAction(QWebPage.DownloadLinkToDisk).trigger()
-    
-    def __copyLink(self):
-        """
-        Private slot to copy a link to the clipboard.
-        """
-        self.pageAction(QWebPage.CopyLinkToClipboard).trigger()
-    
-    def __downloadImage(self):
-        """
-        Private slot to download an image and save it to disk.
-        """
-        self.pageAction(QWebPage.DownloadImageToDisk).trigger()
-    
-    def __copyImage(self):
-        """
-        Private slot to copy an image to the clipboard.
-        """
-        self.pageAction(QWebPage.CopyImageToClipboard).trigger()
+##    def __downloadLink(self):
+##        """
+##        Private slot to download a link and save it to disk.
+##        """
+##        self.pageAction(QWebPage.DownloadLinkToDisk).trigger()
+##    
+##    def __copyLink(self):
+##        """
+##        Private slot to copy a link to the clipboard.
+##        """
+##        self.pageAction(QWebPage.CopyLinkToClipboard).trigger()
+##    
+##    def __downloadImage(self):
+##        """
+##        Private slot to download an image and save it to disk.
+##        """
+##        self.pageAction(QWebPage.DownloadImageToDisk).trigger()
+##    
+##    def __copyImage(self):
+##        """
+##        Private slot to copy an image to the clipboard.
+##        """
+##        self.pageAction(QWebPage.CopyImageToClipboard).trigger()
     
     def __copyLocation(self):
         """
@@ -975,16 +990,18 @@ class WebBrowserView(QWebEngineView):
         url = act.data()
         QApplication.clipboard().setText(url)
     
-    def __blockImage(self):
-        """
-        Private slot to add a block rule for an image URL.
-        """
-        import Helpviewer.HelpWindow
-        act = self.sender()
-        url = act.data()
-        dlg = Helpviewer.HelpWindow.HelpWindow.adBlockManager().showDialog()
-        dlg.addCustomRule(url)
+    # TODO: AdBlock
+##    def __blockImage(self):
+##        """
+##        Private slot to add a block rule for an image URL.
+##        """
+##        import Helpviewer.HelpWindow
+##        act = self.sender()
+##        url = act.data()
+##        dlg = Helpviewer.HelpWindow.HelpWindow.adBlockManager().showDialog()
+##        dlg.addCustomRule(url)
     
+    # TODO: DownloadManager
     def __downloadMedia(self):
         """
         Private slot to download a media and save it to disk.
@@ -993,210 +1010,215 @@ class WebBrowserView(QWebEngineView):
         url = act.data()
         self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
     
-    def __pauseMedia(self):
-        """
-        Private slot to pause or play the selected media.
-        """
-        paused = self.__clickedMediaElement.evaluateJavaScript("this.paused")
-        
-        if paused:
-            self.__clickedMediaElement.evaluateJavaScript("this.play()")
-        else:
-            self.__clickedMediaElement.evaluateJavaScript("this.pause()")
+    # TODO: this needs to be changed
+##    def __pauseMedia(self):
+##        """
+##        Private slot to pause or play the selected media.
+##        """
+##        paused = self.__clickedMediaElement.evaluateJavaScript("this.paused")
+##        
+##        if paused:
+##            self.__clickedMediaElement.evaluateJavaScript("this.play()")
+##        else:
+##            self.__clickedMediaElement.evaluateJavaScript("this.pause()")
+##    
+##    def __muteMedia(self):
+##        """
+##        Private slot to (un)mute the selected media.
+##        """
+##        muted = self.__clickedMediaElement.evaluateJavaScript("this.muted")
+##        
+##        if muted:
+##            self.__clickedMediaElement.evaluateJavaScript("this.muted = false")
+##        else:
+##            self.__clickedMediaElement.evaluateJavaScript("this.muted = true")
     
-    def __muteMedia(self):
-        """
-        Private slot to (un)mute the selected media.
-        """
-        muted = self.__clickedMediaElement.evaluateJavaScript("this.muted")
-        
-        if muted:
-            self.__clickedMediaElement.evaluateJavaScript("this.muted = false")
-        else:
-            self.__clickedMediaElement.evaluateJavaScript("this.muted = true")
+    # TODO: VirusTotal
+##    def __virusTotal(self):
+##        """
+##        Private slot to scan the selected URL with VirusTotal.
+##        """
+##        act = self.sender()
+##        url = act.data()
+##        self.__mw.requestVirusTotalScan(url)
     
-    def __virusTotal(self):
-        """
-        Private slot to scan the selected URL with VirusTotal.
-        """
-        act = self.sender()
-        url = act.data()
-        self.__mw.requestVirusTotalScan(url)
+    # TODO OpenSearch
+##    def __searchRequested(self, act):
+##        """
+##        Private slot to search for some text with a selected search engine.
+##        
+##        @param act reference to the action that triggered this slot (QAction)
+##        """
+##        searchText = self.selectedText()
+##        
+##        if not searchText:
+##            return
+##        
+##        engineName = act.data()
+##        if engineName:
+##            engine = self.__mw.openSearchManager().engine(engineName)
+##            self.search.emit(engine.searchUrl(searchText))
+##    
+##    def __addSearchEngine(self):
+##        """
+##        Private slot to add a new search engine.
+##        """
+##        act = self.sender()
+##        if act is None:
+##            return
+##        
+##        element = act.data()
+##        elementName = element.attribute("name")
+##        formElement = QWebElement(element)
+##        while formElement.tagName().lower() != "form":
+##            formElement = formElement.parent()
+##        
+##        if formElement.isNull() or \
+##           formElement.attribute("action") == "":
+##            return
+##        
+##        method = formElement.attribute("method", "get").lower()
+##        if method != "get":
+##            E5MessageBox.warning(
+##                self,
+##                self.tr("Method not supported"),
+##                self.tr(
+##                    """{0} method is not supported.""").format(method.upper()))
+##            return
+##        
+##        searchUrl = QUrl(self.page().mainFrame().baseUrl().resolved(
+##            QUrl(formElement.attribute("action"))))
+##        if searchUrl.scheme() != "http":
+##            return
+##        
+##        if qVersion() >= "5.0.0":
+##            from PyQt5.QtCore import QUrlQuery
+##            searchUrlQuery = QUrlQuery(searchUrl)
+##        searchEngines = {}
+##        inputFields = formElement.findAll("input")
+##        for inputField in inputFields.toList():
+##            type_ = inputField.attribute("type", "text")
+##            name = inputField.attribute("name")
+##            value = inputField.evaluateJavaScript("this.value")
+##            
+##            if type_ == "submit":
+##                searchEngines[value] = name
+##            elif type_ == "text":
+##                if inputField == element:
+##                    value = "{searchTerms}"
+##                if qVersion() >= "5.0.0":
+##                    searchUrlQuery.addQueryItem(name, value)
+##                else:
+##                    searchUrl.addQueryItem(name, value)
+##            elif type_ == "checkbox" or type_ == "radio":
+##                if inputField.evaluateJavaScript("this.checked"):
+##                    if qVersion() >= "5.0.0":
+##                        searchUrlQuery.addQueryItem(name, value)
+##                    else:
+##                        searchUrl.addQueryItem(name, value)
+##            elif type_ == "hidden":
+##                if qVersion() >= "5.0.0":
+##                    searchUrlQuery.addQueryItem(name, value)
+##                else:
+##                    searchUrl.addQueryItem(name, value)
+##        
+##        selectFields = formElement.findAll("select")
+##        for selectField in selectFields.toList():
+##            name = selectField.attribute("name")
+##            selectedIndex = selectField.evaluateJavaScript(
+##                "this.selectedIndex")
+##            if selectedIndex == -1:
+##                continue
+##            
+##            options = selectField.findAll("option")
+##            value = options.at(selectedIndex).toPlainText()
+##            if qVersion() >= "5.0.0":
+##                searchUrlQuery.addQueryItem(name, value)
+##            else:
+##                searchUrl.addQueryItem(name, value)
+##        
+##        ok = True
+##        if len(searchEngines) > 1:
+##            searchEngine, ok = QInputDialog.getItem(
+##                self,
+##                self.tr("Search engine"),
+##                self.tr("Choose the desired search engine"),
+##                sorted(searchEngines.keys()), 0, False)
+##            
+##            if not ok:
+##                return
+##            
+##            if searchEngines[searchEngine] != "":
+##                if qVersion() >= "5.0.0":
+##                    searchUrlQuery.addQueryItem(
+##                        searchEngines[searchEngine], searchEngine)
+##                else:
+##                    searchUrl.addQueryItem(
+##                        searchEngines[searchEngine], searchEngine)
+##        engineName = ""
+##        labels = formElement.findAll('label[for="{0}"]'.format(elementName))
+##        if labels.count() > 0:
+##            engineName = labels.at(0).toPlainText()
+##        
+##        engineName, ok = QInputDialog.getText(
+##            self,
+##            self.tr("Engine name"),
+##            self.tr("Enter a name for the engine"),
+##            QLineEdit.Normal,
+##            engineName)
+##        if not ok:
+##            return
+##        
+##        if qVersion() >= "5.0.0":
+##            searchUrl.setQuery(searchUrlQuery)
+##        
+##        from .OpenSearch.OpenSearchEngine import OpenSearchEngine
+##        engine = OpenSearchEngine()
+##        engine.setName(engineName)
+##        engine.setDescription(engineName)
+##        engine.setSearchUrlTemplate(searchUrl.toString())
+##        engine.setImage(self.icon().pixmap(16, 16).toImage())
+##        
+##        self.__mw.openSearchManager().addEngine(engine)
     
-    def __searchRequested(self, act):
-        """
-        Private slot to search for some text with a selected search engine.
-        
-        @param act reference to the action that triggered this slot (QAction)
-        """
-        searchText = self.selectedText()
-        
-        if not searchText:
-            return
-        
-        engineName = act.data()
-        if engineName:
-            engine = self.__mw.openSearchManager().engine(engineName)
-            self.search.emit(engine.searchUrl(searchText))
+    # TODO: WebInspector
+##    def __webInspector(self):
+##        """
+##        Private slot to show the web inspector window.
+##        """
+##        if self.__inspector is None:
+##            from .HelpInspector import HelpInspector
+##            self.__inspector = HelpInspector()
+##            self.__inspector.setPage(self.page())
+##            self.__inspector.show()
+##        elif self.__inspector.isVisible():
+##            self.__inspector.hide()
+##        else:
+##            self.__inspector.show()
+##    
+##    def closeWebInspector(self):
+##        """
+##        Public slot to close the web inspector.
+##        """
+##        if self.__inspector is not None:
+##            if self.__inspector.isVisible():
+##                self.__inspector.hide()
+##            self.__inspector.deleteLater()
+##            self.__inspector = None
     
-    def __addSearchEngine(self):
-        """
-        Private slot to add a new search engine.
-        """
-        act = self.sender()
-        if act is None:
-            return
-        
-        element = act.data()
-        elementName = element.attribute("name")
-        formElement = QWebElement(element)
-        while formElement.tagName().lower() != "form":
-            formElement = formElement.parent()
-        
-        if formElement.isNull() or \
-           formElement.attribute("action") == "":
-            return
-        
-        method = formElement.attribute("method", "get").lower()
-        if method != "get":
-            E5MessageBox.warning(
-                self,
-                self.tr("Method not supported"),
-                self.tr(
-                    """{0} method is not supported.""").format(method.upper()))
-            return
-        
-        searchUrl = QUrl(self.page().mainFrame().baseUrl().resolved(
-            QUrl(formElement.attribute("action"))))
-        if searchUrl.scheme() != "http":
-            return
-        
-        if qVersion() >= "5.0.0":
-            from PyQt5.QtCore import QUrlQuery
-            searchUrlQuery = QUrlQuery(searchUrl)
-        searchEngines = {}
-        inputFields = formElement.findAll("input")
-        for inputField in inputFields.toList():
-            type_ = inputField.attribute("type", "text")
-            name = inputField.attribute("name")
-            value = inputField.evaluateJavaScript("this.value")
-            
-            if type_ == "submit":
-                searchEngines[value] = name
-            elif type_ == "text":
-                if inputField == element:
-                    value = "{searchTerms}"
-                if qVersion() >= "5.0.0":
-                    searchUrlQuery.addQueryItem(name, value)
-                else:
-                    searchUrl.addQueryItem(name, value)
-            elif type_ == "checkbox" or type_ == "radio":
-                if inputField.evaluateJavaScript("this.checked"):
-                    if qVersion() >= "5.0.0":
-                        searchUrlQuery.addQueryItem(name, value)
-                    else:
-                        searchUrl.addQueryItem(name, value)
-            elif type_ == "hidden":
-                if qVersion() >= "5.0.0":
-                    searchUrlQuery.addQueryItem(name, value)
-                else:
-                    searchUrl.addQueryItem(name, value)
-        
-        selectFields = formElement.findAll("select")
-        for selectField in selectFields.toList():
-            name = selectField.attribute("name")
-            selectedIndex = selectField.evaluateJavaScript(
-                "this.selectedIndex")
-            if selectedIndex == -1:
-                continue
-            
-            options = selectField.findAll("option")
-            value = options.at(selectedIndex).toPlainText()
-            if qVersion() >= "5.0.0":
-                searchUrlQuery.addQueryItem(name, value)
-            else:
-                searchUrl.addQueryItem(name, value)
-        
-        ok = True
-        if len(searchEngines) > 1:
-            searchEngine, ok = QInputDialog.getItem(
-                self,
-                self.tr("Search engine"),
-                self.tr("Choose the desired search engine"),
-                sorted(searchEngines.keys()), 0, False)
-            
-            if not ok:
-                return
-            
-            if searchEngines[searchEngine] != "":
-                if qVersion() >= "5.0.0":
-                    searchUrlQuery.addQueryItem(
-                        searchEngines[searchEngine], searchEngine)
-                else:
-                    searchUrl.addQueryItem(
-                        searchEngines[searchEngine], searchEngine)
-        engineName = ""
-        labels = formElement.findAll('label[for="{0}"]'.format(elementName))
-        if labels.count() > 0:
-            engineName = labels.at(0).toPlainText()
-        
-        engineName, ok = QInputDialog.getText(
-            self,
-            self.tr("Engine name"),
-            self.tr("Enter a name for the engine"),
-            QLineEdit.Normal,
-            engineName)
-        if not ok:
-            return
-        
-        if qVersion() >= "5.0.0":
-            searchUrl.setQuery(searchUrlQuery)
-        
-        from .OpenSearch.OpenSearchEngine import OpenSearchEngine
-        engine = OpenSearchEngine()
-        engine.setName(engineName)
-        engine.setDescription(engineName)
-        engine.setSearchUrlTemplate(searchUrl.toString())
-        engine.setImage(self.icon().pixmap(16, 16).toImage())
-        
-        self.__mw.openSearchManager().addEngine(engine)
-    
-    def __webInspector(self):
-        """
-        Private slot to show the web inspector window.
-        """
-        if self.__inspector is None:
-            from .HelpInspector import HelpInspector
-            self.__inspector = HelpInspector()
-            self.__inspector.setPage(self.page())
-            self.__inspector.show()
-        elif self.__inspector.isVisible():
-            self.__inspector.hide()
-        else:
-            self.__inspector.show()
-    
-    def closeWebInspector(self):
-        """
-        Public slot to close the web inspector.
-        """
-        if self.__inspector is not None:
-            if self.__inspector.isVisible():
-                self.__inspector.hide()
-            self.__inspector.deleteLater()
-            self.__inspector = None
-    
-    def addBookmark(self):
-        """
-        Public slot to bookmark the current page.
-        """
-        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-        dlg = AddBookmarkDialog()
-        dlg.setUrl(bytes(self.url().toEncoded()).decode())
-        dlg.setTitle(self.title())
-        meta = self.page().mainFrame().metaData()
-        if "description" in meta:
-            dlg.setDescription(meta["description"][0])
-        dlg.exec_()
+    # TODO: Bookmarks
+##    def addBookmark(self):
+##        """
+##        Public slot to bookmark the current page.
+##        """
+##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+##        dlg = AddBookmarkDialog()
+##        dlg.setUrl(bytes(self.url().toEncoded()).decode())
+##        dlg.setTitle(self.title())
+##        meta = self.page().mainFrame().metaData()
+##        if "description" in meta:
+##            dlg.setDescription(meta["description"][0])
+##        dlg.exec_()
     
     def dragEnterEvent(self, evt):
         """
@@ -1222,7 +1244,7 @@ class WebBrowserView(QWebEngineView):
                     evt.acceptProposedAction()
         
         if not evt.isAccepted():
-            super(HelpBrowser, self).dragMoveEvent(evt)
+            super(WebBrowserView, self).dragMoveEvent(evt)
     
     def dropEvent(self, evt):
         """
@@ -1230,7 +1252,7 @@ class WebBrowserView(QWebEngineView):
         
         @param evt reference to the drop event (QDropEvent)
         """
-        super(HelpBrowser, self).dropEvent(evt)
+        super(WebBrowserView, self).dropEvent(evt)
         if not evt.isAccepted() and \
            evt.source() != self and \
            evt.possibleActions() & Qt.CopyAction:
@@ -1253,11 +1275,11 @@ class WebBrowserView(QWebEngineView):
         self.__mw.setEventKeyboardModifiers(evt.modifiers())
         
         if evt.button() == Qt.XButton1:
-            self.pageAction(QWebPage.Back).trigger()
+            self.pageAction(QWebEnginePage.Back).trigger()
         elif evt.button() == Qt.XButton2:
-            self.pageAction(QWebPage.Forward).trigger()
+            self.pageAction(QWebEnginePage.Forward).trigger()
         else:
-            super(HelpBrowser, self).mousePressEvent(evt)
+            super(WebBrowserView, self).mousePressEvent(evt)
     
     def mouseReleaseEvent(self, evt):
         """
@@ -1304,7 +1326,7 @@ class WebBrowserView(QWebEngineView):
             evt.accept()
             return
         
-        super(HelpBrowser, self).wheelEvent(evt)
+        super(WebBrowserView, self).wheelEvent(evt)
     
     def keyPressEvent(self, evt):
         """
@@ -1312,24 +1334,26 @@ class WebBrowserView(QWebEngineView):
         
         @param evt reference to the key event (QKeyEvent)
         """
-        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
-            return
+        # TODO: PIM
+##        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
+##            return
         
-        if self.__enableAccessKeys:
-            self.__accessKeysPressed = (
-                evt.modifiers() == Qt.ControlModifier and
-                evt.key() == Qt.Key_Control)
-            if not self.__accessKeysPressed:
-                if self.__checkForAccessKey(evt):
-                    self.__hideAccessKeys()
-                    evt.accept()
-                    return
-                self.__hideAccessKeys()
-            else:
-                QTimer.singleShot(300, self.__accessKeyShortcut)
+        # TODO: Access Keys
+##        if self.__enableAccessKeys:
+##            self.__accessKeysPressed = (
+##                evt.modifiers() == Qt.ControlModifier and
+##                evt.key() == Qt.Key_Control)
+##            if not self.__accessKeysPressed:
+##                if self.__checkForAccessKey(evt):
+##                    self.__hideAccessKeys()
+##                    evt.accept()
+##                    return
+##                self.__hideAccessKeys()
+##            else:
+##                QTimer.singleShot(300, self.__accessKeyShortcut)
         
         self.__ctrlPressed = (evt.key() == Qt.Key_Control)
-        super(HelpBrowser, self).keyPressEvent(evt)
+        super(WebBrowserView, self).keyPressEvent(evt)
     
     def keyReleaseEvent(self, evt):
         """
@@ -1337,11 +1361,12 @@ class WebBrowserView(QWebEngineView):
         
         @param evt reference to the key event (QKeyEvent)
         """
-        if self.__enableAccessKeys:
-            self.__accessKeysPressed = evt.key() == Qt.Key_Control
+        # TODO: Access Keys
+##        if self.__enableAccessKeys:
+##            self.__accessKeysPressed = evt.key() == Qt.Key_Control
         
         self.__ctrlPressed = False
-        super(HelpBrowser, self).keyReleaseEvent(evt)
+        super(WebBrowserView, self).keyReleaseEvent(evt)
     
     def focusOutEvent(self, evt):
         """
@@ -1349,11 +1374,12 @@ class WebBrowserView(QWebEngineView):
         
         @param evt reference to the focus event (QFocusEvent)
         """
-        if self.__accessKeysPressed:
-            self.__hideAccessKeys()
-            self.__accessKeysPressed = False
+        # TODO: Access Keys
+##        if self.__accessKeysPressed:
+##            self.__hideAccessKeys()
+##            self.__accessKeysPressed = False
         
-        super(HelpBrowser, self).focusOutEvent(evt)
+        super(WebBrowserView, self).focusOutEvent(evt)
     
     def event(self, evt):
         """
@@ -1366,7 +1392,7 @@ class WebBrowserView(QWebEngineView):
             self.gestureEvent(evt)
             return True
         
-        return super(HelpBrowser, self).event(evt)
+        return super(WebBrowserView, self).event(evt)
     
     def gestureEvent(self, evt):
         """
@@ -1414,13 +1440,11 @@ class WebBrowserView(QWebEngineView):
 ##        """
 ##        self.__mw.statusBar().showMessage(text)
 ##    
-    def __linkHovered(self, link, title, textContent):
+    def __linkHovered(self, link):
         """
         Private slot to handle the linkHovered signal.
         
         @param link the URL of the link (string)
-        @param title the link title (string)
-        @param textContent text content of the link (string)
         """
         self.highlighted.emit(link)
     
@@ -1457,13 +1481,17 @@ class WebBrowserView(QWebEngineView):
             self.zoomIn()
             self.zoomOut()
         
-        zoomValue = Helpviewer.HelpWindow.HelpWindow.zoomManager()\
-            .zoomValue(self.url())
-        self.setZoomValue(zoomValue)
+        # TODO: ZoomManager
+##        zoomValue = Helpviewer.HelpWindow.HelpWindow.zoomManager()\
+##            .zoomValue(self.url())
+##        self.setZoomValue(zoomValue)
         
         if ok:
-            self.__mw.adBlockManager().page().hideBlockedPageEntries(self.page())
-            self.__mw.passwordManager().fill(self.page())
+            pass
+            # TODO: AdBlock
+##            self.__mw.adBlockManager().page().hideBlockedPageEntries(self.page())
+            # TODO: Password Manager
+##            self.__mw.passwordManager().fill(self.page())
     
     def isLoading(self):
         """
@@ -1481,15 +1509,15 @@ class WebBrowserView(QWebEngineView):
         """
         return self.__progress
     
-    def saveAs(self):
-        """
-        Public method to save the current page to a file.
-        """
-        url = self.url()
-        if url.isEmpty():
-            return
-        
-        self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
+##    def saveAs(self):
+##        """
+##        Public method to save the current page to a file.
+##        """
+##        url = self.url()
+##        if url.isEmpty():
+##            return
+##        
+##        self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
     
 ##    def __unsupportedContent(self, reply, requestFilename=None,
 ##                             download=False):
@@ -1579,238 +1607,241 @@ class WebBrowserView(QWebEngineView):
 ##        self.loadFinished.emit(False)
 ##    
     
-    def __downloadRequested(self, request):
-        """
-        Private slot to handle a download request.
-        
-        @param request reference to the request object (QNetworkRequest)
-        """
-        self.__mw.downloadManager().download(request, mainWindow=self.__mw)
+    # TODO: Download Manager
+##    def __downloadRequested(self, request):
+##        """
+##        Private slot to handle a download request.
+##        
+##        @param request reference to the request object (QNetworkRequest)
+##        """
+##        self.__mw.downloadManager().download(request, mainWindow=self.__mw)
     
-    def __databaseQuotaExceeded(self, frame, databaseName):
-        """
-        Private slot to handle the case, where the database quota is exceeded.
-        
-        @param frame reference to the frame (QWebFrame)
-        @param databaseName name of the web database (string)
-        """
-        securityOrigin = frame.securityOrigin()
-        if securityOrigin.databaseQuota() > 0 and \
-           securityOrigin.databaseUsage() == 0:
-            # cope with a strange behavior of Qt 4.6, if a database is
-            # accessed for the first time
-            return
-        
-        res = E5MessageBox.yesNo(
-            self,
-            self.tr("Web Database Quota"),
-            self.tr(
-                """<p>The database quota of <strong>{0}</strong> has"""
-                """ been exceeded while accessing database <strong>{1}"""
-                """</strong>.</p><p>Shall it be changed?</p>""")
-            .format(self.__dataString(securityOrigin.databaseQuota()),
-                    databaseName),
-            yesDefault=True)
-        if res:
-            newQuota, ok = QInputDialog.getInt(
-                self,
-                self.tr("New Web Database Quota"),
-                self.tr(
-                    "Enter the new quota in MB (current = {0}, used = {1}; "
-                    "step size = 5 MB):"
-                    .format(
-                        self.__dataString(securityOrigin.databaseQuota()),
-                        self.__dataString(securityOrigin.databaseUsage()))),
-                securityOrigin.databaseQuota() // (1024 * 1024),
-                0, 2147483647, 5)
-            if ok:
-                securityOrigin.setDatabaseQuota(newQuota * 1024 * 1024)
-    
-    def __dataString(self, size):
-        """
-        Private method to generate a formatted data string.
-        
-        @param size size to be formatted (integer)
-        @return formatted data string (string)
-        """
-        unit = ""
-        if size < 1024:
-            unit = self.tr("bytes")
-        elif size < 1024 * 1024:
-            size /= 1024
-            unit = self.tr("kB")
-        else:
-            size /= 1024 * 1024
-            unit = self.tr("MB")
-        return "{0:.1f} {1}".format(size, unit)
+##    def __databaseQuotaExceeded(self, frame, databaseName):
+##        """
+##        Private slot to handle the case, where the database quota is exceeded.
+##        
+##        @param frame reference to the frame (QWebFrame)
+##        @param databaseName name of the web database (string)
+##        """
+##        securityOrigin = frame.securityOrigin()
+##        if securityOrigin.databaseQuota() > 0 and \
+##           securityOrigin.databaseUsage() == 0:
+##            # cope with a strange behavior of Qt 4.6, if a database is
+##            # accessed for the first time
+##            return
+##        
+##        res = E5MessageBox.yesNo(
+##            self,
+##            self.tr("Web Database Quota"),
+##            self.tr(
+##                """<p>The database quota of <strong>{0}</strong> has"""
+##                """ been exceeded while accessing database <strong>{1}"""
+##                """</strong>.</p><p>Shall it be changed?</p>""")
+##            .format(self.__dataString(securityOrigin.databaseQuota()),
+##                    databaseName),
+##            yesDefault=True)
+##        if res:
+##            newQuota, ok = QInputDialog.getInt(
+##                self,
+##                self.tr("New Web Database Quota"),
+##                self.tr(
+##                    "Enter the new quota in MB (current = {0}, used = {1}; "
+##                    "step size = 5 MB):"
+##                    .format(
+##                        self.__dataString(securityOrigin.databaseQuota()),
+##                        self.__dataString(securityOrigin.databaseUsage()))),
+##                securityOrigin.databaseQuota() // (1024 * 1024),
+##                0, 2147483647, 5)
+##            if ok:
+##                securityOrigin.setDatabaseQuota(newQuota * 1024 * 1024)
+##    
+##    def __dataString(self, size):
+##        """
+##        Private method to generate a formatted data string.
+##        
+##        @param size size to be formatted (integer)
+##        @return formatted data string (string)
+##        """
+##        unit = ""
+##        if size < 1024:
+##            unit = self.tr("bytes")
+##        elif size < 1024 * 1024:
+##            size /= 1024
+##            unit = self.tr("kB")
+##        else:
+##            size /= 1024 * 1024
+##            unit = self.tr("MB")
+##        return "{0:.1f} {1}".format(size, unit)
     
     ###########################################################################
     ## Access key related methods below
     ###########################################################################
     
-    def __accessKeyShortcut(self):
-        """
-        Private slot to switch the display of access keys.
-        """
-        if not self.hasFocus() or \
-           not self.__accessKeysPressed or \
-           not self.__enableAccessKeys:
-            return
-        
-        if self.__accessKeyLabels:
-            self.__hideAccessKeys()
-        else:
-            self.__showAccessKeys()
-        
-        self.__accessKeysPressed = False
-    
-    def __checkForAccessKey(self, evt):
-        """
-        Private method to check the existence of an access key and activate the
-        corresponding link.
-        
-        @param evt reference to the key event (QKeyEvent)
-        @return flag indicating, if the event was handled (boolean)
-        """
-        if not self.__accessKeyLabels:
-            return False
-        
-        text = evt.text()
-        if not text:
-            return False
-        
-        key = text[0].upper()
-        handled = False
-        if key in self.__accessKeyNodes:
-            element = self.__accessKeyNodes[key]
-            p = element.geometry().center()
-            frame = element.webFrame()
-            p -= frame.scrollPosition()
-            frame = frame.parentFrame()
-            while frame and frame != self.page().mainFrame():
-                p -= frame.scrollPosition()
-                frame = frame.parentFrame()
-            pevent = QMouseEvent(
-                QEvent.MouseButtonPress, p, Qt.LeftButton,
-                Qt.MouseButtons(Qt.NoButton),
-                Qt.KeyboardModifiers(Qt.NoModifier))
-            qApp.sendEvent(self, pevent)
-            revent = QMouseEvent(
-                QEvent.MouseButtonRelease, p, Qt.LeftButton,
-                Qt.MouseButtons(Qt.NoButton),
-                Qt.KeyboardModifiers(Qt.NoModifier))
-            qApp.sendEvent(self, revent)
-            handled = True
-        
-        return handled
-    
-    def __hideAccessKeys(self):
-        """
-        Private slot to hide the access key labels.
-        """
-        if self.__accessKeyLabels:
-            for label in self.__accessKeyLabels:
-                label.hide()
-                label.deleteLater()
-            self.__accessKeyLabels = []
-            self.__accessKeyNodes = {}
-            self.update()
-    
-    def __showAccessKeys(self):
-        """
-        Private method to show the access key labels.
-        """
-        supportedElements = [
-            "input", "a", "area", "button", "label", "legend", "textarea",
-        ]
-        unusedKeys = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" \
-            " 0 1 2 3 4 5 6 7 8 9".split()
-        
-        viewport = QRect(self.__page.mainFrame().scrollPosition(),
-                         self.__page.viewportSize())
-        # Priority first goes to elements with accesskey attributes
-        alreadyLabeled = []
-        for elementType in supportedElements:
-            result = self.page().mainFrame().findAllElements(elementType)\
-                .toList()
-            for element in result:
-                geometry = element.geometry()
-                if geometry.size().isEmpty() or \
-                   not viewport.contains(geometry.topLeft()):
-                    continue
-                
-                accessKeyAttribute = element.attribute("accesskey").upper()
-                if not accessKeyAttribute:
-                    continue
-                
-                accessKey = ""
-                i = 0
-                while i < len(accessKeyAttribute):
-                    if accessKeyAttribute[i] in unusedKeys:
-                        accessKey = accessKeyAttribute[i]
-                        break
-                    i += 2
-                if accessKey == "":
-                    continue
-                unusedKeys.remove(accessKey)
-                self.__makeAccessLabel(accessKey, element)
-                alreadyLabeled.append(element)
-        
-        # Pick an access key first from the letters in the text and then
-        # from the list of unused access keys
-        for elementType in supportedElements:
-            result = self.page().mainFrame().findAllElements(elementType)\
-                .toList()
-            for element in result:
-                geometry = element.geometry()
-                if not unusedKeys or \
-                   element in alreadyLabeled or \
-                   geometry.size().isEmpty() or \
-                   not viewport.contains(geometry.topLeft()):
-                    continue
-                
-                accessKey = ""
-                text = element.toPlainText().upper()
-                for c in text:
-                    if c in unusedKeys:
-                        accessKey = c
-                        break
-                if accessKey == "":
-                    accessKey = unusedKeys[0]
-                unusedKeys.remove(accessKey)
-                self.__makeAccessLabel(accessKey, element)
-    
-    def __makeAccessLabel(self, accessKey, element):
-        """
-        Private method to generate the access label for an element.
-        
-        @param accessKey access key to generate the label for (str)
-        @param element reference to the web element to create the label for
-            (QWebElement)
-        """
-        label = QLabel(self)
-        label.setText("<qt><b>{0}</b></qt>".format(accessKey))
-        
-        p = QToolTip.palette()
-        color = QColor(Qt.yellow).lighter(150)
-        color.setAlpha(175)
-        p.setColor(QPalette.Window, color)
-        label.setPalette(p)
-        label.setAutoFillBackground(True)
-        label.setFrameStyle(QFrame.Box | QFrame.Plain)
-        point = element.geometry().center()
-        point -= self.__page.mainFrame().scrollPosition()
-        label.move(point)
-        label.show()
-        point.setX(point.x() - label.width() // 2)
-        label.move(point)
-        self.__accessKeyLabels.append(label)
-        self.__accessKeyNodes[accessKey] = element
+    # TODO: Access Keys
+##    def __accessKeyShortcut(self):
+##        """
+##        Private slot to switch the display of access keys.
+##        """
+##        if not self.hasFocus() or \
+##           not self.__accessKeysPressed or \
+##           not self.__enableAccessKeys:
+##            return
+##        
+##        if self.__accessKeyLabels:
+##            self.__hideAccessKeys()
+##        else:
+##            self.__showAccessKeys()
+##        
+##        self.__accessKeysPressed = False
+##    
+##    def __checkForAccessKey(self, evt):
+##        """
+##        Private method to check the existence of an access key and activate the
+##        corresponding link.
+##        
+##        @param evt reference to the key event (QKeyEvent)
+##        @return flag indicating, if the event was handled (boolean)
+##        """
+##        if not self.__accessKeyLabels:
+##            return False
+##        
+##        text = evt.text()
+##        if not text:
+##            return False
+##        
+##        key = text[0].upper()
+##        handled = False
+##        if key in self.__accessKeyNodes:
+##            element = self.__accessKeyNodes[key]
+##            p = element.geometry().center()
+##            frame = element.webFrame()
+##            p -= frame.scrollPosition()
+##            frame = frame.parentFrame()
+##            while frame and frame != self.page().mainFrame():
+##                p -= frame.scrollPosition()
+##                frame = frame.parentFrame()
+##            pevent = QMouseEvent(
+##                QEvent.MouseButtonPress, p, Qt.LeftButton,
+##                Qt.MouseButtons(Qt.NoButton),
+##                Qt.KeyboardModifiers(Qt.NoModifier))
+##            qApp.sendEvent(self, pevent)
+##            revent = QMouseEvent(
+##                QEvent.MouseButtonRelease, p, Qt.LeftButton,
+##                Qt.MouseButtons(Qt.NoButton),
+##                Qt.KeyboardModifiers(Qt.NoModifier))
+##            qApp.sendEvent(self, revent)
+##            handled = True
+##        
+##        return handled
+##    
+##    def __hideAccessKeys(self):
+##        """
+##        Private slot to hide the access key labels.
+##        """
+##        if self.__accessKeyLabels:
+##            for label in self.__accessKeyLabels:
+##                label.hide()
+##                label.deleteLater()
+##            self.__accessKeyLabels = []
+##            self.__accessKeyNodes = {}
+##            self.update()
+##    
+##    def __showAccessKeys(self):
+##        """
+##        Private method to show the access key labels.
+##        """
+##        supportedElements = [
+##            "input", "a", "area", "button", "label", "legend", "textarea",
+##        ]
+##        unusedKeys = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" \
+##            " 0 1 2 3 4 5 6 7 8 9".split()
+##        
+##        viewport = QRect(self.__page.mainFrame().scrollPosition(),
+##                         self.__page.viewportSize())
+##        # Priority first goes to elements with accesskey attributes
+##        alreadyLabeled = []
+##        for elementType in supportedElements:
+##            result = self.page().mainFrame().findAllElements(elementType)\
+##                .toList()
+##            for element in result:
+##                geometry = element.geometry()
+##                if geometry.size().isEmpty() or \
+##                   not viewport.contains(geometry.topLeft()):
+##                    continue
+##                
+##                accessKeyAttribute = element.attribute("accesskey").upper()
+##                if not accessKeyAttribute:
+##                    continue
+##                
+##                accessKey = ""
+##                i = 0
+##                while i < len(accessKeyAttribute):
+##                    if accessKeyAttribute[i] in unusedKeys:
+##                        accessKey = accessKeyAttribute[i]
+##                        break
+##                    i += 2
+##                if accessKey == "":
+##                    continue
+##                unusedKeys.remove(accessKey)
+##                self.__makeAccessLabel(accessKey, element)
+##                alreadyLabeled.append(element)
+##        
+##        # Pick an access key first from the letters in the text and then
+##        # from the list of unused access keys
+##        for elementType in supportedElements:
+##            result = self.page().mainFrame().findAllElements(elementType)\
+##                .toList()
+##            for element in result:
+##                geometry = element.geometry()
+##                if not unusedKeys or \
+##                   element in alreadyLabeled or \
+##                   geometry.size().isEmpty() or \
+##                   not viewport.contains(geometry.topLeft()):
+##                    continue
+##                
+##                accessKey = ""
+##                text = element.toPlainText().upper()
+##                for c in text:
+##                    if c in unusedKeys:
+##                        accessKey = c
+##                        break
+##                if accessKey == "":
+##                    accessKey = unusedKeys[0]
+##                unusedKeys.remove(accessKey)
+##                self.__makeAccessLabel(accessKey, element)
+##    
+##    def __makeAccessLabel(self, accessKey, element):
+##        """
+##        Private method to generate the access label for an element.
+##        
+##        @param accessKey access key to generate the label for (str)
+##        @param element reference to the web element to create the label for
+##            (QWebElement)
+##        """
+##        label = QLabel(self)
+##        label.setText("<qt><b>{0}</b></qt>".format(accessKey))
+##        
+##        p = QToolTip.palette()
+##        color = QColor(Qt.yellow).lighter(150)
+##        color.setAlpha(175)
+##        p.setColor(QPalette.Window, color)
+##        label.setPalette(p)
+##        label.setAutoFillBackground(True)
+##        label.setFrameStyle(QFrame.Box | QFrame.Plain)
+##        point = element.geometry().center()
+##        point -= self.__page.mainFrame().scrollPosition()
+##        label.move(point)
+##        label.show()
+##        point.setX(point.x() - label.width() // 2)
+##        label.move(point)
+##        self.__accessKeyLabels.append(label)
+##        self.__accessKeyNodes[accessKey] = element
     
     ###########################################################################
     ## Miscellaneous methods below
     ###########################################################################
     
+    # TODO: check, if this is needed (referenced anywhere) (same for HelpBrowserWV)
     def createWindow(self, windowType):
         """
         Public method called, when a new window should be created.
@@ -1825,9 +1856,10 @@ class WebBrowserView(QWebEngineView):
         """
         Public method to indicate a change of the settings.
         """
-        self.__enableAccessKeys = Preferences.getHelp("AccessKeysEnabled")
-        if not self.__enableAccessKeys:
-            self.__hideAccessKeys()
+        # TODO: Access Keys
+##        self.__enableAccessKeys = Preferences.getHelp("AccessKeysEnabled")
+##        if not self.__enableAccessKeys:
+##            self.__hideAccessKeys()
         
         self.reload()
     
@@ -1835,31 +1867,32 @@ class WebBrowserView(QWebEngineView):
     ## RSS related methods below
     ###########################################################################
     
-    def checkRSS(self):
-        """
-        Public method to check, if the loaded page contains feed links.
-        
-        @return flag indicating the existence of feed links (boolean)
-        """
-        self.__rss = []
-        
-        frame = self.page().mainFrame()
-        linkElementsList = frame.findAllElements("link").toList()
-        
-        for linkElement in linkElementsList:
-            # only atom+xml and rss+xml will be processed
-            if linkElement.attribute("rel") != "alternate" or \
-               (linkElement.attribute("type") != "application/rss+xml" and
-                    linkElement.attribute("type") != "application/atom+xml"):
-                continue
-            
-            title = linkElement.attribute("title")
-            href = linkElement.attribute("href")
-            if href == "" or title == "":
-                continue
-            self.__rss.append((title, href))
-        
-        return len(self.__rss) > 0
+    # TODO: extract links from page to implement RSS stuff
+##    def checkRSS(self):
+##        """
+##        Public method to check, if the loaded page contains feed links.
+##        
+##        @return flag indicating the existence of feed links (boolean)
+##        """
+##        self.__rss = []
+##        
+##        frame = self.page()
+##        linkElementsList = frame.findAllElements("link").toList()
+##        
+##        for linkElement in linkElementsList:
+##            # only atom+xml and rss+xml will be processed
+##            if linkElement.attribute("rel") != "alternate" or \
+##               (linkElement.attribute("type") != "application/rss+xml" and
+##                    linkElement.attribute("type") != "application/atom+xml"):
+##                continue
+##            
+##            title = linkElement.attribute("title")
+##            href = linkElement.attribute("href")
+##            if href == "" or title == "":
+##                continue
+##            self.__rss.append((title, href))
+##        
+##        return len(self.__rss) > 0
     
     def getRSS(self):
         """
@@ -1881,189 +1914,189 @@ class WebBrowserView(QWebEngineView):
     ## Clicked Frame slots
     ###########################################################################
     
-    def __loadClickedFrame(self):
-        """
-        Private slot to load the selected frame only.
-        """
-        self.setSource(self.__clickedFrame.url())
-    
-    def __printClickedFrame(self):
-        """
-        Private slot to print the selected frame.
-        """
-        printer = QPrinter(mode=QPrinter.HighResolution)
-        if Preferences.getPrinter("ColorMode"):
-            printer.setColorMode(QPrinter.Color)
-        else:
-            printer.setColorMode(QPrinter.GrayScale)
-        if Preferences.getPrinter("FirstPageFirst"):
-            printer.setPageOrder(QPrinter.FirstPageFirst)
-        else:
-            printer.setPageOrder(QPrinter.LastPageFirst)
-        printer.setPageMargins(
-            Preferences.getPrinter("LeftMargin") * 10,
-            Preferences.getPrinter("TopMargin") * 10,
-            Preferences.getPrinter("RightMargin") * 10,
-            Preferences.getPrinter("BottomMargin") * 10,
-            QPrinter.Millimeter
-        )
-        printerName = Preferences.getPrinter("PrinterName")
-        if printerName:
-            printer.setPrinterName(printerName)
-        
-        printDialog = QPrintDialog(printer, self)
-        if printDialog.exec_() == QDialog.Accepted:
-            try:
-                self.__clickedFrame.print_(printer)
-            except AttributeError:
-                E5MessageBox.critical(
-                    self,
-                    self.tr("eric6 Web Browser"),
-                    self.tr(
-                        """<p>Printing is not available due to a bug in"""
-                        """ PyQt5. Please upgrade.</p>"""))
-    
-    def __printPreviewClickedFrame(self):
-        """
-        Private slot to show a print preview of the clicked frame.
-        """
-        from PyQt5.QtPrintSupport import QPrintPreviewDialog
-        
-        printer = QPrinter(mode=QPrinter.HighResolution)
-        if Preferences.getPrinter("ColorMode"):
-            printer.setColorMode(QPrinter.Color)
-        else:
-            printer.setColorMode(QPrinter.GrayScale)
-        if Preferences.getPrinter("FirstPageFirst"):
-            printer.setPageOrder(QPrinter.FirstPageFirst)
-        else:
-            printer.setPageOrder(QPrinter.LastPageFirst)
-        printer.setPageMargins(
-            Preferences.getPrinter("LeftMargin") * 10,
-            Preferences.getPrinter("TopMargin") * 10,
-            Preferences.getPrinter("RightMargin") * 10,
-            Preferences.getPrinter("BottomMargin") * 10,
-            QPrinter.Millimeter
-        )
-        printerName = Preferences.getPrinter("PrinterName")
-        if printerName:
-            printer.setPrinterName(printerName)
-        
-        preview = QPrintPreviewDialog(printer, self)
-        preview.paintRequested.connect(self.__generatePrintPreviewClickedFrame)
-        preview.exec_()
-    
-    def __generatePrintPreviewClickedFrame(self, printer):
-        """
-        Private slot to generate a print preview of the clicked frame.
-        
-        @param printer reference to the printer object (QPrinter)
-        """
-        try:
-            self.__clickedFrame.print_(printer)
-        except AttributeError:
-            E5MessageBox.critical(
-                self,
-                self.tr("eric6 Web Browser"),
-                self.tr(
-                    """<p>Printing is not available due to a bug in PyQt5."""
-                    """Please upgrade.</p>"""))
-            return
-    
-    def __printPdfClickedFrame(self):
-        """
-        Private slot to print the selected frame to PDF.
-        """
-        printer = QPrinter(mode=QPrinter.HighResolution)
-        if Preferences.getPrinter("ColorMode"):
-            printer.setColorMode(QPrinter.Color)
-        else:
-            printer.setColorMode(QPrinter.GrayScale)
-        printerName = Preferences.getPrinter("PrinterName")
-        if printerName:
-            printer.setPrinterName(printerName)
-        printer.setOutputFormat(QPrinter.PdfFormat)
-        name = self.__clickedFrame.url().path().rsplit('/', 1)[-1]
-        if name:
-            name = name.rsplit('.', 1)[0]
-            name += '.pdf'
-            printer.setOutputFileName(name)
-        
-        printDialog = QPrintDialog(printer, self)
-        if printDialog.exec_() == QDialog.Accepted:
-            try:
-                self.__clickedFrame.print_(printer)
-            except AttributeError:
-                E5MessageBox.critical(
-                    self,
-                    self.tr("eric6 Web Browser"),
-                    self.tr(
-                        """<p>Printing is not available due to a bug in"""
-                        """ PyQt5. Please upgrade.</p>"""))
-                return
-    
-    def __zoomInClickedFrame(self):
-        """
-        Private slot to zoom into the clicked frame.
-        """
-        index = self.__levelForZoom(
-            int(self.__clickedFrame.zoomFactor() * 100))
-        if index < len(self.__zoomLevels) - 1:
-            self.__clickedFrame.setZoomFactor(
-                self.__zoomLevels[index + 1] / 100)
-    
-    def __zoomResetClickedFrame(self):
-        """
-        Private slot to reset the zoom factor of the clicked frame.
-        """
-        self.__clickedFrame.setZoomFactor(self.__currentZoom / 100)
-    
-    def __zoomOutClickedFrame(self):
-        """
-        Private slot to zoom out of the clicked frame.
-        """
-        index = self.__levelForZoom(
-            int(self.__clickedFrame.zoomFactor() * 100))
-        if index > 0:
-            self.__clickedFrame.setZoomFactor(
-                self.__zoomLevels[index - 1] / 100)
-    
-    def __showClickedFrameSource(self):
-        """
-        Private slot to show the source of the clicked frame.
-        """
-        from QScintilla.MiniEditor import MiniEditor
-        src = self.__clickedFrame.toHtml()
-        editor = MiniEditor(parent=self)
-        editor.setText(src, "Html")
-        editor.setLanguage("dummy.html")
-        editor.show()
+##    def __loadClickedFrame(self):
+##        """
+##        Private slot to load the selected frame only.
+##        """
+##        self.setSource(self.__clickedFrame.url())
+##    
+##    def __printClickedFrame(self):
+##        """
+##        Private slot to print the selected frame.
+##        """
+##        printer = QPrinter(mode=QPrinter.HighResolution)
+##        if Preferences.getPrinter("ColorMode"):
+##            printer.setColorMode(QPrinter.Color)
+##        else:
+##            printer.setColorMode(QPrinter.GrayScale)
+##        if Preferences.getPrinter("FirstPageFirst"):
+##            printer.setPageOrder(QPrinter.FirstPageFirst)
+##        else:
+##            printer.setPageOrder(QPrinter.LastPageFirst)
+##        printer.setPageMargins(
+##            Preferences.getPrinter("LeftMargin") * 10,
+##            Preferences.getPrinter("TopMargin") * 10,
+##            Preferences.getPrinter("RightMargin") * 10,
+##            Preferences.getPrinter("BottomMargin") * 10,
+##            QPrinter.Millimeter
+##        )
+##        printerName = Preferences.getPrinter("PrinterName")
+##        if printerName:
+##            printer.setPrinterName(printerName)
+##        
+##        printDialog = QPrintDialog(printer, self)
+##        if printDialog.exec_() == QDialog.Accepted:
+##            try:
+##                self.__clickedFrame.print_(printer)
+##            except AttributeError:
+##                E5MessageBox.critical(
+##                    self,
+##                    self.tr("eric6 Web Browser"),
+##                    self.tr(
+##                        """<p>Printing is not available due to a bug in"""
+##                        """ PyQt5. Please upgrade.</p>"""))
+##    
+##    def __printPreviewClickedFrame(self):
+##        """
+##        Private slot to show a print preview of the clicked frame.
+##        """
+##        from PyQt5.QtPrintSupport import QPrintPreviewDialog
+##        
+##        printer = QPrinter(mode=QPrinter.HighResolution)
+##        if Preferences.getPrinter("ColorMode"):
+##            printer.setColorMode(QPrinter.Color)
+##        else:
+##            printer.setColorMode(QPrinter.GrayScale)
+##        if Preferences.getPrinter("FirstPageFirst"):
+##            printer.setPageOrder(QPrinter.FirstPageFirst)
+##        else:
+##            printer.setPageOrder(QPrinter.LastPageFirst)
+##        printer.setPageMargins(
+##            Preferences.getPrinter("LeftMargin") * 10,
+##            Preferences.getPrinter("TopMargin") * 10,
+##            Preferences.getPrinter("RightMargin") * 10,
+##            Preferences.getPrinter("BottomMargin") * 10,
+##            QPrinter.Millimeter
+##        )
+##        printerName = Preferences.getPrinter("PrinterName")
+##        if printerName:
+##            printer.setPrinterName(printerName)
+##        
+##        preview = QPrintPreviewDialog(printer, self)
+##        preview.paintRequested.connect(self.__generatePrintPreviewClickedFrame)
+##        preview.exec_()
+##    
+##    def __generatePrintPreviewClickedFrame(self, printer):
+##        """
+##        Private slot to generate a print preview of the clicked frame.
+##        
+##        @param printer reference to the printer object (QPrinter)
+##        """
+##        try:
+##            self.__clickedFrame.print_(printer)
+##        except AttributeError:
+##            E5MessageBox.critical(
+##                self,
+##                self.tr("eric6 Web Browser"),
+##                self.tr(
+##                    """<p>Printing is not available due to a bug in PyQt5."""
+##                    """Please upgrade.</p>"""))
+##            return
+##    
+##    def __printPdfClickedFrame(self):
+##        """
+##        Private slot to print the selected frame to PDF.
+##        """
+##        printer = QPrinter(mode=QPrinter.HighResolution)
+##        if Preferences.getPrinter("ColorMode"):
+##            printer.setColorMode(QPrinter.Color)
+##        else:
+##            printer.setColorMode(QPrinter.GrayScale)
+##        printerName = Preferences.getPrinter("PrinterName")
+##        if printerName:
+##            printer.setPrinterName(printerName)
+##        printer.setOutputFormat(QPrinter.PdfFormat)
+##        name = self.__clickedFrame.url().path().rsplit('/', 1)[-1]
+##        if name:
+##            name = name.rsplit('.', 1)[0]
+##            name += '.pdf'
+##            printer.setOutputFileName(name)
+##        
+##        printDialog = QPrintDialog(printer, self)
+##        if printDialog.exec_() == QDialog.Accepted:
+##            try:
+##                self.__clickedFrame.print_(printer)
+##            except AttributeError:
+##                E5MessageBox.critical(
+##                    self,
+##                    self.tr("eric6 Web Browser"),
+##                    self.tr(
+##                        """<p>Printing is not available due to a bug in"""
+##                        """ PyQt5. Please upgrade.</p>"""))
+##                return
+##    
+##    def __zoomInClickedFrame(self):
+##        """
+##        Private slot to zoom into the clicked frame.
+##        """
+##        index = self.__levelForZoom(
+##            int(self.__clickedFrame.zoomFactor() * 100))
+##        if index < len(self.__zoomLevels) - 1:
+##            self.__clickedFrame.setZoomFactor(
+##                self.__zoomLevels[index + 1] / 100)
+##    
+##    def __zoomResetClickedFrame(self):
+##        """
+##        Private slot to reset the zoom factor of the clicked frame.
+##        """
+##        self.__clickedFrame.setZoomFactor(self.__currentZoom / 100)
+##    
+##    def __zoomOutClickedFrame(self):
+##        """
+##        Private slot to zoom out of the clicked frame.
+##        """
+##        index = self.__levelForZoom(
+##            int(self.__clickedFrame.zoomFactor() * 100))
+##        if index > 0:
+##            self.__clickedFrame.setZoomFactor(
+##                self.__zoomLevels[index - 1] / 100)
+##    
+##    def __showClickedFrameSource(self):
+##        """
+##        Private slot to show the source of the clicked frame.
+##        """
+##        from QScintilla.MiniEditor import MiniEditor
+##        src = self.__clickedFrame.toHtml()
+##        editor = MiniEditor(parent=self)
+##        editor.setText(src, "Html")
+##        editor.setLanguage("dummy.html")
+##        editor.show()
 
 
-def contentSniff(data):
-    """
-    Module function to do some content sniffing to check, if the data is HTML.
-    
-    @param data data block to sniff at (string)
-    @return flag indicating HTML content (boolean)
-    """
-    if data.contains("<!doctype") or \
-       data.contains("<script") or \
-       data.contains("<html") or \
-       data.contains("<!--") or \
-       data.contains("<head") or \
-       data.contains("<iframe") or \
-       data.contains("<h1") or \
-       data.contains("<div") or \
-       data.contains("<font") or \
-       data.contains("<table") or \
-       data.contains("<a") or \
-       data.contains("<style") or \
-       data.contains("<title") or \
-       data.contains("<b") or \
-       data.contains("<body") or \
-       data.contains("<br") or \
-       data.contains("<p"):
-        return True
-    
-    return False
+##def contentSniff(data):
+##    """
+##    Module function to do some content sniffing to check, if the data is HTML.
+##    
+##    @param data data block to sniff at (string)
+##    @return flag indicating HTML content (boolean)
+##    """
+##    if data.contains("<!doctype") or \
+##       data.contains("<script") or \
+##       data.contains("<html") or \
+##       data.contains("<!--") or \
+##       data.contains("<head") or \
+##       data.contains("<iframe") or \
+##       data.contains("<h1") or \
+##       data.contains("<div") or \
+##       data.contains("<font") or \
+##       data.contains("<table") or \
+##       data.contains("<a") or \
+##       data.contains("<style") or \
+##       data.contains("<title") or \
+##       data.contains("<b") or \
+##       data.contains("<body") or \
+##       data.contains("<br") or \
+##       data.contains("<p"):
+##        return True
+##    
+##    return False

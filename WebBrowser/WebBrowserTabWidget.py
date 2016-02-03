@@ -58,12 +58,12 @@ class WebBrowserTabWidget(E5TabWidget):
         
         @param parent reference to the parent widget (QWidget)
         """
-        super(WebBrowserTabWidget, self).__init__(self, parent, dnd=True)
+        super(WebBrowserTabWidget, self).__init__(parent, dnd=True)
         
         # TODO: implement this
-        from .WebBrowserTabBar import WebBrowserTabBar
-        self.__tabBar = WebBrowserTabBar(self)
-        self.setCustomTabBar(True, self.__tabBar)
+##        from .WebBrowserTabBar import WebBrowserTabBar
+##        self.__tabBar = WebBrowserTabBar(self)
+##        self.setCustomTabBar(True, self.__tabBar)
         
         self.__mainWindow = parent
         
@@ -79,7 +79,7 @@ class WebBrowserTabWidget(E5TabWidget):
         
         from .UrlBar.StackedUrlBar import StackedUrlBar
         self.__stackedUrlBar = StackedUrlBar(self)
-        self.__tabBar.tabMoved.connect(self.__stackedUrlBar.moveBar)
+##        self.__tabBar.tabMoved.connect(self.__stackedUrlBar.moveBar)
         
         self.__tabContextMenuIndex = -1
         self.currentChanged[int].connect(self.__currentChanged)
@@ -812,8 +812,9 @@ class WebBrowserTabWidget(E5TabWidget):
             self.setTabIcon(
                 self.indexOf(browser),
                 WebBrowser.WebBrowserWindow.WebBrowserWindow.icon(url))
-            WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()\
-                .iconChanged(url)
+            # TODO: Bookmarks
+##            WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()\
+##                .iconChanged(url)
     
     def getSourceFileList(self):
         """
