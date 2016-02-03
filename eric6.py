@@ -317,6 +317,7 @@ def main():
     if len(sys.argv) > 1:
         args = sys.argv[1:]
     
+    # TODO: this code is misleading - it applies to Qt5 as well
     # get the Qt4 translations directory
     qt4TransDir = Preferences.getQt4TranslationsDir()
     if not qt4TransDir:
