@@ -457,7 +457,7 @@ class WebBrowserPage(QWebEnginePage):
 ##        """
 ##        return self.__adBlockedEntries
     
-    # TODO: re-enable once User Agent Manager is done
+    # TODO: User Agent Manager
 ##    def userAgent(self, resolveEmpty=False):
 ##        """
 ##        Public method to get the global user agent setting.

@@ -9,7 +9,7 @@ Module implementing the web browser main window.
 
 from __future__ import unicode_literals
 try:
-    str = unicode
+    str = unicode           # __IGNORE_EXCEPTION__
 except NameError:
     pass
 
@@ -41,8 +41,8 @@ from E5Gui.E5Action import E5Action
 from E5Gui import E5MessageBox, E5FileDialog, E5ErrorMessage
 from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui.E5Application import e5App
-##from E5Gui.E5ZoomWidget import E5ZoomWidget
-##
+from E5Gui.E5ZoomWidget import E5ZoomWidget
+
 ##from E5Network.E5NetworkIcon import E5NetworkIcon
 
 import Preferences
@@ -126,14 +126,16 @@ class WebBrowserWindow(E5MainWindow):
         if self.__initShortcutsOnly:
             self.__initActions()
         else:
-            # TODO: implement this
             from .SearchWidget import SearchWidget
+            # TODO: QtHelp
 ##            from .HelpTocWidget import HelpTocWidget
 ##            from .HelpIndexWidget import HelpIndexWidget
 ##            from .HelpSearchWidget import HelpSearchWidget
-##            from .HelpBrowserWV import HelpBrowser
+            from .WebBrowserView import WebBrowserView
             from .WebBrowserTabWidget import WebBrowserTabWidget
+            # TODO: AdBlock
 ##            from .AdBlock.AdBlockIcon import AdBlockIcon
+            # TODO: VirusTotal
 ##            from .VirusTotal.VirusTotalApi import VirusTotalAPI
             
             # TODO: allow using Qt Help even if not called from eric6
@@ -159,22 +161,22 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__helpEngine = None
 ##            self.__helpInstaller = None
             
-##            self.__zoomWidget = E5ZoomWidget(
-##                UI.PixmapCache.getPixmap("zoomOut.png"),
-##                UI.PixmapCache.getPixmap("zoomIn.png"),
-##                UI.PixmapCache.getPixmap("zoomReset.png"), self)
-##            self.statusBar().addPermanentWidget(self.__zoomWidget)
-##            self.__zoomWidget.setMapping(
-##                HelpBrowser.ZoomLevels, HelpBrowser.ZoomLevelDefault)
-##            self.__zoomWidget.valueChanged.connect(self.__zoomValueChanged)
-##            
+            self.__zoomWidget = E5ZoomWidget(
+                UI.PixmapCache.getPixmap("zoomOut.png"),
+                UI.PixmapCache.getPixmap("zoomIn.png"),
+                UI.PixmapCache.getPixmap("zoomReset.png"), self)
+            self.statusBar().addPermanentWidget(self.__zoomWidget)
+            self.__zoomWidget.setMapping(
+                WebBrowserView.ZoomLevels, WebBrowserView.ZoomLevelDefault)
+            self.__zoomWidget.valueChanged.connect(self.__zoomValueChanged)
+            
             self.__tabWidget = WebBrowserTabWidget(self)
             self.__tabWidget.currentChanged[int].connect(self.__currentChanged)
             self.__tabWidget.titleChanged.connect(self.__titleChanged)
             self.__tabWidget.showMessage.connect(self.statusBar().showMessage)
             self.__tabWidget.browserClosed.connect(self.__browserClosed)
-##            self.__tabWidget.browserZoomValueChanged.connect(
-##                self.__zoomWidget.setValue)
+            self.__tabWidget.browserZoomValueChanged.connect(
+                self.__zoomWidget.setValue)
             
             self.__searchWidget = SearchWidget(self, self)
             centralWidget = QWidget()
@@ -188,7 +190,7 @@ class WebBrowserWindow(E5MainWindow):
             self.setCentralWidget(centralWidget)
             self.__searchWidget.hide()
             
-            # TODO: do these once Qt 5.6 is available
+            # TODO: QtHelp, do these once Qt 5.6 is available
 ##            if WebBrowserWindow.UseQtHelp:
 ##                # setup the TOC widget
 ##                self.__tocWindow = HelpTocWidget(self.__helpEngine, self)
@@ -265,7 +267,7 @@ class WebBrowserWindow(E5MainWindow):
             
             # setup connections
             self.__activating = False
-            # TODO: do these once Qt 5.6 is available
+            # TODO: QtHelp, do these once Qt 5.6 is available
 ##            if WebBrowserWindow.UseQtHelp:
 ##                # TOC window
 ##                self.__tocWindow.linkActivated.connect(self.__linkActivated)
@@ -301,7 +303,7 @@ class WebBrowserWindow(E5MainWindow):
             
 ##            self.flashCookieManager()
 ##            
-            # TODO: do these once Qt 5.6 is available
+            # TODO: QtHelp, do these once Qt 5.6 is available
 ##            if WebBrowserWindow.UseQtHelp:
 ##                QTimer.singleShot(0, self.__lookForNewDocumentation)
 ##                if self.__searchWord is not None:
@@ -322,6 +324,13 @@ class WebBrowserWindow(E5MainWindow):
         threads started with QThread'
         """
         pass
+    
+    def fromEric(self):
+        """
+        Public method to check, if the web browser was called from within the
+        eric IDE.
+        """
+        return self.__fromEric
     
 ##    def __setIconDatabasePath(self, enable=True):
 ##        """
@@ -574,7 +583,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__saveVisiblePageScreen)
 ##        self.__actions.append(self.saveVisiblePageScreenAct)
         
-        # TODO: re-enable when bookmarks are done
+        # TODO: Bookmarks
 ##        bookmarksManager = self.bookmarksManager()
 ##        self.importBookmarksAct = E5Action(
 ##            self.tr('Import Bookmarks'),
@@ -606,7 +615,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                bookmarksManager.exportBookmarks)
 ##        self.__actions.append(self.exportBookmarksAct)
         
-        # TODO: re-enable when print stuff is done
+        # TODO: print stuff
 ##        self.printAct = E5Action(
 ##            self.tr('Print'),
 ##            UI.PixmapCache.getIcon("print.png"),
@@ -684,7 +693,7 @@ class WebBrowserWindow(E5MainWindow):
                 self.__tabWidget.closeAllBrowsers)
         self.__actions.append(self.closeAllAct)
         
-        # TODO: re-enable when Private Browsing is done
+        # TODO: Private Browsing
 ##        self.privateBrowsingAct = E5Action(
 ##            self.tr('Private Browsing'),
 ##            UI.PixmapCache.getIcon("privateBrowsing.png"),
@@ -871,7 +880,7 @@ class WebBrowserWindow(E5MainWindow):
                 self.__searchWidget.findPrevious)
         self.__actions.append(self.findPrevAct)
         
-        # TODO: re-enable when bookmarks are done
+        # TODO: Bookmarks
 ##        self.bookmarksManageAct = E5Action(
 ##            self.tr('Manage Bookmarks'),
 ##            self.tr('&Manage Bookmarks...'),
@@ -982,56 +991,57 @@ class WebBrowserWindow(E5MainWindow):
             self.aboutQtAct.triggered.connect(self.__aboutQt)
         self.__actions.append(self.aboutQtAct)
         
-        # TODO: re-enable once Zoom stuff is done
-##        self.zoomInAct = E5Action(
-##            self.tr('Zoom in'),
-##            UI.PixmapCache.getIcon("zoomIn.png"),
-##            self.tr('Zoom &in'),
-##            QKeySequence(self.tr("Ctrl++", "View|Zoom in")),
-##            QKeySequence(self.tr("Zoom In", "View|Zoom in")),
-##            self, 'webbrowser_view_zoom_in')
-##        self.zoomInAct.setStatusTip(self.tr('Zoom in on the text'))
-##        self.zoomInAct.setWhatsThis(self.tr(
-##            """<b>Zoom in</b>"""
-##            """<p>Zoom in on the text. This makes the text bigger.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.zoomInAct.triggered.connect(self.__zoomIn)
-##        self.__actions.append(self.zoomInAct)
-##        
-##        self.zoomOutAct = E5Action(
-##            self.tr('Zoom out'),
-##            UI.PixmapCache.getIcon("zoomOut.png"),
-##            self.tr('Zoom &out'),
-##            QKeySequence(self.tr("Ctrl+-", "View|Zoom out")),
-##            QKeySequence(self.tr("Zoom Out", "View|Zoom out")),
-##            self, 'webbrowser_view_zoom_out')
-##        self.zoomOutAct.setStatusTip(self.tr('Zoom out on the text'))
-##        self.zoomOutAct.setWhatsThis(self.tr(
-##            """<b>Zoom out</b>"""
-##            """<p>Zoom out on the text. This makes the text smaller.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.zoomOutAct.triggered.connect(self.__zoomOut)
-##        self.__actions.append(self.zoomOutAct)
-##        
-##        self.zoomResetAct = E5Action(
-##            self.tr('Zoom reset'),
-##            UI.PixmapCache.getIcon("zoomReset.png"),
-##            self.tr('Zoom &reset'),
-##            QKeySequence(self.tr("Ctrl+0", "View|Zoom reset")),
-##            0, self, 'webbrowser_view_zoom_reset')
-##        self.zoomResetAct.setStatusTip(self.tr(
-##            'Reset the zoom of the text'))
-##        self.zoomResetAct.setWhatsThis(self.tr(
-##            """<b>Zoom reset</b>"""
-##            """<p>Reset the zoom of the text. """
-##            """This sets the zoom factor to 100%.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.zoomResetAct.triggered.connect(self.__zoomReset)
-##        self.__actions.append(self.zoomResetAct)
-##        
+        self.zoomInAct = E5Action(
+            self.tr('Zoom in'),
+            UI.PixmapCache.getIcon("zoomIn.png"),
+            self.tr('Zoom &in'),
+            QKeySequence(self.tr("Ctrl++", "View|Zoom in")),
+            QKeySequence(self.tr("Zoom In", "View|Zoom in")),
+            self, 'webbrowser_view_zoom_in')
+        self.zoomInAct.setStatusTip(self.tr('Zoom in on the web page'))
+        self.zoomInAct.setWhatsThis(self.tr(
+            """<b>Zoom in</b>"""
+            """<p>Zoom in on the web page."""
+            """ This makes the web page bigger.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.zoomInAct.triggered.connect(self.__zoomIn)
+        self.__actions.append(self.zoomInAct)
+        
+        self.zoomOutAct = E5Action(
+            self.tr('Zoom out'),
+            UI.PixmapCache.getIcon("zoomOut.png"),
+            self.tr('Zoom &out'),
+            QKeySequence(self.tr("Ctrl+-", "View|Zoom out")),
+            QKeySequence(self.tr("Zoom Out", "View|Zoom out")),
+            self, 'webbrowser_view_zoom_out')
+        self.zoomOutAct.setStatusTip(self.tr('Zoom out on the web page'))
+        self.zoomOutAct.setWhatsThis(self.tr(
+            """<b>Zoom out</b>"""
+            """<p>Zoom out on the web page."""
+            """ This makes the web page smaller.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.zoomOutAct.triggered.connect(self.__zoomOut)
+        self.__actions.append(self.zoomOutAct)
+        
+        self.zoomResetAct = E5Action(
+            self.tr('Zoom reset'),
+            UI.PixmapCache.getIcon("zoomReset.png"),
+            self.tr('Zoom &reset'),
+            QKeySequence(self.tr("Ctrl+0", "View|Zoom reset")),
+            0, self, 'webbrowser_view_zoom_reset')
+        self.zoomResetAct.setStatusTip(self.tr(
+            'Reset the zoom of the web page'))
+        self.zoomResetAct.setWhatsThis(self.tr(
+            """<b>Zoom reset</b>"""
+            """<p>Reset the zoom of the web page. """
+            """This sets the zoom factor to 100%.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.zoomResetAct.triggered.connect(self.__zoomReset)
+        self.__actions.append(self.zoomResetAct)
+        
 ##        if hasattr(QWebSettings, 'ZoomTextOnly'):
 ##            self.zoomTextOnlyAct = E5Action(
 ##                self.tr('Zoom text only'),
@@ -1139,6 +1149,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showAcceptedLanguages)
 ##        self.__actions.append(self.acceptedLanguagesAct)
         
+        # TODO: Cookies
 ##        self.cookiesAct = E5Action(
 ##            self.tr('Cookies'),
 ##            UI.PixmapCache.getIcon("cookie.png"),
@@ -1154,7 +1165,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showCookiesConfiguration)
 ##        self.__actions.append(self.cookiesAct)
         
-        # TODO: re-enable once Flash Cookies stuff is done
+        # TODO: Flash Cookies
 ##        self.flashCookiesAct = E5Action(
 ##            self.tr('Flash Cookies'),
 ##            UI.PixmapCache.getIcon("flashCookie.png"),
@@ -1240,7 +1251,7 @@ class WebBrowserWindow(E5MainWindow):
                 E5ErrorMessage.editMessageFilters)
         self.__actions.append(self.editMessageFilterAct)
         
-        # TODO: re-enable once feature permission stuff is done
+        # TODO: Feature Permission
 ##        self.featurePermissionAct = E5Action(
 ##            self.tr('Edit HTML5 Feature Permissions'),
 ##            UI.PixmapCache.getIcon("featurePermission.png"),
@@ -1398,7 +1409,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.clearIconsAct.triggered.connect(self.__clearIconsDatabase)
 ##        self.__actions.append(self.clearIconsAct)
         
-        # TODO: re-enable once search engines have been done
+        # TODO: Open Search
 ##        self.searchEnginesAct = E5Action(
 ##            self.tr('Configure Search Engines'),
 ##            self.tr('Configure Search &Engines...'),
@@ -1416,6 +1427,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showEnginesConfigurationDialog)
 ##        self.__actions.append(self.searchEnginesAct)
         
+        # TODO: Passwords
 ##        self.passwordsAct = E5Action(
 ##            self.tr('Manage Saved Passwords'),
 ##            UI.PixmapCache.getIcon("passwords.png"),
@@ -1432,6 +1444,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.passwordsAct.triggered.connect(self.__showPasswordsDialog)
 ##        self.__actions.append(self.passwordsAct)
         
+        # TODO: AdBlock
 ##        self.adblockAct = E5Action(
 ##            self.tr('Ad Block'),
 ##            UI.PixmapCache.getIcon("adBlockPlus.png"),
@@ -1449,6 +1462,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.adblockAct.triggered.connect(self.__showAdBlockDialog)
 ##        self.__actions.append(self.adblockAct)
         
+        # TODO: Click2Flash (?)
 ##        self.flashblockAct = E5Action(
 ##            self.tr('ClickToFlash'),
 ##            UI.PixmapCache.getIcon("flashBlock.png"),
@@ -1467,6 +1481,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showClickToFlashDialog)
 ##        self.__actions.append(self.flashblockAct)
         
+        # TODO: Certificates
 ##        if SSL_AVAILABLE:
 ##            self.certificatesAct = E5Action(
 ##                self.tr('Manage SSL Certificates'),
@@ -1486,6 +1501,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                    self.__showCertificatesDialog)
 ##            self.__actions.append(self.certificatesAct)
         
+        # TODO: Network Monitor (?)
 ##        self.toolsMonitorAct = E5Action(
 ##            self.tr('Network Monitor'),
 ##            self.tr('&Network Monitor...'),
@@ -1502,7 +1518,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showNetworkMonitor)
 ##        self.__actions.append(self.toolsMonitorAct)
         
-        # TODO: re-enable once Download Manager has been done
+        # TODO: Download Manager
 ##        self.showDownloadManagerAct = E5Action(
 ##            self.tr('Downloads'),
 ##            self.tr('Downloads'),
@@ -1518,7 +1534,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showDownloadsWindow)
 ##        self.__actions.append(self.showDownloadManagerAct)
         
-        # TODO: re-enable once RSS Feeds Manager has been done
+        # TODO: RSS Feeds Manager
 ##        self.feedsManagerAct = E5Action(
 ##            self.tr('RSS Feeds Dialog'),
 ##            UI.PixmapCache.getIcon("rss22.png"),
@@ -1537,6 +1553,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.feedsManagerAct.triggered.connect(self.__showFeedsManager)
 ##        self.__actions.append(self.feedsManagerAct)
         
+        # TODO: Site Info
 ##        self.siteInfoAct = E5Action(
 ##            self.tr('Siteinfo Dialog'),
 ##            UI.PixmapCache.getIcon("helpAbout.png"),
@@ -1554,6 +1571,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.siteInfoAct.triggered.connect(self.__showSiteinfoDialog)
 ##        self.__actions.append(self.siteInfoAct)
         
+        # TODO: User Agents
 ##        self.userAgentManagerAct = E5Action(
 ##            self.tr('Manage User Agent Settings'),
 ##            self.tr('Manage &User Agent Settings'),
@@ -1569,6 +1587,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showUserAgentsDialog)
 ##        self.__actions.append(self.userAgentManagerAct)
         
+        # TODO: Synchronisation
 ##        self.synchronizationAct = E5Action(
 ##            self.tr('Synchronize data'),
 ##            UI.PixmapCache.getIcon("sync.png"),
@@ -1586,7 +1605,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showSyncDialog)
 ##        self.__actions.append(self.synchronizationAct)
         
-        # TODO: re-enable once zoom stuff is done
+        # TODO: Zoom Manager
 ##        self.zoomValuesAct = E5Action(
 ##            self.tr('Manage Saved Zoom Values'),
 ##            UI.PixmapCache.getIcon("zoomReset.png"),
@@ -1677,11 +1696,12 @@ class WebBrowserWindow(E5MainWindow):
         menu.addSeparator()
         menu.addAction(self.stopAct)
         menu.addAction(self.reloadAct)
+        # TODO: QtHelp
 ##        if WebBrowserWindow.UseQtHelp:
 ##            menu.addSeparator()
 ##            menu.addAction(self.syncTocAct)
         
-        # TODO: re-enable once History stuff is done
+        # TODO: History
 ##        from .History.HistoryMenu import HistoryMenu
 ##        self.historyMenu = HistoryMenu(self, self.__tabWidget)
 ##        self.historyMenu.setTearOffEnabled(True)
@@ -1690,7 +1710,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.historyMenu.newUrl.connect(self.openUrlNewTab)
 ##        mb.addMenu(self.historyMenu)
         
-        # TODO: re-enable once Bookmarks stuff is done
+        # TODO: Bookmarks
 ##        from .Bookmarks.BookmarksMenu import BookmarksMenuBarMenu
 ##        self.bookmarksMenu = BookmarksMenuBarMenu(self)
 ##        self.bookmarksMenu.setTearOffEnabled(True)
@@ -1889,7 +1909,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.searchEdit.setSizePolicy(sizePolicy)
 ##        self.searchEdit.search.connect(self.__linkActivated)
 ##        self.__navigationSplitter.addWidget(self.searchEdit)
-##        gotb.addWidget(self.__navigationSplitter)
+        gotb.addWidget(self.__navigationSplitter)
         
         self.__navigationSplitter.setSizePolicy(
             QSizePolicy.Expanding, QSizePolicy.Maximum)
@@ -2373,35 +2393,35 @@ class WebBrowserWindow(E5MainWindow):
         """
         self.currentBrowser().stop()
     
-##    def __zoomValueChanged(self, value):
-##        """
-##        Private slot to handle value changes of the zoom widget.
-##        
-##        @param value zoom value (integer)
-##        """
-##        self.currentBrowser().setZoomValue(value)
-##    
-##    def __zoomIn(self):
-##        """
-##        Private slot called to handle the zoom in action.
-##        """
-##        self.currentBrowser().zoomIn()
-##        self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
-##    
-##    def __zoomOut(self):
-##        """
-##        Private slot called to handle the zoom out action.
-##        """
-##        self.currentBrowser().zoomOut()
-##        self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
-##    
-##    def __zoomReset(self):
-##        """
-##        Private slot called to handle the zoom reset action.
-##        """
-##        self.currentBrowser().zoomReset()
-##        self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
-##    
+    def __zoomValueChanged(self, value):
+        """
+        Private slot to handle value changes of the zoom widget.
+        
+        @param value zoom value (integer)
+        """
+        self.currentBrowser().setZoomValue(value)
+    
+    def __zoomIn(self):
+        """
+        Private slot called to handle the zoom in action.
+        """
+        self.currentBrowser().zoomIn()
+        self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
+    
+    def __zoomOut(self):
+        """
+        Private slot called to handle the zoom out action.
+        """
+        self.currentBrowser().zoomOut()
+        self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
+    
+    def __zoomReset(self):
+        """
+        Private slot called to handle the zoom reset action.
+        """
+        self.currentBrowser().zoomReset()
+        self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
+    
 ##    def __zoomTextOnly(self, textOnly):
 ##        """
 ##        Private slot called to handle the zoom text only action.
@@ -2521,9 +2541,9 @@ class WebBrowserWindow(E5MainWindow):
                 self.setForwardAvailable(cb.isForwardAvailable())
                 self.setBackwardAvailable(cb.isBackwardAvailable())
                 self.setLoadingActions(cb.isLoading())
-##                
-##                # set value of zoom widget
-##                self.__zoomWidget.setValue(cb.zoomValue())
+                
+                # set value of zoom widget
+                self.__zoomWidget.setValue(cb.zoomValue())
     
     def __showPreferences(self):
         """

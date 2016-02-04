@@ -10,7 +10,7 @@ Module implementing the web browser using QWebEngineView.
 
 from __future__ import unicode_literals
 try:
-    str = unicode
+    str = unicode           # __IGNORE_EXCEPTION__
 except NameError:
     pass
 
@@ -228,13 +228,16 @@ class WebBrowserView(QWebEngineView):
         
 ##        self.page().databaseQuotaExceeded.connect(self.__databaseQuotaExceeded)
         
-        # TODO: re-enable onece Open Search is done
+        # TODO: Open Search
 ##        self.__mw.openSearchManager().currentEngineChanged.connect(
 ##            self.__currentEngineChanged)
         
+        self.__rwhvqt = None
+        # TODO: eventFilter (see below)
+##        self.installEventFilter(self)
         self.setAcceptDrops(True)
         
-        # TODO: re-enable for Access Keys
+        # TODO: Access Keys
 ##        self.__enableAccessKeys = Preferences.getHelp("AccessKeysEnabled")
 ##        self.__accessKeysPressed = False
 ##        self.__accessKeyLabels = []
@@ -247,8 +250,9 @@ class WebBrowserView(QWebEngineView):
         
         self.__clickedFrame = None
         
-        # TODO: re-enable once done
+        # TODO: PIM
 ##        self.__mw.personalInformationManager().connectPage(self.page())
+        # TODO: GreaseMonkey
 ##        self.__mw.greaseMonkeyManager().connectPage(self.page())
 ##        
 ##        self.__inspector = None
@@ -459,6 +463,8 @@ class WebBrowserView(QWebEngineView):
         """
         Public slot to move to the first page loaded.
         """
+##        homeUrl = QUrl("http://localhost")
+##        # TODO: eric: scheme or Configuration page
         homeUrl = QUrl(Preferences.getWebBrowser("HomePage"))
         self.setSource(homeUrl)
         self.__urlChanged(self.history().currentItem().url())
@@ -524,7 +530,7 @@ class WebBrowserView(QWebEngineView):
         if value != self.zoomValue():
             self.setZoomFactor(value / 100.0)
             self.__currentZoom = value
-            # TODO: re-enable this when Zoom Manager is done
+            # TODO: Zoom Manager
 ##            if saveValue:
 ##                Helpviewer.HelpWindow.HelpWindow.zoomManager().setZoomValue(
 ##                    self.url(), value)
@@ -606,7 +612,7 @@ class WebBrowserView(QWebEngineView):
         else:
             self.findText(txt, findFlags, callback)
     
-    # TODO: re-enable once WebBrowserWebElement is done
+    # TODO: WebBrowserWebElement
 ##    def __isMediaElement(self, element):
 ##        """
 ##        Private method to check, if the given element is a media element.
@@ -625,12 +631,12 @@ class WebBrowserView(QWebEngineView):
         @param evt reference to the context menu event object
             (QContextMenuEvent)
         """
-        # TODO: re-enable once User Agent is done
+        # TODO: User Agent
 ##        from .UserAgent.UserAgentMenu import UserAgentMenu
         menu = QMenu(self)
         
 ##        frameAtPos = self.page().frameAt(evt.pos())
-        # TODO: re-enable once WebHitTestResult is done
+        # TODO: WebHitTestResult
 ##        hit = self.page().hitTestContent(evt.pos())
 ##        if not hit.linkUrl().isEmpty():
 ##            menu.addAction(
@@ -763,7 +769,7 @@ class WebBrowserView(QWebEngineView):
         if not menu.isEmpty():
             menu.addSeparator()
         
-        # TODO: re-enable once PIM is done
+        # TODO: PIM
 ##        self.__mw.personalInformationManager().createSubMenu(menu, self, hit)
         
         menu.addAction(self.__mw.newTabAct)
@@ -812,14 +818,15 @@ class WebBrowserView(QWebEngineView):
 ##            menu.addMenu(fmenu)
 ##            menu.addSeparator()
         
-        menu.addAction(
-            UI.PixmapCache.getIcon("bookmark22.png"),
-            self.tr("Bookmark this Page"), self.addBookmark)
+        # TODO: Bookmarks
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("bookmark22.png"),
+##            self.tr("Bookmark this Page"), self.addBookmark)
         menu.addAction(
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Page Link"), self.__sendLink).setData(self.url())
         menu.addSeparator()
-        # TODO: re-enable once User Agent is done
+        # TODO: User Agent
 ##        self.__userAgentMenu = UserAgentMenu(self.tr("User Agent"),
 ##                                             url=self.url())
 ##        menu.addMenu(self.__userAgentMenu)
@@ -841,7 +848,7 @@ class WebBrowserView(QWebEngineView):
         menu.addAction(self.__mw.findAct)
         menu.addSeparator()
         if self.selectedText():
-            # TODO: re-enable once Open Search is done
+            # TODO: Open Search
 ##            self.__searchMenu = menu.addMenu(self.tr("Search with..."))
 ##            
 ##            from .OpenSearch.OpenSearchEngineAction import \
@@ -856,7 +863,7 @@ class WebBrowserView(QWebEngineView):
 ##            
 ##            menu.addSeparator()
             
-            # TODO: re-enable once Languages Dialog is done
+            # TODO: Languages Dialog
 ##            from .HelpLanguagesDialog import HelpLanguagesDialog
 ##            languages = Preferences.toList(
 ##                Preferences.Prefs.settings.value(
@@ -896,7 +903,7 @@ class WebBrowserView(QWebEngineView):
 ##                           self.__addSearchEngine).setData(element)
 ##            menu.addSeparator()
         
-        # TODO: re-enable once Web Inspector is done
+        # TODO: Web Inspector
 ##        menu.addAction(
 ##            UI.PixmapCache.getIcon("webInspector.png"),
 ##            self.tr("Web Inspector..."), self.__webInspector)
@@ -1306,10 +1313,7 @@ class WebBrowserView(QWebEngineView):
         
         @param evt reference to the wheel event (QWheelEvent)
         """
-        if qVersion() >= "5.0.0":
-            delta = evt.angleDelta().y()
-        else:
-            delta = evt.delta()
+        delta = evt.angleDelta().y()
         if evt.modifiers() & Qt.ControlModifier:
             if delta < 0:
                 self.zoomOut()
@@ -1328,45 +1332,45 @@ class WebBrowserView(QWebEngineView):
         
         super(WebBrowserView, self).wheelEvent(evt)
     
-    def keyPressEvent(self, evt):
-        """
-        Protected method called by a key press.
-        
-        @param evt reference to the key event (QKeyEvent)
-        """
-        # TODO: PIM
-##        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
-##            return
-        
-        # TODO: Access Keys
-##        if self.__enableAccessKeys:
-##            self.__accessKeysPressed = (
-##                evt.modifiers() == Qt.ControlModifier and
-##                evt.key() == Qt.Key_Control)
-##            if not self.__accessKeysPressed:
-##                if self.__checkForAccessKey(evt):
-##                    self.__hideAccessKeys()
-##                    evt.accept()
-##                    return
-##                self.__hideAccessKeys()
-##            else:
-##                QTimer.singleShot(300, self.__accessKeyShortcut)
-        
-        self.__ctrlPressed = (evt.key() == Qt.Key_Control)
-        super(WebBrowserView, self).keyPressEvent(evt)
-    
-    def keyReleaseEvent(self, evt):
-        """
-        Protected method called by a key release.
-        
-        @param evt reference to the key event (QKeyEvent)
-        """
-        # TODO: Access Keys
-##        if self.__enableAccessKeys:
-##            self.__accessKeysPressed = evt.key() == Qt.Key_Control
-        
-        self.__ctrlPressed = False
-        super(WebBrowserView, self).keyReleaseEvent(evt)
+##    def keyPressEvent(self, evt):
+##        """
+##        Protected method called by a key press.
+##        
+##        @param evt reference to the key event (QKeyEvent)
+##        """
+##        # TODO: PIM
+####        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
+####            return
+##        
+##        # TODO: Access Keys
+####        if self.__enableAccessKeys:
+####            self.__accessKeysPressed = (
+####                evt.modifiers() == Qt.ControlModifier and
+####                evt.key() == Qt.Key_Control)
+####            if not self.__accessKeysPressed:
+####                if self.__checkForAccessKey(evt):
+####                    self.__hideAccessKeys()
+####                    evt.accept()
+####                    return
+####                self.__hideAccessKeys()
+####            else:
+####                QTimer.singleShot(300, self.__accessKeyShortcut)
+##        
+##        self.__ctrlPressed = (evt.key() == Qt.Key_Control)
+##        super(WebBrowserView, self).keyPressEvent(evt)
+##    
+##    def keyReleaseEvent(self, evt):
+##        """
+##        Protected method called by a key release.
+##        
+##        @param evt reference to the key event (QKeyEvent)
+##        """
+##        # TODO: Access Keys
+####        if self.__enableAccessKeys:
+####            self.__accessKeysPressed = evt.key() == Qt.Key_Control
+##        
+##        self.__ctrlPressed = False
+##        super(WebBrowserView, self).keyReleaseEvent(evt)
     
     def focusOutEvent(self, evt):
         """
@@ -1409,6 +1413,73 @@ class WebBrowserView(QWebEngineView):
                 self.__currentZoom = int(scaleFactor * 100)
                 self.__applyZoom()
             evt.accept()
+##bool WebView::eventFilter(QObject *obj, QEvent *event)
+##{
+##    // Hack to find widget that receives input events
+##    if (obj == this && event->type() == QEvent::ChildAdded) {
+##        QWidget *child = qobject_cast<QWidget*>(static_cast<QChildEvent*>(event)->child());
+##        if (child && child->inherits("QtWebEngineCore::RenderWidgetHostViewQtDelegateWidget")) {
+##            m_rwhvqt = child;
+##            m_rwhvqt->installEventFilter(this);
+##        }
+##    }
+##
+##    // Forward events to WebView
+##    if (obj == m_rwhvqt) {
+###define HANDLE_EVENT(f, t) \
+##        { \
+##        bool wasAccepted = event->isAccepted(); \
+##        event->setAccepted(false); \
+##        f(static_cast<t*>(event)); \
+##        bool ret = event->isAccepted(); \
+##        event->setAccepted(wasAccepted); \
+##        return ret; \
+##        }
+##
+##        switch (event->type()) {
+##        case QEvent::KeyPress:
+##            HANDLE_EVENT(_keyPressEvent, QKeyEvent);
+##
+##        case QEvent::KeyRelease:
+##            HANDLE_EVENT(_keyReleaseEvent, QKeyEvent);
+##
+##        case QEvent::MouseButtonPress:
+##            HANDLE_EVENT(_mousePressEvent, QMouseEvent);
+##
+##        case QEvent::MouseButtonRelease:
+##            HANDLE_EVENT(_mouseReleaseEvent, QMouseEvent);
+##
+##        case QEvent::MouseMove:
+##            HANDLE_EVENT(_mouseMoveEvent, QMouseEvent);
+##
+##        case QEvent::Wheel:
+##            HANDLE_EVENT(_wheelEvent, QWheelEvent);
+##
+##        default:
+##            break;
+##        }
+##
+###undef HANDLE_EVENT
+##    }
+##
+##    // Block already handled events
+##    if (obj == this) {
+##        switch (event->type()) {
+##        case QEvent::KeyPress:
+##        case QEvent::KeyRelease:
+##        case QEvent::MouseButtonPress:
+##        case QEvent::MouseButtonRelease:
+##        case QEvent::MouseMove:
+##        case QEvent::Wheel:
+##            return true;
+##
+##        default:
+##            break;
+##        }
+##    }
+##
+##    return QWebEngineView::eventFilter(obj, event);
+##}
     
     def clearHistory(self):
         """
@@ -1481,7 +1552,7 @@ class WebBrowserView(QWebEngineView):
             self.zoomIn()
             self.zoomOut()
         
-        # TODO: ZoomManager
+        # TODO: Zoom Manager
 ##        zoomValue = Helpviewer.HelpWindow.HelpWindow.zoomManager()\
 ##            .zoomValue(self.url())
 ##        self.setZoomValue(zoomValue)
@@ -1867,7 +1938,7 @@ class WebBrowserView(QWebEngineView):
     ## RSS related methods below
     ###########################################################################
     
-    # TODO: extract links from page to implement RSS stuff
+    # TODO: RSS, extract links from page to implement RSS stuff
 ##    def checkRSS(self):
 ##        """
 ##        Public method to check, if the loaded page contains feed links.

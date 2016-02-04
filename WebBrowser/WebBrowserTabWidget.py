@@ -21,7 +21,6 @@ from E5Gui.E5TabWidget import E5TabWidget
 from E5Gui import E5MessageBox
 from E5Gui.E5Application import e5App
 
-# TODO: implement this
 from .WebBrowserView import WebBrowserView
 
 import UI.PixmapCache
@@ -60,10 +59,9 @@ class WebBrowserTabWidget(E5TabWidget):
         """
         super(WebBrowserTabWidget, self).__init__(parent, dnd=True)
         
-        # TODO: implement this
-##        from .WebBrowserTabBar import WebBrowserTabBar
-##        self.__tabBar = WebBrowserTabBar(self)
-##        self.setCustomTabBar(True, self.__tabBar)
+        from .WebBrowserTabBar import WebBrowserTabBar
+        self.__tabBar = WebBrowserTabBar(self)
+        self.setCustomTabBar(True, self.__tabBar)
         
         self.__mainWindow = parent
         
@@ -71,7 +69,7 @@ class WebBrowserTabWidget(E5TabWidget):
         self.setDocumentMode(True)
         self.setElideMode(Qt.ElideNone)
         
-        # TODO: re-enable once Closed Tabs Manager is done
+        # TODO: Closed Tabs Manager
 ##        from .ClosedTabsManager import ClosedTabsManager
 ##        self.__closedTabsManager = ClosedTabsManager(self)
 ##        self.__closedTabsManager.closedTabAvailable.connect(
@@ -79,7 +77,7 @@ class WebBrowserTabWidget(E5TabWidget):
         
         from .UrlBar.StackedUrlBar import StackedUrlBar
         self.__stackedUrlBar = StackedUrlBar(self)
-##        self.__tabBar.tabMoved.connect(self.__stackedUrlBar.moveBar)
+        self.__tabBar.tabMoved.connect(self.__stackedUrlBar.moveBar)
         
         self.__tabContextMenuIndex = -1
         self.currentChanged[int].connect(self.__currentChanged)
@@ -105,7 +103,7 @@ class WebBrowserTabWidget(E5TabWidget):
         self.__navigationButton.setEnabled(False)
         self.__rightCornerWidgetLayout.addWidget(self.__navigationButton)
         
-        # TODO: re-enable once Closed Tabs Manager is done
+        # TODO: Closed Tabs Manager
 ##        self.__closedTabsMenu = QMenu(self)
 ##        self.__closedTabsMenu.aboutToShow.connect(
 ##            self.__aboutToShowClosedTabsMenu)
@@ -837,7 +835,8 @@ class WebBrowserTabWidget(E5TabWidget):
         
         @return flag indicating a shut down (boolean)
         """
-        if self.count() > 1 and Preferences.getHelp("WarnOnMultipleClose"):
+        if self.count() > 1 and Preferences.getWebBrowser(
+                "WarnOnMultipleClose"):
             mb = E5MessageBox.E5MessageBox(
                 E5MessageBox.Information,
                 self.tr("Are you sure you want to close the window?"),
@@ -917,7 +916,7 @@ class WebBrowserTabWidget(E5TabWidget):
         @param path path string to guess an URL for (string)
         @return guessed URL (QUrl)
         """
-        # TODO: re-enable once Open Search is done
+        # TODO: Open Search
 ##        manager = self.__mainWindow.openSearchManager()
 ##        path = Utilities.fromNativeSeparators(path)
 ##        url = manager.convertKeywordSearchToUrl(path)
@@ -962,7 +961,7 @@ class WebBrowserTabWidget(E5TabWidget):
             elif browser.url() != "":
                 browser.setFocus()
     
-    # TODO: re-enable once Closed Tabs Manager is done
+    # TODO: Closed Tabs Manager
 ##    def restoreClosedTab(self):
 ##        """
 ##        Public slot to restore the most recently closed tab.

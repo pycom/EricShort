@@ -12,7 +12,6 @@ from __future__ import unicode_literals
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.QtGui import QPalette, QBrush, QColor
 from PyQt5.QtWidgets import QWidget
-##from PyQt5.QtWebKitWidgets import QWebPage
 
 from .Ui_SearchWidget import Ui_SearchWidget
 
@@ -88,13 +87,22 @@ class SearchWidget(QWidget, Ui_SearchWidget):
             return
         
         # TODO: adjust this to the browser API
-        # TODO: use the callback interface of QWebEnginePage
-        if not self.__mainWindow.currentBrowser().findNextPrev(
-                self.findtextCombo.currentText(),
-                self.caseCheckBox.isChecked(),
-                self.__findBackwards,
-                self.wrapCheckBox.isChecked(),
-                False):
+        self.__mainWindow.currentBrowser().findNextPrev(
+            self.findtextCombo.currentText(),
+            self.caseCheckBox.isChecked(),
+            self.__findBackwards,
+            self.wrapCheckBox.isChecked(),
+            False,
+            self.__findNextPrevCallback)
+    
+    def __findNextPrevCallback(self, found):
+        """
+        Private method to process the result of the last search.
+        
+        @param found flag indicating if the last search succeeded
+        @type bool
+        """
+        if not found:
             self.infoLabel.setText(self.tr("Expression was not found."))
             self.__setFindtextComboBackground(True)
 ##    

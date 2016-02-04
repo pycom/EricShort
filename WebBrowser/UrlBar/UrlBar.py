@@ -55,29 +55,34 @@ class UrlBar(E5LineEdit):
 ##        self.__privateMode = QWebSettings.globalSettings().testAttribute(
 ##            QWebSettings.PrivateBrowsingEnabled)
         
-        # TODO: re-enable once bookmarks are done
+        # TODO: Bookmarks
 ##        self.__bmActiveIcon = UI.PixmapCache.getIcon("bookmark16.png")
 ##        self.__bmInactiveIcon = QIcon(
 ##            self.__bmActiveIcon.pixmap(16, 16, QIcon.Disabled))
         
+        # TODO: FavIcon
 ##        self.__favicon = FavIconLabel(self)
 ##        self.addWidget(self.__favicon, E5LineEdit.LeftSide)
-##        
+        
+        # TODO: SSL
 ##        self.__sslLabel = SslLabel(self)
 ##        self.addWidget(self.__sslLabel, E5LineEdit.LeftSide)
 ##        self.__sslLabel.setVisible(False)
-##        
+        
+        # TODO: Privacy
 ##        self.__privacyButton = E5LineEditButton(self)
 ##        self.__privacyButton.setIcon(
 ##            UI.PixmapCache.getIcon("privateBrowsing.png"))
 ##        self.addWidget(self.__privacyButton, E5LineEdit.RightSide)
 ##        self.__privacyButton.setVisible(self.__privateMode)
-##        
+        
+        # TODO: RSS
 ##        self.__rssButton = E5LineEditButton(self)
 ##        self.__rssButton.setIcon(UI.PixmapCache.getIcon("rss16.png"))
 ##        self.addWidget(self.__rssButton, E5LineEdit.RightSide)
 ##        self.__rssButton.setVisible(False)
         
+        # TODO: Bookmarks
 ##        self.__bookmarkButton = E5LineEditButton(self)
 ##        self.addWidget(self.__bookmarkButton, E5LineEdit.RightSide)
 ##        self.__bookmarkButton.setVisible(False)
@@ -87,19 +92,24 @@ class UrlBar(E5LineEdit):
         self.addWidget(self.__clearButton, E5LineEdit.RightSide)
         self.__clearButton.setVisible(False)
         
+        # TODO: Bookmarks
 ##        self.__bookmarkButton.clicked.connect(self.__showBookmarkInfo)
-##        self.__privacyButton.clicked.connect(self.__privacyClicked)
+        # TODO: RSS
 ##        self.__rssButton.clicked.connect(self.__rssClicked)
+        # TODO: Privacy
+##        self.__privacyButton.clicked.connect(self.__privacyClicked)
         self.__clearButton.clicked.connect(self.clear)
 ##        self.__mw.privacyChanged.connect(self.__privacyButton.setVisible)
         self.textChanged.connect(self.__textChanged)
         
+        # TODO: Bookmarks
 ##        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
 ##            .entryChanged.connect(self.__bookmarkChanged)
 ##        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
 ##            .entryAdded.connect(self.__bookmarkChanged)
 ##        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
 ##            .entryRemoved.connect(self.__bookmarkChanged)
+        # TODO: Speed Dial
 ##        Helpviewer.HelpWindow.HelpWindow.speedDial().pagesChanged.connect(
 ##            self.__bookmarkChanged)
     
@@ -110,13 +120,15 @@ class UrlBar(E5LineEdit):
         @param browser reference to the browser widget (WebBrowserView)
         """
         self.__browser = browser
+        # TODO: FavIcon
 ##        self.__favicon.setBrowser(browser)
         
         self.__browser.urlChanged.connect(self.__browserUrlChanged)
         self.__browser.loadProgress.connect(self.update)
         self.__browser.loadFinished.connect(self.__loadFinished)
         self.__browser.loadStarted.connect(self.__loadStarted)
-##        
+        
+        # TODO: SSL
 ##        self.__sslLabel.clicked.connect(self.__browser.page().showSslInfo)
     
     def browser(self):
@@ -147,9 +159,12 @@ class UrlBar(E5LineEdit):
         Private slot to perform actions before the page is loaded.
         """
         pass
+        # TODO: SSL
 ##        self.__sslLabel.setVisible(False)
+        # TODO: Bookmarks
 ##        self.__bookmarkButton.setVisible(False)
     
+    # TODO: Bookmarks
 ##    def __checkBookmark(self):
 ##        """
 ##        Private slot to check the current URL for the bookmarked state.
@@ -176,18 +191,18 @@ class UrlBar(E5LineEdit):
         """
         pass
 ##        try:
-        # TODO: re-enable once Bookmarks are done
+        # TODO: Bookmarks
 ##        if self.__browser.url().scheme() in ["eric", "about"]:
 ##            self.__bookmarkButton.setVisible(False)
 ##        else:
 ##            self.__checkBookmark()
 ##            self.__bookmarkButton.setVisible(True)
         
-        # TODO: re-enable once RSS is done
+        # TODO: RSS
 ##        if ok:
 ##            self.__rssButton.setVisible(self.__browser.checkRSS())
         
-        # TODO: do the SSL certificate stuff (if possible)
+        # TODO: SSL certificate stuff (if possible)
 ##        if ok and \
 ##           self.__browser.url().scheme() == "https" and \
 ##           QSslCertificate is not None:
@@ -217,6 +232,7 @@ class UrlBar(E5LineEdit):
 ##        except RuntimeError:
 ##            pass
     
+    # TODO: Privacy
 ##    def setPrivateMode(self, on):
 ##        """
 ##        Public method to set the private mode.
@@ -246,6 +262,7 @@ class UrlBar(E5LineEdit):
         """
         self.update()
     
+    # TODO: Bookmarks
 ##    def __showBookmarkInfo(self):
 ##        """
 ##        Private slot to show a dialog with some bookmark info.
@@ -283,6 +300,7 @@ class UrlBar(E5LineEdit):
         
         @param evt reference to the paint event (QPaintEvent)
         """
+        # TODO: Privacy
 ##        if self.__privateMode:
 ##            backgroundColor = QColor(220, 220, 220)     # light gray
 ##            foregroundColor = Qt.black

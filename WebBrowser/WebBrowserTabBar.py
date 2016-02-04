@@ -37,12 +37,11 @@ class WebBrowserTabBar(E5WheelTabBar):
         
         self.setMouseTracking(True)
     
-    def __showTabPreview(self):
-        """
-        Private slot to show the tab preview.
-        """
-        pass
-        # TODO: page preview
+    # TODO: page preview
+##    def __showTabPreview(self):
+##        """
+##        Private slot to show the tab preview.
+##        """
 ##        indexedBrowser = self.__tabWidget.browserAt(
 ##            self.__currentTabPreviewIndex)
 ##        currentBrowser = self.__tabWidget.currentBrowser()
@@ -84,7 +83,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         if self.count() == 1:
             return
         
-        E5WheelTabBar.mouseMoveEvent(self, evt)
+        super(WebBrowserTabBar, self).mouseMoveEvent(evt)
         
         # TODO: page preview
 ##        if Preferences.getHelp("ShowPreview"):
@@ -124,7 +123,7 @@ class WebBrowserTabBar(E5WheelTabBar):
 ##                self.__previewPopup.hide()
 ##            self.__currentTabPreviewIndex = -1
         
-        E5WheelTabBar.leaveEvent(self, evt)
+        super(WebBrowserTabBar, self).leaveEvent(evt)
     
     def mousePressEvent(self, evt):
         """
@@ -138,7 +137,7 @@ class WebBrowserTabBar(E5WheelTabBar):
 ##                self.__previewPopup.hide()
 ##            self.__currentTabPreviewIndex = -1
         
-        E5WheelTabBar.mousePressEvent(self, evt)
+        super(WebBrowserTabBar, self).mousePressEvent(evt)
     
     def event(self, evt):
         """
@@ -157,7 +156,7 @@ class WebBrowserTabBar(E5WheelTabBar):
 ##            evt.setAccepted(True)
 ##            return True
         
-        return E5WheelTabBar.event(self, evt)
+        return super(WebBrowserTabBar, self).event(evt)
     
     def tabRemoved(self, index):
         """

@@ -1008,8 +1008,10 @@ class Prefs(object):
         "SingleWebBrowserWindow": True,
         "SaveGeometry": True,
         "WebBrowserState": QByteArray(),
-        "StartupBehavior": 1,      # show speed dial
-        "HomePage": "eric:home",
+##        "StartupBehavior": 1,      # show speed dial
+##        "HomePage": "eric:home",
+        "StartupBehavior": 0,      # show home page
+        "HomePage": "http://eric-ide.python-projects.org",     # TODO: eric: scheme
         "WarnOnMultipleClose": True,
         "DefaultScheme": "https://",
     }
