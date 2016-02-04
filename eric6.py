@@ -317,14 +317,13 @@ def main():
     if len(sys.argv) > 1:
         args = sys.argv[1:]
     
-    # TODO: this code is misleading - it applies to Qt5 as well
     # get the Qt4 translations directory
-    qt4TransDir = Preferences.getQt4TranslationsDir()
-    if not qt4TransDir:
-        qt4TransDir = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+    qtTransDir = Preferences.getQtTranslationsDir()
+    if not qtTransDir:
+        qtTransDir = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
     
     # Load translation files and install them
-    loc = Startup.loadTranslators(qt4TransDir, app, ("qscintilla",))
+    loc = Startup.loadTranslators(qtTransDir, app, ("qscintilla",))
     
     # Initialize SSL stuff
     from E5Network.E5SslUtilities import initSSL
