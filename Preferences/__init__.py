@@ -1020,6 +1020,7 @@ class Prefs(object):
     }
 
     # defaults for Qt related stuff
+    # TODO: introduce Qt5TranslationsDir and use it depending on Qt version
     qtDefaults = {
         "Qt4TranslationsDir": "",
         "QtToolsPrefix4": "",
