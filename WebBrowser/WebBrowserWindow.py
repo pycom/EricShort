@@ -1674,9 +1674,9 @@ class WebBrowserWindow(E5MainWindow):
         
         menu = mb.addMenu(self.tr('&View'))
         menu.setTearOffEnabled(True)
-##        menu.addAction(self.zoomInAct)
-##        menu.addAction(self.zoomResetAct)
-##        menu.addAction(self.zoomOutAct)
+        menu.addAction(self.zoomInAct)
+        menu.addAction(self.zoomResetAct)
+        menu.addAction(self.zoomOutAct)
 ##        if self.zoomTextOnlyAct is not None:
 ##            menu.addAction(self.zoomTextOnlyAct)
         menu.addSeparator()
@@ -1832,12 +1832,12 @@ class WebBrowserWindow(E5MainWindow):
         edittb.setIconSize(UI.Config.ToolBarIconSize)
         edittb.addAction(self.copyAct)
         
-##        viewtb = self.addToolBar(self.tr("View"))
-##        viewtb.setObjectName("ViewToolBar")
-##        viewtb.setIconSize(UI.Config.ToolBarIconSize)
-##        viewtb.addAction(self.zoomInAct)
-##        viewtb.addAction(self.zoomResetAct)
-##        viewtb.addAction(self.zoomOutAct)
+        viewtb = self.addToolBar(self.tr("View"))
+        viewtb.setObjectName("ViewToolBar")
+        viewtb.setIconSize(UI.Config.ToolBarIconSize)
+        viewtb.addAction(self.zoomInAct)
+        viewtb.addAction(self.zoomResetAct)
+        viewtb.addAction(self.zoomOutAct)
 ##        viewtb.addSeparator()
 ##        viewtb.addAction(self.fullScreenAct)
         
@@ -2545,28 +2545,29 @@ class WebBrowserWindow(E5MainWindow):
                 # set value of zoom widget
                 self.__zoomWidget.setValue(cb.zoomValue())
     
+    # TODO: Preferences dialog
     def __showPreferences(self):
         """
         Private slot to set the preferences.
         """
-        from Preferences.ConfigurationDialog import ConfigurationDialog
-        dlg = ConfigurationDialog(
-            self, 'Configuration', True, fromEric=self.__fromEric,
-            displayMode=ConfigurationDialog.WebBrowserMode)
-        dlg.preferencesChanged.connect(self.preferencesChanged)
-        dlg.masterPasswordChanged.connect(self.masterPasswordChanged)
-        dlg.show()
-        if self.__lastConfigurationPageName:
-            dlg.showConfigurationPageByName(self.__lastConfigurationPageName)
-        else:
-            dlg.showConfigurationPageByName("empty")
-        dlg.exec_()
-        QApplication.processEvents()
-        if dlg.result() == QDialog.Accepted:
-            dlg.setPreferences()
-            Preferences.syncPreferences()
-            self.preferencesChanged()
-        self.__lastConfigurationPageName = dlg.getConfigurationPageName()
+##        from Preferences.ConfigurationDialog import ConfigurationDialog
+##        dlg = ConfigurationDialog(
+##            self, 'Configuration', True, fromEric=self.__fromEric,
+##            displayMode=ConfigurationDialog.WebBrowserMode)
+##        dlg.preferencesChanged.connect(self.preferencesChanged)
+##        dlg.masterPasswordChanged.connect(self.masterPasswordChanged)
+##        dlg.show()
+##        if self.__lastConfigurationPageName:
+##            dlg.showConfigurationPageByName(self.__lastConfigurationPageName)
+##        else:
+##            dlg.showConfigurationPageByName("empty")
+##        dlg.exec_()
+##        QApplication.processEvents()
+##        if dlg.result() == QDialog.Accepted:
+##            dlg.setPreferences()
+##            Preferences.syncPreferences()
+##            self.preferencesChanged()
+##        self.__lastConfigurationPageName = dlg.getConfigurationPageName()
     
     def preferencesChanged(self):
         """
@@ -3576,38 +3577,38 @@ class WebBrowserWindow(E5MainWindow):
         else:
             QWebEngineSettings.globalSettings().setDefaultTextEncoding(codec)
     
-##    def eventMouseButtons(self):
-##        """
-##        Public method to get the last recorded mouse buttons.
-##        
-##        @return mouse buttons (Qt.MouseButtons)
-##        """
-##        return self.__eventMouseButtons
-##    
-##    def eventKeyboardModifiers(self):
-##        """
-##        Public method to get the last recorded keyboard modifiers.
-##        
-##        @return keyboard modifiers (Qt.KeyboardModifiers)
-##        """
-##        return self.__eventKeyboardModifiers
-##    
-##    def setEventMouseButtons(self, buttons):
-##        """
-##        Public method to record mouse buttons.
-##        
-##        @param buttons mouse buttons to record (Qt.MouseButtons)
-##        """
-##        self.__eventMouseButtons = buttons
-##    
-##    def setEventKeyboardModifiers(self, modifiers):
-##        """
-##        Public method to record keyboard modifiers.
-##        
-##        @param modifiers keyboard modifiers to record (Qt.KeyboardModifiers)
-##        """
-##        self.__eventKeyboardModifiers = modifiers
-##    
+    def eventMouseButtons(self):
+        """
+        Public method to get the last recorded mouse buttons.
+        
+        @return mouse buttons (Qt.MouseButtons)
+        """
+        return self.__eventMouseButtons
+    
+    def eventKeyboardModifiers(self):
+        """
+        Public method to get the last recorded keyboard modifiers.
+        
+        @return keyboard modifiers (Qt.KeyboardModifiers)
+        """
+        return self.__eventKeyboardModifiers
+    
+    def setEventMouseButtons(self, buttons):
+        """
+        Public method to record mouse buttons.
+        
+        @param buttons mouse buttons to record (Qt.MouseButtons)
+        """
+        self.__eventMouseButtons = buttons
+    
+    def setEventKeyboardModifiers(self, modifiers):
+        """
+        Public method to record keyboard modifiers.
+        
+        @param modifiers keyboard modifiers to record (Qt.KeyboardModifiers)
+        """
+        self.__eventKeyboardModifiers = modifiers
+    
     def mousePressEvent(self, evt):
         """
         Protected method called by a mouse press event.

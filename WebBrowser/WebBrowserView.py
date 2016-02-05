@@ -40,117 +40,6 @@ try:
 except ImportError:
     SSL_AVAILABLE = False
 
-###############################################################################
-##
-##
-##class JavaScriptExternalObject(QObject):
-##    """
-##    Class implementing an external javascript object to add search providers.
-##    """
-##    def __init__(self, mw, parent=None):
-##        """
-##        Constructor
-##        
-##        @param mw reference to the main window 8HelpWindow)
-##        @param parent reference to the parent object (QObject)
-##        """
-##        super(JavaScriptExternalObject, self).__init__(parent)
-##        
-##        self.__mw = mw
-##    
-##    @pyqtSlot(str)
-##    def AddSearchProvider(self, url):
-##        """
-##        Public slot to add a search provider.
-##        
-##        @param url url of the XML file defining the search provider (string)
-##        """
-##        self.__mw.openSearchManager().addEngine(QUrl(url))
-##
-##
-##class LinkedResource(object):
-##    """
-##    Class defining a data structure for linked resources.
-##    """
-##    def __init__(self):
-##        """
-##        Constructor
-##        """
-##        self.rel = ""
-##        self.type_ = ""
-##        self.href = ""
-##        self.title = ""
-##
-###############################################################################
-##
-##
-##class JavaScriptEricObject(QObject):
-##    """
-##    Class implementing an external javascript object to search via the
-##    startpage.
-##    """
-##    # these must be in line with the strings used by the javascript part of
-##    # the start page
-##    translations = [
-##        QT_TRANSLATE_NOOP("JavaScriptEricObject",
-##                          "Welcome to eric6 Web Browser!"),
-##        QT_TRANSLATE_NOOP("JavaScriptEricObject", "eric6 Web Browser"),
-##        QT_TRANSLATE_NOOP("JavaScriptEricObject", "Search!"),
-##        QT_TRANSLATE_NOOP("JavaScriptEricObject", "About eric6"),
-##    ]
-##    
-##    def __init__(self, mw, parent=None):
-##        """
-##        Constructor
-##        
-##        @param mw reference to the main window 8HelpWindow)
-##        @param parent reference to the parent object (QObject)
-##        """
-##        super(JavaScriptEricObject, self).__init__(parent)
-##        
-##        self.__mw = mw
-##    
-##    @pyqtSlot(str, result=str)
-##    def translate(self, trans):
-##        """
-##        Public method to translate the given string.
-##        
-##        @param trans string to be translated (string)
-##        @return translation (string)
-##        """
-##        if trans == "QT_LAYOUT_DIRECTION":
-##            # special handling to detect layout direction
-##            if qApp.isLeftToRight():
-##                return "LTR"
-##            else:
-##                return "RTL"
-##        
-##        return self.tr(trans)
-##    
-##    @pyqtSlot(result=str)
-##    def providerString(self):
-##        """
-##        Public method to get a string for the search provider.
-##        
-##        @return string for the search provider (string)
-##        """
-##        return self.tr("Search results provided by {0}")\
-##            .format(self.__mw.openSearchManager().currentEngineName())
-##    
-##    @pyqtSlot(str, result=str)
-##    def searchUrl(self, searchStr):
-##        """
-##        Public method to get the search URL for the given search term.
-##        
-##        @param searchStr search term (string)
-##        @return search URL (string)
-##        """
-##        return bytes(
-##            self.__mw.openSearchManager().currentEngine()
-##            .searchUrl(searchStr).toEncoded()).decode()
-##
-###############################################################################
-
 
 class WebBrowserView(QWebEngineView):
     """
@@ -187,6 +76,9 @@ class WebBrowserView(QWebEngineView):
         """
         super(WebBrowserView, self).__init__(parent)
         self.setObjectName(name)
+        
+        self.__rwhvqt = None
+        self.installEventFilter(self)
 ##        
 ##        import Helpviewer.HelpWindow
 ##        self.__speedDial = Helpviewer.HelpWindow.HelpWindow.speedDial()
@@ -232,9 +124,6 @@ class WebBrowserView(QWebEngineView):
 ##        self.__mw.openSearchManager().currentEngineChanged.connect(
 ##            self.__currentEngineChanged)
         
-        self.__rwhvqt = None
-        # TODO: eventFilter (see below)
-##        self.installEventFilter(self)
         self.setAcceptDrops(True)
         
         # TODO: Access Keys
@@ -254,7 +143,8 @@ class WebBrowserView(QWebEngineView):
 ##        self.__mw.personalInformationManager().connectPage(self.page())
         # TODO: GreaseMonkey
 ##        self.__mw.greaseMonkeyManager().connectPage(self.page())
-##        
+        
+        # TODO: WebInspector
 ##        self.__inspector = None
         
         self.grabGesture(Qt.PinchGesture)
@@ -1272,7 +1162,7 @@ class WebBrowserView(QWebEngineView):
                 self.setSource(url)
                 evt.acceptProposedAction()
     
-    def mousePressEvent(self, evt):
+    def _mousePressEvent(self, evt):
         """
         Protected method called by a mouse press event.
         
@@ -1288,7 +1178,7 @@ class WebBrowserView(QWebEngineView):
         else:
             super(WebBrowserView, self).mousePressEvent(evt)
     
-    def mouseReleaseEvent(self, evt):
+    def _mouseReleaseEvent(self, evt):
         """
         Protected method called by a mouse release event.
         
@@ -1307,7 +1197,7 @@ class WebBrowserView(QWebEngineView):
                 self.setSource(url)
         evt.setAccepted(accepted)
     
-    def wheelEvent(self, evt):
+    def _wheelEvent(self, evt):
         """
         Protected method to handle wheel events.
         
@@ -1332,45 +1222,45 @@ class WebBrowserView(QWebEngineView):
         
         super(WebBrowserView, self).wheelEvent(evt)
     
-##    def keyPressEvent(self, evt):
-##        """
-##        Protected method called by a key press.
-##        
-##        @param evt reference to the key event (QKeyEvent)
-##        """
-##        # TODO: PIM
-####        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
-####            return
-##        
-##        # TODO: Access Keys
-####        if self.__enableAccessKeys:
-####            self.__accessKeysPressed = (
-####                evt.modifiers() == Qt.ControlModifier and
-####                evt.key() == Qt.Key_Control)
-####            if not self.__accessKeysPressed:
-####                if self.__checkForAccessKey(evt):
-####                    self.__hideAccessKeys()
-####                    evt.accept()
-####                    return
-####                self.__hideAccessKeys()
-####            else:
-####                QTimer.singleShot(300, self.__accessKeyShortcut)
-##        
-##        self.__ctrlPressed = (evt.key() == Qt.Key_Control)
-##        super(WebBrowserView, self).keyPressEvent(evt)
-##    
-##    def keyReleaseEvent(self, evt):
-##        """
-##        Protected method called by a key release.
-##        
-##        @param evt reference to the key event (QKeyEvent)
-##        """
-##        # TODO: Access Keys
-####        if self.__enableAccessKeys:
-####            self.__accessKeysPressed = evt.key() == Qt.Key_Control
-##        
-##        self.__ctrlPressed = False
-##        super(WebBrowserView, self).keyReleaseEvent(evt)
+    def _keyPressEvent(self, evt):
+        """
+        Protected method called by a key press.
+        
+        @param evt reference to the key event (QKeyEvent)
+        """
+        # TODO: PIM
+##        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
+##            return
+        
+        # TODO: Access Keys
+##        if self.__enableAccessKeys:
+##            self.__accessKeysPressed = (
+##                evt.modifiers() == Qt.ControlModifier and
+##                evt.key() == Qt.Key_Control)
+##            if not self.__accessKeysPressed:
+##                if self.__checkForAccessKey(evt):
+##                    self.__hideAccessKeys()
+##                    evt.accept()
+##                    return
+##                self.__hideAccessKeys()
+##            else:
+##                QTimer.singleShot(300, self.__accessKeyShortcut)
+        
+        self.__ctrlPressed = (evt.key() == Qt.Key_Control)
+        super(WebBrowserView, self).keyPressEvent(evt)
+    
+    def _keyReleaseEvent(self, evt):
+        """
+        Protected method called by a key release.
+        
+        @param evt reference to the key event (QKeyEvent)
+        """
+        # TODO: Access Keys
+##        if self.__enableAccessKeys:
+##            self.__accessKeysPressed = evt.key() == Qt.Key_Control
+        
+        self.__ctrlPressed = False
+        super(WebBrowserView, self).keyReleaseEvent(evt)
     
     def focusOutEvent(self, evt):
         """
@@ -1385,20 +1275,21 @@ class WebBrowserView(QWebEngineView):
         
         super(WebBrowserView, self).focusOutEvent(evt)
     
-    def event(self, evt):
-        """
-        Public method handling events.
-        
-        @param evt reference to the event (QEvent)
-        @return flag indicating, if the event was handled (boolean)
-        """
-        if evt.type() == QEvent.Gesture:
-            self.gestureEvent(evt)
-            return True
-        
-        return super(WebBrowserView, self).event(evt)
+    # TODO: Obsoleted by eventFilter() (?)
+##    def event(self, evt):
+##        """
+##        Public method handling events.
+##        
+##        @param evt reference to the event (QEvent)
+##        @return flag indicating, if the event was handled (boolean)
+##        """
+##        if evt.type() == QEvent.Gesture:
+##            self.gestureEvent(evt)
+##            return True
+##        
+##        return super(WebBrowserView, self).event(evt)
     
-    def gestureEvent(self, evt):
+    def _gestureEvent(self, evt):
         """
         Protected method handling gesture events.
         
@@ -1413,73 +1304,58 @@ class WebBrowserView(QWebEngineView):
                 self.__currentZoom = int(scaleFactor * 100)
                 self.__applyZoom()
             evt.accept()
-##bool WebView::eventFilter(QObject *obj, QEvent *event)
-##{
-##    // Hack to find widget that receives input events
-##    if (obj == this && event->type() == QEvent::ChildAdded) {
-##        QWidget *child = qobject_cast<QWidget*>(static_cast<QChildEvent*>(event)->child());
-##        if (child && child->inherits("QtWebEngineCore::RenderWidgetHostViewQtDelegateWidget")) {
-##            m_rwhvqt = child;
-##            m_rwhvqt->installEventFilter(this);
-##        }
-##    }
-##
-##    // Forward events to WebView
-##    if (obj == m_rwhvqt) {
-###define HANDLE_EVENT(f, t) \
-##        { \
-##        bool wasAccepted = event->isAccepted(); \
-##        event->setAccepted(false); \
-##        f(static_cast<t*>(event)); \
-##        bool ret = event->isAccepted(); \
-##        event->setAccepted(wasAccepted); \
-##        return ret; \
-##        }
-##
-##        switch (event->type()) {
-##        case QEvent::KeyPress:
-##            HANDLE_EVENT(_keyPressEvent, QKeyEvent);
-##
-##        case QEvent::KeyRelease:
-##            HANDLE_EVENT(_keyReleaseEvent, QKeyEvent);
-##
-##        case QEvent::MouseButtonPress:
-##            HANDLE_EVENT(_mousePressEvent, QMouseEvent);
-##
-##        case QEvent::MouseButtonRelease:
-##            HANDLE_EVENT(_mouseReleaseEvent, QMouseEvent);
-##
-##        case QEvent::MouseMove:
-##            HANDLE_EVENT(_mouseMoveEvent, QMouseEvent);
-##
-##        case QEvent::Wheel:
-##            HANDLE_EVENT(_wheelEvent, QWheelEvent);
-##
-##        default:
-##            break;
-##        }
-##
-###undef HANDLE_EVENT
-##    }
-##
-##    // Block already handled events
-##    if (obj == this) {
-##        switch (event->type()) {
-##        case QEvent::KeyPress:
-##        case QEvent::KeyRelease:
-##        case QEvent::MouseButtonPress:
-##        case QEvent::MouseButtonRelease:
-##        case QEvent::MouseMove:
-##        case QEvent::Wheel:
-##            return true;
-##
-##        default:
-##            break;
-##        }
-##    }
-##
-##    return QWebEngineView::eventFilter(obj, event);
-##}
+    
+    def eventFilter(self, obj, evt):
+        """
+        Protected method to process event for other objects.
+        
+        @param obj reference to object to process events for
+        @type QObject
+        @param evt reference to event to be processed
+        @type QEvent
+        @return flag indicating that the event should be filtered out
+        @rtype bool
+        """
+        # find the render widget receiving events for the web page
+        if obj is self and evt.type() == QEvent.ChildAdded:
+            child = evt.child()
+            if child and child.inherits(
+                    "QtWebEngineCore::RenderWidgetHostViewQtDelegateWidget"):
+                self.__rwhvqt = child
+                self.__rwhvqt.installEventFilter(self)
+        
+        # forward events to WebBrowserView
+        if obj is self.__rwhvqt:
+            wasAccepted = evt.isAccepted()
+            evt.setAccepted(False)
+            if evt.type() == QEvent.KeyPress:
+                self._keyPressEvent(evt)
+            elif evt.type() == QEvent.KeyRelease:
+                self._keyReleaseEvent(evt)
+            elif evt.type() == QEvent.MouseButtonPress:
+                self._mousePressEvent(evt)
+            elif evt.type() == QEvent.MouseButtonRelease:
+                self._mouseReleaseEvent(evt)
+##            elif evt.type() == QEvent.MouseMove:
+##                self.__mouseMoveEvent(evt)
+            elif evt.type() == QEvent.Wheel:
+                self._wheelEvent(evt)
+            elif evt.type() == QEvent.Gesture:
+                self._gestureEvent(evt)
+            ret = evt.isAccepted()
+            evt.setAccepted(wasAccepted)
+            return ret
+        
+        # block already handled events
+        if obj is self:
+            if evt.type() in [QEvent.KeyPress, QEvent.KeyRelease,
+                              QEvent.MouseButtonPress,
+                              QEvent.MouseButtonRelease,
+##                              QEvent.MouseMove,
+                              QEvent.Wheel, QEvent.Gesture]:
+                return True
+        
+        return super(WebBrowserView, self).eventFilter(obj, evt)
     
     def clearHistory(self):
         """
@@ -1547,10 +1423,11 @@ class WebBrowserView(QWebEngineView):
         self.__isLoading = False
         self.__progress = 0
         
-        if Preferences.getHelp("ClickToFlashEnabled"):
-            # this is a hack to make the ClickToFlash button appear
-            self.zoomIn()
-            self.zoomOut()
+        # TODO: ClickToFlash (?)
+##        if Preferences.getHelp("ClickToFlashEnabled"):
+##            # this is a hack to make the ClickToFlash button appear
+##            self.zoomIn()
+##            self.zoomOut()
         
         # TODO: Zoom Manager
 ##        zoomValue = Helpviewer.HelpWindow.HelpWindow.zoomManager()\

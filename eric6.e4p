@@ -1264,6 +1264,9 @@
     <Source>ViewManager/BookmarkedFilesDialog.py</Source>
     <Source>ViewManager/ViewManager.py</Source>
     <Source>ViewManager/__init__.py</Source>
+    <Source>WebBrowser/JavaScript/AutoFillJsObject.py</Source>
+    <Source>WebBrowser/JavaScript/ExternalJsObject.py</Source>
+    <Source>WebBrowser/JavaScript/__init__.py</Source>
     <Source>WebBrowser/SearchWidget.py</Source>
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>

@@ -10,25 +10,20 @@ Module implementing the helpbrowser using QWebView.
 
 from __future__ import unicode_literals
 try:
-    str = unicode
+    str = unicode       # __IGNORE_EXCEPTION__
 except NameError:
     pass
 
 from PyQt5.QtCore import pyqtSlot, pyqtSignal, QObject, QT_TRANSLATE_NOOP, \
     QUrl, QBuffer, QIODevice, QFileInfo, Qt, QTimer, QEvent, \
-    QRect, QFile, QPoint, QByteArray, qVersion
+    QRect, QFile, QPoint, QByteArray, QEventLoop, qVersion
 from PyQt5.QtGui import QDesktopServices, QClipboard, QMouseEvent, QColor, \
     QPalette
 from PyQt5.QtWidgets import qApp, QStyle, QMenu, QApplication, QInputDialog, \
     QLineEdit, QLabel, QToolTip, QFrame, QDialog
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog
-##from PyQt5.QtWebKit import QWebSettings
-##from PyQt5.QtWebKitWidgets import QWebView, QWebPage
 from PyQt5.QtWebEngineWidgets import QWebEnginePage
-try:
-    from PyQt5.QtWebKit import QWebElement
-except ImportError:
-    pass
+from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtNetwork import QNetworkReply, QNetworkRequest
 import sip
 
@@ -36,6 +31,8 @@ from E5Gui import E5MessageBox, E5FileDialog
 
 import WebBrowser
 import WebBrowser.WebBrowserWindow
+
+from .JavaScript.ExternalJsObject import ExternalJsObject
 
 import Preferences
 import UI.PixmapCache
@@ -173,6 +170,8 @@ class WebBrowserPage(QWebEnginePage):
         """
         super(WebBrowserPage, self).__init__(parent)
         
+        self.setupWebChannel()
+        
 ##        self.setPluginFactory(self.webPluginFactory())
 ##        
 ##        self.__lastRequest = None
@@ -186,8 +185,8 @@ class WebBrowserPage(QWebEnginePage):
 ##        self.__proxy.setPrimaryNetworkAccessManager(
 ##            Helpviewer.HelpWindow.HelpWindow.networkAccessManager())
 ##        self.setNetworkAccessManager(self.__proxy)
-##        
-##        self.__sslConfiguration = None
+        
+        self.__sslConfiguration = None
 ##        self.__proxy.finished.connect(self.__managerFinished)
 ##        
         self.__adBlockedEntries = []
@@ -587,37 +586,32 @@ class WebBrowserPage(QWebEnginePage):
 ##                self.tr("SSL Info"),
 ##                self.tr("""This site does not contain SSL information."""))
 ##    
-##    def hasValidSslInfo(self):
-##        """
-##        Public method to check, if the page has a valid SSL certificate.
-##        
-##        @return flag indicating a valid SSL certificate (boolean)
-##        """
-##        if self.__sslConfiguration is None:
-##            return False
-##        
-##        certList = self.__sslConfiguration.peerCertificateChain()
-##        if not certList:
-##            return False
-##        
-##        certificateDict = Globals.toDict(
-##            Preferences.Prefs.settings.value("Ssl/CaCertificatesDict"))
-##        for server in certificateDict:
-##            localCAList = QSslCertificate.fromData(certificateDict[server])
-##            for cert in certList:
-##                if cert in localCAList:
-##                    return True
-##        
-##        if qVersion() >= "5.0.0":
-##            for cert in certList:
-##                if cert.isBlacklisted():
-##                    return False
-##        else:
-##            for cert in certList:
-##                if not cert.isValid():
-##                    return False
-##        
-##        return True
+    def hasValidSslInfo(self):
+        """
+        Public method to check, if the page has a valid SSL certificate.
+        
+        @return flag indicating a valid SSL certificate (boolean)
+        """
+        if self.__sslConfiguration is None:
+            return False
+        
+        certList = self.__sslConfiguration.peerCertificateChain()
+        if not certList:
+            return False
+        
+        certificateDict = Globals.toDict(
+            Preferences.Prefs.settings.value("Ssl/CaCertificatesDict"))
+        for server in certificateDict:
+            localCAList = QSslCertificate.fromData(certificateDict[server])
+            for cert in certList:
+                if cert in localCAList:
+                    return True
+        
+        for cert in certList:
+            if cert.isBlacklisted():
+                return False
+        
+        return True
     
 ##    @classmethod
 ##    def webPluginFactory(cls):
@@ -711,6 +705,69 @@ class WebBrowserPage(QWebEnginePage):
         @param feature requested feature
         @type QWebEnginePage.Feature
         """
-        manager = WebBrowser.WebBrowserWindow.WebBrowserWindow\
-            .featurePermissionManager()
-        manager.requestFeaturePermission(self, frame, feature)
+        # TODO: Feature Permission
+##        manager = WebBrowser.WebBrowserWindow.WebBrowserWindow\
+##            .featurePermissionManager()
+##        manager.requestFeaturePermission(self, frame, feature)
+    
+    def execJavaScript(self, script):
+        """
+        Public method to execute a JavaScript function synchroneously.
+        
+        @param script JavaScript script source to be executed
+        @type str
+        @return result of the script
+        @rtype depending upon script result
+        """
+        loop = QEventLoop()
+        resultDict = {"res": None}
+        
+        def resultCallback(res, resDict=resultDict):
+            if loop and loop.isRunning():
+                resDict["res"] = res
+                loop.quit()
+        
+        self.previewView.page().runJavaScript(
+            script, resultCallback)
+        
+        loop.exec_()
+        return resultDict["res"]
+    
+    def scroll(self, x, y):
+        """
+        Public method to scroll by the given amount of pixels.
+        
+        @param x horizontal scroll value
+        @type int
+        @param y vertical scroll value
+        @type int
+        """
+        self.runJavaScript(
+            "window.scrollTo(window.scrollX + {0}, window.scrollY + {1})"
+            .format(x, y)
+        )
+    
+    def hitTestContent(self, pos):
+        """
+        Public method to test the contents at a given position.
+        
+        @param pos position to be tested
+        @type QPoint
+        @return object containing the test results
+        @rtype WebBrowserHitTestResult
+        """
+        # TODO: WebBrowserHitTestResult
+##        return WebBrowserHitTestResult(self, pos) 
+    
+    def setupWebChannel(self):
+        """
+        Public method to setup a web channel to our external object.
+        """
+        oldChannel = self.webChannel()
+        newChannel = QWebChannel()
+        newChannel.registerObject("eric_object", ExternalJsObject(self))
+        self.setWebChannel(newChannel)
+        
+        if oldChannel:
+            del oldChannel.registeredObjects["eric_object"]
+            del oldChannel
