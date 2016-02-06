@@ -1267,7 +1267,12 @@
     <Source>WebBrowser/JavaScript/AutoFillJsObject.py</Source>
     <Source>WebBrowser/JavaScript/ExternalJsObject.py</Source>
     <Source>WebBrowser/JavaScript/__init__.py</Source>
+    <Source>WebBrowser/Network/NetworkManager.py</Source>
+    <Source>WebBrowser/Network/__init__.py</Source>
     <Source>WebBrowser/SearchWidget.py</Source>
+    <Source>WebBrowser/Tools/Scripts.py</Source>
+    <Source>WebBrowser/Tools/WebBrowserTools.py</Source>
+    <Source>WebBrowser/Tools/__init__.py</Source>
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
     <Source>WebBrowser/UrlBar/__init__.py</Source>
@@ -1277,6 +1282,7 @@
     <Source>WebBrowser/WebBrowserView.py</Source>
     <Source>WebBrowser/WebBrowserWindow.py</Source>
     <Source>WebBrowser/__init__.py</Source>
+    <Source>WebBrowser/data/javascript_rc.py</Source>
     <Source>__init__.py</Source>
     <Source>cleanupSource.py</Source>
     <Source>compileUiFiles.py</Source>
@@ -1706,6 +1712,7 @@
     <Resource>Helpviewer/data/icons.qrc</Resource>
     <Resource>Helpviewer/data/javascript.qrc</Resource>
     <Resource>IconEditor/cursors/cursors.qrc</Resource>
+    <Resource>WebBrowser/data/javascript.qrc</Resource>
   </Resources>
   <Interfaces/>
   <Others>
@@ -1810,6 +1817,9 @@
     <Other>ThirdParty/Pygments/pygments/PKG-INFO</Other>
     <Other>ThirdParty/Send2Trash/LICENSE</Other>
     <Other>ThirdParty/enum/LICENSE</Other>
+    <Other>WebBrowser/data/javascript/jquery-ui.js</Other>
+    <Other>WebBrowser/data/javascript/jquery.js</Other>
+    <Other>WebBrowser/data/javascript/qwebchannel.js</Other>
     <Other>changelog</Other>
     <Other>default.e4k</Other>
     <Other>default_Mac.e4k</Other>
@@ -1931,7 +1941,7 @@
   </Vcs>
   <FiletypeAssociations>
     <FiletypeAssociation pattern="*.idl" type="INTERFACES"/>
-    <FiletypeAssociation pattern="*.js" type="__IGNORE__"/>
+    <FiletypeAssociation pattern="*.js" type="OTHERS"/>
     <FiletypeAssociation pattern="*.py" type="SOURCES"/>
     <FiletypeAssociation pattern="*.py3" type="SOURCES"/>
     <FiletypeAssociation pattern="*.pyw" type="SOURCES"/>

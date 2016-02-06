@@ -1014,6 +1014,7 @@ class Prefs(object):
         "HomePage": "http://eric-ide.python-projects.org",     # TODO: eric: scheme
         "WarnOnMultipleClose": True,
         "DefaultScheme": "https://",
+        "UserStyleSheet": "",
     }
     
     @classmethod
@@ -1040,7 +1041,6 @@ class Prefs(object):
         cls.webBrowserDefaults.update({
             "AutoLoadImages": webEngineSettings.testAttribute(
                 QWebEngineSettings.AutoLoadImages),
-##            "UserStyleSheet": "",
             "SaveUrlColor": QColor(248, 248, 210),
 ##            "JavaEnabled":
 ##            websettings.testAttribute(QWebSettings.JavaEnabled),
@@ -1074,6 +1074,10 @@ class Prefs(object):
                 QWebEngineSettings.ScrollAnimatorEnabled),
             "ErrorPageEnabled": webEngineSettings.testAttribute(
                 QWebEngineSettings.ErrorPageEnabled),
+            "MinimumFontSize": webEngineSettings.fontSize(
+                QWebEngineSettings.MinimumFontSize),
+            "MinimumLogicalFontSize": webEngineSettings.fontSize(
+                QWebEngineSettings.MinimumLogicalFontSize),
         })
         
         cls.webEngineSettingsIntitialized = True
@@ -2703,7 +2707,8 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "DownloadManagerRemovePolicy", "AdBlockUpdatePeriod",
 ##                 "SearchLanguage", "SyncType", "SyncFtpPort",
 ##                 "SyncFtpIdleTimeout", "SyncEncryptionKeyLength"]:
-    elif key in ["StartupBehavior",]:
+    elif key in ["StartupBehavior", "MinimumFontSize",
+                 "MinimumLogicalFontSize"]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["SingleHelpWindow", "SaveGeometry", "WebSearchSuggestions",

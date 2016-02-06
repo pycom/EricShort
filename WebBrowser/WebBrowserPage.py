@@ -771,3 +771,15 @@ class WebBrowserPage(QWebEnginePage):
         if oldChannel:
             del oldChannel.registeredObjects["eric_object"]
             del oldChannel
+    
+    def certificateError(self, error):
+        """
+        Protected method to handle SSL certificate errors.
+        
+        @param error object containing the certificate error information
+        @type QWebEngineCertificateError
+        @return flag indicating to ignore this error
+        @rtype bool
+        """
+        return WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()\
+            .certificateError(error, self.view())

@@ -113,8 +113,6 @@ class WebBrowserView(QWebEngineView):
 ##        self.page().setForwardUnsupportedContent(True)
 ##        self.page().unsupportedContent.connect(self.__unsupportedContent)
         
-        # TODO: this was moved to QWebEngineProfile
-##        self.page().downloadRequested.connect(self.__downloadRequested)
 ##        self.page().frameCreated.connect(self.__addExternalBinding)
 ##        self.__addExternalBinding(self.page().mainFrame())
         
@@ -1554,15 +1552,6 @@ class WebBrowserView(QWebEngineView):
 ##        self.__mw.historyManager().removeHistoryEntry(replyUrl, self.title())
 ##        self.loadFinished.emit(False)
 ##    
-    
-    # TODO: Download Manager
-##    def __downloadRequested(self, request):
-##        """
-##        Private slot to handle a download request.
-##        
-##        @param request reference to the request object (QNetworkRequest)
-##        """
-##        self.__mw.downloadManager().download(request, mainWindow=self.__mw)
     
 ##    def __databaseQuotaExceeded(self, frame, databaseName):
 ##        """

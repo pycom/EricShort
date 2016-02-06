@@ -24,19 +24,14 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy, QDockWidget, \
     QApplication, QWhatsThis, QDialog, QHBoxLayout, QProgressBar, QAction, \
     QInputDialog
 ##from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEnginePage
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings, QWebEnginePage, \
+    QWebEngineProfile, QWebEngineScript
 try:
     from PyQt5.QtHelp import QHelpEngine, QHelpEngineCore, QHelpSearchQuery
     QTHELP_AVAILABLE = True
 except ImportError:
     QTHELP_AVAILABLE = False
-##
-##from .Network.NetworkAccessManager import SSL_AVAILABLE
-##
-##from .data import icons_rc          # __IGNORE_WARNING__
-##from .data import html_rc           # __IGNORE_WARNING__
-##from .data import javascript_rc     # __IGNORE_WARNING__
-##
+
 from E5Gui.E5Action import E5Action
 from E5Gui import E5MessageBox, E5FileDialog, E5ErrorMessage
 from E5Gui.E5MainWindow import E5MainWindow
@@ -53,6 +48,15 @@ import Utilities
 import UI.PixmapCache
 import UI.Config
 from UI.Info import Version
+##
+##from .Network.NetworkAccessManager import SSL_AVAILABLE
+##
+##from .data import icons_rc          # __IGNORE_WARNING__
+##from .data import html_rc           # __IGNORE_WARNING__
+##from .data import javascript_rc     # __IGNORE_WARNING__
+##
+
+from .Tools import Scripts, WebBrowserTools
 
 
 class WebBrowserWindow(E5MainWindow):
@@ -74,7 +78,7 @@ class WebBrowserWindow(E5MainWindow):
     _fromEric = False
     UseQtHelp = QTHELP_AVAILABLE
     
-##    _networkAccessManager = None
+    _networkManager = None
 ##    _cookieJar = None
 ##    _helpEngine = None
 ##    _bookmarksManager = None
@@ -94,7 +98,8 @@ class WebBrowserWindow(E5MainWindow):
 ##    _zoomManager = None
     
     def __init__(self, home, path, parent, name, fromEric=False,
-                 initShortcutsOnly=False, searchWord=None):
+                 initShortcutsOnly=False, searchWord=None,
+                 private=False):
         """
         Constructor
         
@@ -107,6 +112,7 @@ class WebBrowserWindow(E5MainWindow):
         @keyparam initShortcutsOnly flag indicating to just initialize the
             keyboard shortcuts (boolean)
         @keyparam searchWord word to search for (string)
+        @keyparam private flag indicating a private browsing window (bool)
         """
         super(WebBrowserWindow, self).__init__(parent)
         self.setObjectName(name)
@@ -120,12 +126,30 @@ class WebBrowserWindow(E5MainWindow):
         self.__mHistory = []
         self.__lastConfigurationPageName = ""
         
+        self.__isPrivate = private
+        
 ##        self.__eventMouseButtons = Qt.NoButton
 ##        self.__eventKeyboardModifiers = Qt.NoModifier
 ##        
         if self.__initShortcutsOnly:
             self.__initActions()
         else:
+            if self.isPrivate():
+                self.__webProfile = QWebEngineProfile(self)
+            else:
+                self.__webProfile = QWebEngineProfile.defaultProfile()
+            self.__webProfile.downloadRequested.connect(
+                self.__downloadRequested)
+            
+            # Setup QWebChannel user script
+            script = QWebEngineScript()
+            script.setName("_eric_webchannel")
+            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
+            script.setWorldId(QWebEngineScript.MainWorld)
+            script.setRunsOnSubFrames(True)
+            script.setSourceCode(Scripts.setupWebChannel())
+            self.__webProfile.scripts().insert(script)
+            
             from .SearchWidget import SearchWidget
             # TODO: QtHelp
 ##            from .HelpTocWidget import HelpTocWidget
@@ -365,10 +389,16 @@ class WebBrowserWindow(E5MainWindow):
                                fixedFont.family())
         settings.setFontSize(QWebEngineSettings.DefaultFixedFontSize,
                              fixedFont.pointSize())
+        settings.setFontSize(
+            QWebEngineSettings.MinimumFontSize,
+            Preferences.getWebBrowser("MinimumFontSize"))
+        settings.setFontSize(
+            QWebEngineSettings.MinimumLogicalFontSize,
+            Preferences.getWebBrowser("MinimumLogicalFontSize"))
         
-##        styleSheet = Preferences.getHelp("UserStyleSheet")
-##        settings.setUserStyleSheetUrl(self.__userStyleSheet(styleSheet))
-##        
+        styleSheet = Preferences.getHelp("UserStyleSheet")
+        self.__setUserStyleSheet(styleSheet)
+        
         settings.setAttribute(
             QWebEngineSettings.AutoLoadImages,
             Preferences.getWebBrowser("AutoLoadImages"))
@@ -419,9 +449,13 @@ class WebBrowserWindow(E5MainWindow):
 ##                Preferences.getHelp("OfflineWebApplicationCacheQuota") *
 ##                1024 * 1024)
 ##        
-        settings.setAttribute(
-            QWebEngineSettings.LocalStorageEnabled,
-            Preferences.getWebBrowser("LocalStorageEnabled"))
+        if self.isPrivate():
+            settings.setAttribute(
+                QWebEngineSettings.LocalStorageEnabled, False)
+        else:
+            settings.setAttribute(
+                QWebEngineSettings.LocalStorageEnabled,
+                Preferences.getWebBrowser("LocalStorageEnabled"))
 ##        localStorageDir = os.path.join(
 ##            Utilities.getConfigDir(), "browser", "weblocalstorage")
 ##        if not os.path.exists(localStorageDir):
@@ -2503,6 +2537,15 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.privateBrowsingAct.setChecked(on)
 ##        self.privacyChanged.emit(on)
     
+    def isPrivate(self):
+        """
+        Public method to check the private browsing mode.
+        
+        @return flag indicating private browsing mode
+        @rtype bool
+        """
+        return self.__isPrivate
+    
     def currentBrowser(self):
         """
         Public method to get a reference to the current web browser.
@@ -2675,23 +2718,19 @@ class WebBrowserWindow(E5MainWindow):
 ##        else:
 ##            return None
 ##        
-##    @classmethod
-##    def networkAccessManager(cls):
-##        """
-##        Class method to get a reference to the network access manager.
-##        
-##        @return reference to the network access manager (NetworkAccessManager)
-##        """
-##        if cls._networkAccessManager is None:
-##            from .Network.NetworkAccessManager import NetworkAccessManager
-##            from .CookieJar.CookieJar import CookieJar
-##            cls._networkAccessManager = \
-##                NetworkAccessManager(cls.helpEngine())
-##            cls._cookieJar = CookieJar()
-##            cls._networkAccessManager.setCookieJar(cls._cookieJar)
-##        
-##        return cls._networkAccessManager
-##        
+    @classmethod
+    def networkManager(cls):
+        """
+        Class method to get a reference to the network manager object.
+        
+        @return reference to the network access manager (NetworkManager)
+        """
+        if cls._networkManager is None:
+            from .Network.NetworkManager import NetworkManager
+            cls._networkManager = NetworkManager()
+        
+        return cls._networkManager
+        
 ##    @classmethod
 ##    def cookieJar(cls):
 ##        """
@@ -2699,6 +2738,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        
 ##        @return reference to the cookie jar (CookieJar)
 ##        """
+##            from .CookieJar.CookieJar import CookieJar
+##            cls._cookieJar = CookieJar()
 ##        return cls.networkAccessManager().cookieJar()
 ##        
 ##    def __clearIconsDatabase(self):
@@ -3842,45 +3883,45 @@ class WebBrowserWindow(E5MainWindow):
 ##            QLineEdit.Normal)
 ##        if ok and domain:
 ##            self.__virusTotal.getDomainReport(domain)
-##    
-##    ###########################################################################
-##    ## Style sheet handling below                                            ##
-##    ###########################################################################
-##    
-##    def reloadUserStyleSheet(self):
-##        """
-##        Public method to reload the user style sheet.
-##        """
-##        settings = QWebSettings.globalSettings()
-##        styleSheet = Preferences.getHelp("UserStyleSheet")
-##        settings.setUserStyleSheetUrl(self.__userStyleSheet(styleSheet))
-##    
-##    def __userStyleSheet(self, styleSheetFile):
-##        """
-##        Private method to generate the user style sheet.
-##        
-##        @param styleSheetFile name of the user style sheet file (string)
-##        @return style sheet (QUrl)
-##        """
-##        userStyle = self.adBlockManager().elementHidingRules() + \
-##            "{display:none !important;}"
-##        
-##        if styleSheetFile:
-##            try:
-##                f = open(styleSheetFile, "r")
-##                fileData = f.read()
-##                f.close()
-##                fileData = fileData.replace("\n", "")
-##                userStyle += fileData
-##            except IOError:
-##                pass
-##        
-##        encodedStyle = bytes(QByteArray(userStyle.encode("utf-8")).toBase64())\
-##            .decode()
-##        dataString = "data:text/css;charset=utf-8;base64,{0}".format(
-##            encodedStyle)
-##        
-##        return QUrl(dataString)
+    
+    ###########################################################################
+    ## Style sheet handling below                                            ##
+    ###########################################################################
+    
+    def reloadUserStyleSheet(self):
+        """
+        Public method to reload the user style sheet.
+        """
+        styleSheet = Preferences.getWebBrowser("UserStyleSheet")
+        self.__setUserStyleSheet(styleSheet)
+    
+    def __setUserStyleSheet(self, styleSheetFile):
+        """
+        Private method to set a user style sheet.
+        
+        @param styleSheetFile name of the user style sheet file (string)
+        """
+        # TODO: AdBlock
+        userStyle = ""
+##        userStyle = \
+##            self.adBlockManager().elementHidingRules().replace('"', '\\"')
+        
+        userStyle += WebBrowserTools.readAllFileContents(styleSheetFile)\
+            .replace("\n", "")
+        name = "_eric_userstylesheet"
+        
+        oldScript = self.__webProfile.scripts().findScript(name)
+        if not oldScript.isNull():
+            self.__webProfile.scripts().remove(oldScript)
+        
+        if userStyle:
+            script = QWebEngineScript()
+            script.setName(name)
+            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
+            script.setWorldId(QWebEngineScript.ApplicationWorld)
+            script.setRunsOnSubFrames(True)
+            script.setSourceCode(Scripts.setStyleSheet(userStyle))
+            self.__webProfile.scripts().insert(script)
     
     ##########################################
     ## Support for desktop notifications below
@@ -3923,3 +3964,18 @@ class WebBrowserWindow(E5MainWindow):
             return e5App().getObject("UserInterface").notificationsEnabled()
         else:
             return Preferences.getUI("NotificationsEnabled")
+    
+    ###################################
+    ## Support for download files below
+    ###################################
+    
+    def __downloadRequested(self, download):
+        """
+        Private slot to handle a download request.
+        
+        @param download reference to the download data
+        @type QWebEngineDownloadItem
+        """
+        pass
+        # TODO: DownloadManager
+##        self.downloadManager().download(download, mainWindow=self)

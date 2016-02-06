@@ -76,9 +76,13 @@ def createMainWidget(argv):
     from WebBrowser.WebBrowserWindow import WebBrowserWindow
     
     searchWord = None
+    private = False
     for arg in reversed(argv):
         if arg.startswith("--search="):
             searchWord = argv[1].split("=", 1)[1]
+            argv.remove(arg)
+        elif arg == "--private":
+            private = True
             argv.remove(arg)
         elif arg.startswith("--"):
             argv.remove(arg)
@@ -89,7 +93,7 @@ def createMainWidget(argv):
         home = ""
     
     browser = WebBrowserWindow(home, '.', None, 'web_browser',
-                               searchWord=searchWord)
+                               searchWord=searchWord, private=private)
     return browser
 
 
@@ -100,6 +104,7 @@ def main():
     options = [
         ("--config=configDir",
          "use the given directory as the one containing the config files"),
+        ("--private",  "start the browser in private browsing mode"),
         ("--search=word", "search for the given word"),
         ("--settings=settingsDir",
          "use the given directory to store the settings files"),

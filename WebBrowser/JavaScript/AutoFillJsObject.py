@@ -12,6 +12,8 @@ Module implementing the Auto Fill web channel endpoint.
 # Copyright (C) David Rosca <nowrep@gmail.com>
 #
 
+from __future__ import unicode_literals
+
 from PyQt5.QtCore import pyqtSlot, QObject, QByteArray
 
 

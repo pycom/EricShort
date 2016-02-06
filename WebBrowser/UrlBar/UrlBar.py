@@ -9,7 +9,7 @@ Module implementing the URL bar widget.
 
 from __future__ import unicode_literals
 try:
-    str = unicode
+    str = unicode       # __IGNORE_EXCEPTION__
 except NameError:
     pass
 

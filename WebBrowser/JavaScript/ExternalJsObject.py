@@ -13,6 +13,8 @@ a web channel.
 # Copyright (C) David Rosca <nowrep@gmail.com>
 #
 
+from __future__ import unicode_literals
+
 from PyQt5.QtCore import QObject
 
 from .AutoFillJsObject import AutoFillJsObject
