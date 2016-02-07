@@ -1015,6 +1015,7 @@ class Prefs(object):
         "WarnOnMultipleClose": True,
         "DefaultScheme": "https://",
         "UserStyleSheet": "",
+        "ZoomValuesDB": "{}",       # empty JSON dictionary
     }
     
     @classmethod

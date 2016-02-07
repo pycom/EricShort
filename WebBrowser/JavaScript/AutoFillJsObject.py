@@ -36,6 +36,15 @@ class AutoFillJsObject(QObject):
     def formSubmitted(self, urlStr, userName, password, data):
         """
         Public slot passing form data to the auto fill manager.
+        
+        @param urlStr form submission URL
+        @type str
+        @param userName name of the user
+        @type str
+        @param password user password
+        @type str
+        @param data data to be submitted
+        @type QByteArray
         """
         # TODO: AutoFill
         pass

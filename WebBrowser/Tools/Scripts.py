@@ -56,6 +56,8 @@ def setStyleSheet(css):
     """
     Function generating a script to set a user style sheet.
     
+    @param css style sheet to be applied
+    @type str
     @return script to set a user style sheet
     @rtype str
     """

@@ -7,6 +7,8 @@
 Module implementing a network manager class.
 """
 
+from __future__ import unicode_literals
+
 from PyQt5.QtNetwork import QNetworkAccessManager
 
 from E5Gui import E5MessageBox
@@ -34,7 +36,7 @@ class NetworkManager(QNetworkAccessManager):
     
     def certificateError(self, error, view):
         """
-        Protected method to handle SSL certificate errors.
+        Public method to handle SSL certificate errors.
         
         @param error object containing the certificate error information
         @type QWebEngineCertificateError

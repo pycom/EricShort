@@ -18,7 +18,7 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal, QObject, QT_TRANSLATE_NOOP, \
     QUrl, QBuffer, QIODevice, QFileInfo, Qt, QTimer, QEvent, \
     QRect, QFile, QPoint, QByteArray, qVersion
 from PyQt5.QtGui import QDesktopServices, QClipboard, QMouseEvent, QColor, \
-    QPalette
+    QPalette, QIcon
 from PyQt5.QtWidgets import qApp, QStyle, QMenu, QApplication, QInputDialog, \
     QLineEdit, QLabel, QToolTip, QFrame, QDialog
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog
@@ -29,6 +29,8 @@ from E5Gui import E5MessageBox, E5FileDialog
 
 import WebBrowser
 from .WebBrowserPage import WebBrowserPage
+
+from .Tools.WebIconLoader import WebIconLoader
 
 import Preferences
 import UI.PixmapCache
@@ -51,6 +53,7 @@ class WebBrowserView(QWebEngineView):
     @signal highlighted(str) emitted, when the mouse hovers over a link
     @signal search(QUrl) emitted, when a search is requested
     @signal zoomValueChanged(int) emitted to signal a change of the zoom value
+    @signal iconChanged() emitted to signal a changed web site icon
     """
     sourceChanged = pyqtSignal(QUrl)
     forwardAvailable = pyqtSignal(bool)
@@ -58,6 +61,7 @@ class WebBrowserView(QWebEngineView):
     highlighted = pyqtSignal(str)
     search = pyqtSignal(QUrl)
     zoomValueChanged = pyqtSignal(int)
+    iconChanged = pyqtSignal()
     
     ZoomLevels = [
         30, 40, 50, 67, 80, 90,
@@ -90,6 +94,8 @@ class WebBrowserView(QWebEngineView):
         self.__ctrlPressed = False
         self.__isLoading = False
         self.__progress = 0
+        self.__siteIconLoader = None
+        self.__siteIcon = QIcon()
         
         self.__currentZoom = 100
         self.__zoomLevels = WebBrowserView.ZoomLevels[:]
@@ -102,6 +108,7 @@ class WebBrowserView(QWebEngineView):
 ##        self.page().setLinkDelegationPolicy(QWebPage.DelegateAllLinks)
 ##        self.linkClicked.connect(self.setSource)
 ##        
+        self.iconUrlChanged.connect(self.__iconUrlChanged)
         self.urlChanged.connect(self.__urlChanged)
 ##        self.statusBarMessage.connect(self.__statusBarMessage)
         self.page().linkHovered.connect(self.__linkHovered)
@@ -125,7 +132,7 @@ class WebBrowserView(QWebEngineView):
         self.setAcceptDrops(True)
         
         # TODO: Access Keys
-##        self.__enableAccessKeys = Preferences.getHelp("AccessKeysEnabled")
+##        self.__enableAccessKeys = Preferences.getWebBrowser("AccessKeysEnabled")
 ##        self.__accessKeysPressed = False
 ##        self.__accessKeyLabels = []
 ##        self.__accessKeyNodes = {}
@@ -222,6 +229,15 @@ class WebBrowserView(QWebEngineView):
 ##        """
 ##        if self.url().toString() == "eric:home":
 ##            self.reload()
+    
+    def mainWindow(self):
+        """
+        Public method to get a reference to the main window.
+        
+        @return reference to the main window
+        @rtype WebBrowserWindow
+        """
+        return self.__mw
     
     # TODO: eliminate requestData, add param to get rid of __ctrlPressed
     def setSource(self, name, requestData=None):
@@ -415,13 +431,12 @@ class WebBrowserView(QWebEngineView):
             zoom manager
         @type bool
         """
-        if value != self.zoomValue():
+        if value != self.__currentZoom:
             self.setZoomFactor(value / 100.0)
             self.__currentZoom = value
-            # TODO: Zoom Manager
-##            if saveValue:
-##                Helpviewer.HelpWindow.HelpWindow.zoomManager().setZoomValue(
-##                    self.url(), value)
+            if saveValue and not self.__mw.isPrivate():
+                from .ZoomManager import ZoomManager
+                ZoomManager.instance().setZoomValue(self.url(), value)
             self.zoomValueChanged.emit(value)
     
     def zoomValue(self):
@@ -481,7 +496,6 @@ class WebBrowserView(QWebEngineView):
         @param callback reference to a function with a bool parameter
         @type function(bool) or None
         """
-        
         findFlags = QWebEnginePage.FindFlags()
         if case:
             findFlags |= QWebEnginePage.FindCaseSensitively
@@ -547,8 +561,8 @@ class WebBrowserView(QWebEngineView):
 ##                UI.PixmapCache.getIcon("mailSend.png"),
 ##                self.tr("Send Link"),
 ##                self.__sendLink).setData(hit.linkUrl())
-##            if Preferences.getHelp("VirusTotalEnabled") and \
-##               Preferences.getHelp("VirusTotalServiceKey") != "":
+##            if Preferences.getWebBrowser("VirusTotalEnabled") and \
+##               Preferences.getWebBrowser("VirusTotalServiceKey") != "":
 ##                menu.addAction(
 ##                    UI.PixmapCache.getIcon("virustotal.png"),
 ##                    self.tr("Scan Link with VirusTotal"),
@@ -580,8 +594,8 @@ class WebBrowserView(QWebEngineView):
 ##                UI.PixmapCache.getIcon("adBlockPlus.png"),
 ##                self.tr("Block Image"), self.__blockImage)\
 ##                .setData(hit.imageUrl().toString())
-##            if Preferences.getHelp("VirusTotalEnabled") and \
-##               Preferences.getHelp("VirusTotalServiceKey") != "":
+##            if Preferences.getWebBrowser("VirusTotalEnabled") and \
+##               Preferences.getWebBrowser("VirusTotalServiceKey") != "":
 ##                menu.addAction(
 ##                    UI.PixmapCache.getIcon("virustotal.png"),
 ##                    self.tr("Scan Image with VirusTotal"),
@@ -1305,7 +1319,7 @@ class WebBrowserView(QWebEngineView):
     
     def eventFilter(self, obj, evt):
         """
-        Protected method to process event for other objects.
+        Public method to process event for other objects.
         
         @param obj reference to object to process events for
         @type QObject
@@ -1377,6 +1391,46 @@ class WebBrowserView(QWebEngineView):
         self.forwardAvailable.emit(self.isForwardAvailable())
         self.backwardAvailable.emit(self.isBackwardAvailable())
     
+    def __iconUrlChanged(self, url):
+        """
+        Private slot to handle the iconUrlChanged signal.
+        
+        @param url URL to get web site icon from
+        @type QUrl
+        """
+        self.__siteIcon = QIcon()
+        if self.__siteIconLoader is not None:
+            self.__siteIconLoader.deleteLater()
+        self.__siteIconLoader = WebIconLoader(url, self)
+        self.__siteIconLoader.iconLoaded.connect(self.__iconLoaded)
+    
+    def __iconLoaded(self, icon):
+        """
+        Private slot handling the loaded web site icon.
+        
+        @param icon web site icon
+        @type QIcon
+        """
+        self.__siteIcon = icon
+        
+        from .Tools import WebIconProvider
+        WebIconProvider.instance().saveIcon(self)
+        
+        self.iconChanged.emit()
+    
+    def icon(self):
+        """
+        Public method to get the web site icon.
+        
+        @return web site icon
+        @rtype QIcon
+        """
+        if not self.__siteIcon.isNull():
+            return QIcon(self.__siteIcon)
+        
+        from .Tools import WebIconProvider
+        return WebIconProvider.instance().iconForUrl(self.url())
+    
 ##    def __statusBarMessage(self, text):
 ##        """
 ##        Private slot to handle the statusBarMessage signal.
@@ -1422,15 +1476,14 @@ class WebBrowserView(QWebEngineView):
         self.__progress = 0
         
         # TODO: ClickToFlash (?)
-##        if Preferences.getHelp("ClickToFlashEnabled"):
+##        if Preferences.getWebBrowser("ClickToFlashEnabled"):
 ##            # this is a hack to make the ClickToFlash button appear
 ##            self.zoomIn()
 ##            self.zoomOut()
         
-        # TODO: Zoom Manager
-##        zoomValue = Helpviewer.HelpWindow.HelpWindow.zoomManager()\
-##            .zoomValue(self.url())
-##        self.setZoomValue(zoomValue)
+        from .ZoomManager import ZoomManager
+        zoomValue = ZoomManager.instance().zoomValue(self.url())
+        self.setZoomValue(zoomValue)
         
         if ok:
             pass
@@ -1794,7 +1847,7 @@ class WebBrowserView(QWebEngineView):
         Public method to indicate a change of the settings.
         """
         # TODO: Access Keys
-##        self.__enableAccessKeys = Preferences.getHelp("AccessKeysEnabled")
+##        self.__enableAccessKeys = Preferences.getWebBrowser("AccessKeysEnabled")
 ##        if not self.__enableAccessKeys:
 ##            self.__hideAccessKeys()
         

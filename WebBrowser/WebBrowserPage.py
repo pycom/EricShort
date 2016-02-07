@@ -201,7 +201,7 @@ class WebBrowserPage(QWebEnginePage):
     
     def acceptNavigationRequest(self, url, type_, isMainFrame):
         """
-        Protected method to determine, if a request may be accepted.
+        Public method to determine, if a request may be accepted.
         
         @param url URL to navigate to
         @type QUrl
@@ -490,7 +490,7 @@ class WebBrowserPage(QWebEnginePage):
 ##            .userAgentForUrl(url)
 ##        if agent == "":
 ##            # no agent string specified for the given host -> use global one
-##            agent = Preferences.getHelp("UserAgent")
+##            agent = Preferences.getWebBrowser("UserAgent")
 ##            if agent == "":
 ##                # no global agent string specified -> use default one
 ##                agent = QWebPage.userAgentForUrl(self, url)
@@ -774,7 +774,7 @@ class WebBrowserPage(QWebEnginePage):
     
     def certificateError(self, error):
         """
-        Protected method to handle SSL certificate errors.
+        Public method to handle SSL certificate errors.
         
         @param error object containing the certificate error information
         @type QWebEngineCertificateError

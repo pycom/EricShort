@@ -31,11 +31,20 @@ import sys
 import os
 
 # TODO: adjust this when done
-MIN_QT_VERSION = "5.5.0"
+MIN_QT_VERSION = "5.6.0"
 
 from PyQt5.QtCore import qVersion
 if qVersion() < MIN_QT_VERSION:
-    print("You need at least Qt Version {0} to execute the web browser."
+    try:    # Py2
+        import tkMessageBox as messagebox
+    except ImportError:
+        try:    # Py3
+            from tkinter import messagebox
+        except ImportError:
+            sys.exit(100)
+    messagebox.showerror(
+        "eric6 Error",
+        "You need at least Qt Version {0} to execute the web browser."
           .format(MIN_QT_VERSION))
     sys.exit(100)
 

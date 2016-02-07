@@ -56,7 +56,9 @@ from UI.Info import Version
 ##from .data import javascript_rc     # __IGNORE_WARNING__
 ##
 
-from .Tools import Scripts, WebBrowserTools
+from .Tools import Scripts, WebBrowserTools, WebIconProvider
+
+from .ZoomManager import ZoomManager
 
 
 class WebBrowserWindow(E5MainWindow):
@@ -95,7 +97,6 @@ class WebBrowserWindow(E5MainWindow):
     _notification = None
 ##    _featurePermissionManager = None
 ##    _flashCookieManager = None
-##    _zoomManager = None
     
     def __init__(self, home, path, parent, name, fromEric=False,
                  initShortcutsOnly=False, searchWord=None,
@@ -178,7 +179,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            if WebBrowserWindow.UseQtHelp:
 ##                self.__helpEngine = \
 ##                    QHelpEngine(os.path.join(Utilities.getConfigDir(),
-##                                             "browser", "eric6help.qhc"), self)
+##                                             "web_browser", "eric6help.qhc"), self)
 ##                self.__removeOldDocumentation()
 ##                self.__helpEngine.warning.connect(self.__warning)
 ##            else:
@@ -256,7 +257,7 @@ class WebBrowserWindow(E5MainWindow):
             else:
                 self.restoreGeometry(g)
             
-##            self.__setIconDatabasePath()
+            self.__setIconDatabasePath()
             self.__initWebEngineSettings()
             
             self.__initActions()
@@ -277,7 +278,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.__adBlockIcon = AdBlockIcon(self)
 ##            self.statusBar().addPermanentWidget(self.__adBlockIcon)
 ##            self.__adBlockIcon.setEnabled(
-##                Preferences.getHelp("AdBlockEnabled"))
+##                Preferences.getWebBrowser("AdBlockEnabled"))
 ##            self.__tabWidget.currentChanged[int].connect(
 ##                self.__adBlockIcon.currentChanged)
 ##            self.__tabWidget.sourceChanged.connect(
@@ -353,24 +354,28 @@ class WebBrowserWindow(E5MainWindow):
         """
         Public method to check, if the web browser was called from within the
         eric IDE.
+        
+        @return flag indicating that the browserw as opened from within eric
+        @rtype bool
         """
         return self.__fromEric
     
-##    def __setIconDatabasePath(self, enable=True):
-##        """
-##        Private method to set the favicons path.
-##        
-##        @param enable flag indicating to enabled icon storage (boolean)
-##        """
-##        if enable:
-##            iconDatabasePath = os.path.join(Utilities.getConfigDir(),
-##                                            "browser", "favicons")
-##            if not os.path.exists(iconDatabasePath):
-##                os.makedirs(iconDatabasePath)
-##        else:
-##            iconDatabasePath = ""   # setting an empty path disables it
-##        QWebSettings.setIconDatabasePath(iconDatabasePath)
-##        
+    def __setIconDatabasePath(self, enable=True):
+        """
+        Private method to set the favicons path.
+        
+        @param enable flag indicating to enabled icon storage (boolean)
+        """
+        if enable:
+            iconDatabasePath = os.path.join(Utilities.getConfigDir(),
+                                            "web_browser", "favicons")
+            if not os.path.exists(iconDatabasePath):
+                os.makedirs(iconDatabasePath)
+        else:
+            iconDatabasePath = ""   # setting an empty path disables it
+        
+        WebIconProvider.instance().setIconDatabasePath(iconDatabasePath)
+        
     def __initWebEngineSettings(self):
         """
         Private method to set the global web settings.
@@ -396,7 +401,7 @@ class WebBrowserWindow(E5MainWindow):
             QWebEngineSettings.MinimumLogicalFontSize,
             Preferences.getWebBrowser("MinimumLogicalFontSize"))
         
-        styleSheet = Preferences.getHelp("UserStyleSheet")
+        styleSheet = Preferences.getWebBrowser("UserStyleSheet")
         self.__setUserStyleSheet(styleSheet)
         
         settings.setAttribute(
@@ -404,7 +409,7 @@ class WebBrowserWindow(E5MainWindow):
             Preferences.getWebBrowser("AutoLoadImages"))
 ##        settings.setAttribute(
 ##            QWebSettings.JavaEnabled,
-##            Preferences.getHelp("JavaEnabled"))
+##            Preferences.getWebBrowser("JavaEnabled"))
         settings.setAttribute(
             QWebEngineSettings.JavascriptEnabled,
             Preferences.getWebBrowser("JavaScriptEnabled"))
@@ -416,37 +421,37 @@ class WebBrowserWindow(E5MainWindow):
             Preferences.getWebBrowser("JavaScriptCanAccessClipboard"))
 ##        settings.setAttribute(
 ##            QWebSettings.PluginsEnabled,
-##            Preferences.getHelp("PluginsEnabled"))
+##            Preferences.getWebBrowser("PluginsEnabled"))
         
 ##        if hasattr(QWebSettings, "PrintElementBackgrounds"):
 ##            settings.setAttribute(
 ##                QWebSettings.PrintElementBackgrounds,
-##                Preferences.getHelp("PrintBackgrounds"))
+##                Preferences.getWebBrowser("PrintBackgrounds"))
 ##        
 ##        if hasattr(QWebSettings, "setOfflineStoragePath"):
 ##            settings.setAttribute(
 ##                QWebSettings.OfflineStorageDatabaseEnabled,
-##                Preferences.getHelp("OfflineStorageDatabaseEnabled"))
+##                Preferences.getWebBrowser("OfflineStorageDatabaseEnabled"))
 ##            webDatabaseDir = os.path.join(
-##                Utilities.getConfigDir(), "browser", "webdatabases")
+##                Utilities.getConfigDir(), "web_browser", "webdatabases")
 ##            if not os.path.exists(webDatabaseDir):
 ##                os.makedirs(webDatabaseDir)
 ##            settings.setOfflineStoragePath(webDatabaseDir)
 ##            settings.setOfflineStorageDefaultQuota(
-##                Preferences.getHelp("OfflineStorageDatabaseQuota") *
+##                Preferences.getWebBrowser("OfflineStorageDatabaseQuota") *
 ##                1024 * 1024)
 ##        
 ##        if hasattr(QWebSettings, "OfflineWebApplicationCacheEnabled"):
 ##            settings.setAttribute(
 ##                QWebSettings.OfflineWebApplicationCacheEnabled,
-##                Preferences.getHelp("OfflineWebApplicationCacheEnabled"))
+##                Preferences.getWebBrowser("OfflineWebApplicationCacheEnabled"))
 ##            appCacheDir = os.path.join(
-##                Utilities.getConfigDir(), "browser", "webappcaches")
+##                Utilities.getConfigDir(), "web_browser", "webappcaches")
 ##            if not os.path.exists(appCacheDir):
 ##                os.makedirs(appCacheDir)
 ##            settings.setOfflineWebApplicationCachePath(appCacheDir)
 ##            settings.setOfflineWebApplicationCacheQuota(
-##                Preferences.getHelp("OfflineWebApplicationCacheQuota") *
+##                Preferences.getWebBrowser("OfflineWebApplicationCacheQuota") *
 ##                1024 * 1024)
 ##        
         if self.isPrivate():
@@ -457,7 +462,7 @@ class WebBrowserWindow(E5MainWindow):
                 QWebEngineSettings.LocalStorageEnabled,
                 Preferences.getWebBrowser("LocalStorageEnabled"))
 ##        localStorageDir = os.path.join(
-##            Utilities.getConfigDir(), "browser", "weblocalstorage")
+##            Utilities.getConfigDir(), "web_browser", "weblocalstorage")
 ##        if not os.path.exists(localStorageDir):
 ##            os.makedirs(localStorageDir)
 ##        settings.setLocalStoragePath(localStorageDir)
@@ -465,7 +470,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        if hasattr(QWebSettings, "DnsPrefetchEnabled"):
 ##            settings.setAttribute(
 ##                QWebSettings.DnsPrefetchEnabled,
-##                Preferences.getHelp("DnsPrefetchEnabled"))
+##                Preferences.getWebBrowser("DnsPrefetchEnabled"))
 ##        
         settings.setDefaultTextEncoding(
             Preferences.getWebBrowser("DefaultTextEncoding"))
@@ -488,7 +493,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        if hasattr(QWebSettings, "SiteSpecificQuirksEnabled"):
 ##            settings.setAttribute(
 ##                QWebSettings.SiteSpecificQuirksEnabled,
-##                Preferences.getHelp("SiteSpecificQuirksEnabled"))
+##                Preferences.getWebBrowser("SiteSpecificQuirksEnabled"))
 ##        
 ##        QWebSecurityOrigin.addLocalScheme("eric")
         settings.setAttribute(
@@ -1639,27 +1644,27 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showSyncDialog)
 ##        self.__actions.append(self.synchronizationAct)
         
-        # TODO: Zoom Manager
-##        self.zoomValuesAct = E5Action(
-##            self.tr('Manage Saved Zoom Values'),
-##            UI.PixmapCache.getIcon("zoomReset.png"),
-##            self.tr('Manage Saved Zoom Values...'),
-##            0, 0,
-##            self, 'webbrowser_manage_zoom_values')
-##        self.zoomValuesAct.setStatusTip(self.tr(
-##            'Manage the saved zoom values'))
-##        self.zoomValuesAct.setWhatsThis(self.tr(
-##            """<b>Manage Saved Zoom Values...</b>"""
-##            """<p>Opens a dialog to manage the saved zoom values.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.zoomValuesAct.triggered.connect(self.__showZoomValuesDialog)
-##        self.__actions.append(self.zoomValuesAct)
+        self.zoomValuesAct = E5Action(
+            self.tr('Manage Saved Zoom Values'),
+            UI.PixmapCache.getIcon("zoomReset.png"),
+            self.tr('Manage Saved Zoom Values...'),
+            0, 0,
+            self, 'webbrowser_manage_zoom_values')
+        self.zoomValuesAct.setStatusTip(self.tr(
+            'Manage the saved zoom values'))
+        self.zoomValuesAct.setWhatsThis(self.tr(
+            """<b>Manage Saved Zoom Values...</b>"""
+            """<p>Opens a dialog to manage the saved zoom values.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.zoomValuesAct.triggered.connect(self.__showZoomValuesDialog)
+        self.__actions.append(self.zoomValuesAct)
         
         self.backAct.setEnabled(False)
         self.forwardAct.setEnabled(False)
         
         # now read the keyboard shortcuts for the actions
+        # TODO: change this to webBrowser
         Shortcuts.readShortcuts(helpViewer=self)
     
     def getActions(self):
@@ -1782,8 +1787,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        if SSL_AVAILABLE:
 ##            menu.addAction(self.certificatesAct)
 ##        menu.addSeparator()
-##        menu.addAction(self.zoomValuesAct)
-##        menu.addSeparator()
+        menu.addAction(self.zoomValuesAct)
+        menu.addSeparator()
 ##        menu.addAction(self.adblockAct)
 ##        menu.addAction(self.flashblockAct)
 ##        menu.addSeparator()
@@ -1991,8 +1996,8 @@ class WebBrowserWindow(E5MainWindow):
 ##            UI.PixmapCache.getIcon("virustotal.png"),
 ##            self.tr("Domain Report"),
 ##            self.__virusTotalDomainReport)
-##        if not Preferences.getHelp("VirusTotalEnabled") or \
-##           Preferences.getHelp("VirusTotalServiceKey") == "":
+##        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
+##           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
 ##            self.virustotalScanCurrentAct.setEnabled(False)
 ##            self.virustotalIpReportAct.setEnabled(False)
 ##            self.virustotalDomainReportAct.setEnabled(False)
@@ -2356,6 +2361,10 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.speedDial().close()
 ##        
 ##        self.syncManager().close()
+        
+        ZoomManager.instance().close()
+        
+        WebIconProvider.instance().close()
 ##        
 ##        self.__virusTotal.close()
 ##        
@@ -2375,7 +2384,7 @@ class WebBrowserWindow(E5MainWindow):
         self.__tabWidget.closeAllBrowsers()
         
         state = self.saveState()
-        Preferences.setWebBrowser("HelpViewerState", state)
+        Preferences.setWebBrowser("WebBrowserState", state)
 
         if Preferences.getWebBrowser("SaveGeometry"):
             if not self.__isFullScreen():
@@ -2631,8 +2640,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.searchEdit.preferencesChanged()
 ##        
 ##        self.__virusTotal.preferencesChanged()
-##        if not Preferences.getHelp("VirusTotalEnabled") or \
-##           Preferences.getHelp("VirusTotalServiceKey") == "":
+##        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
+##           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
 ##            self.virustotalScanCurrentAct.setEnabled(False)
 ##            self.virustotalIpReportAct.setEnabled(False)
 ##            self.virustotalDomainReportAct.setEnabled(False)
@@ -2713,7 +2722,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            if cls._helpEngine is None:
 ##                cls._helpEngine = \
 ##                    QHelpEngine(os.path.join(Utilities.getConfigDir(),
-##                                             "browser", "eric6help.qhc"))
+##                                             "web_browser", "eric6help.qhc"))
 ##            return cls._helpEngine
 ##        else:
 ##            return None
@@ -3156,7 +3165,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                    "{0}/flashplayer/help/settings_manager07.html".format(
 ##                        langCode))
 ##            if zoomValues:
-##                self.zoomManager().clear()
+##                ZoomManager.instance().clear()
 ##        
 ##    def __showEnginesConfigurationDialog(self):
 ##        """
@@ -3225,15 +3234,15 @@ class WebBrowserWindow(E5MainWindow):
 ##        """
 ##        self.featurePermissionManager().showFeaturePermissionsDialog()
 ##        
-##    def __showZoomValuesDialog(self):
-##        """
-##        Private slot to show the zoom values management dialog.
-##        """
-##        from .ZoomManager.ZoomValuesDialog import ZoomValuesDialog
-##        
-##        dlg = ZoomValuesDialog(self)
-##        dlg.exec_()
-##        
+    def __showZoomValuesDialog(self):
+        """
+        Private slot to show the zoom values management dialog.
+        """
+        from .ZoomManager.ZoomValuesDialog import ZoomValuesDialog
+        
+        dlg = ZoomValuesDialog(self)
+        dlg.exec_()
+        
 ##    def __showNetworkMonitor(self):
 ##        """
 ##        Private slot to show the network monitor dialog.
@@ -3480,20 +3489,6 @@ class WebBrowserWindow(E5MainWindow):
 ##            cls._flashCookieManager = FlashCookieManager()
 ##        
 ##        return cls._flashCookieManager
-##        
-##    @classmethod
-##    def zoomManager(cls):
-##        """
-##        Class method to get a reference to the zoom values manager.
-##        
-##        @return reference to the zoom values manager
-##        @rtype ZoomManager
-##        """
-##        if cls._zoomManager is None:
-##            from .ZoomManager.ZoomManager import ZoomManager
-##            cls._zoomManager = ZoomManager()
-##        
-##        return cls._zoomManager
 ##        
     @classmethod
     def mainWindow(cls):

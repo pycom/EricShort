@@ -27,7 +27,7 @@ from E5Gui.E5LineEditButton import E5LineEditButton
 
 import WebBrowser.WebBrowserWindow
 
-##from .FavIconLabel import FavIconLabel
+from .FavIconLabel import FavIconLabel
 ##from .SslLabel import SslLabel
 ##
 import UI.PixmapCache
@@ -60,9 +60,8 @@ class UrlBar(E5LineEdit):
 ##        self.__bmInactiveIcon = QIcon(
 ##            self.__bmActiveIcon.pixmap(16, 16, QIcon.Disabled))
         
-        # TODO: FavIcon
-##        self.__favicon = FavIconLabel(self)
-##        self.addWidget(self.__favicon, E5LineEdit.LeftSide)
+        self.__favicon = FavIconLabel(self)
+        self.addWidget(self.__favicon, E5LineEdit.LeftSide)
         
         # TODO: SSL
 ##        self.__sslLabel = SslLabel(self)
@@ -120,8 +119,7 @@ class UrlBar(E5LineEdit):
         @param browser reference to the browser widget (WebBrowserView)
         """
         self.__browser = browser
-        # TODO: FavIcon
-##        self.__favicon.setBrowser(browser)
+        self.__favicon.setBrowser(browser)
         
         self.__browser.urlChanged.connect(self.__browserUrlChanged)
         self.__browser.loadProgress.connect(self.update)

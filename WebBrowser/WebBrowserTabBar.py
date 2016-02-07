@@ -86,7 +86,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         super(WebBrowserTabBar, self).mouseMoveEvent(evt)
         
         # TODO: page preview
-##        if Preferences.getHelp("ShowPreview"):
+##        if Preferences.getWebBrowser("ShowPreview"):
 ##            # Find the tab under the mouse
 ##            i = 0
 ##            tabIndex = -1
@@ -117,7 +117,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         @param evt reference to the leave event (QEvent)
         """
         # TODO: page preview
-##        if Preferences.getHelp("ShowPreview"):
+##        if Preferences.getWebBrowser("ShowPreview"):
 ##            # If leave tabwidget then hide previous tab preview
 ##            if self.__previewPopup is not None:
 ##                self.__previewPopup.hide()
@@ -132,7 +132,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         @param evt reference to the mouse press event (QMouseEvent)
         """
         # TODO: page preview
-##        if Preferences.getHelp("ShowPreview"):
+##        if Preferences.getWebBrowser("ShowPreview"):
 ##            if self.__previewPopup is not None:
 ##                self.__previewPopup.hide()
 ##            self.__currentTabPreviewIndex = -1
@@ -151,7 +151,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         """
         # TODO: page preview
 ##        if evt.type() == QEvent.ToolTip and \
-##           Preferences.getHelp("ShowPreview"):
+##           Preferences.getWebBrowser("ShowPreview"):
 ##            # suppress tool tips if we are showing previews
 ##            evt.setAccepted(True)
 ##            return True
@@ -166,7 +166,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         """
         pass
         # TODO: page preview
-##        if Preferences.getHelp("ShowPreview"):
+##        if Preferences.getWebBrowser("ShowPreview"):
 ##            if self.__previewPopup is not None:
 ##                self.__previewPopup.hide()
 ##            self.__currentTabPreviewIndex = -1

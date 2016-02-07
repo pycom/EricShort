@@ -348,7 +348,7 @@ class WebBrowserTabWidget(E5TabWidget):
         browser.forwardAvailable.connect(self.__mainWindow.setForwardAvailable)
         browser.loadStarted.connect(self.__loadStarted)
         browser.loadFinished.connect(self.__loadFinished)
-        browser.iconUrlChanged.connect(self.__iconUrlChanged)
+        browser.iconChanged.connect(self.__iconChanged)
         browser.search.connect(self.newBrowser)
         browser.page().windowCloseRequested.connect(
             self.__windowCloseRequested)
@@ -796,21 +796,18 @@ class WebBrowserTabWidget(E5TabWidget):
             
             self.__mainWindow.setLoadingActions(False)
     
-    def __iconUrlChanged(self, url):
+    def __iconChanged(self):
         """
-        Private slot to handle a change of the icon URL.
-        
-        @param url URL of the icon
-        @type QUrl
+        Private slot to handle a change of the web site icon.
         """
         browser = self.sender()
         
         if browser is not None and isinstance(browser, QWidget):
-            import WebBrowser.WebBrowserWindow
             self.setTabIcon(
                 self.indexOf(browser),
-                WebBrowser.WebBrowserWindow.WebBrowserWindow.icon(url))
+                browser.icon())
             # TODO: Bookmarks
+##            import WebBrowser.WebBrowserWindow
 ##            WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()\
 ##                .iconChanged(url)
     

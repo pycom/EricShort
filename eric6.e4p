@@ -1267,12 +1267,16 @@
     <Source>WebBrowser/JavaScript/AutoFillJsObject.py</Source>
     <Source>WebBrowser/JavaScript/ExternalJsObject.py</Source>
     <Source>WebBrowser/JavaScript/__init__.py</Source>
+    <Source>WebBrowser/Network/FollowRedirectReply.py</Source>
     <Source>WebBrowser/Network/NetworkManager.py</Source>
     <Source>WebBrowser/Network/__init__.py</Source>
     <Source>WebBrowser/SearchWidget.py</Source>
     <Source>WebBrowser/Tools/Scripts.py</Source>
     <Source>WebBrowser/Tools/WebBrowserTools.py</Source>
+    <Source>WebBrowser/Tools/WebIconLoader.py</Source>
+    <Source>WebBrowser/Tools/WebIconProvider.py</Source>
     <Source>WebBrowser/Tools/__init__.py</Source>
+    <Source>WebBrowser/UrlBar/FavIconLabel.py</Source>
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
     <Source>WebBrowser/UrlBar/__init__.py</Source>
@@ -1281,6 +1285,10 @@
     <Source>WebBrowser/WebBrowserTabWidget.py</Source>
     <Source>WebBrowser/WebBrowserView.py</Source>
     <Source>WebBrowser/WebBrowserWindow.py</Source>
+    <Source>WebBrowser/ZoomManager/ZoomManager.py</Source>
+    <Source>WebBrowser/ZoomManager/ZoomValuesDialog.py</Source>
+    <Source>WebBrowser/ZoomManager/ZoomValuesModel.py</Source>
+    <Source>WebBrowser/ZoomManager/__init__.py</Source>
     <Source>WebBrowser/__init__.py</Source>
     <Source>WebBrowser/data/javascript_rc.py</Source>
     <Source>__init__.py</Source>
@@ -1681,6 +1689,7 @@
     <Form>VCS/RepositoryInfoDialog.ui</Form>
     <Form>ViewManager/BookmarkedFilesDialog.ui</Form>
     <Form>WebBrowser/SearchWidget.ui</Form>
+    <Form>WebBrowser/ZoomManager/ZoomValuesDialog.ui</Form>
   </Forms>
   <Translations>
     <Translation>i18n/eric6_cs.qm</Translation>
