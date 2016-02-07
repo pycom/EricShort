@@ -385,6 +385,36 @@ class WebBrowserView(QWebEngineView):
         """
         self.triggerPageAction(QWebEnginePage.Copy)
     
+    def cut(self):
+        """
+        Public slot to cut the selected text.
+        """
+        self.triggerPageAction(QWebEnginePage.Cut)
+    
+    def paste(self):
+        """
+        Public slot to paste text from the clipboard.
+        """
+        self.triggerPageAction(QWebEnginePage.Paste)
+    
+    def undo(self):
+        """
+        Public slot to undo the last edit action.
+        """
+        self.triggerPageAction(QWebEnginePage.Undo)
+    
+    def redo(self):
+        """
+        Public slot to redo the last edit action.
+        """
+        self.triggerPageAction(QWebEnginePage.Redo)
+    
+    def selectAll(self):
+        """
+        Public slot to select all text.
+        """
+        self.triggerPageAction(QWebEnginePage.SelectAll)
+    
     def isForwardAvailable(self):
         """
         Public method to determine, if a forward move in history is possible.
@@ -556,7 +586,8 @@ class WebBrowserView(QWebEngineView):
 ##            menu.addSeparator()
 ##            menu.addAction(
 ##                UI.PixmapCache.getIcon("editCopy.png"),
-##                self.tr("Copy Link to Clipboard"), self.__copyLink)
+##                self.tr("Copy Link to Clipboard"), self.__copyLink)\
+##                .setData(hit.linkUrl())
 ##            menu.addAction(
 ##                UI.PixmapCache.getIcon("mailSend.png"),
 ##                self.tr("Send Link"),
@@ -584,7 +615,7 @@ class WebBrowserView(QWebEngineView):
 ##            menu.addAction(
 ##                UI.PixmapCache.getIcon("editCopy.png"),
 ##                self.tr("Copy Image Location to Clipboard"),
-##                self.__copyLocation).setData(hit.imageUrl().toString())
+##                self.__copyLink).setData(hit.imageUrl())
 ##            menu.addAction(
 ##                UI.PixmapCache.getIcon("mailSend.png"),
 ##                self.tr("Send Image Link"),
@@ -633,7 +664,7 @@ class WebBrowserView(QWebEngineView):
 ##                menu.addAction(
 ##                    UI.PixmapCache.getIcon("editCopy.png"),
 ##                    self.tr("Copy Media Address to Clipboard"),
-##                    self.__copyLocation).setData(videoUrl.toString())
+##                    self.__copyLink).setData(videoUrl)
 ##                menu.addAction(
 ##                    UI.PixmapCache.getIcon("mailSend.png"),
 ##                    self.tr("Send Media Address"), self.__sendLink)\
@@ -725,6 +756,9 @@ class WebBrowserView(QWebEngineView):
 ##            UI.PixmapCache.getIcon("bookmark22.png"),
 ##            self.tr("Bookmark this Page"), self.addBookmark)
         menu.addAction(
+            UI.PixmapCache.getIcon("editCopy.png"),
+            self.tr("Copy Page Link"), self.__copyLink).setData(self.url())
+        menu.addAction(
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Page Link"), self.__sendLink).setData(self.url())
         menu.addSeparator()
@@ -741,8 +775,16 @@ class WebBrowserView(QWebEngineView):
         menu.addAction(self.__mw.zoomResetAct)
         menu.addAction(self.__mw.zoomOutAct)
         menu.addSeparator()
+        # TODO: edit actions only for forms
+        menu.addAction(self.__mw.undoAct)
+        menu.addAction(self.__mw.redoAct)
+        menu.addSeparator()
         if self.selectedText():
             menu.addAction(self.__mw.copyAct)
+            menu.addAction(self.__mw.cutAct)
+        menu.addAction(self.__mw.pasteAct)
+        menu.addAction(self.__mw.selectAllAct)
+        if self.selectedText():
             menu.addAction(
                 UI.PixmapCache.getIcon("mailSend.png"),
                 self.tr("Send Text"),
@@ -805,7 +847,7 @@ class WebBrowserView(QWebEngineView):
 ##                           self.__addSearchEngine).setData(element)
 ##            menu.addSeparator()
         
-        # TODO: Web Inspector
+        # TODO: WebInspector
 ##        menu.addAction(
 ##            UI.PixmapCache.getIcon("webInspector.png"),
 ##            self.tr("Web Inspector..."), self.__webInspector)
@@ -867,17 +909,24 @@ class WebBrowserView(QWebEngineView):
             data = data.toString()
         QDesktopServices.openUrl(QUrl("mailto:?body=" + data))
     
+    def __copyLink(self):
+        """
+        Private slot to copy a link to the clipboard.
+        """
+        act = self.sender()
+        data = act.data()
+        if isinstance(data, QUrl) and data.isEmpty():
+            return
+        
+        if isinstance(data, QUrl):
+            data = data.toString()
+        QApplication.clipboard().setText(data)
+    
 ##    def __downloadLink(self):
 ##        """
 ##        Private slot to download a link and save it to disk.
 ##        """
 ##        self.pageAction(QWebPage.DownloadLinkToDisk).trigger()
-##    
-##    def __copyLink(self):
-##        """
-##        Private slot to copy a link to the clipboard.
-##        """
-##        self.pageAction(QWebPage.CopyLinkToClipboard).trigger()
 ##    
 ##    def __downloadImage(self):
 ##        """
@@ -890,14 +939,6 @@ class WebBrowserView(QWebEngineView):
 ##        Private slot to copy an image to the clipboard.
 ##        """
 ##        self.pageAction(QWebPage.CopyImageToClipboard).trigger()
-    
-    def __copyLocation(self):
-        """
-        Private slot to copy an image or media location to the clipboard.
-        """
-        act = self.sender()
-        url = act.data()
-        QApplication.clipboard().setText(url)
     
     # TODO: AdBlock
 ##    def __blockImage(self):

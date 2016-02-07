@@ -868,7 +868,82 @@ class WebBrowserWindow(E5MainWindow):
             self.copyAct.triggered.connect(self.__copy)
         self.__actions.append(self.copyAct)
         
-        # TODO: add more editing actions: Cut, Paste, Undo, Redo, Select All
+        self.cutAct = E5Action(
+            self.tr('Cut'),
+            UI.PixmapCache.getIcon("editCut.png"),
+            self.tr('Cu&t'),
+            QKeySequence(self.tr("Ctrl+X", "Edit|Cut")),
+            0, self, 'webbrowser_edit_cut')
+        self.cutAct.setStatusTip(self.tr('Cut the selected text'))
+        self.cutAct.setWhatsThis(self.tr(
+            """<b>Cut</b>"""
+            """<p>Cut the selected text to the clipboard.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.cutAct.triggered.connect(self.__cut)
+        self.__actions.append(self.cutAct)
+        
+        self.pasteAct = E5Action(
+            self.tr('Paste'),
+            UI.PixmapCache.getIcon("editPaste.png"),
+            self.tr('&Paste'),
+            QKeySequence(self.tr("Ctrl+V", "Edit|Paste")),
+            0, self, 'webbrowser_edit_paste')
+        self.pasteAct.setStatusTip(self.tr('Paste text from the clipboard'))
+        self.pasteAct.setWhatsThis(self.tr(
+            """<b>Paste</b>"""
+            """<p>Paste some text from the clipboard.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.pasteAct.triggered.connect(self.__paste)
+        self.__actions.append(self.pasteAct)
+        
+        self.undoAct = E5Action(
+            self.tr('Undo'),
+            UI.PixmapCache.getIcon("editUndo.png"),
+            self.tr('&Undo'),
+            QKeySequence(self.tr("Ctrl+Z", "Edit|Undo")),
+            0, self, 'webbrowser_edit_undo')
+        self.undoAct.setStatusTip(self.tr('Undo the last edit action'))
+        self.undoAct.setWhatsThis(self.tr(
+            """<b>Undo</b>"""
+            """<p>Undo the last edit action.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.undoAct.triggered.connect(self.__undo)
+        self.__actions.append(self.undoAct)
+        
+        self.redoAct = E5Action(
+            self.tr('Redo'),
+            UI.PixmapCache.getIcon("editRedo.png"),
+            self.tr('&Redo'),
+            QKeySequence(self.tr("Ctrl+Shift+Z", "Edit|Redo")),
+            0, self, 'webbrowser_edit_redo')
+        self.redoAct.setStatusTip(self.tr('Redo the last edit action'))
+        self.redoAct.setWhatsThis(self.tr(
+            """<b>Redo</b>"""
+            """<p>Redo the last edit action.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.redoAct.triggered.connect(self.__redo)
+        self.__actions.append(self.redoAct)
+        
+        self.selectAllAct = E5Action(
+            self.tr('Select All'),
+            UI.PixmapCache.getIcon("editSelectAll.png"),
+            self.tr('&Select All'),
+            QKeySequence(self.tr("Ctrl+A", "Edit|Select All")),
+            0, self, 'webbrowser_edit_select_all')
+        self.selectAllAct.setStatusTip(self.tr('Select all text'))
+        self.selectAllAct.setWhatsThis(self.tr(
+            """<b>Select All</b>"""
+            """<p>Select all text of the current browser.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.selectAllAct.triggered.connect(self.__selectAll)
+        self.__actions.append(self.selectAllAct)
+        
+        # TODO: add more editing actions: Select All
         
         self.findAct = E5Action(
             self.tr('Find...'),
@@ -1705,7 +1780,14 @@ class WebBrowserWindow(E5MainWindow):
         
         menu = mb.addMenu(self.tr('&Edit'))
         menu.setTearOffEnabled(True)
+        menu.addAction(self.undoAct)
+        menu.addAction(self.redoAct)
+        menu.addSeparator()
         menu.addAction(self.copyAct)
+        menu.addAction(self.cutAct)
+        menu.addAction(self.pasteAct)
+        menu.addSeparator()
+        menu.addAction(self.selectAllAct)
         menu.addSeparator()
         menu.addAction(self.findAct)
         menu.addAction(self.findNextAct)
@@ -1869,7 +1951,14 @@ class WebBrowserWindow(E5MainWindow):
         edittb = self.addToolBar(self.tr("Edit"))
         edittb.setObjectName("EditToolBar")
         edittb.setIconSize(UI.Config.ToolBarIconSize)
+        edittb.addAction(self.undoAct)
+        edittb.addAction(self.redoAct)
+        edittb.addSeparator()
         edittb.addAction(self.copyAct)
+        edittb.addAction(self.cutAct)
+        edittb.addAction(self.pasteAct)
+        edittb.addSeparator()
+        edittb.addAction(self.selectAllAct)
         
         viewtb = self.addToolBar(self.tr("View"))
         viewtb.setObjectName("ViewToolBar")
@@ -2507,6 +2596,36 @@ class WebBrowserWindow(E5MainWindow):
         Private slot called to handle the copy action.
         """
         self.currentBrowser().copy()
+    
+    def __cut(self):
+        """
+        Private slot called to handle the cut action.
+        """
+        self.currentBrowser().cut()
+    
+    def __paste(self):
+        """
+        Private slot called to handle the paste action.
+        """
+        self.currentBrowser().paste()
+    
+    def __undo(self):
+        """
+        Private slot to handle the undo action.
+        """
+        self.currentBrowser().undo()
+    
+    def __redo(self):
+        """
+        Private slot to handle the redo action.
+        """
+        self.currentBrowser().redo()
+    
+    def __selectAll(self):
+        """
+        Private slot to handle the select all action.
+        """
+        self.currentBrowser().selectAll()
 ##    
 ##    def __privateBrowsing(self):
 ##        """
@@ -3074,8 +3193,8 @@ class WebBrowserWindow(E5MainWindow):
             item = backItems[index]
             act = QAction(self)
             act.setData(-1 * (index + 1))
-##            icon = HelpWindow.__getWebIcon(item.url())
-##            act.setIcon(icon)
+            icon = HelpWindow.icon(item.url())
+            act.setIcon(icon)
             act.setText(item.title())
             self.backMenu.addAction(act)
         
@@ -3091,8 +3210,8 @@ class WebBrowserWindow(E5MainWindow):
             item = forwardItems[index]
             act = QAction(self)
             act.setData(index + 1)
-##            icon = HelpWindow.__getWebIcon(item.url())
-##            act.setIcon(icon)
+            icon = HelpWindow.icon(item.url())
+            act.setIcon(icon)
             act.setText(item.title())
             self.forwardMenu.addAction(act)
         
@@ -3291,53 +3410,8 @@ class WebBrowserWindow(E5MainWindow):
         @param url URL to get icon for (QUrl)
         @return icon for the URL (QIcon)
         """
-        # TODO: implement an icon fetcher
-##        icon = HelpWindow.__getWebIcon(url)
-##        if icon.isNull():
-##            hostUrl = QUrl()
-##            hostUrl.setScheme(url.scheme())
-##            hostUrl.setHost(url.host())
-##            icon = HelpWindow.__getWebIcon(hostUrl)
-##        
-##        if icon.isNull():
-##            pixmap = QWebSettings.webGraphic(
-##                QWebSettings.DefaultFrameIconGraphic)
-##            if pixmap.isNull():
-##                pixmap = UI.PixmapCache.getPixmap("defaultIcon.png")
-##                QWebSettings.setWebGraphic(
-##                    QWebSettings.DefaultFrameIconGraphic, pixmap)
-##            return QIcon(pixmap)
-##        
-        icon = UI.PixmapCache.getIcon("defaultIcon.png")
-        return icon
+        return WebIconProvider.instance().iconForUrl(url)
 
-##    @staticmethod
-##    def __getWebIcon(url):
-##        """
-##        Private static method to fetch the icon for a URL.
-##        
-##        @param url URL to get icon for (QUrl)
-##        @return icon for the URL (QIcon)
-##        """
-##        scheme = url.scheme()
-##        if scheme in ["eric", "about"]:
-##            return UI.PixmapCache.getIcon("ericWeb.png")
-##        elif scheme == "qthelp" and QTHELP_AVAILABLE:
-##            return UI.PixmapCache.getIcon("qthelp.png")
-##        elif scheme == "file":
-##            return UI.PixmapCache.getIcon("fileMisc.png")
-##        elif scheme == "abp":
-##            return UI.PixmapCache.getIcon("adBlockPlus.png")
-##        
-##        icon = QWebSettings.iconForUrl(url)
-##        if icon.isNull():
-##            # try again
-##            QThread.usleep(10)
-##            icon = QWebSettings.iconForUrl(url)
-##        if not icon.isNull():
-##            icon = QIcon(icon.pixmap(22, 22))
-##        return icon
-##        
 ##    @classmethod
 ##    def bookmarksManager(cls):
 ##        """
