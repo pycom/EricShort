@@ -1650,7 +1650,7 @@ class HexEditWidget(QAbstractScrollArea):
             self.__addrSeparators = self.__addrDigits // 4 - 1
             self.__pxPosHexX = (
                 self.__pxGapAdr +
-                (self.__addrDigits + self.__addrSeparators) * 
+                (self.__addrDigits + self.__addrSeparators) *
                 self.__pxCharWidth + self.__pxGapAdrHex)
         else:
             self.__pxPosHexX = self.__pxGapAdrHex

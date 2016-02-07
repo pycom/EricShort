@@ -267,14 +267,14 @@ def strGroup(txt, sep, groupLen=4):
     @return result string
     @rtype str
     """
-    l=[]
+    groups = []
     
     while len(txt) // groupLen != 0:
-        l.insert(0, txt[-groupLen:])
+        groups.insert(0, txt[-groupLen:])
         txt = txt[:-groupLen]
     if len(txt) > 0:
-        l.insert(0, txt)
-    return sep.join(l)
+        groups.insert(0, txt)
+    return sep.join(groups)
 
 
 ###############################################################################
