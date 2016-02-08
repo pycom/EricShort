@@ -30,7 +30,7 @@ except AttributeError:
 import sys
 import os
 
-# TODO: adjust this when done
+# TODO: adjust this to 5.6.0 when done
 MIN_QT_VERSION = "5.5.0"
 
 from PyQt5.QtCore import qVersion

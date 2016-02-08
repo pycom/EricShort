@@ -34,6 +34,8 @@ import WebBrowser.WebBrowserWindow
 
 from .JavaScript.ExternalJsObject import ExternalJsObject
 
+from .Tools.WebHitTestResult import WebHitTestResult
+
 import Preferences
 import UI.PixmapCache
 import Globals
@@ -721,14 +723,14 @@ class WebBrowserPage(QWebEnginePage):
         """
         loop = QEventLoop()
         resultDict = {"res": None}
+        QTimer.singleShot(500, loop.quit);
         
         def resultCallback(res, resDict=resultDict):
             if loop and loop.isRunning():
                 resDict["res"] = res
                 loop.quit()
         
-        self.previewView.page().runJavaScript(
-            script, resultCallback)
+        self.runJavaScript(script, resultCallback)
         
         loop.exec_()
         return resultDict["res"]
@@ -749,15 +751,14 @@ class WebBrowserPage(QWebEnginePage):
     
     def hitTestContent(self, pos):
         """
-        Public method to test the contents at a given position.
+        Public method to test the content at a specified position.
         
-        @param pos position to be tested
+        @param pos position to execute the test at
         @type QPoint
-        @return object containing the test results
-        @rtype WebBrowserHitTestResult
+        @return test result object
+        @rtype WebHitTestResult
         """
-        # TODO: WebBrowserHitTestResult
-##        return WebBrowserHitTestResult(self, pos) 
+        return WebHitTestResult(self, pos)
     
     def setupWebChannel(self):
         """

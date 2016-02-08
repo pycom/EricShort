@@ -129,9 +129,9 @@ class WebBrowserWindow(E5MainWindow):
         
         self.__isPrivate = private
         
-##        self.__eventMouseButtons = Qt.NoButton
-##        self.__eventKeyboardModifiers = Qt.NoModifier
-##        
+        self.__eventMouseButtons = Qt.NoButton
+        self.__eventKeyboardModifiers = Qt.NoModifier
+        
         if self.__initShortcutsOnly:
             self.__initActions()
         else:

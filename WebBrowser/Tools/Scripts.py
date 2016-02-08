@@ -7,6 +7,11 @@
 Module containing function to generate JavaScript code.
 """
 
+#
+# This code was ported from QupZilla.
+# Copyright (C) David Rosca <nowrep@gmail.com>
+#
+
 from __future__ import unicode_literals
 
 from .WebBrowserTools import readAllFileContents

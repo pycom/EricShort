@@ -18,7 +18,7 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal, QObject, QT_TRANSLATE_NOOP, \
     QUrl, QBuffer, QIODevice, QFileInfo, Qt, QTimer, QEvent, \
     QRect, QFile, QPoint, QByteArray, qVersion
 from PyQt5.QtGui import QDesktopServices, QClipboard, QMouseEvent, QColor, \
-    QPalette, QIcon
+    QPalette, QIcon, QContextMenuEvent
 from PyQt5.QtWidgets import qApp, QStyle, QMenu, QApplication, QInputDialog, \
     QLineEdit, QLabel, QToolTip, QFrame, QDialog
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog
@@ -556,6 +556,50 @@ class WebBrowserView(QWebEngineView):
     
     def contextMenuEvent(self, evt):
         """
+        Public method called to create a context menu.
+        
+        This method is overridden from QWebEngineView.
+        
+        @param evt reference to the context menu event object
+            (QContextMenuEvent)
+        """
+        pos = evt.pos()
+        reason = evt.reason()
+        QTimer.singleShot(
+            0,
+            lambda: self._contextMenuEvent(QContextMenuEvent(reason, pos)))
+        # needs to be done this way because contextMenuEvent is blocking
+        # the main loop
+    
+    # TODO: re-arrange the menu creation stuff to better adjust to the current situation
+##void TabbedWebView::_contextMenuEvent(QContextMenuEvent *event)
+##{
+##    m_menu->clear();
+##
+##    const WebHitTestResult hitTest = page()->hitTestContent(event->pos());
+##
+##    createContextMenu(m_menu, hitTest);
+##
+##    if (!hitTest.isContentEditable() && !hitTest.isContentSelected() && m_window) {
+##        m_menu->addAction(m_window->adBlockIcon()->menuAction());
+##    }
+##
+##    m_menu->addSeparator();
+##    m_menu->addAction(tr("Inspect Element"), this, SLOT(inspectElement()));
+##
+##    if (!m_menu->isEmpty()) {
+##        // Prevent choosing first option with double rightclick
+##        const QPoint pos = event->globalPos();
+##        QPoint p(pos.x(), pos.y() + 1);
+##
+##        m_menu->popup(p);
+##        return;
+##    }
+##
+##    WebView::_contextMenuEvent(event);
+##}
+    def _contextMenuEvent(self, evt):
+        """
         Protected method called to create a context menu.
         
         This method is overridden from QWebEngineView.
@@ -563,6 +607,8 @@ class WebBrowserView(QWebEngineView):
         @param evt reference to the context menu event object
             (QContextMenuEvent)
         """
+        hitTest = self.page().hitTestContent(evt.pos())
+        
         # TODO: User Agent
 ##        from .UserAgent.UserAgentMenu import UserAgentMenu
         menu = QMenu(self)
