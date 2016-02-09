@@ -76,3 +76,44 @@ def setStyleSheet(css):
     
     style = css.replace("'", "\\'").replace("\n", "\\n")
     return source.format(style)
+
+
+def toggleMediaPause(pos):
+    """
+    Function generating a script to toggle the paused state of a media element.
+    
+    @param pos position of the media element
+    @type QPoint
+    @return script to toggle the element paused state
+    @rtype str
+    """
+    source = """
+        (function() {{
+            var e = document.elementFromPoint({0}, {1});
+            if (!e)
+                return;
+            if (e.paused)
+                e.play();
+            else
+                e.pause();
+            }})()"""
+    return source.format(pos.x(), pos.y())
+
+
+def toggleMediaMute(pos):
+    """
+    Function generating a script to toggle the mute state of a media element.
+    
+    @param pos position of the media element
+    @type QPoint
+    @return script to toggle the element mute state
+    @rtype str
+    """
+    source = """
+        (function() {[
+            var e = document.elementFromPoint({0}, {1});
+            if (!e)
+                return;
+            e.muted = !e.muted;
+            }})()"""
+    return source.format(pos.x(), pos.y())

@@ -96,6 +96,8 @@ class WebBrowserView(QWebEngineView):
         self.__progress = 0
         self.__siteIconLoader = None
         self.__siteIcon = QIcon()
+        self.__menu = QMenu(self)
+        self.__clickedPos = QPoint()
         
         self.__currentZoom = 100
         self.__zoomLevels = WebBrowserView.ZoomLevels[:]
@@ -572,32 +574,6 @@ class WebBrowserView(QWebEngineView):
         # the main loop
     
     # TODO: re-arrange the menu creation stuff to better adjust to the current situation
-##void TabbedWebView::_contextMenuEvent(QContextMenuEvent *event)
-##{
-##    m_menu->clear();
-##
-##    const WebHitTestResult hitTest = page()->hitTestContent(event->pos());
-##
-##    createContextMenu(m_menu, hitTest);
-##
-##    if (!hitTest.isContentEditable() && !hitTest.isContentSelected() && m_window) {
-##        m_menu->addAction(m_window->adBlockIcon()->menuAction());
-##    }
-##
-##    m_menu->addSeparator();
-##    m_menu->addAction(tr("Inspect Element"), this, SLOT(inspectElement()));
-##
-##    if (!m_menu->isEmpty()) {
-##        // Prevent choosing first option with double rightclick
-##        const QPoint pos = event->globalPos();
-##        QPoint p(pos.x(), pos.y() + 1);
-##
-##        m_menu->popup(p);
-##        return;
-##    }
-##
-##    WebView::_contextMenuEvent(event);
-##}
     def _contextMenuEvent(self, evt):
         """
         Protected method called to create a context menu.
@@ -607,195 +583,283 @@ class WebBrowserView(QWebEngineView):
         @param evt reference to the context menu event object
             (QContextMenuEvent)
         """
+        self.__menu.clear()
+        
         hitTest = self.page().hitTestContent(evt.pos())
         
-        # TODO: User Agent
-##        from .UserAgent.UserAgentMenu import UserAgentMenu
-        menu = QMenu(self)
+        self.__createContextMenu(self.__menu, hitTest)
         
-##        frameAtPos = self.page().frameAt(evt.pos())
-        # TODO: WebHitTestResult
-##        hit = self.page().hitTestContent(evt.pos())
-##        if not hit.linkUrl().isEmpty():
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("openNewTab.png"),
-##                self.tr("Open Link in New Tab\tCtrl+LMB"),
-##                self.__openLinkInNewTab).setData(hit.linkUrl())
-##            menu.addSeparator()
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("download.png"),
-##                self.tr("Save Lin&k"), self.__downloadLink)
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("bookmark22.png"),
-##                self.tr("Bookmark this Link"), self.__bookmarkLink)\
-##                .setData(hit.linkUrl())
-##            menu.addSeparator()
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("editCopy.png"),
-##                self.tr("Copy Link to Clipboard"), self.__copyLink)\
-##                .setData(hit.linkUrl())
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("mailSend.png"),
-##                self.tr("Send Link"),
-##                self.__sendLink).setData(hit.linkUrl())
-##            if Preferences.getWebBrowser("VirusTotalEnabled") and \
-##               Preferences.getWebBrowser("VirusTotalServiceKey") != "":
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("virustotal.png"),
-##                    self.tr("Scan Link with VirusTotal"),
-##                    self.__virusTotal).setData(hit.linkUrl())
+        # TODO: AdBlock
+##        if not hitTest.isContentEditable() and not hitTest.isContentSelected():
+##            self.__menu.addAction(self.__mw.adBlockIcon().menuAction())
         
-##        if not hit.imageUrl().isEmpty():
-##            if not menu.isEmpty():
-##                menu.addSeparator()
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("openNewTab.png"),
-##                self.tr("Open Image in New Tab"),
-##                self.__openLinkInNewTab).setData(hit.imageUrl())
-##            menu.addSeparator()
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("download.png"),
-##                self.tr("Save Image"), self.__downloadImage)
-##            menu.addAction(
-##                self.tr("Copy Image to Clipboard"), self.__copyImage)
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("editCopy.png"),
-##                self.tr("Copy Image Location to Clipboard"),
-##                self.__copyLink).setData(hit.imageUrl())
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("mailSend.png"),
-##                self.tr("Send Image Link"),
-##                self.__sendLink).setData(hit.imageUrl())
-##            menu.addSeparator()
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("adBlockPlus.png"),
-##                self.tr("Block Image"), self.__blockImage)\
-##                .setData(hit.imageUrl().toString())
-##            if Preferences.getWebBrowser("VirusTotalEnabled") and \
-##               Preferences.getWebBrowser("VirusTotalServiceKey") != "":
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("virustotal.png"),
-##                    self.tr("Scan Image with VirusTotal"),
-##                    self.__virusTotal).setData(hit.imageUrl())
+        # TODO: WebInspector
+##        self.__menu.addSeparator()
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("webInspector.png"),
+##            self.tr("Inspect Element..."), self.__webInspector)
         
-##        element = hit.element()
-##        if not element.isNull():
-##            if self.__isMediaElement(element):
-##                if not menu.isEmpty():
-##                    menu.addSeparator()
-##                
-##                self.__clickedMediaElement = element
-##                
-##                paused = element.evaluateJavaScript("this.paused")
-##                muted = element.evaluateJavaScript("this.muted")
-##                videoUrl = QUrl(element.evaluateJavaScript("this.currentSrc"))
-##                
-##                if paused:
-##                    menu.addAction(
-##                        UI.PixmapCache.getIcon("mediaPlaybackStart.png"),
-##                        self.tr("Play"), self.__pauseMedia)
-##                else:
-##                    menu.addAction(
-##                        UI.PixmapCache.getIcon("mediaPlaybackPause.png"),
-##                        self.tr("Pause"), self.__pauseMedia)
-##                if muted:
-##                    menu.addAction(
-##                        UI.PixmapCache.getIcon("audioVolumeHigh.png"),
-##                        self.tr("Unmute"), self.__muteMedia)
-##                else:
-##                    menu.addAction(
-##                        UI.PixmapCache.getIcon("audioVolumeMuted.png"),
-##                        self.tr("Mute"), self.__muteMedia)
-##                menu.addSeparator()
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("editCopy.png"),
-##                    self.tr("Copy Media Address to Clipboard"),
-##                    self.__copyLink).setData(videoUrl)
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("mailSend.png"),
-##                    self.tr("Send Media Address"), self.__sendLink)\
-##                    .setData(videoUrl)
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("download.png"),
-##                    self.tr("Save Media"), self.__downloadMedia)\
-##                    .setData(videoUrl)
-##            
-##            if element.tagName().lower() in ["input", "textarea"]:
-##                if menu.isEmpty():
-##                    pageMenu = self.page().createStandardContextMenu()
-##                    directionFound = False
-##                    # used to detect double direction entry
-##                    for act in pageMenu.actions():
-##                        if act.isSeparator():
-##                            menu.addSeparator()
-##                            continue
-##                        if act.menu():
-##                            if self.pageAction(
-##                                    QWebPage.SetTextDirectionDefault) in \
-##                                    act.menu().actions():
-##                                if directionFound:
-##                                    act.setVisible(False)
-##                                directionFound = True
-##                            elif self.pageAction(QWebPage.ToggleBold) in \
-##                                    act.menu().actions():
-##                                act.setVisible(False)
-##                        elif act == self.pageAction(QWebPage.InspectElement):
-##                            # we have our own inspect entry
-##                            act.setVisible(False)
-##                        menu.addAction(act)
-##                    pageMenu = None
+        if not self.__menu.isEmpty():
+            pos = evt.globalPos()
+            self.__menu.popup(QPoint(pos.x(), pos.y() + 1))
+    
+    def __createContextMenu(self, menu, hitTest):
+        """
+        Private method to populate the context menu.
+        
+        @param menu reference to the menu to be populated
+        @type QMenu
+        @param hitTest reference to the hit test object
+        @type WebHitTestResult
+        """
+        if not hitTest.linkUrl().isEmpty() and \
+                hitTest.linkUrl().scheme() != "javascript":
+            self.__createLinkContextMenu(menu, hitTest)
+        
+        if not hitTest.imageUrl().isEmpty():
+            self.__createImageContextMenu(menu, hitTest)
+        
+        if not hitTest.mediaUrl().isEmpty():
+            self.__createMediaContextMenu(menu, hitTest)
+        
+        if hitTest.isContentEditable():
+            menu.addAction(self.__mw.undoAct)
+            menu.addAction(self.__mw.redoAct)
+            menu.addSeparator()
+            menu.addAction(self.__mw.cutAct)
+            menu.addAction(self.__mw.copyAct)
+            menu.addAction(self.__mw.pasteAct)
+            # TODO: PIM
+##            menu.addSeparator()
+##            self.__mw.personalInformationManager().createSubMenu(menu, self, hit)
+            
+            # TODO: complete this context menu action
+##            if hitTest.tagName() == "input":
+##                act = menu.addAction("")
+##                act.setVisible(False)
+##                self.__checkForForm(act, hitTest.pos())
+        
+        if self.selectedText():
+            self.__createSelectedTextContextMenu(menu, hitTest)
+        
+        if self.__menu.isEmpty():
+            self.__createPageContextMenu(menu)
+    
+    def __createLinkContextMenu(self, menu, hitTest):
+        """
+        Private method to populate the context menu for URLs.
+        
+        @param menu reference to the menu to be populated
+        @type QMenu
+        @param hitTest reference to the hit test object
+        @type WebHitTestResult
+        """
+        if not menu.isEmpty():
+            menu.addSeparator()
+        
+        menu.addAction(
+            UI.PixmapCache.getIcon("openNewTab.png"),
+            self.tr("Open Link in New Tab\tCtrl+LMB"),
+            self.__openLinkInNewTab).setData(hitTest.linkUrl())
+        # TODO: context menu: Open Link in New Window
+        # TODO: context menu: Open Link in Private Window
+        menu.addSeparator()
+        # TODO: Download Link
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("download.png"),
+##            self.tr("Save Lin&k"), self.__downloadLink)
+        # TODO: Bookmarks
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("bookmark22.png"),
+##            self.tr("Bookmark this Link"), self.__bookmarkLink)\
+##            .setData(hitTest.linkUrl())
+        menu.addSeparator()
+        menu.addAction(
+            UI.PixmapCache.getIcon("editCopy.png"),
+            self.tr("Copy Link to Clipboard"), self.__copyLink)\
+            .setData(hitTest.linkUrl())
+        menu.addAction(
+            UI.PixmapCache.getIcon("mailSend.png"),
+            self.tr("Send Link"),
+            self.__sendLink).setData(hitTest.linkUrl())
+        # TODO: VirusTotal
+##        if Preferences.getWebBrowser("VirusTotalEnabled") and \
+##           Preferences.getWebBrowser("VirusTotalServiceKey") != "":
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("virustotal.png"),
+##                self.tr("Scan Link with VirusTotal"),
+##                self.__virusTotal).setData(hitTest.linkUrl())
+        
+    def __createImageContextMenu(self, menu, hitTest):
+        """
+        Private method to populate the context menu for images.
+        
+        @param menu reference to the menu to be populated
+        @type QMenu
+        @param hitTest reference to the hit test object
+        @type WebHitTestResult
+        """
+        if not menu.isEmpty():
+            menu.addSeparator()
+        
+        menu.addAction(
+            UI.PixmapCache.getIcon("openNewTab.png"),
+            self.tr("Open Image in New Tab"),
+            self.__openLinkInNewTab).setData(hitTest.imageUrl())
+        menu.addSeparator()
+        # TODO: Save Image
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("download.png"),
+##            self.tr("Save Image"), self.__downloadImage)
+        # TODO: Copy Image
+##        menu.addAction(
+##            self.tr("Copy Image to Clipboard"), self.__copyImage)
+        menu.addAction(
+            UI.PixmapCache.getIcon("editCopy.png"),
+            self.tr("Copy Image Location to Clipboard"),
+            self.__copyLink).setData(hitTest.imageUrl())
+        menu.addAction(
+            UI.PixmapCache.getIcon("mailSend.png"),
+            self.tr("Send Image Link"),
+            self.__sendLink).setData(hitTest.imageUrl())
+        # TODO: AdBlock
+##        menu.addSeparator()
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("adBlockPlus.png"),
+##            self.tr("Block Image"), self.__blockImage)\
+##            .setData(hitTest.imageUrl().toString())
+        # TODO: VirusTotal
+##        if Preferences.getWebBrowser("VirusTotalEnabled") and \
+##           Preferences.getWebBrowser("VirusTotalServiceKey") != "":
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("virustotal.png"),
+##                self.tr("Scan Image with VirusTotal"),
+##                self.__virusTotal).setData(hitTest.imageUrl())
+    
+    def __createMediaContextMenu(self, menu, hitTest):
+        """
+        Private method to populate the context menu for media elements.
+        
+        @param menu reference to the menu to be populated
+        @type QMenu
+        @param hitTest reference to the hit test object
+        @type WebHitTestResult
+        """
+        self.__clickedPos = hitTest.pos()
         
         if not menu.isEmpty():
             menu.addSeparator()
         
-        # TODO: PIM
-##        self.__mw.personalInformationManager().createSubMenu(menu, self, hit)
+        if hitTest.mediaPaused():
+            menu.addAction(
+                UI.PixmapCache.getIcon("mediaPlaybackStart.png"),
+                self.tr("Play"), self.__pauseMedia)
+        else:
+            menu.addAction(
+                UI.PixmapCache.getIcon("mediaPlaybackPause.png"),
+                self.tr("Pause"), self.__pauseMedia)
+        if hitTest.mediaMuted():
+            menu.addAction(
+                UI.PixmapCache.getIcon("audioVolumeHigh.png"),
+                self.tr("Unmute"), self.__muteMedia)
+        else:
+            menu.addAction(
+                UI.PixmapCache.getIcon("audioVolumeMuted.png"),
+                self.tr("Mute"), self.__muteMedia)
+        menu.addSeparator()
+        menu.addAction(
+            UI.PixmapCache.getIcon("editCopy.png"),
+            self.tr("Copy Media Address to Clipboard"),
+            self.__copyLink).setData(hitTest.mediaUrl())
+        menu.addAction(
+            UI.PixmapCache.getIcon("mailSend.png"),
+            self.tr("Send Media Address"), self.__sendLink)\
+            .setData(hitTest.mediaUrl())
+        # TODO: DownloadManager
+##        menu.addAction(
+##            UI.PixmapCache.getIcon("download.png"),
+##            self.tr("Save Media"), self.__downloadMedia)\
+##            .setData(hitTest.mediaUrl())
+    
+    def __createSelectedTextContextMenu(self, menu, hitTest):
+        """
+        Private method to populate the context menu for selected text.
+        
+        @param menu reference to the menu to be populated
+        @type QMenu
+        @param hitTest reference to the hit test object
+        @type WebHitTestResult
+        """
+        if not menu.isEmpty():
+            menu.addSeparator()
+        
+        menu.addAction(self.__mw.copyAct)
+        menu.addSeparator()
+        menu.addAction(
+            UI.PixmapCache.getIcon("mailSend.png"),
+            self.tr("Send Text"),
+            self.__sendLink).setData(self.selectedText())
+        # TODO: OpenSearch
+        # TODO: OpenSearch: add a search entry using the current engine
+##        self.__searchMenu = menu.addMenu(self.tr("Search with..."))
+##        
+##        from .OpenSearch.OpenSearchEngineAction import \
+##            OpenSearchEngineAction
+##        engineNames = self.__mw.openSearchManager().allEnginesNames()
+##        for engineName in engineNames:
+##            engine = self.__mw.openSearchManager().engine(engineName)
+##            act = OpenSearchEngineAction(engine, self.__searchMenu)
+##            act.setData(engineName)
+##            self.__searchMenu.addAction(act)
+##        self.__searchMenu.triggered.connect(self.__searchRequested)
+##        
+##        menu.addSeparator()
+        
+        # TODO: Languages Dialog
+##        from .HelpLanguagesDialog import HelpLanguagesDialog
+##        languages = Preferences.toList(
+##            Preferences.Prefs.settings.value(
+##                "Help/AcceptLanguages",
+##                HelpLanguagesDialog.defaultAcceptLanguages()))
+##        if languages:
+##            language = languages[0]
+##            langCode = language.split("[")[1][:2]
+##            googleTranslatorUrl = QUrl(
+##                "http://translate.google.com/#auto|{0}|{1}".format(
+##                    langCode, self.selectedText()))
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("translate.png"),
+##                self.tr("Google Translate"), self.__openLinkInNewTab)\
+##                .setData(googleTranslatorUrl)
+##            wiktionaryUrl = QUrl(
+##                "http://{0}.wiktionary.org/wiki/Special:Search?search={1}"
+##                .format(langCode, self.selectedText()))
+##            menu.addAction(
+##                UI.PixmapCache.getIcon("wikipedia.png"),
+##                self.tr("Dictionary"), self.__openLinkInNewTab)\
+##                .setData(wiktionaryUrl)
+##            menu.addSeparator()
+        
+        guessedUrl = QUrl.fromUserInput(self.selectedText().strip())
+        if self.__isUrlValid(guessedUrl):
+            menu.addAction(
+                self.tr("Go to web address"),
+                self.__openLinkInNewTab).setData(guessedUrl)
+    
+    def __createPageContextMenu(self, menu):
+        """
+        Private method to populate the basic context menu.
+        
+        @param menu reference to the menu to be populated
+        @type QMenu
+        """
         
         menu.addAction(self.__mw.newTabAct)
         menu.addAction(self.__mw.newAct)
         menu.addSeparator()
+        # TODO: Save
 ##        menu.addAction(self.__mw.saveAsAct)
 ##        menu.addSeparator()
-        
-##        if frameAtPos and self.page().mainFrame() != frameAtPos:
-##            self.__clickedFrame = frameAtPos
-##            fmenu = QMenu(self.tr("This Frame"))
-##            frameUrl = self.__clickedFrame.url()
-##            if frameUrl.isValid():
-##                fmenu.addAction(
-##                    self.tr("Show &only this frame"),
-##                    self.__loadClickedFrame)
-##                fmenu.addAction(
-##                    UI.PixmapCache.getIcon("openNewTab.png"),
-##                    self.tr("Show in new &tab"),
-##                    self.__openLinkInNewTab).setData(self.__clickedFrame.url())
-##                fmenu.addSeparator()
-##            fmenu.addAction(
-##                UI.PixmapCache.getIcon("print.png"),
-##                self.tr("&Print"), self.__printClickedFrame)
-##            fmenu.addAction(
-##                UI.PixmapCache.getIcon("printPreview.png"),
-##                self.tr("Print Preview"), self.__printPreviewClickedFrame)
-##            fmenu.addAction(
-##                UI.PixmapCache.getIcon("printPdf.png"),
-##                self.tr("Print as PDF"), self.__printPdfClickedFrame)
-##            fmenu.addSeparator()
-##            fmenu.addAction(
-##                UI.PixmapCache.getIcon("zoomIn.png"),
-##                self.tr("Zoom &in"), self.__zoomInClickedFrame)
-##            fmenu.addAction(
-##                UI.PixmapCache.getIcon("zoomReset.png"),
-##                self.tr("Zoom &reset"), self.__zoomResetClickedFrame)
-##            fmenu.addAction(
-##                UI.PixmapCache.getIcon("zoomOut.png"),
-##                self.tr("Zoom &out"), self.__zoomOutClickedFrame)
-##            fmenu.addSeparator()
-##            fmenu.addAction(
-##                self.tr("Show frame so&urce"),
-##                self.__showClickedFrameSource)
-##            
-##            menu.addMenu(fmenu)
-##            menu.addSeparator()
         
         # TODO: Bookmarks
 ##        menu.addAction(
@@ -808,7 +872,9 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Page Link"), self.__sendLink).setData(self.url())
         menu.addSeparator()
+        
         # TODO: User Agent
+##        from .UserAgent.UserAgentMenu import UserAgentMenu
 ##        self.__userAgentMenu = UserAgentMenu(self.tr("User Agent"),
 ##                                             url=self.url())
 ##        menu.addMenu(self.__userAgentMenu)
@@ -816,74 +882,18 @@ class WebBrowserView(QWebEngineView):
         menu.addAction(self.__mw.backAct)
         menu.addAction(self.__mw.forwardAct)
         menu.addAction(self.__mw.homeAct)
+        menu.addAction(self.__mw.reloadAct)
+        menu.addAction(self.__mw.stopAct)
         menu.addSeparator()
         menu.addAction(self.__mw.zoomInAct)
         menu.addAction(self.__mw.zoomResetAct)
         menu.addAction(self.__mw.zoomOutAct)
         menu.addSeparator()
-        # TODO: edit actions only for forms
-        menu.addAction(self.__mw.undoAct)
-        menu.addAction(self.__mw.redoAct)
-        menu.addSeparator()
-        if self.selectedText():
-            menu.addAction(self.__mw.copyAct)
-            menu.addAction(self.__mw.cutAct)
-        menu.addAction(self.__mw.pasteAct)
         menu.addAction(self.__mw.selectAllAct)
-        if self.selectedText():
-            menu.addAction(
-                UI.PixmapCache.getIcon("mailSend.png"),
-                self.tr("Send Text"),
-                self.__sendLink).setData(self.selectedText())
-        menu.addAction(self.__mw.findAct)
         menu.addSeparator()
-        if self.selectedText():
-            # TODO: Open Search
-##            self.__searchMenu = menu.addMenu(self.tr("Search with..."))
-##            
-##            from .OpenSearch.OpenSearchEngineAction import \
-##                OpenSearchEngineAction
-##            engineNames = self.__mw.openSearchManager().allEnginesNames()
-##            for engineName in engineNames:
-##                engine = self.__mw.openSearchManager().engine(engineName)
-##                act = OpenSearchEngineAction(engine, self.__searchMenu)
-##                act.setData(engineName)
-##                self.__searchMenu.addAction(act)
-##            self.__searchMenu.triggered.connect(self.__searchRequested)
-##            
-##            menu.addSeparator()
-            
-            # TODO: Languages Dialog
-##            from .HelpLanguagesDialog import HelpLanguagesDialog
-##            languages = Preferences.toList(
-##                Preferences.Prefs.settings.value(
-##                    "Help/AcceptLanguages",
-##                    HelpLanguagesDialog.defaultAcceptLanguages()))
-##            if languages:
-##                language = languages[0]
-##                langCode = language.split("[")[1][:2]
-##                googleTranslatorUrl = QUrl(
-##                    "http://translate.google.com/#auto|{0}|{1}".format(
-##                        langCode, self.selectedText()))
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("translate.png"),
-##                    self.tr("Google Translate"), self.__openLinkInNewTab)\
-##                    .setData(googleTranslatorUrl)
-##                wiktionaryUrl = QUrl(
-##                    "http://{0}.wiktionary.org/wiki/Special:Search?search={1}"
-##                    .format(langCode, self.selectedText()))
-##                menu.addAction(
-##                    UI.PixmapCache.getIcon("wikipedia.png"),
-##                    self.tr("Dictionary"), self.__openLinkInNewTab)\
-##                    .setData(wiktionaryUrl)
-##                menu.addSeparator()
-            
-            guessedUrl = QUrl.fromUserInput(self.selectedText().strip())
-            if self.__isUrlValid(guessedUrl):
-                menu.addAction(
-                    self.tr("Go to web address"),
-                    self.__openLinkInNewTab).setData(guessedUrl)
-                menu.addSeparator()
+        menu.addAction(self.__mw.findAct)
+        
+        # TODO: OpenSearch
 ##        
 ##        element = hit.element()
 ##        if not element.isNull() and \
@@ -892,13 +902,6 @@ class WebBrowserView(QWebEngineView):
 ##            menu.addAction(self.tr("Add to web search toolbar"),
 ##                           self.__addSearchEngine).setData(element)
 ##            menu.addSeparator()
-        
-        # TODO: WebInspector
-##        menu.addAction(
-##            UI.PixmapCache.getIcon("webInspector.png"),
-##            self.tr("Web Inspector..."), self.__webInspector)
-        
-        menu.exec_(evt.globalPos())
     
     def __isUrlValid(self, url):
         """
@@ -998,36 +1001,30 @@ class WebBrowserView(QWebEngineView):
 ##        dlg.addCustomRule(url)
     
     # TODO: DownloadManager
-    def __downloadMedia(self):
-        """
-        Private slot to download a media and save it to disk.
-        """
-        act = self.sender()
-        url = act.data()
-        self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
+##    def __downloadMedia(self):
+##        """
+##        Private slot to download a media and save it to disk.
+##        """
+##        act = self.sender()
+##        url = act.data()
+##        self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
     
     # TODO: this needs to be changed
-##    def __pauseMedia(self):
-##        """
-##        Private slot to pause or play the selected media.
-##        """
-##        paused = self.__clickedMediaElement.evaluateJavaScript("this.paused")
-##        
-##        if paused:
-##            self.__clickedMediaElement.evaluateJavaScript("this.play()")
-##        else:
-##            self.__clickedMediaElement.evaluateJavaScript("this.pause()")
-##    
-##    def __muteMedia(self):
-##        """
-##        Private slot to (un)mute the selected media.
-##        """
-##        muted = self.__clickedMediaElement.evaluateJavaScript("this.muted")
-##        
-##        if muted:
-##            self.__clickedMediaElement.evaluateJavaScript("this.muted = false")
-##        else:
-##            self.__clickedMediaElement.evaluateJavaScript("this.muted = true")
+    def __pauseMedia(self):
+        """
+        Private slot to pause or play the selected media.
+        """
+        from .Tools import Scripts
+        script = Scripts.toggleMediaPause(self.__clickedPos)
+        self.page().runJavaScript(script)
+    
+    def __muteMedia(self):
+        """
+        Private slot to (un)mute the selected media.
+        """
+        from .Tools import Scripts
+        script = Scripts.toggleMediaMute(self.__clickedPos)
+        self.page().runJavaScript(script)
     
     # TODO: VirusTotal
 ##    def __virusTotal(self):
