@@ -540,6 +540,8 @@ class WebBrowserWindow(E5MainWindow):
             self.newAct.triggered.connect(self.newWindow)
         self.__actions.append(self.newAct)
         
+        # TODO: Private Window
+        
         self.openAct = E5Action(
             self.tr('Open File'),
             UI.PixmapCache.getIcon("open.png"),
@@ -2173,6 +2175,8 @@ class WebBrowserWindow(E5MainWindow):
                              self.__fromEric)
         h.show()
     
+    # TODO: Private Window
+    
     # TODO: check if this is still needed
     def previewer(self):
         """
@@ -2564,6 +2568,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            QWebSettings.ZoomTextOnly, textOnly)
 ##        self.zoomTextOnlyChanged.emit(textOnly)
 ##    
+    # TODO: Full Screen
 ##    def __viewFullScreen(self):
 ##        """
 ##        Private slot called to toggle fullscreen mode.

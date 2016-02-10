@@ -96,7 +96,7 @@ def toggleMediaPause(pos):
                 e.play();
             else
                 e.pause();
-            }})()"""
+        }})()"""
     return source.format(pos.x(), pos.y())
 
 
@@ -115,5 +115,42 @@ def toggleMediaMute(pos):
             if (!e)
                 return;
             e.muted = !e.muted;
-            }})()"""
+        }})()"""
+    return source.format(pos.x(), pos.y())
+
+
+def getFormData(pos):
+    """
+    Function generating a script to extract data for a form element.
+    
+    @param pos position to extract data at
+    @type QPoint
+    @return script to extract form data
+    @rtype str
+    """
+    source = """
+        (function() {{
+            var e = document.elementFromPoint({0}, {1});
+            if (!e || e.tagName != 'INPUT')
+                return;
+            var fe = e.parentElement;
+            while (fe) {{
+                if (fe.tagName == 'FORM')
+                    break;
+                fe = fe.parentElement;
+            }}
+            if (!fe)
+                return;
+            var res = {{
+                method: fe.method.toLowerCase(),
+                action: fe.action,
+                inputName: e.name,
+                inputs: [],
+            }};
+            for (var i = 0; i < fe.length; ++i) {{
+                var input = fe.elements[i];
+                res.inputs.push([input.name, input.value]);
+            }}
+            return res;
+        }})()"""
     return source.format(pos.x(), pos.y())
