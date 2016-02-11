@@ -55,10 +55,9 @@ class UrlBar(E5LineEdit):
 ##        self.__privateMode = QWebSettings.globalSettings().testAttribute(
 ##            QWebSettings.PrivateBrowsingEnabled)
         
-        # TODO: Bookmarks
-##        self.__bmActiveIcon = UI.PixmapCache.getIcon("bookmark16.png")
-##        self.__bmInactiveIcon = QIcon(
-##            self.__bmActiveIcon.pixmap(16, 16, QIcon.Disabled))
+        self.__bmActiveIcon = UI.PixmapCache.getIcon("bookmark16.png")
+        self.__bmInactiveIcon = QIcon(
+            self.__bmActiveIcon.pixmap(16, 16, QIcon.Disabled))
         
         self.__favicon = FavIconLabel(self)
         self.addWidget(self.__favicon, E5LineEdit.LeftSide)
@@ -81,18 +80,16 @@ class UrlBar(E5LineEdit):
 ##        self.addWidget(self.__rssButton, E5LineEdit.RightSide)
 ##        self.__rssButton.setVisible(False)
         
-        # TODO: Bookmarks
-##        self.__bookmarkButton = E5LineEditButton(self)
-##        self.addWidget(self.__bookmarkButton, E5LineEdit.RightSide)
-##        self.__bookmarkButton.setVisible(False)
+        self.__bookmarkButton = E5LineEditButton(self)
+        self.addWidget(self.__bookmarkButton, E5LineEdit.RightSide)
+        self.__bookmarkButton.setVisible(False)
         
         self.__clearButton = E5LineEditButton(self)
         self.__clearButton.setIcon(UI.PixmapCache.getIcon("clearLeft.png"))
         self.addWidget(self.__clearButton, E5LineEdit.RightSide)
         self.__clearButton.setVisible(False)
         
-        # TODO: Bookmarks
-##        self.__bookmarkButton.clicked.connect(self.__showBookmarkInfo)
+        self.__bookmarkButton.clicked.connect(self.__showBookmarkInfo)
         # TODO: RSS
 ##        self.__rssButton.clicked.connect(self.__rssClicked)
         # TODO: Privacy
@@ -101,15 +98,14 @@ class UrlBar(E5LineEdit):
 ##        self.__mw.privacyChanged.connect(self.__privacyButton.setVisible)
         self.textChanged.connect(self.__textChanged)
         
-        # TODO: Bookmarks
-##        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
-##            .entryChanged.connect(self.__bookmarkChanged)
-##        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
-##            .entryAdded.connect(self.__bookmarkChanged)
-##        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
-##            .entryRemoved.connect(self.__bookmarkChanged)
+        self.__mw.bookmarksManager().entryChanged.connect(
+            self.__bookmarkChanged)
+        self.__mw.bookmarksManager().entryAdded.connect(
+            self.__bookmarkChanged)
+        self.__mw.bookmarksManager().entryRemoved.connect(
+            self.__bookmarkChanged)
         # TODO: Speed Dial
-##        Helpviewer.HelpWindow.HelpWindow.speedDial().pagesChanged.connect(
+##        self.__mw.speedDial().pagesChanged.connect(
 ##            self.__bookmarkChanged)
     
     def setBrowser(self, browser):
@@ -159,42 +155,39 @@ class UrlBar(E5LineEdit):
         pass
         # TODO: SSL
 ##        self.__sslLabel.setVisible(False)
-        # TODO: Bookmarks
-##        self.__bookmarkButton.setVisible(False)
+        self.__bookmarkButton.setVisible(False)
     
-    # TODO: Bookmarks
-##    def __checkBookmark(self):
-##        """
-##        Private slot to check the current URL for the bookmarked state.
-##        """
-##        manager = Helpviewer.HelpWindow.HelpWindow.bookmarksManager()
-##        if manager.bookmarkForUrl(self.__browser.url()) is not None:
-##            self.__bookmarkButton.setIcon(self.__bmActiveIcon)
-##            bookmarks = manager.bookmarksForUrl(self.__browser.url())
-##            from Helpviewer.Bookmarks.BookmarkNode import BookmarkNode
-##            for bookmark in bookmarks:
-##                manager.setTimestamp(bookmark, BookmarkNode.TsVisited,
-##                                     QDateTime.currentDateTime())
-##        elif Helpviewer.HelpWindow.HelpWindow.speedDial()\
+    def __checkBookmark(self):
+        """
+        Private slot to check the current URL for the bookmarked state.
+        """
+        manager = self.__mw.bookmarksManager()
+        if manager.bookmarkForUrl(self.__browser.url()) is not None:
+            self.__bookmarkButton.setIcon(self.__bmActiveIcon)
+            bookmarks = manager.bookmarksForUrl(self.__browser.url())
+            from Helpviewer.Bookmarks.BookmarkNode import BookmarkNode
+            for bookmark in bookmarks:
+                manager.setTimestamp(bookmark, BookmarkNode.TsVisited,
+                                     QDateTime.currentDateTime())
+        # TODO: SpeedDial
+##        elif self.__mw.speedDial()\
 ##                .pageForUrl(self.__browser.url()).url != "":
 ##            self.__bookmarkButton.setIcon(self.__bmActiveIcon)
-##        else:
-##            self.__bookmarkButton.setIcon(self.__bmInactiveIcon)
-##    
+        else:
+            self.__bookmarkButton.setIcon(self.__bmInactiveIcon)
+    
     def __loadFinished(self, ok):
         """
         Private slot to set some data after the page was loaded.
         
         @param ok flag indicating a successful load (boolean)
         """
-        pass
 ##        try:
-        # TODO: Bookmarks
-##        if self.__browser.url().scheme() in ["eric", "about"]:
-##            self.__bookmarkButton.setVisible(False)
-##        else:
-##            self.__checkBookmark()
-##            self.__bookmarkButton.setVisible(True)
+        if self.__browser.url().scheme() in ["eric", "about"]:
+            self.__bookmarkButton.setVisible(False)
+        else:
+            self.__checkBookmark()
+            self.__bookmarkButton.setVisible(True)
         
         # TODO: RSS
 ##        if ok:
@@ -260,38 +253,38 @@ class UrlBar(E5LineEdit):
         """
         self.update()
     
-    # TODO: Bookmarks
-##    def __showBookmarkInfo(self):
-##        """
-##        Private slot to show a dialog with some bookmark info.
-##        """
-##        from .BookmarkActionSelectionDialog import \
-##            BookmarkActionSelectionDialog
-##        url = self.__browser.url()
-##        dlg = BookmarkActionSelectionDialog(url)
-##        if dlg.exec_() == QDialog.Accepted:
-##            action = dlg.getAction()
-##            if action == BookmarkActionSelectionDialog.AddBookmark:
-##                self.__browser.addBookmark()
-##            elif action == BookmarkActionSelectionDialog.EditBookmark:
-##                bookmark = Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
-##                    .bookmarkForUrl(url)
-##                from .BookmarkInfoDialog import BookmarkInfoDialog
-##                dlg = BookmarkInfoDialog(bookmark, self.__browser)
-##                dlg.exec_()
+    def __showBookmarkInfo(self):
+        """
+        Private slot to show a dialog with some bookmark info.
+        """
+        from .BookmarkActionSelectionDialog import \
+            BookmarkActionSelectionDialog
+        url = self.__browser.url()
+        dlg = BookmarkActionSelectionDialog(url)
+        if dlg.exec_() == QDialog.Accepted:
+            action = dlg.getAction()
+            if action == BookmarkActionSelectionDialog.AddBookmark:
+                self.__browser.addBookmark()
+            elif action == BookmarkActionSelectionDialog.EditBookmark:
+                bookmark = self.__mw.bookmarksManager()\
+                    .bookmarkForUrl(url)
+                from .BookmarkInfoDialog import BookmarkInfoDialog
+                dlg = BookmarkInfoDialog(bookmark, self.__browser)
+                dlg.exec_()
+            # TODO: SpeedDial
 ##            elif action == BookmarkActionSelectionDialog.AddSpeeddial:
-##                Helpviewer.HelpWindow.HelpWindow.speedDial().addPage(
+##                self.__mw.speedDial().addPage(
 ##                    url, self.__browser.title())
 ##            elif action == BookmarkActionSelectionDialog.RemoveSpeeddial:
-##                Helpviewer.HelpWindow.HelpWindow.speedDial().removePage(url)
-##    
-##    @pyqtSlot()
-##    def __bookmarkChanged(self):
-##        """
-##        Private slot to handle bookmark or speed dial changes.
-##        """
-##        self.__checkBookmark()
-##    
+##                self.__mw.speedDial().removePage(url)
+    
+    @pyqtSlot()
+    def __bookmarkChanged(self):
+        """
+        Private slot to handle bookmark or speed dial changes.
+        """
+        self.__checkBookmark()
+    
     def paintEvent(self, evt):
         """
         Protected method handling a paint event.

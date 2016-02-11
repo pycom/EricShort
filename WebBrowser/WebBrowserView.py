@@ -656,11 +656,10 @@ class WebBrowserView(QWebEngineView):
 ##        menu.addAction(
 ##            UI.PixmapCache.getIcon("download.png"),
 ##            self.tr("Save Lin&k"), self.__downloadLink)
-        # TODO: Bookmarks
-##        menu.addAction(
-##            UI.PixmapCache.getIcon("bookmark22.png"),
-##            self.tr("Bookmark this Link"), self.__bookmarkLink)\
-##            .setData(hitTest.linkUrl())
+        menu.addAction(
+            UI.PixmapCache.getIcon("bookmark22.png"),
+            self.tr("Bookmark this Link"), self.__bookmarkLink)\
+            .setData(hitTest.linkUrl())
         menu.addSeparator()
         menu.addAction(
             UI.PixmapCache.getIcon("editCopy.png"),
@@ -849,10 +848,9 @@ class WebBrowserView(QWebEngineView):
 ##        menu.addAction(self.__mw.saveAsAct)
 ##        menu.addSeparator()
         
-        # TODO: Bookmarks
-##        menu.addAction(
-##            UI.PixmapCache.getIcon("bookmark22.png"),
-##            self.tr("Bookmark this Page"), self.addBookmark)
+        menu.addAction(
+            UI.PixmapCache.getIcon("bookmark22.png"),
+            self.tr("Bookmark this Page"), self.addBookmark)
         menu.addAction(
             UI.PixmapCache.getIcon("editCopy.png"),
             self.tr("Copy Page Link"), self.__copyLink).setData(self.url())
@@ -949,20 +947,19 @@ class WebBrowserView(QWebEngineView):
         self.setSource(url)
         self.__ctrlPressed = False
     
-    # TODO: Bookmarks
-##    def __bookmarkLink(self):
-##        """
-##        Private slot to bookmark a link via the context menu.
-##        """
-##        act = self.sender()
-##        url = act.data()
-##        if url.isEmpty():
-##            return
-##        
-##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-##        dlg = AddBookmarkDialog()
-##        dlg.setUrl(bytes(url.toEncoded()).decode())
-##        dlg.exec_()
+    def __bookmarkLink(self):
+        """
+        Private slot to bookmark a link via the context menu.
+        """
+        act = self.sender()
+        url = act.data()
+        if url.isEmpty():
+            return
+        
+        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+        dlg = AddBookmarkDialog()
+        dlg.setUrl(bytes(url.toEncoded()).decode())
+        dlg.exec_()
     
     def __sendLink(self):
         """
@@ -1108,19 +1105,18 @@ class WebBrowserView(QWebEngineView):
 ##            self.__inspector.deleteLater()
 ##            self.__inspector = None
     
-    # TODO: Bookmarks
-##    def addBookmark(self):
-##        """
-##        Public slot to bookmark the current page.
-##        """
-##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-##        dlg = AddBookmarkDialog()
-##        dlg.setUrl(bytes(self.url().toEncoded()).decode())
-##        dlg.setTitle(self.title())
-##        meta = self.page().mainFrame().metaData()
-##        if "description" in meta:
-##            dlg.setDescription(meta["description"][0])
-##        dlg.exec_()
+    def addBookmark(self):
+        """
+        Public slot to bookmark the current page.
+        """
+        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+        dlg = AddBookmarkDialog()
+        dlg.setUrl(bytes(self.url().toEncoded()).decode())
+        dlg.setTitle(self.title())
+        meta = self.page().mainFrame().metaData()
+        if "description" in meta:
+            dlg.setDescription(meta["description"][0])
+        dlg.exec_()
     
     def dragEnterEvent(self, evt):
         """

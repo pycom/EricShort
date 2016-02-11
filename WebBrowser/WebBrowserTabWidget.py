@@ -806,10 +806,7 @@ class WebBrowserTabWidget(E5TabWidget):
             self.setTabIcon(
                 self.indexOf(browser),
                 browser.icon())
-            # TODO: Bookmarks
-##            import WebBrowser.WebBrowserWindow
-##            WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()\
-##                .iconChanged(url)
+            self.__mainWindow.bookmarksManager().iconChanged(browser.url())
     
     def getSourceFileList(self):
         """

@@ -83,7 +83,7 @@ class WebBrowserWindow(E5MainWindow):
     _networkManager = None
 ##    _cookieJar = None
 ##    _helpEngine = None
-##    _bookmarksManager = None
+    _bookmarksManager = None
 ##    _historyManager = None
 ##    _passwordManager = None
 ##    _adblockManager = None
@@ -624,37 +624,36 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__saveVisiblePageScreen)
 ##        self.__actions.append(self.saveVisiblePageScreenAct)
         
-        # TODO: Bookmarks
-##        bookmarksManager = self.bookmarksManager()
-##        self.importBookmarksAct = E5Action(
-##            self.tr('Import Bookmarks'),
-##            self.tr('&Import Bookmarks...'),
-##            0, 0, self, 'webbrowser_file_import_bookmarks')
-##        self.importBookmarksAct.setStatusTip(
-##            self.tr('Import bookmarks from other browsers'))
-##        self.importBookmarksAct.setWhatsThis(self.tr(
-##            """<b>Import Bookmarks</b>"""
-##            """<p>Import bookmarks from other browsers.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.importBookmarksAct.triggered.connect(
-##                bookmarksManager.importBookmarks)
-##        self.__actions.append(self.importBookmarksAct)
-##        
-##        self.exportBookmarksAct = E5Action(
-##            self.tr('Export Bookmarks'),
-##            self.tr('&Export Bookmarks...'),
-##            0, 0, self, 'webbrowser_file_export_bookmarks')
-##        self.exportBookmarksAct.setStatusTip(
-##            self.tr('Export the bookmarks into a file'))
-##        self.exportBookmarksAct.setWhatsThis(self.tr(
-##            """<b>Export Bookmarks</b>"""
-##            """<p>Export the bookmarks into a file.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.exportBookmarksAct.triggered.connect(
-##                bookmarksManager.exportBookmarks)
-##        self.__actions.append(self.exportBookmarksAct)
+        bookmarksManager = self.bookmarksManager()
+        self.importBookmarksAct = E5Action(
+            self.tr('Import Bookmarks'),
+            self.tr('&Import Bookmarks...'),
+            0, 0, self, 'webbrowser_file_import_bookmarks')
+        self.importBookmarksAct.setStatusTip(
+            self.tr('Import bookmarks from other browsers'))
+        self.importBookmarksAct.setWhatsThis(self.tr(
+            """<b>Import Bookmarks</b>"""
+            """<p>Import bookmarks from other browsers.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.importBookmarksAct.triggered.connect(
+                bookmarksManager.importBookmarks)
+        self.__actions.append(self.importBookmarksAct)
+        
+        self.exportBookmarksAct = E5Action(
+            self.tr('Export Bookmarks'),
+            self.tr('&Export Bookmarks...'),
+            0, 0, self, 'webbrowser_file_export_bookmarks')
+        self.exportBookmarksAct.setStatusTip(
+            self.tr('Export the bookmarks into a file'))
+        self.exportBookmarksAct.setWhatsThis(self.tr(
+            """<b>Export Bookmarks</b>"""
+            """<p>Export the bookmarks into a file.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.exportBookmarksAct.triggered.connect(
+                bookmarksManager.exportBookmarks)
+        self.__actions.append(self.exportBookmarksAct)
         
         # TODO: print stuff
 ##        self.printAct = E5Action(
@@ -996,69 +995,68 @@ class WebBrowserWindow(E5MainWindow):
                 self.__searchWidget.findPrevious)
         self.__actions.append(self.findPrevAct)
         
-        # TODO: Bookmarks
-##        self.bookmarksManageAct = E5Action(
-##            self.tr('Manage Bookmarks'),
-##            self.tr('&Manage Bookmarks...'),
-##            QKeySequence(self.tr("Ctrl+Shift+B", "Help|Manage bookmarks")),
-##            0, self, 'webbrowser_bookmarks_manage')
-##        self.bookmarksManageAct.setStatusTip(self.tr(
-##            'Open a dialog to manage the bookmarks.'))
-##        self.bookmarksManageAct.setWhatsThis(self.tr(
-##            """<b>Manage Bookmarks...</b>"""
-##            """<p>Open a dialog to manage the bookmarks.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.bookmarksManageAct.triggered.connect(
-##                self.__showBookmarksDialog)
-##        self.__actions.append(self.bookmarksManageAct)
-##        
-##        self.bookmarksAddAct = E5Action(
-##            self.tr('Add Bookmark'),
-##            UI.PixmapCache.getIcon("addBookmark.png"),
-##            self.tr('Add &Bookmark...'),
-##            QKeySequence(self.tr("Ctrl+D", "Help|Add bookmark")),
-##            0, self, 'webbrowser_bookmark_add')
-##        self.bookmarksAddAct.setIconVisibleInMenu(False)
-##        self.bookmarksAddAct.setStatusTip(self.tr(
-##            'Open a dialog to add a bookmark.'))
-##        self.bookmarksAddAct.setWhatsThis(self.tr(
-##            """<b>Add Bookmark</b>"""
-##            """<p>Open a dialog to add the current URL as a bookmark.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.bookmarksAddAct.triggered.connect(self.__addBookmark)
-##        self.__actions.append(self.bookmarksAddAct)
-##        
-##        self.bookmarksAddFolderAct = E5Action(
-##            self.tr('Add Folder'),
-##            self.tr('Add &Folder...'),
-##            0, 0, self, 'webbrowser_bookmark_show_all')
-##        self.bookmarksAddFolderAct.setStatusTip(self.tr(
-##            'Open a dialog to add a new bookmarks folder.'))
-##        self.bookmarksAddFolderAct.setWhatsThis(self.tr(
-##            """<b>Add Folder...</b>"""
-##            """<p>Open a dialog to add a new bookmarks folder.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.bookmarksAddFolderAct.triggered.connect(
-##                self.__addBookmarkFolder)
-##        self.__actions.append(self.bookmarksAddFolderAct)
-##        
-##        self.bookmarksAllTabsAct = E5Action(
-##            self.tr('Bookmark All Tabs'),
-##            self.tr('Bookmark All Tabs...'),
-##            0, 0, self, 'webbrowser_bookmark_all_tabs')
-##        self.bookmarksAllTabsAct.setStatusTip(self.tr(
-##            'Bookmark all open tabs.'))
-##        self.bookmarksAllTabsAct.setWhatsThis(self.tr(
-##            """<b>Bookmark All Tabs...</b>"""
-##            """<p>Open a dialog to add a new bookmarks folder for"""
-##            """ all open tabs.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.bookmarksAllTabsAct.triggered.connect(self.bookmarkAll)
-##        self.__actions.append(self.bookmarksAllTabsAct)
+        self.bookmarksManageAct = E5Action(
+            self.tr('Manage Bookmarks'),
+            self.tr('&Manage Bookmarks...'),
+            QKeySequence(self.tr("Ctrl+Shift+B", "Help|Manage bookmarks")),
+            0, self, 'webbrowser_bookmarks_manage')
+        self.bookmarksManageAct.setStatusTip(self.tr(
+            'Open a dialog to manage the bookmarks.'))
+        self.bookmarksManageAct.setWhatsThis(self.tr(
+            """<b>Manage Bookmarks...</b>"""
+            """<p>Open a dialog to manage the bookmarks.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.bookmarksManageAct.triggered.connect(
+                self.__showBookmarksDialog)
+        self.__actions.append(self.bookmarksManageAct)
+        
+        self.bookmarksAddAct = E5Action(
+            self.tr('Add Bookmark'),
+            UI.PixmapCache.getIcon("addBookmark.png"),
+            self.tr('Add &Bookmark...'),
+            QKeySequence(self.tr("Ctrl+D", "Help|Add bookmark")),
+            0, self, 'webbrowser_bookmark_add')
+        self.bookmarksAddAct.setIconVisibleInMenu(False)
+        self.bookmarksAddAct.setStatusTip(self.tr(
+            'Open a dialog to add a bookmark.'))
+        self.bookmarksAddAct.setWhatsThis(self.tr(
+            """<b>Add Bookmark</b>"""
+            """<p>Open a dialog to add the current URL as a bookmark.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.bookmarksAddAct.triggered.connect(self.__addBookmark)
+        self.__actions.append(self.bookmarksAddAct)
+        
+        self.bookmarksAddFolderAct = E5Action(
+            self.tr('Add Folder'),
+            self.tr('Add &Folder...'),
+            0, 0, self, 'webbrowser_bookmark_show_all')
+        self.bookmarksAddFolderAct.setStatusTip(self.tr(
+            'Open a dialog to add a new bookmarks folder.'))
+        self.bookmarksAddFolderAct.setWhatsThis(self.tr(
+            """<b>Add Folder...</b>"""
+            """<p>Open a dialog to add a new bookmarks folder.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.bookmarksAddFolderAct.triggered.connect(
+                self.__addBookmarkFolder)
+        self.__actions.append(self.bookmarksAddFolderAct)
+        
+        self.bookmarksAllTabsAct = E5Action(
+            self.tr('Bookmark All Tabs'),
+            self.tr('Bookmark All Tabs...'),
+            0, 0, self, 'webbrowser_bookmark_all_tabs')
+        self.bookmarksAllTabsAct.setStatusTip(self.tr(
+            'Bookmark all open tabs.'))
+        self.bookmarksAllTabsAct.setWhatsThis(self.tr(
+            """<b>Bookmark All Tabs...</b>"""
+            """<p>Open a dialog to add a new bookmarks folder for"""
+            """ all open tabs.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.bookmarksAllTabsAct.triggered.connect(self.bookmarkAll)
+        self.__actions.append(self.bookmarksAllTabsAct)
         
         self.whatsThisAct = E5Action(
             self.tr('What\'s This?'),
@@ -1833,24 +1831,23 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.historyMenu.newUrl.connect(self.openUrlNewTab)
 ##        mb.addMenu(self.historyMenu)
         
-        # TODO: Bookmarks
-##        from .Bookmarks.BookmarksMenu import BookmarksMenuBarMenu
-##        self.bookmarksMenu = BookmarksMenuBarMenu(self)
-##        self.bookmarksMenu.setTearOffEnabled(True)
-##        self.bookmarksMenu.setTitle(self.tr('&Bookmarks'))
-##        self.bookmarksMenu.openUrl.connect(self.openUrl)
-##        self.bookmarksMenu.newUrl.connect(self.openUrlNewTab)
-##        mb.addMenu(self.bookmarksMenu)
-##        
-##        bookmarksActions = []
-##        bookmarksActions.append(self.bookmarksManageAct)
-##        bookmarksActions.append(self.bookmarksAddAct)
-##        bookmarksActions.append(self.bookmarksAllTabsAct)
-##        bookmarksActions.append(self.bookmarksAddFolderAct)
-##        bookmarksActions.append("--SEPARATOR--")
-##        bookmarksActions.append(self.importBookmarksAct)
-##        bookmarksActions.append(self.exportBookmarksAct)
-##        self.bookmarksMenu.setInitialActions(bookmarksActions)
+        from .Bookmarks.BookmarksMenu import BookmarksMenuBarMenu
+        self.bookmarksMenu = BookmarksMenuBarMenu(self)
+        self.bookmarksMenu.setTearOffEnabled(True)
+        self.bookmarksMenu.setTitle(self.tr('&Bookmarks'))
+        self.bookmarksMenu.openUrl.connect(self.openUrl)
+        self.bookmarksMenu.newUrl.connect(self.openUrlNewTab)
+        mb.addMenu(self.bookmarksMenu)
+        
+        bookmarksActions = []
+        bookmarksActions.append(self.bookmarksManageAct)
+        bookmarksActions.append(self.bookmarksAddAct)
+        bookmarksActions.append(self.bookmarksAllTabsAct)
+        bookmarksActions.append(self.bookmarksAddFolderAct)
+        bookmarksActions.append("--SEPARATOR--")
+        bookmarksActions.append(self.importBookmarksAct)
+        bookmarksActions.append(self.exportBookmarksAct)
+        self.bookmarksMenu.setInitialActions(bookmarksActions)
         
         menu = mb.addMenu(self.tr('&Settings'))
         menu.setTearOffEnabled(True)
@@ -2060,15 +2057,15 @@ class WebBrowserWindow(E5MainWindow):
         forwardButton.setMenu(self.forwardMenu)
         forwardButton.setPopupMode(QToolButton.MenuButtonPopup)
         
-##        from .Bookmarks.BookmarksToolBar import BookmarksToolBar
-##        bookmarksModel = self.bookmarksManager().bookmarksModel()
-##        self.bookmarksToolBar = BookmarksToolBar(self, bookmarksModel, self)
-##        self.bookmarksToolBar.setObjectName("BookmarksToolBar")
-##        self.bookmarksToolBar.setIconSize(UI.Config.ToolBarIconSize)
-##        self.bookmarksToolBar.openUrl.connect(self.openUrl)
-##        self.bookmarksToolBar.newUrl.connect(self.openUrlNewTab)
-##        self.addToolBarBreak()
-##        self.addToolBar(self.bookmarksToolBar)
+        from .Bookmarks.BookmarksToolBar import BookmarksToolBar
+        bookmarksModel = self.bookmarksManager().bookmarksModel()
+        self.bookmarksToolBar = BookmarksToolBar(self, bookmarksModel, self)
+        self.bookmarksToolBar.setObjectName("BookmarksToolBar")
+        self.bookmarksToolBar.setIconSize(UI.Config.ToolBarIconSize)
+        self.bookmarksToolBar.openUrl.connect(self.openUrl)
+        self.bookmarksToolBar.newUrl.connect(self.openUrlNewTab)
+        self.addToolBarBreak()
+        self.addToolBar(self.bookmarksToolBar)
         
 ##        self.addToolBarBreak()
 ##        vttb = self.addToolBar(self.tr("VirusTotal"))
@@ -2316,74 +2313,74 @@ class WebBrowserWindow(E5MainWindow):
         self.reloadAct.setEnabled(not b)
         self.stopAct.setEnabled(b)
         
-##    def __addBookmark(self):
-##        """
-##        Private slot called to add the displayed file to the bookmarks.
-##        """
-##        view = self.currentBrowser()
-##        url = bytes(view.url().toEncoded()).decode()
-##        title = view.title()
-##        description = ""
-##        meta = view.page().mainFrame().metaData()
-##        if "description" in meta:
-##            description = meta["description"][0]
-##        
-##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-##        dlg = AddBookmarkDialog()
-##        dlg.setUrl(url)
-##        dlg.setTitle(title)
-##        dlg.setDescription(description)
-##        menu = self.bookmarksManager().menu()
-##        idx = self.bookmarksManager().bookmarksModel().nodeIndex(menu)
-##        dlg.setCurrentIndex(idx)
-##        dlg.exec_()
-##        
-##    def __addBookmarkFolder(self):
-##        """
-##        Private slot to add a new bookmarks folder.
-##        """
-##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-##        dlg = AddBookmarkDialog()
-##        menu = self.bookmarksManager().menu()
-##        idx = self.bookmarksManager().bookmarksModel().nodeIndex(menu)
-##        dlg.setCurrentIndex(idx)
-##        dlg.setFolder(True)
-##        dlg.exec_()
-##        
-##    def __showBookmarksDialog(self):
-##        """
-##        Private slot to show the bookmarks dialog.
-##        """
-##        from .Bookmarks.BookmarksDialog import BookmarksDialog
-##        self.__bookmarksDialog = BookmarksDialog(self)
-##        self.__bookmarksDialog.openUrl.connect(self.openUrl)
-##        self.__bookmarksDialog.newUrl.connect(self.openUrlNewTab)
-##        self.__bookmarksDialog.show()
-##        
-##    def bookmarkAll(self):
-##        """
-##        Public slot to bookmark all open tabs.
-##        """
-##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-##        dlg = AddBookmarkDialog()
-##        dlg.setFolder(True)
-##        dlg.setTitle(self.tr("Saved Tabs"))
-##        dlg.exec_()
-##        
-##        folder = dlg.addedNode()
-##        if folder is None:
-##            return
-##        
-##        from .Bookmarks.BookmarkNode import BookmarkNode
-##        for browser in self.__tabWidget.browsers():
-##            bookmark = BookmarkNode(BookmarkNode.Bookmark)
-##            bookmark.url = bytes(browser.url().toEncoded()).decode()
-##            bookmark.title = browser.title()
-##            meta = browser.page().mainFrame().metaData()
-##            if "description" in meta:
-##                bookmark.desc = meta["description"][0]
-##            
-##            self.bookmarksManager().addBookmark(folder, bookmark)
+    def __addBookmark(self):
+        """
+        Private slot called to add the displayed file to the bookmarks.
+        """
+        view = self.currentBrowser()
+        url = bytes(view.url().toEncoded()).decode()
+        title = view.title()
+        description = ""
+        meta = view.page().mainFrame().metaData()
+        if "description" in meta:
+            description = meta["description"][0]
+        
+        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+        dlg = AddBookmarkDialog()
+        dlg.setUrl(url)
+        dlg.setTitle(title)
+        dlg.setDescription(description)
+        menu = self.bookmarksManager().menu()
+        idx = self.bookmarksManager().bookmarksModel().nodeIndex(menu)
+        dlg.setCurrentIndex(idx)
+        dlg.exec_()
+        
+    def __addBookmarkFolder(self):
+        """
+        Private slot to add a new bookmarks folder.
+        """
+        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+        dlg = AddBookmarkDialog()
+        menu = self.bookmarksManager().menu()
+        idx = self.bookmarksManager().bookmarksModel().nodeIndex(menu)
+        dlg.setCurrentIndex(idx)
+        dlg.setFolder(True)
+        dlg.exec_()
+        
+    def __showBookmarksDialog(self):
+        """
+        Private slot to show the bookmarks dialog.
+        """
+        from .Bookmarks.BookmarksDialog import BookmarksDialog
+        self.__bookmarksDialog = BookmarksDialog(self)
+        self.__bookmarksDialog.openUrl.connect(self.openUrl)
+        self.__bookmarksDialog.newUrl.connect(self.openUrlNewTab)
+        self.__bookmarksDialog.show()
+        
+    def bookmarkAll(self):
+        """
+        Public slot to bookmark all open tabs.
+        """
+        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+        dlg = AddBookmarkDialog()
+        dlg.setFolder(True)
+        dlg.setTitle(self.tr("Saved Tabs"))
+        dlg.exec_()
+        
+        folder = dlg.addedNode()
+        if folder is None:
+            return
+        
+        from .Bookmarks.BookmarkNode import BookmarkNode
+        for browser in self.__tabWidget.browsers():
+            bookmark = BookmarkNode(BookmarkNode.Bookmark)
+            bookmark.url = bytes(browser.url().toEncoded()).decode()
+            bookmark.title = browser.title()
+            meta = browser.page().mainFrame().metaData()
+            if "description" in meta:
+                bookmark.desc = meta["description"][0]
+            
+            self.bookmarksManager().addBookmark(folder, bookmark)
         
     def __find(self):
         """
@@ -2440,9 +2437,9 @@ class WebBrowserWindow(E5MainWindow):
 ##        
 ##        self.cookieJar().close()
 ##        
-##        self.bookmarksToolBar.setModel(None)
-##        self.bookmarksManager().close()
-##        
+        self.bookmarksToolBar.setModel(None)
+        self.bookmarksManager().close()
+        
 ##        self.historyManager().close()
 ##        
 ##        self.passwordManager().close()
@@ -3417,19 +3414,19 @@ class WebBrowserWindow(E5MainWindow):
         """
         return WebIconProvider.instance().iconForUrl(url)
 
-##    @classmethod
-##    def bookmarksManager(cls):
-##        """
-##        Class method to get a reference to the bookmarks manager.
-##        
-##        @return reference to the bookmarks manager (BookmarksManager)
-##        """
-##        if cls._bookmarksManager is None:
-##            from .Bookmarks.BookmarksManager import BookmarksManager
-##            cls._bookmarksManager = BookmarksManager()
-##        
-##        return cls._bookmarksManager
-##        
+    @classmethod
+    def bookmarksManager(cls):
+        """
+        Class method to get a reference to the bookmarks manager.
+        
+        @return reference to the bookmarks manager (BookmarksManager)
+        """
+        if cls._bookmarksManager is None:
+            from .Bookmarks.BookmarksManager import BookmarksManager
+            cls._bookmarksManager = BookmarksManager()
+        
+        return cls._bookmarksManager
+    
     def openUrl(self, url, title):
         """
         Public slot to load a URL in the current tab.
@@ -3438,7 +3435,7 @@ class WebBrowserWindow(E5MainWindow):
         @param title title of the bookmark (string)
         """
         self.__linkActivated(url)
-        
+    
     def openUrlNewTab(self, url, title):
         """
         Public slot to load a URL in a new tab.

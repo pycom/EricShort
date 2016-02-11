@@ -183,7 +183,7 @@ class WebIconProvider(QObject):
         self.load()
         
         urlStr = self.__urlToString(url)
-        if url in self.__iconsDB:
+        if urlStr in self.__iconsDB:
             return self.__iconsDB[urlStr]
         else:
             return UI.PixmapCache.getIcon("defaultIcon.png")
