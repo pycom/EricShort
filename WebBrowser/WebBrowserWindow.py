@@ -1190,17 +1190,17 @@ class WebBrowserWindow(E5MainWindow):
             self.pageSourceAct.triggered.connect(self.__showPageSource)
         self.__actions.append(self.pageSourceAct)
         self.addAction(self.pageSourceAct)
-##        
-##        self.fullScreenAct = E5Action(
-##            self.tr('Full Screen'),
-##            UI.PixmapCache.getIcon("windowFullscreen.png"),
-##            self.tr('&Full Screen'),
-##            QKeySequence(self.tr('F11')), 0,
-##            self, 'webbrowser_view_full_scree')
-##        if not self.__initShortcutsOnly:
-##            self.fullScreenAct.triggered.connect(self.__viewFullScreen)
-##        self.__actions.append(self.fullScreenAct)
-##        self.addAction(self.fullScreenAct)
+        
+        self.fullScreenAct = E5Action(
+            self.tr('Full Screen'),
+            UI.PixmapCache.getIcon("windowFullscreen.png"),
+            self.tr('&Full Screen'),
+            QKeySequence(self.tr('F11')), 0,
+            self, 'webbrowser_view_full_scree')
+        if not self.__initShortcutsOnly:
+            self.fullScreenAct.triggered.connect(self.__viewFullScreen)
+        self.__actions.append(self.fullScreenAct)
+        self.addAction(self.fullScreenAct)
         
         self.nextTabAct = E5Action(
             self.tr('Show next tab'),
@@ -1246,7 +1246,8 @@ class WebBrowserWindow(E5MainWindow):
         if not self.__initShortcutsOnly:
             self.prefAct.triggered.connect(self.__showPreferences)
         self.__actions.append(self.prefAct)
-
+        
+        # TODO: Languages
 ##        self.acceptedLanguagesAct = E5Action(
 ##            self.tr('Languages'),
 ##            UI.PixmapCache.getIcon("flag.png"),
@@ -1295,6 +1296,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showFlashCookiesManagement)
 ##        self.__actions.append(self.flashCookiesAct)
         
+        # TODO: Offline Storage
 ##        self.offlineStorageAct = E5Action(
 ##            self.tr('Offline Storage'),
 ##            UI.PixmapCache.getIcon("preferences-html5.png"),
@@ -1311,6 +1313,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showOfflineStorageConfiguration)
 ##        self.__actions.append(self.offlineStorageAct)
         
+        # TODO: PIM
 ##        self.personalDataAct = E5Action(
 ##            self.tr('Personal Information'),
 ##            UI.PixmapCache.getIcon("pim.png"),
@@ -1329,6 +1332,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showPersonalInformationDialog)
 ##        self.__actions.append(self.personalDataAct)
         
+        # TODO: GreaseMonkey
 ##        self.greaseMonkeyAct = E5Action(
 ##            self.tr('GreaseMonkey Scripts'),
 ##            UI.PixmapCache.getIcon("greaseMonkey.png"),
@@ -1490,6 +1494,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                    self.__searchEngine.reindexDocumentation)
 ##            self.__actions.append(self.reindexDocumentationAct)
         
+        # TODO: Clear Private Data
 ##        self.clearPrivateDataAct = E5Action(
 ##            self.tr('Clear private data'),
 ##            self.tr('&Clear private data'),
@@ -1506,7 +1511,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.clearPrivateDataAct.triggered.connect(
 ##                self.__clearPrivateData)
 ##        self.__actions.append(self.clearPrivateDataAct)
-        
+##        
 ##        self.clearIconsAct = E5Action(
 ##            self.tr('Clear icons database'),
 ##            self.tr('Clear &icons database'),
@@ -1802,7 +1807,7 @@ class WebBrowserWindow(E5MainWindow):
 ##            menu.addAction(self.zoomTextOnlyAct)
         menu.addSeparator()
         menu.addAction(self.pageSourceAct)
-##        menu.addAction(self.fullScreenAct)
+        menu.addAction(self.fullScreenAct)
         self.__textEncodingMenu = menu.addMenu(
             self.tr("Text Encoding"))
         self.__textEncodingMenu.aboutToShow.connect(
@@ -1965,8 +1970,8 @@ class WebBrowserWindow(E5MainWindow):
         viewtb.addAction(self.zoomInAct)
         viewtb.addAction(self.zoomResetAct)
         viewtb.addAction(self.zoomOutAct)
-##        viewtb.addSeparator()
-##        viewtb.addAction(self.fullScreenAct)
+        viewtb.addSeparator()
+        viewtb.addAction(self.fullScreenAct)
         
         findtb = self.addToolBar(self.tr("Find"))
         findtb.setObjectName("FindToolBar")
@@ -2318,12 +2323,29 @@ class WebBrowserWindow(E5MainWindow):
         Private slot called to add the displayed file to the bookmarks.
         """
         view = self.currentBrowser()
-        url = bytes(view.url().toEncoded()).decode()
+        urlStr = bytes(view.url().toEncoded()).decode()
         title = view.title()
+        
+        script = Scripts.getAllMetaAttributes()
+        view.page().runJavaScript(
+            script,
+            lambda res: self.__addBookmarkCallback(urlStr, title, res))
+    
+    def __addBookmarkCallback(self, url, title, res):
+        """
+        Private callback method of __addBookmark().
+        
+        @param url URL for the bookmark
+        @type str
+        @param title title for the bookmark
+        @type str
+        @param res result of the JavaScript
+        @type list
+        """
         description = ""
-        meta = view.page().mainFrame().metaData()
-        if "description" in meta:
-            description = meta["description"][0]
+        for meta in res:
+            if meta["name"] == "description":
+                description = meta["content"]
         
         from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
         dlg = AddBookmarkDialog()
@@ -2371,16 +2393,41 @@ class WebBrowserWindow(E5MainWindow):
         if folder is None:
             return
         
-        from .Bookmarks.BookmarkNode import BookmarkNode
-        for browser in self.__tabWidget.browsers():
-            bookmark = BookmarkNode(BookmarkNode.Bookmark)
-            bookmark.url = bytes(browser.url().toEncoded()).decode()
-            bookmark.title = browser.title()
-            meta = browser.page().mainFrame().metaData()
-            if "description" in meta:
-                bookmark.desc = meta["description"][0]
+        for view in self.__tabWidget.browsers():
+            urlStr = bytes(view.url().toEncoded()).decode()
+            title = view.title()
             
-            self.bookmarksManager().addBookmark(folder, bookmark)
+            script = Scripts.getAllMetaAttributes()
+            view.page().runJavaScript(
+                script,
+                lambda res: self.__bookmarkAllCallback(folder, urlStr,
+                                                       title, res))
+    
+    def __bookmarkAllCallback(self, folder, url, title, res):
+        """
+        Private callback method of __addBookmark().
+        
+        @param folder reference to the bookmarks folder
+        @type BookmarkNode
+        @param url URL for the bookmark
+        @type str
+        @param title title for the bookmark
+        @type str
+        @param res result of the JavaScript
+        @type list
+        """
+        description = ""
+        for meta in res:
+            if meta["name"] == "description":
+                description = meta["content"]
+        
+        from .Bookmarks.BookmarkNode import BookmarkNode
+        bookmark = BookmarkNode(BookmarkNode.Bookmark)
+        bookmark.url = url
+        bookmark.title = title
+        bookmark.desc = description
+        
+        self.bookmarksManager().addBookmark(folder, bookmark)
         
     def __find(self):
         """
@@ -2565,25 +2612,26 @@ class WebBrowserWindow(E5MainWindow):
 ##            QWebSettings.ZoomTextOnly, textOnly)
 ##        self.zoomTextOnlyChanged.emit(textOnly)
 ##    
-    # TODO: Full Screen
-##    def __viewFullScreen(self):
-##        """
-##        Private slot called to toggle fullscreen mode.
-##        """
-##        if self.__isFullScreen():
-##            # switch back to normal
-##            self.setWindowState(self.windowState() & ~Qt.WindowFullScreen)
-##            self.menuBar().show()
-##            self.fullScreenAct.setIcon(
-##                UI.PixmapCache.getIcon("windowFullscreen.png"))
-##            self.fullScreenAct.setIconText(self.tr('Full Screen'))
-##        else:
-##            # switch to full screen
-##            self.setWindowState(self.windowState() | Qt.WindowFullScreen)
-##            self.menuBar().hide()
-##            self.fullScreenAct.setIcon(
-##                UI.PixmapCache.getIcon("windowRestore.png"))
-##            self.fullScreenAct.setIconText(self.tr('Restore Window'))
+    def __viewFullScreen(self):
+        """
+        Private slot called to toggle fullscreen mode.
+        """
+        if self.__isFullScreen():
+            # TODO: Full Screen - web pages need to be toggled separately (Qt 5.6)
+            # switch back to normal
+            self.setWindowState(self.windowState() & ~Qt.WindowFullScreen)
+            self.menuBar().show()
+            self.fullScreenAct.setIcon(
+                UI.PixmapCache.getIcon("windowFullscreen.png"))
+            self.fullScreenAct.setIconText(self.tr('Full Screen'))
+        else:
+            # switch to full screen
+            self.setWindowState(self.windowState() | Qt.WindowFullScreen)
+            self.menuBar().hide()
+            self.fullScreenAct.setIcon(
+                UI.PixmapCache.getIcon("windowRestore.png"))
+            self.fullScreenAct.setIconText(self.tr('Restore Window'))
+            # TODO: Full Screen - web pages need to be toggled separately (Qt 5.6)
     
     def __isFullScreen(self):
         """
@@ -2723,6 +2771,7 @@ class WebBrowserWindow(E5MainWindow):
         """
         Private slot to set the preferences.
         """
+        # TODO: Preferences
 ##        from Preferences.ConfigurationDialog import ConfigurationDialog
 ##        dlg = ConfigurationDialog(
 ##            self, 'Configuration', True, fromEric=self.__fromEric,
@@ -2752,14 +2801,18 @@ class WebBrowserWindow(E5MainWindow):
         
         self.__initWebEngineSettings()
         
+        # TODO: NetworkManager
 ##        self.networkAccessManager().preferencesChanged()
 ##        
+        # TODO: History
 ##        self.historyManager().preferencesChanged()
 ##        
         self.__tabWidget.preferencesChanged()
         
+        # TODO: OpenSearch
 ##        self.searchEdit.preferencesChanged()
 ##        
+        # TODO: VirusTotal
 ##        self.__virusTotal.preferencesChanged()
 ##        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
 ##           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
@@ -2778,6 +2831,7 @@ class WebBrowserWindow(E5MainWindow):
         @param oldPassword current master password (string)
         @param newPassword new master password (string)
         """
+        # TODO: PasswordManager
 ##        from Preferences.ConfigurationDialog import ConfigurationDialog
 ##        self.passwordManager().masterPasswordChanged(oldPassword, newPassword)
 ##        if self.__fromEric and isinstance(self.sender(), ConfigurationDialog):

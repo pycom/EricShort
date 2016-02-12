@@ -9,7 +9,7 @@ Module implementing the main user interface.
 
 from __future__ import unicode_literals
 try:
-    str = unicode
+    str = unicode       # __IGNORE_EXCEPTION__
 except NameError:
     pass
 
@@ -32,6 +32,15 @@ try:
     WEBKIT_AVAILABLE = True
 except ImportError:
     WEBKIT_AVAILABLE = False
+# TODO: adjust this to 5.6.0 when done
+if qVersion() < "5.5.0":
+    WEBENGINE_AVAILABLE = False
+else:
+    try:
+        from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
+        WEBENGINE_AVAILABLE = True
+    except ImportError:
+        WEBENGINE_AVAILABLE = False
 
 from .Info import Version, BugAddress, Program, FeatureAddress
 from . import Config
@@ -468,10 +477,16 @@ class UserInterface(E5MainWindow):
         self.__initExternalToolsActions()
         
         # create a dummy help window for shortcuts handling
-        if WEBKIT_AVAILABLE:
+        if WEBENGINE_AVAILABLE:
+            from WebBrowser.WebBrowserWindow import WebBrowserWindow
+            self.dummyHelpViewer = \
+                WebBrowserWindow(None, '.', None, 'web_browser', True, True)
+        elif WEBKIT_AVAILABLE:
             from Helpviewer.HelpWindow import HelpWindow
             self.dummyHelpViewer = \
                 HelpWindow(None, '.', None, 'help viewer', True, True)
+        else:
+            self.dummyHelpViewer = None
         
         # register all relevant objects
         splash.showMessage(self.tr("Registering Objects..."))
@@ -486,7 +501,7 @@ class UserInterface(E5MainWindow):
         e5App().registerObject("TaskViewer", self.taskViewer)
         e5App().registerObject("TemplateViewer", self.templateViewer)
         e5App().registerObject("Shell", self.shell)
-        if WEBKIT_AVAILABLE:
+        if self.dummyHelpViewer is not None:
             e5App().registerObject("DummyHelpViewer", self.dummyHelpViewer)
         e5App().registerObject("PluginManager", self.pluginManager)
         e5App().registerObject("ToolbarManager", self.toolbarManager)
@@ -1596,7 +1611,7 @@ class UserInterface(E5MainWindow):
         self.whatsThisAct.triggered.connect(self.__whatsThis)
         self.actions.append(self.whatsThisAct)
 
-        if WEBKIT_AVAILABLE:
+        if WEBENGINE_AVAILABLE or WEBKIT_AVAILABLE:
             self.helpviewerAct = E5Action(
                 self.tr('Helpviewer'),
                 UI.PixmapCache.getIcon("help.png"),
@@ -1925,7 +1940,7 @@ class UserInterface(E5MainWindow):
         self.hexEditorAct.triggered.connect(self.__openHexEditor)
         self.actions.append(self.hexEditorAct)
 
-        if WEBKIT_AVAILABLE:
+        if WEBENGINE_AVAILABLE or WEBKIT_AVAILABLE:
             self.webBrowserAct = E5Action(
                 self.tr('eric6 Web Browser'),
                 UI.PixmapCache.getIcon("ericWeb.png"),
@@ -5213,12 +5228,17 @@ class UserInterface(E5MainWindow):
             if not homeUrl.scheme():
                 home = QUrl.fromLocalFile(home).toString()
         
-        if WEBKIT_AVAILABLE:
+        if WEBENGINE_AVAILABLE or WEBKIT_AVAILABLE:
             if not (useSingle or Preferences.getHelp("SingleHelpWindow")) or \
                self.helpWindow is None:
-                from Helpviewer.HelpWindow import HelpWindow
-                help = HelpWindow(home, '.', None, 'help viewer', True,
-                                  searchWord=searchWord)
+                if WEBENGINE_AVAILABLE:
+                    from WebBrowser.WebBrowserWindow import WebBrowserWindow
+                    help = WebBrowserWindow(home, '.', None, 'web_browser',
+                                            True, searchWord=searchWord)
+                elif WEBKIT_AVAILABLE:
+                    from Helpviewer.HelpWindow import HelpWindow
+                    help = HelpWindow(home, '.', None, 'help viewer', True,
+                                      searchWord=searchWord)
 
                 if QApplication.desktop().width() > 400 and \
                    QApplication.desktop().height() > 500:
@@ -5228,7 +5248,10 @@ class UserInterface(E5MainWindow):
                 
                 if useSingle or Preferences.getHelp("SingleHelpWindow"):
                     self.helpWindow = help
-                    self.helpWindow.helpClosed.connect(self.__helpClosed)
+                    try:
+                        self.helpWindow.webBrowserClosed.connect(self.__helpClosed)
+                    except AttributeError:
+                        self.helpWindow.helpClosed.connect(self.__helpClosed)
                     self.preferencesChanged.connect(
                         self.helpWindow.preferencesChanged)
                     self.masterPasswordChanged.connect(
@@ -5284,7 +5307,7 @@ class UserInterface(E5MainWindow):
             (boolean)
         @return reference to the help window instance (HelpWindow)
         """
-        if WEBKIT_AVAILABLE:
+        if WEBENGINE_AVAILABLE or WEBKIT_AVAILABLE:
             if self.helpWindow is None:
                 self.launchHelpViewer("", useSingle=True)
             self.helpWindow.raise_()

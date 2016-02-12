@@ -154,3 +154,27 @@ def getFormData(pos):
             return res;
         }})()"""
     return source.format(pos.x(), pos.y())
+
+
+def getAllMetaAttributes():
+    """
+    Function generating a script to extract all meta attributes of a web page.
+    
+    @return script to extract meta attributes
+    @rtype str
+    """
+    source = """
+        (function() {
+            var out = [];
+            var meta = document.getElementsByTagName('meta');
+            for (var i = 0; i < meta.length; ++i) {
+                var e = meta[i];
+                out.push({
+                    name: e.getAttribute('name'),
+                    content: e.getAttribute('content'),
+                    httpequiv: e.getAttribute('http-equiv')
+                });
+            }
+            return out;
+            })()"""
+    return source
