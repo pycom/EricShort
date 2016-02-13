@@ -179,32 +179,6 @@ class HistoryManager(QObject):
             self.__saveTimer.changeOccurred()
         self.historyReset.emit()
     
-##    def _addHistoryEntry(self, itm):
-##        """
-##        Protected method to add a history item.
-##        
-##        @param itm reference to the history item to add (HistoryEntry)
-##        """
-##        import WebBrowser.WebBrowserWindow
-##        if WebBrowser.WebBrowserWindow.WebBrowserWindow\
-##                .mainWindow().getWindow().isPrivate():
-##            return
-##        
-##        self.__history.insert(0, itm)
-##        self.entryAdded.emit(itm)
-##        if len(self.__history) == 1:
-##            self.__checkForExpired()
-##    
-##    def _removeHistoryEntry(self, itm):
-##        """
-##        Protected method to remove a history item.
-##        
-##        @param itm reference to the history item to remove (HistoryEntry)
-##        """
-##        self.__lastSavedUrl = ""
-##        self.__history.remove(itm)
-##        self.entryRemoved.emit(itm)
-    
     def addHistoryEntry(self, view):
         """
         Public method to add a history entry.

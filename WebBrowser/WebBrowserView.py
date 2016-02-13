@@ -1109,14 +1109,41 @@ class WebBrowserView(QWebEngineView):
         """
         Public slot to bookmark the current page.
         """
+        from .Tools import Scripts
+        script = Scripts.getAllMetaAttributes()
+        self.page().runJavaScript(
+            script, self.__addBookmarkCallback)
+    
+    def __addBookmarkCallback(self, res):
+        """
+        Private callback method of __addBookmark().
+        
+        @param url URL for the bookmark
+        @type str
+        @param title title for the bookmark
+        @type str
+        @param res result of the JavaScript
+        @type list
+        """
+        description = ""
+        for meta in res:
+            if meta["name"] == "description":
+                description = meta["content"]
+        
         from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
         dlg = AddBookmarkDialog()
         dlg.setUrl(bytes(self.url().toEncoded()).decode())
         dlg.setTitle(self.title())
-        meta = self.page().mainFrame().metaData()
-        if "description" in meta:
-            dlg.setDescription(meta["description"][0])
+        dlg.setDescription(description)
         dlg.exec_()
+##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
+##        dlg = AddBookmarkDialog()
+##        dlg.setUrl(bytes(self.url().toEncoded()).decode())
+##        dlg.setTitle(self.title())
+##        meta = self.page().mainFrame().metaData()
+##        if "description" in meta:
+##            dlg.setDescription(meta["description"][0])
+##        dlg.exec_()
     
     def dragEnterEvent(self, evt):
         """

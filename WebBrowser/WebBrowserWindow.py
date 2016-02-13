@@ -944,8 +944,6 @@ class WebBrowserWindow(E5MainWindow):
             self.selectAllAct.triggered.connect(self.__selectAll)
         self.__actions.append(self.selectAllAct)
         
-        # TODO: add more editing actions: Select All
-        
         self.findAct = E5Action(
             self.tr('Find...'),
             UI.PixmapCache.getIcon("find.png"),
@@ -2322,6 +2320,7 @@ class WebBrowserWindow(E5MainWindow):
         Private slot called to add the displayed file to the bookmarks.
         """
         view = self.currentBrowser()
+        view.addBookmark()
         urlStr = bytes(view.url().toEncoded()).decode()
         title = view.title()
         

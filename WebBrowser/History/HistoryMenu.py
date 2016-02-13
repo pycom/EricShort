@@ -277,12 +277,11 @@ class HistoryMenu(E5ModelMenu):
         self.__initialActions = []
         self.__mostVisitedMenu = None
         
-        # TODO: Closed Tabs Manager
-##        self.__closedTabsMenu = QMenu(self.tr("Closed Tabs"))
-##        self.__closedTabsMenu.aboutToShow.connect(
-##            self.__aboutToShowClosedTabsMenu)
-##        self.__tabWidget.closedTabsManager().closedTabAvailable.connect(
-##            self.__closedTabAvailable)
+        self.__closedTabsMenu = QMenu(self.tr("Closed Tabs"))
+        self.__closedTabsMenu.aboutToShow.connect(
+            self.__aboutToShowClosedTabsMenu)
+        self.__tabWidget.closedTabsManager().closedTabAvailable.connect(
+            self.__closedTabAvailable)
         
         self.setMaxRows(7)
         
@@ -340,10 +339,9 @@ class HistoryMenu(E5ModelMenu):
             self.__mostVisitedMenu.openUrl.connect(self.openUrl)
             self.__mostVisitedMenu.newUrl.connect(self.newUrl)
         self.addMenu(self.__mostVisitedMenu)
-        # TODO: Closed Tabs Manager
-##        act = self.addMenu(self.__closedTabsMenu)
-##        act.setIcon(UI.PixmapCache.getIcon("trash.png"))
-##        act.setEnabled(self.__tabWidget.canRestoreClosedTab())
+        act = self.addMenu(self.__closedTabsMenu)
+        act.setIcon(UI.PixmapCache.getIcon("trash.png"))
+        act.setEnabled(self.__tabWidget.canRestoreClosedTab())
         self.addSeparator()
         
         act = self.addAction(UI.PixmapCache.getIcon("history.png"),
@@ -383,42 +381,40 @@ class HistoryMenu(E5ModelMenu):
                 self.tr("Clear History"),
                 self.tr("""Do you want to clear the history?""")):
             self.__historyManager.clear()
-            # TODO: Closed Tabs Manager
-##            self.__tabWidget.clearClosedTabsList()
+            self.__tabWidget.clearClosedTabsList()
     
-    # TODO: Closed Tabs Manager
-##    def __aboutToShowClosedTabsMenu(self):
-##        """
-##        Private slot to populate the closed tabs menu.
-##        """
-##        fm = self.__closedTabsMenu.fontMetrics()
-##        maxWidth = fm.width('m') * 40
-##        
-##        import WebBrowser.WebBrowserWindow
-##        self.__closedTabsMenu.clear()
-##        index = 0
-##        for tab in self.__tabWidget.closedTabsManager().allClosedTabs():
-##            title = fm.elidedText(tab.title, Qt.ElideRight, maxWidth)
-##            self.__closedTabsMenu.addAction(
-##                WebBrowser.WebBrowserWindow.WebBrowserWindow.icon(tab.url),
-##                title,
-##                self.__tabWidget.restoreClosedTab).setData(index)
-##            index += 1
-##        self.__closedTabsMenu.addSeparator()
-##        self.__closedTabsMenu.addAction(
-##            self.tr("Restore All Closed Tabs"),
-##            self.__tabWidget.restoreAllClosedTabs)
-##        self.__closedTabsMenu.addAction(
-##            self.tr("Clear List"),
-##            self.__tabWidget.clearClosedTabsList)
-##    
-##    def __closedTabAvailable(self, avail):
-##        """
-##        Private slot to handle changes of the availability of closed tabs.
-##        
-##        @param avail flag indicating the availability of closed tabs (boolean)
-##        """
-##        self.__closedTabsMenu.setEnabled(avail)
+    def __aboutToShowClosedTabsMenu(self):
+        """
+        Private slot to populate the closed tabs menu.
+        """
+        fm = self.__closedTabsMenu.fontMetrics()
+        maxWidth = fm.width('m') * 40
+        
+        import WebBrowser.WebBrowserWindow
+        self.__closedTabsMenu.clear()
+        index = 0
+        for tab in self.__tabWidget.closedTabsManager().allClosedTabs():
+            title = fm.elidedText(tab.title, Qt.ElideRight, maxWidth)
+            self.__closedTabsMenu.addAction(
+                WebBrowser.WebBrowserWindow.WebBrowserWindow.icon(tab.url),
+                title,
+                self.__tabWidget.restoreClosedTab).setData(index)
+            index += 1
+        self.__closedTabsMenu.addSeparator()
+        self.__closedTabsMenu.addAction(
+            self.tr("Restore All Closed Tabs"),
+            self.__tabWidget.restoreAllClosedTabs)
+        self.__closedTabsMenu.addAction(
+            self.tr("Clear List"),
+            self.__tabWidget.clearClosedTabsList)
+    
+    def __closedTabAvailable(self, avail):
+        """
+        Private slot to handle changes of the availability of closed tabs.
+        
+        @param avail flag indicating the availability of closed tabs (boolean)
+        """
+        self.__closedTabsMenu.setEnabled(avail)
 
 
 class HistoryMostVisitedMenu(E5ModelMenu):

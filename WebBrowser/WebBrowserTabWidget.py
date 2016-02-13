@@ -69,11 +69,10 @@ class WebBrowserTabWidget(E5TabWidget):
         self.setDocumentMode(True)
         self.setElideMode(Qt.ElideNone)
         
-        # TODO: Closed Tabs Manager
-##        from .ClosedTabsManager import ClosedTabsManager
-##        self.__closedTabsManager = ClosedTabsManager(self)
-##        self.__closedTabsManager.closedTabAvailable.connect(
-##            self.__closedTabAvailable)
+        from .ClosedTabsManager import ClosedTabsManager
+        self.__closedTabsManager = ClosedTabsManager(self)
+        self.__closedTabsManager.closedTabAvailable.connect(
+            self.__closedTabAvailable)
         
         from .UrlBar.StackedUrlBar import StackedUrlBar
         self.__stackedUrlBar = StackedUrlBar(self)
@@ -103,20 +102,19 @@ class WebBrowserTabWidget(E5TabWidget):
         self.__navigationButton.setEnabled(False)
         self.__rightCornerWidgetLayout.addWidget(self.__navigationButton)
         
-        # TODO: Closed Tabs Manager
-##        self.__closedTabsMenu = QMenu(self)
-##        self.__closedTabsMenu.aboutToShow.connect(
-##            self.__aboutToShowClosedTabsMenu)
-##        
-##        self.__closedTabsButton = QToolButton(self)
-##        self.__closedTabsButton.setIcon(UI.PixmapCache.getIcon("trash.png"))
-##        self.__closedTabsButton.setToolTip(
-##            self.tr("Show a navigation menu for closed tabs"))
-##        self.__closedTabsButton.setPopupMode(QToolButton.InstantPopup)
-##        self.__closedTabsButton.setMenu(self.__closedTabsMenu)
-##        self.__closedTabsButton.setEnabled(False)
-##        self.__rightCornerWidgetLayout.addWidget(self.__closedTabsButton)
-##        
+        self.__closedTabsMenu = QMenu(self)
+        self.__closedTabsMenu.aboutToShow.connect(
+            self.__aboutToShowClosedTabsMenu)
+        
+        self.__closedTabsButton = QToolButton(self)
+        self.__closedTabsButton.setIcon(UI.PixmapCache.getIcon("trash.png"))
+        self.__closedTabsButton.setToolTip(
+            self.tr("Show a navigation menu for closed tabs"))
+        self.__closedTabsButton.setPopupMode(QToolButton.InstantPopup)
+        self.__closedTabsButton.setMenu(self.__closedTabsMenu)
+        self.__closedTabsButton.setEnabled(False)
+        self.__rightCornerWidgetLayout.addWidget(self.__closedTabsButton)
+        
         self.__closeButton = QToolButton(self)
         self.__closeButton.setIcon(UI.PixmapCache.getIcon("close.png"))
         self.__closeButton.setToolTip(
@@ -186,10 +184,10 @@ class WebBrowserTabWidget(E5TabWidget):
         self.__tabContextMenu.addAction(
             UI.PixmapCache.getIcon("reload.png"),
             self.tr('Reload All'), self.reloadAllBrowsers)
-##        self.__tabContextMenu.addSeparator()
-##        self.__tabContextMenu.addAction(
-##            UI.PixmapCache.getIcon("addBookmark.png"),
-##            self.tr('Bookmark All Tabs'), self.__mainWindow.bookmarkAll)
+        self.__tabContextMenu.addSeparator()
+        self.__tabContextMenu.addAction(
+            UI.PixmapCache.getIcon("addBookmark.png"),
+            self.tr('Bookmark All Tabs'), self.__mainWindow.bookmarkAll)
         
         self.__tabBackContextMenu = QMenu(self)
         self.__tabBackContextMenu.addAction(
@@ -197,15 +195,15 @@ class WebBrowserTabWidget(E5TabWidget):
         self.__tabBackContextMenu.addAction(
             UI.PixmapCache.getIcon("reload.png"),
             self.tr('Reload All'), self.reloadAllBrowsers)
-##        self.__tabBackContextMenu.addAction(
-##            UI.PixmapCache.getIcon("addBookmark.png"),
-##            self.tr('Bookmark All Tabs'), self.__mainWindow.bookmarkAll)
-##        self.__tabBackContextMenu.addSeparator()
-##        self.__restoreClosedTabAct = self.__tabBackContextMenu.addAction(
-##            UI.PixmapCache.getIcon("trash.png"),
-##            self.tr('Restore Closed Tab'), self.restoreClosedTab)
-##        self.__restoreClosedTabAct.setEnabled(False)
-##        self.__restoreClosedTabAct.setData(0)
+        self.__tabBackContextMenu.addAction(
+            UI.PixmapCache.getIcon("addBookmark.png"),
+            self.tr('Bookmark All Tabs'), self.__mainWindow.bookmarkAll)
+        self.__tabBackContextMenu.addSeparator()
+        self.__restoreClosedTabAct = self.__tabBackContextMenu.addAction(
+            UI.PixmapCache.getIcon("trash.png"),
+            self.tr('Restore Closed Tab'), self.restoreClosedTab)
+        self.__restoreClosedTabAct.setEnabled(False)
+        self.__restoreClosedTabAct.setData(0)
     
     def __showContextMenu(self, coord, index):
         """
@@ -484,8 +482,9 @@ class WebBrowserTabWidget(E5TabWidget):
         urlbar.deleteLater()
         del urlbar
         
-##        self.__closedTabsManager.recordBrowser(browser, index)
-##        
+        self.__closedTabsManager.recordBrowser(browser, index)
+        
+        # TODO: WebInspector
 ##        browser.closeWebInspector()
         browser.home()
         self.removeTab(index)
@@ -955,78 +954,77 @@ class WebBrowserTabWidget(E5TabWidget):
             elif browser.url() != "":
                 browser.setFocus()
     
-    # TODO: Closed Tabs Manager
-##    def restoreClosedTab(self):
-##        """
-##        Public slot to restore the most recently closed tab.
-##        """
-##        if not self.canRestoreClosedTab():
-##            return
-##        
-##        act = self.sender()
-##        tab = self.__closedTabsManager.getClosedTabAt(act.data())
-##        
-##        self.newBrowser(tab.url.toString(), position=tab.position)
-##    
-##    def canRestoreClosedTab(self):
-##        """
-##        Public method to check, if closed tabs can be restored.
-##        
-##        @return flag indicating that closed tabs can be restored (boolean)
-##        """
-##        return self.__closedTabsManager.isClosedTabAvailable()
-##    
-##    def restoreAllClosedTabs(self):
-##        """
-##        Public slot to restore all closed tabs.
-##        """
-##        if not self.canRestoreClosedTab():
-##            return
-##        
-##        for tab in self.__closedTabsManager.allClosedTabs():
-##            self.newBrowser(tab.url.toString(), position=tab.position)
-##        self.__closedTabsManager.clearList()
-##    
-##    def clearClosedTabsList(self):
-##        """
-##        Public slot to clear the list of closed tabs.
-##        """
-##        self.__closedTabsManager.clearList()
-##    
-##    def __aboutToShowClosedTabsMenu(self):
-##        """
-##        Private slot to populate the closed tabs menu.
-##        """
-##        fm = self.__closedTabsMenu.fontMetrics()
-##        maxWidth = fm.width('m') * 40
-##        
-##        self.__closedTabsMenu.clear()
-##        index = 0
-##        for tab in self.__closedTabsManager.allClosedTabs():
-##            title = fm.elidedText(tab.title, Qt.ElideRight, maxWidth)
-##            self.__closedTabsMenu.addAction(
-##                self.__mainWindow.icon(tab.url), title,
-##                self.restoreClosedTab).setData(index)
-##            index += 1
-##        self.__closedTabsMenu.addSeparator()
-##        self.__closedTabsMenu.addAction(
-##            self.tr("Restore All Closed Tabs"), self.restoreAllClosedTabs)
-##        self.__closedTabsMenu.addAction(
-##            self.tr("Clear List"), self.clearClosedTabsList)
-##    
-##    def closedTabsManager(self):
-##        """
-##        Public slot to get a reference to the closed tabs manager.
-##        
-##        @return reference to the closed tabs manager (ClosedTabsManager)
-##        """
-##        return self.__closedTabsManager
-##    
-##    def __closedTabAvailable(self, avail):
-##        """
-##        Private slot to handle changes of the availability of closed tabs.
-##        
-##        @param avail flag indicating the availability of closed tabs (boolean)
-##        """
-##        self.__closedTabsButton.setEnabled(avail)
-##        self.__restoreClosedTabAct.setEnabled(avail)
+    def restoreClosedTab(self):
+        """
+        Public slot to restore the most recently closed tab.
+        """
+        if not self.canRestoreClosedTab():
+            return
+        
+        act = self.sender()
+        tab = self.__closedTabsManager.getClosedTabAt(act.data())
+        
+        self.newBrowser(tab.url.toString(), position=tab.position)
+    
+    def canRestoreClosedTab(self):
+        """
+        Public method to check, if closed tabs can be restored.
+        
+        @return flag indicating that closed tabs can be restored (boolean)
+        """
+        return self.__closedTabsManager.isClosedTabAvailable()
+    
+    def restoreAllClosedTabs(self):
+        """
+        Public slot to restore all closed tabs.
+        """
+        if not self.canRestoreClosedTab():
+            return
+        
+        for tab in self.__closedTabsManager.allClosedTabs():
+            self.newBrowser(tab.url.toString(), position=tab.position)
+        self.__closedTabsManager.clearList()
+    
+    def clearClosedTabsList(self):
+        """
+        Public slot to clear the list of closed tabs.
+        """
+        self.__closedTabsManager.clearList()
+    
+    def __aboutToShowClosedTabsMenu(self):
+        """
+        Private slot to populate the closed tabs menu.
+        """
+        fm = self.__closedTabsMenu.fontMetrics()
+        maxWidth = fm.width('m') * 40
+        
+        self.__closedTabsMenu.clear()
+        index = 0
+        for tab in self.__closedTabsManager.allClosedTabs():
+            title = fm.elidedText(tab.title, Qt.ElideRight, maxWidth)
+            self.__closedTabsMenu.addAction(
+                self.__mainWindow.icon(tab.url), title,
+                self.restoreClosedTab).setData(index)
+            index += 1
+        self.__closedTabsMenu.addSeparator()
+        self.__closedTabsMenu.addAction(
+            self.tr("Restore All Closed Tabs"), self.restoreAllClosedTabs)
+        self.__closedTabsMenu.addAction(
+            self.tr("Clear List"), self.clearClosedTabsList)
+    
+    def closedTabsManager(self):
+        """
+        Public slot to get a reference to the closed tabs manager.
+        
+        @return reference to the closed tabs manager (ClosedTabsManager)
+        """
+        return self.__closedTabsManager
+    
+    def __closedTabAvailable(self, avail):
+        """
+        Private slot to handle changes of the availability of closed tabs.
+        
+        @param avail flag indicating the availability of closed tabs (boolean)
+        """
+        self.__closedTabsButton.setEnabled(avail)
+        self.__restoreClosedTabAct.setEnabled(avail)

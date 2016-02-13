@@ -1288,6 +1288,7 @@
     <Source>WebBrowser/Bookmarks/XbelReader.py</Source>
     <Source>WebBrowser/Bookmarks/XbelWriter.py</Source>
     <Source>WebBrowser/Bookmarks/__init__.py</Source>
+    <Source>WebBrowser/ClosedTabsManager.py</Source>
     <Source>WebBrowser/History/HistoryCompleter.py</Source>
     <Source>WebBrowser/History/HistoryDialog.py</Source>
     <Source>WebBrowser/History/HistoryFilterModel.py</Source>
@@ -1309,6 +1310,8 @@
     <Source>WebBrowser/Tools/WebIconLoader.py</Source>
     <Source>WebBrowser/Tools/WebIconProvider.py</Source>
     <Source>WebBrowser/Tools/__init__.py</Source>
+    <Source>WebBrowser/UrlBar/BookmarkActionSelectionDialog.py</Source>
+    <Source>WebBrowser/UrlBar/BookmarkInfoDialog.py</Source>
     <Source>WebBrowser/UrlBar/FavIconLabel.py</Source>
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
@@ -1727,6 +1730,8 @@
     <Form>WebBrowser/Bookmarks/BookmarksImportDialog.ui</Form>
     <Form>WebBrowser/History/HistoryDialog.ui</Form>
     <Form>WebBrowser/SearchWidget.ui</Form>
+    <Form>WebBrowser/UrlBar/BookmarkActionSelectionDialog.ui</Form>
+    <Form>WebBrowser/UrlBar/BookmarkInfoDialog.ui</Form>
     <Form>WebBrowser/ZoomManager/ZoomValuesDialog.ui</Form>
   </Forms>
   <Translations>
