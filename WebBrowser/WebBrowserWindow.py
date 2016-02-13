@@ -84,7 +84,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    _cookieJar = None
 ##    _helpEngine = None
     _bookmarksManager = None
-##    _historyManager = None
+    _historyManager = None
 ##    _passwordManager = None
 ##    _adblockManager = None
 ##    _downloadManager = None
@@ -1827,14 +1827,13 @@ class WebBrowserWindow(E5MainWindow):
 ##            menu.addSeparator()
 ##            menu.addAction(self.syncTocAct)
         
-        # TODO: History
-##        from .History.HistoryMenu import HistoryMenu
-##        self.historyMenu = HistoryMenu(self, self.__tabWidget)
-##        self.historyMenu.setTearOffEnabled(True)
-##        self.historyMenu.setTitle(self.tr('H&istory'))
-##        self.historyMenu.openUrl.connect(self.openUrl)
-##        self.historyMenu.newUrl.connect(self.openUrlNewTab)
-##        mb.addMenu(self.historyMenu)
+        from .History.HistoryMenu import HistoryMenu
+        self.historyMenu = HistoryMenu(self, self.__tabWidget)
+        self.historyMenu.setTearOffEnabled(True)
+        self.historyMenu.setTitle(self.tr('H&istory'))
+        self.historyMenu.openUrl.connect(self.openUrl)
+        self.historyMenu.newUrl.connect(self.openUrlNewTab)
+        mb.addMenu(self.historyMenu)
         
         from .Bookmarks.BookmarksMenu import BookmarksMenuBarMenu
         self.bookmarksMenu = BookmarksMenuBarMenu(self)
@@ -2804,9 +2803,8 @@ class WebBrowserWindow(E5MainWindow):
         # TODO: NetworkManager
 ##        self.networkAccessManager().preferencesChanged()
 ##        
-        # TODO: History
-##        self.historyManager().preferencesChanged()
-##        
+        self.historyManager().preferencesChanged()
+        
         self.__tabWidget.preferencesChanged()
         
         # TODO: OpenSearch
@@ -3502,19 +3500,19 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.newTab(None, (req, QNetworkAccessManager.GetOperation, b""))
         self.newTab(url)
     
-##    @classmethod
-##    def historyManager(cls):
-##        """
-##        Class method to get a reference to the history manager.
-##        
-##        @return reference to the history manager (HistoryManager)
-##        """
-##        if cls._historyManager is None:
-##            from .History.HistoryManager import HistoryManager
-##            cls._historyManager = HistoryManager()
-##        
-##        return cls._historyManager
-##        
+    @classmethod
+    def historyManager(cls):
+        """
+        Class method to get a reference to the history manager.
+        
+        @return reference to the history manager (HistoryManager)
+        """
+        if cls._historyManager is None:
+            from .History.HistoryManager import HistoryManager
+            cls._historyManager = HistoryManager()
+        
+        return cls._historyManager
+        
 ##    @classmethod
 ##    def passwordManager(cls):
 ##        """

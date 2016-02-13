@@ -1016,6 +1016,7 @@ class Prefs(object):
         "DefaultScheme": "https://",
         "UserStyleSheet": "",
         "ZoomValuesDB": "{}",       # empty JSON dictionary
+        "HistoryLimit": 30,
     }
     
     @classmethod
@@ -2709,7 +2710,7 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "SearchLanguage", "SyncType", "SyncFtpPort",
 ##                 "SyncFtpIdleTimeout", "SyncEncryptionKeyLength"]:
     elif key in ["StartupBehavior", "MinimumFontSize",
-                 "MinimumLogicalFontSize"]:
+                 "MinimumLogicalFontSize", "HistoryLimit"]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["SingleHelpWindow", "SaveGeometry", "WebSearchSuggestions",

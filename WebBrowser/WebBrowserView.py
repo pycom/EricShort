@@ -1475,9 +1475,7 @@ class WebBrowserView(QWebEngineView):
         self.setZoomValue(zoomValue)
         
         if ok:
-            pass
-            # TODO: History
-##            self.__mw.historyManager().addHistoryEntry(self.url())
+            self.__mw.historyManager().addHistoryEntry(self)
             # TODO: AdBlock
 ##            self.__mw.adBlockManager().page().hideBlockedPageEntries(self.page())
             # TODO: Password Manager
