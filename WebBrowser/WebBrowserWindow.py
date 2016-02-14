@@ -95,7 +95,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    _personalInformationManager = None
 ##    _greaseMonkeyManager = None
     _notification = None
-##    _featurePermissionManager = None
+    _featurePermissionManager = None
 ##    _flashCookieManager = None
     
     def __init__(self, home, path, parent, name, fromEric=False,
@@ -1367,23 +1367,22 @@ class WebBrowserWindow(E5MainWindow):
                 E5ErrorMessage.editMessageFilters)
         self.__actions.append(self.editMessageFilterAct)
         
-        # TODO: Feature Permission
-##        self.featurePermissionAct = E5Action(
-##            self.tr('Edit HTML5 Feature Permissions'),
-##            UI.PixmapCache.getIcon("featurePermission.png"),
-##            self.tr('Edit HTML5 Feature Permissions...'), 0, 0, self,
-##            'webbrowser_edit_feature_permissions')
-##        self.featurePermissionAct.setStatusTip(self.tr(
-##            'Edit the remembered HTML5 feature permissions'))
-##        self.featurePermissionAct.setWhatsThis(self.tr(
-##            """<b>Edit HTML5 Feature Permissions</b>"""
-##            """<p>Opens a dialog to edit the remembered HTML5"""
-##            """ feature permissions.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.featurePermissionAct.triggered.connect(
-##                self.__showFeaturePermissionDialog)
-##        self.__actions.append(self.featurePermissionAct)
+        self.featurePermissionAct = E5Action(
+            self.tr('Edit HTML5 Feature Permissions'),
+            UI.PixmapCache.getIcon("featurePermission.png"),
+            self.tr('Edit HTML5 Feature Permissions...'), 0, 0, self,
+            'webbrowser_edit_feature_permissions')
+        self.featurePermissionAct.setStatusTip(self.tr(
+            'Edit the remembered HTML5 feature permissions'))
+        self.featurePermissionAct.setWhatsThis(self.tr(
+            """<b>Edit HTML5 Feature Permissions</b>"""
+            """<p>Opens a dialog to edit the remembered HTML5"""
+            """ feature permissions.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.featurePermissionAct.triggered.connect(
+                self.__showFeaturePermissionDialog)
+        self.__actions.append(self.featurePermissionAct)
         
         # TODO: re-enable once Qt 5.6 is available
 ##        if WebBrowserWindow.UseQtHelp or self.__initShortcutsOnly:
@@ -1858,7 +1857,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        menu.addAction(self.offlineStorageAct)
 ##        menu.addAction(self.personalDataAct)
 ##        menu.addAction(self.greaseMonkeyAct)
-##        menu.addAction(self.featurePermissionAct)
+        menu.addAction(self.featurePermissionAct)
 ##        menu.addSeparator()
         menu.addAction(self.editMessageFilterAct)
         menu.addSeparator()
@@ -1998,7 +1997,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        settingstb.addAction(self.offlineStorageAct)
 ##        settingstb.addAction(self.personalDataAct)
 ##        settingstb.addAction(self.greaseMonkeyAct)
-##        settingstb.addAction(self.featurePermissionAct)
+        settingstb.addAction(self.featurePermissionAct)
         
 ##        toolstb = self.addToolBar(self.tr("Tools"))
 ##        toolstb.setObjectName("ToolsToolBar")
@@ -3401,12 +3400,12 @@ class WebBrowserWindow(E5MainWindow):
 ##        """
 ##        self.greaseMonkeyManager().showConfigurationDialog()
 ##        
-##    def __showFeaturePermissionDialog(self):
-##        """
-##        Private slot to show the feature permission dialog.
-##        """
-##        self.featurePermissionManager().showFeaturePermissionsDialog()
-##        
+    def __showFeaturePermissionDialog(self):
+        """
+        Private slot to show the feature permission dialog.
+        """
+        self.featurePermissionManager().showFeaturePermissionsDialog()
+        
     def __showZoomValuesDialog(self):
         """
         Private slot to show the zoom values management dialog.
@@ -3588,21 +3587,21 @@ class WebBrowserWindow(E5MainWindow):
 ##        
 ##        return cls._greaseMonkeyManager
 ##        
-##    @classmethod
-##    def featurePermissionManager(cls):
-##        """
-##        Class method to get a reference to the feature permission manager.
-##        
-##        @return reference to the feature permission manager
-##        @rtype FeaturePermissionManager
-##        """
-##        if cls._featurePermissionManager is None:
-##            from .FeaturePermissions.FeaturePermissionManager import \
-##                FeaturePermissionManager
-##            cls._featurePermissionManager = FeaturePermissionManager()
-##        
-##        return cls._featurePermissionManager
-##        
+    @classmethod
+    def featurePermissionManager(cls):
+        """
+        Class method to get a reference to the feature permission manager.
+        
+        @return reference to the feature permission manager
+        @rtype FeaturePermissionManager
+        """
+        if cls._featurePermissionManager is None:
+            from .FeaturePermissions.FeaturePermissionManager import \
+                FeaturePermissionManager
+            cls._featurePermissionManager = FeaturePermissionManager()
+        
+        return cls._featurePermissionManager
+        
 ##    @classmethod
 ##    def flashCookieManager(cls):
 ##        """

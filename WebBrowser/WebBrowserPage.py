@@ -708,10 +708,9 @@ class WebBrowserPage(QWebEnginePage):
         @param feature requested feature
         @type QWebEnginePage.Feature
         """
-        # TODO: Feature Permission
-##        manager = WebBrowser.WebBrowserWindow.WebBrowserWindow\
-##            .featurePermissionManager()
-##        manager.requestFeaturePermission(self, frame, feature)
+        manager = WebBrowser.WebBrowserWindow.WebBrowserWindow\
+            .featurePermissionManager()
+        manager.requestFeaturePermission(self, url, feature)
     
     def execJavaScript(self, script):
         """

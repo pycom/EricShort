@@ -1289,6 +1289,10 @@
     <Source>WebBrowser/Bookmarks/XbelWriter.py</Source>
     <Source>WebBrowser/Bookmarks/__init__.py</Source>
     <Source>WebBrowser/ClosedTabsManager.py</Source>
+    <Source>WebBrowser/FeaturePermissions/FeaturePermissionBar.py</Source>
+    <Source>WebBrowser/FeaturePermissions/FeaturePermissionManager.py</Source>
+    <Source>WebBrowser/FeaturePermissions/FeaturePermissionsDialog.py</Source>
+    <Source>WebBrowser/FeaturePermissions/__init__.py</Source>
     <Source>WebBrowser/History/HistoryCompleter.py</Source>
     <Source>WebBrowser/History/HistoryDialog.py</Source>
     <Source>WebBrowser/History/HistoryFilterModel.py</Source>
@@ -1742,6 +1746,7 @@
     <Form>WebBrowser/Bookmarks/BookmarkPropertiesDialog.ui</Form>
     <Form>WebBrowser/Bookmarks/BookmarksDialog.ui</Form>
     <Form>WebBrowser/Bookmarks/BookmarksImportDialog.ui</Form>
+    <Form>WebBrowser/FeaturePermissions/FeaturePermissionsDialog.ui</Form>
     <Form>WebBrowser/History/HistoryDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchEditDialog.ui</Form>
