@@ -10,7 +10,7 @@ Module implementing the helpbrowser using QWebView.
 
 from __future__ import unicode_literals
 try:
-    str = unicode
+    str = unicode       # __IGNORE_EXCEPTION__
 except NameError:
     pass
 
@@ -1617,8 +1617,8 @@ class HelpBrowser(QWebView):
         
         searchUrl = QUrl(self.page().mainFrame().baseUrl().resolved(
             QUrl(formElement.attribute("action"))))
-        if searchUrl.scheme() != "http":
-            return
+##        if searchUrl.scheme() != "http":
+##            return
         
         if qVersion() >= "5.0.0":
             from PyQt5.QtCore import QUrlQuery

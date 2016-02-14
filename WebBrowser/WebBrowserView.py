@@ -22,7 +22,7 @@ from PyQt5.QtGui import QDesktopServices, QClipboard, QMouseEvent, QColor, \
 from PyQt5.QtWidgets import qApp, QStyle, QMenu, QApplication, QInputDialog, \
     QLineEdit, QLabel, QToolTip, QFrame, QDialog
 from PyQt5.QtPrintSupport import QPrinter, QPrintDialog
-from PyQt5.QtNetwork import QNetworkReply, QNetworkRequest
+from PyQt5.QtNetwork import QNetworkReply, QNetworkRequest, QHostInfo
 from PyQt5.QtWebEngineWidgets import QWebEngineView, QWebEnginePage
 
 from E5Gui import E5MessageBox, E5FileDialog
@@ -31,6 +31,9 @@ import WebBrowser
 from .WebBrowserPage import WebBrowserPage
 
 from .Tools.WebIconLoader import WebIconLoader
+from .Tools import WebBrowserTools, Scripts
+
+from .Network.LoadRequest import LoadRequest, LoadRequestOperations
 
 import Preferences
 import UI.PixmapCache
@@ -128,9 +131,8 @@ class WebBrowserView(QWebEngineView):
         
 ##        self.page().databaseQuotaExceeded.connect(self.__databaseQuotaExceeded)
         
-        # TODO: Open Search
-##        self.__mw.openSearchManager().currentEngineChanged.connect(
-##            self.__currentEngineChanged)
+        self.__mw.openSearchManager().currentEngineChanged.connect(
+            self.__currentEngineChanged)
         
         self.setAcceptDrops(True)
         
@@ -190,48 +192,12 @@ class WebBrowserView(QWebEngineView):
 ##                self.__addExternalBinding)
 ##        frame.addToJavaScriptWindowObject("external", self.__javaScriptBinding)
 ##    
-##    def linkedResources(self, relation=""):
-##        """
-##        Public method to extract linked resources.
-##        
-##        @param relation relation to extract (string)
-##        @return list of linked resources (list of LinkedResource)
-##        """
-##        resources = []
-##        
-##        baseUrl = self.page().mainFrame().baseUrl()
-##        
-##        linkElements = self.page().mainFrame().findAllElements(
-##            "html > head > link")
-##        
-##        for linkElement in linkElements.toList():
-##            rel = linkElement.attribute("rel")
-##            href = linkElement.attribute("href")
-##            type_ = linkElement.attribute("type")
-##            title = linkElement.attribute("title")
-##            
-##            if href == "" or type_ == "":
-##                continue
-##            if relation and rel != relation:
-##                continue
-##            
-##            resource = LinkedResource()
-##            resource.rel = rel
-##            resource.type_ = type_
-##            resource.href = baseUrl.resolved(
-##                QUrl.fromEncoded(href.encode("utf-8")))
-##            resource.title = title
-##            
-##            resources.append(resource)
-##        
-##        return resources
-##    
-##    def __currentEngineChanged(self):
-##        """
-##        Private slot to track a change of the current search engine.
-##        """
-##        if self.url().toString() == "eric:home":
-##            self.reload()
+    def __currentEngineChanged(self):
+        """
+        Private slot to track a change of the current search engine.
+        """
+        if self.url().toString() == "eric:home":
+            self.reload()
     
     def mainWindow(self):
         """
@@ -241,6 +207,61 @@ class WebBrowserView(QWebEngineView):
         @rtype WebBrowserWindow
         """
         return self.__mw
+    
+    def load(self, urlOrRequest):
+        """
+        Public method to load a web site.
+        
+        @param urlOrRequest URL or request object
+        @type QUrl or LoadRequest
+        """
+        if isinstance(urlOrRequest, QUrl):
+            super(WebBrowserView, self).load(urlOrRequest)
+        elif isinstance(urlOrRequest, LoadRequest):
+            reqUrl = urlOrRequest.url()
+            if reqUrl.isEmpty():
+                return
+            
+            if reqUrl.scheme() == "javascript":
+                script = reqUrl.toString()[11:]
+                # check if the javascript script is percent encode
+                # i.e. it contains '%' characters
+                if '%' in script:
+                    script = QUrl.fromPercentEncoding(
+                        QByteArray(script.encode("utf-8")))
+                self.page().runJavaScript(script)
+                return
+            
+            if self.__isUrlValid(reqUrl):
+                self.loadRequest(urlOrRequest)
+                return
+            
+            # ensure proper loading of hosts without a '.'
+            if not reqUrl.isEmpty() and \
+               reqUrl.scheme() and \
+               not WebBrowserTools.containsSpace(reqUrl.path()) and \
+               '.' not in reqUrl.path():
+                u = QUrl("http://" + reqUrl.path())
+                if u.isValid():
+                    info = QHostInfo.fromName(u.path())
+                    if info.error() == QHostInfo.NoError:
+                        req = LoadRequest(urlOrRequest)
+                        req.setUrl(u)
+                        self.loadRequest(req)
+                        return
+    
+    def loadRequest(self, req):
+        """
+        Public method to load a page via a load request object.
+        
+        @param req loaf request object
+        @type LoadRequest
+        """
+        if req.Operation == LoadRequestOperations.GetOperation:
+            self.load(req.url())
+        else:
+            self.page().runJavaScript(
+                Scripts.sendPostData(req.url(), req.data()))
     
     # TODO: eliminate requestData, add param to get rid of __ctrlPressed
     def setSource(self, name, requestData=None):
@@ -786,21 +807,20 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Text"),
             self.__sendLink).setData(self.selectedText())
-        # TODO: OpenSearch
         # TODO: OpenSearch: add a search entry using the current engine
-##        self.__searchMenu = menu.addMenu(self.tr("Search with..."))
-##        
-##        from .OpenSearch.OpenSearchEngineAction import \
-##            OpenSearchEngineAction
-##        engineNames = self.__mw.openSearchManager().allEnginesNames()
-##        for engineName in engineNames:
-##            engine = self.__mw.openSearchManager().engine(engineName)
-##            act = OpenSearchEngineAction(engine, self.__searchMenu)
-##            act.setData(engineName)
-##            self.__searchMenu.addAction(act)
-##        self.__searchMenu.triggered.connect(self.__searchRequested)
-##        
-##        menu.addSeparator()
+        self.__searchMenu = menu.addMenu(self.tr("Search with..."))
+        
+        from .OpenSearch.OpenSearchEngineAction import \
+            OpenSearchEngineAction
+        engineNames = self.__mw.openSearchManager().allEnginesNames()
+        for engineName in engineNames:
+            engine = self.__mw.openSearchManager().engine(engineName)
+            act = OpenSearchEngineAction(engine, self.__searchMenu)
+            act.setData(engineName)
+            self.__searchMenu.addAction(act)
+        self.__searchMenu.triggered.connect(self.__searchRequested)
+        
+        menu.addSeparator()
         
         # TODO: Languages Dialog
 ##        from .HelpLanguagesDialog import HelpLanguagesDialog
@@ -1074,11 +1094,10 @@ class WebBrowserView(QWebEngineView):
         """
         from .Tools import Scripts
         script = Scripts.getFormData(self.__clickedPos)
-        # TODO: OpenSearch: add ew method
-##        self.page().runJavaScript(
-##            script,
-##            lambda res: self.__mw.openSearchManager().addEngineFromForm(
-##                res, self))
+        self.page().runJavaScript(
+            script,
+            lambda res: self.__mw.openSearchManager().addEngineFromForm(
+                res, self))
     
     # TODO: WebInspector
 ##    def __webInspector(self):

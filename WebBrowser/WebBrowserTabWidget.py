@@ -297,14 +297,12 @@ class WebBrowserTabWidget(E5TabWidget):
         """
         self.newBrowser()
     
-    # TODO: remove requestData from signature
     def newBrowser(self, link=None, requestData=None, position=-1):
         """
         Public method to create a new web browser tab.
         
         @param link link to be shown (string or QUrl)
-        @param requestData tuple containing the request data (QNetworkRequest,
-            QNetworkAccessManager.Operation, QByteArray)
+        @param requestData page load request data (LoadRequest)
         @keyparam position position to create the new tab at or -1 to add it
             to the end (integer)
         """
@@ -317,18 +315,18 @@ class WebBrowserTabWidget(E5TabWidget):
         
         from .UrlBar.UrlBar import UrlBar
         urlbar = UrlBar(self.__mainWindow, self)
-##        if self.__historyCompleter is None:
-##            import Helpviewer.HelpWindow
-##            from .History.HistoryCompleter import HistoryCompletionModel, \
-##                HistoryCompleter
-##            self.__historyCompletionModel = HistoryCompletionModel(self)
-##            self.__historyCompletionModel.setSourceModel(
-##                Helpviewer.HelpWindow.HelpWindow.historyManager()
-##                .historyFilterModel())
-##            self.__historyCompleter = HistoryCompleter(
-##                self.__historyCompletionModel, self)
-##            self.__historyCompleter.activated[str].connect(self.__pathSelected)
-##        urlbar.setCompleter(self.__historyCompleter)
+        if self.__historyCompleter is None:
+            import Helpviewer.HelpWindow
+            from .History.HistoryCompleter import HistoryCompletionModel, \
+                HistoryCompleter
+            self.__historyCompletionModel = HistoryCompletionModel(self)
+            self.__historyCompletionModel.setSourceModel(
+                Helpviewer.HelpWindow.HelpWindow.historyManager()
+                .historyFilterModel())
+            self.__historyCompleter = HistoryCompleter(
+                self.__historyCompletionModel, self)
+            self.__historyCompleter.activated[str].connect(self.__pathSelected)
+        urlbar.setCompleter(self.__historyCompleter)
         urlbar.returnPressed.connect(self.__lineEditReturnPressed)
         if position == -1:
             self.__stackedUrlBar.addWidget(urlbar)
@@ -364,8 +362,7 @@ class WebBrowserTabWidget(E5TabWidget):
         self.__closeButton.setEnabled(True)
         self.__navigationButton.setEnabled(True)
         
-##        if not linkName and not requestData:
-        if not linkName:
+        if not linkName and not requestData:
             if Preferences.getWebBrowser("StartupBehavior") == 0:
                 linkName = Preferences.getWebBrowser("HomePage")
             elif Preferences.getWebBrowser("StartupBehavior") == 1:
@@ -381,18 +378,16 @@ class WebBrowserTabWidget(E5TabWidget):
                     index,
                     self.__elide(browser.documentTitle().replace("&", "&&")))
                 self.setTabToolTip(index, browser.documentTitle())
-##        elif requestData:
-##            browser.load(*requestData)
+        elif requestData:
+            browser.load(requestData)
     
-    # TODO: remove requestData from signature
     def newBrowserAfter(self, browser, link=None, requestData=None):
         """
         Public method to create a new web browser tab after a given one.
         
         @param browser reference to the browser to add after (WebBrowserView)
         @param link link to be shown (string or QUrl)
-        @param requestData tuple containing the request data (QNetworkRequest,
-            QNetworkAccessManager.Operation, QByteArray)
+        @param requestData page load request data (LoadRequest)
         """
         if browser:
             position = self.indexOf(browser) + 1
@@ -893,14 +888,14 @@ class WebBrowserTabWidget(E5TabWidget):
 ##                None, (request, QNetworkAccessManager.GetOperation, b""))
             self.currentBrowser().setFocus()
     
-##    def __pathSelected(self, path):
-##        """
-##        Private slot called when a URL is selected from the completer.
-##        
-##        @param path path to be shown (string)
-##        """
-##        url = self.__guessUrlFromPath(path)
-##        self.currentBrowser().setSource(url)
+    def __pathSelected(self, path):
+        """
+        Private slot called when a URL is selected from the completer.
+        
+        @param path path to be shown (string)
+        """
+        url = self.__guessUrlFromPath(path)
+        self.currentBrowser().setSource(url)
     
     def __guessUrlFromPath(self, path):
         """
@@ -909,12 +904,11 @@ class WebBrowserTabWidget(E5TabWidget):
         @param path path string to guess an URL for (string)
         @return guessed URL (QUrl)
         """
-        # TODO: Open Search
-##        manager = self.__mainWindow.openSearchManager()
-##        path = Utilities.fromNativeSeparators(path)
-##        url = manager.convertKeywordSearchToUrl(path)
-##        if url.isValid():
-##            return url
+        manager = self.__mainWindow.openSearchManager()
+        path = Utilities.fromNativeSeparators(path)
+        url = manager.convertKeywordSearchToUrl(path)
+        if url.isValid():
+            return url
         
         try:
             url = QUrl.fromUserInput(path)
@@ -927,8 +921,8 @@ class WebBrowserTabWidget(E5TabWidget):
         
         # TODO: extend this logic to about:config (open config dialog)
         
-##        if url.scheme() in ["s", "search"]:
-##            url = manager.currentEngine().searchUrl(url.path().strip())
+        if url.scheme() in ["s", "search"]:
+            url = manager.currentEngine().searchUrl(url.path().strip())
         
         if url.scheme() != "" and \
            (url.host() != "" or url.path() != ""):

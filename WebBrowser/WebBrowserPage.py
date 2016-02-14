@@ -35,6 +35,7 @@ import WebBrowser.WebBrowserWindow
 from .JavaScript.ExternalJsObject import ExternalJsObject
 
 from .Tools.WebHitTestResult import WebHitTestResult
+from .Tools import Scripts
 
 import Preferences
 import UI.PixmapCache
@@ -434,7 +435,7 @@ class WebBrowserPage(QWebEnginePage):
     
     def __loadStarted(self):
         """
-        Private method to handle the loadStarted signal.
+        Private slot to handle the loadStarted signal.
         """
         self.__adBlockedEntries = []
 ##    

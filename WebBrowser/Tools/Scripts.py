@@ -14,6 +14,8 @@ Module containing function to generate JavaScript code.
 
 from __future__ import unicode_literals
 
+from PyQt5.QtCore import QUrlQuery, QUrl
+
 from .WebBrowserTools import readAllFileContents
 
 
@@ -176,5 +178,68 @@ def getAllMetaAttributes():
                 });
             }
             return out;
-            })()"""
+        })()"""
     return source
+
+
+def getOpenSearchLinks():
+    """
+    Function generating a script to extract all open search links.
+    
+    @return script to extract all open serach links
+    @rtype str
+    """
+    source = """
+        (function() {
+            var out = [];
+            var links = document.getElementsByTagName('link');
+            for (var i = 0; i < links.length; ++i) {
+                var e = links[i];
+                if (e.type == 'application/opensearchdescription+xml') {
+                    out.push({
+                        url: e.getAttribute('href'),
+                        title: e.getAttribute('title')
+                    });
+                }
+            }
+            return out;
+        })()"""
+    return source
+
+
+def sendPostData(url, data):
+    """
+    Function generating a script to send Post data.
+    
+    @param url URL to send the data to
+    @type QUrl
+    @param data data to be sent
+    @type QByteArray
+    @return script to send Post data
+    @rtype str
+    """
+    source = """
+        (function() {{
+            var form = document.createElement('form');
+            form.setAttribute('method', 'POST');
+            form.setAttribute('action', '{0}');
+            var val;
+            {1}
+            form.submit();
+            }})()"""
+    
+    valueSource = """
+        val = document.createElement('input');
+        val.setAttribute('type', 'hidden');
+        val.setAttribute('name', '{0}');
+        val.setAttribute('value', '{1}');
+        form.appendChild(val);"""
+    
+    values = ""
+    query = QUrlQuery(data)
+    for name, value in query.queryItems(QUrl.FullyDecoded):
+        value = value.replace("'", "\\'")
+        name = name.replace("'", "\\'")
+        values += valueSource.format(name, value)
+    
+    return source.format(url.toString(), values)

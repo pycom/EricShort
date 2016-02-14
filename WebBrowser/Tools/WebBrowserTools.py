@@ -44,3 +44,19 @@ def readAllFileByteContents(filename):
         return contents
     
     return QByteArray()
+
+
+def containsSpace(string):
+    """
+    Function to check, if a string contains whitespace characters.
+    
+    @param string string to be checked
+    @type str
+    @return flag indicating the presence of at least one whitespace character
+    @rtype bool
+    """
+    for ch in string:
+        if ch.isspace():
+            return True
+    
+    return False

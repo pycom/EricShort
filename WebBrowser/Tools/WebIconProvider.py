@@ -185,8 +185,19 @@ class WebIconProvider(QObject):
         urlStr = self.__urlToString(url)
         if urlStr in self.__iconsDB:
             return self.__iconsDB[urlStr]
+        elif scheme == "https":
+            return UI.PixmapCache.getIcon("securityHigh32.png")
         else:
             return UI.PixmapCache.getIcon("defaultIcon.png")
+    
+    def clear(self):
+        """
+        Public method to clear the icons cache.
+        """
+        self.load()
+        self.__iconsDB = {}
+        self.changed.emit()
+        self.__saveTimer.saveIfNeccessary()
 
 
 __WebIconProvider = None

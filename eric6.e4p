@@ -1301,8 +1301,20 @@
     <Source>WebBrowser/JavaScript/ExternalJsObject.py</Source>
     <Source>WebBrowser/JavaScript/__init__.py</Source>
     <Source>WebBrowser/Network/FollowRedirectReply.py</Source>
+    <Source>WebBrowser/Network/LoadRequest.py</Source>
     <Source>WebBrowser/Network/NetworkManager.py</Source>
     <Source>WebBrowser/Network/__init__.py</Source>
+    <Source>WebBrowser/OpenSearch/DefaultSearchEngines/DefaultSearchEngines_rc.py</Source>
+    <Source>WebBrowser/OpenSearch/DefaultSearchEngines/__init__.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchDialog.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchEditDialog.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchEngine.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchEngineAction.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchEngineModel.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchManager.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchReader.py</Source>
+    <Source>WebBrowser/OpenSearch/OpenSearchWriter.py</Source>
+    <Source>WebBrowser/OpenSearch/__init__.py</Source>
     <Source>WebBrowser/SearchWidget.py</Source>
     <Source>WebBrowser/Tools/Scripts.py</Source>
     <Source>WebBrowser/Tools/WebBrowserTools.py</Source>
@@ -1316,10 +1328,12 @@
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
     <Source>WebBrowser/UrlBar/__init__.py</Source>
+    <Source>WebBrowser/WebBrowserClearPrivateDataDialog.py</Source>
     <Source>WebBrowser/WebBrowserPage.py</Source>
     <Source>WebBrowser/WebBrowserTabBar.py</Source>
     <Source>WebBrowser/WebBrowserTabWidget.py</Source>
     <Source>WebBrowser/WebBrowserView.py</Source>
+    <Source>WebBrowser/WebBrowserWebSearchWidget.py</Source>
     <Source>WebBrowser/WebBrowserWindow.py</Source>
     <Source>WebBrowser/ZoomManager/ZoomManager.py</Source>
     <Source>WebBrowser/ZoomManager/ZoomValuesDialog.py</Source>
@@ -1729,9 +1743,12 @@
     <Form>WebBrowser/Bookmarks/BookmarksDialog.ui</Form>
     <Form>WebBrowser/Bookmarks/BookmarksImportDialog.ui</Form>
     <Form>WebBrowser/History/HistoryDialog.ui</Form>
+    <Form>WebBrowser/OpenSearch/OpenSearchDialog.ui</Form>
+    <Form>WebBrowser/OpenSearch/OpenSearchEditDialog.ui</Form>
     <Form>WebBrowser/SearchWidget.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkActionSelectionDialog.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkInfoDialog.ui</Form>
+    <Form>WebBrowser/WebBrowserClearPrivateDataDialog.ui</Form>
     <Form>WebBrowser/ZoomManager/ZoomValuesDialog.ui</Form>
   </Forms>
   <Translations>
@@ -1765,6 +1782,7 @@
     <Resource>Helpviewer/data/javascript.qrc</Resource>
     <Resource>IconEditor/cursors/cursors.qrc</Resource>
     <Resource>WebBrowser/Bookmarks/DefaultBookmarks.qrc</Resource>
+    <Resource>WebBrowser/OpenSearch/DefaultSearchEngines/DefaultSearchEngines.qrc</Resource>
     <Resource>WebBrowser/data/javascript.qrc</Resource>
   </Resources>
   <Interfaces/>
@@ -1871,6 +1889,22 @@
     <Other>ThirdParty/Send2Trash/LICENSE</Other>
     <Other>ThirdParty/enum/LICENSE</Other>
     <Other>WebBrowser/Bookmarks/DefaultBookmarks.xbel</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Amazoncom.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Bing.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/DeEn_Beolingus.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/DuckDuckGo.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Facebook.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Google.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Google_Im_Feeling_Lucky.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/LEO_DeuEng.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/LinuxMagazin.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Reddit.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Wikia.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Wikia_en.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Wikipedia.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Wiktionary.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/Yahoo.xml</Other>
+    <Other>WebBrowser/OpenSearch/DefaultSearchEngines/YouTube.xml</Other>
     <Other>WebBrowser/data/javascript/jquery-ui.js</Other>
     <Other>WebBrowser/data/javascript/jquery.js</Other>
     <Other>WebBrowser/data/javascript/qwebchannel.js</Other>

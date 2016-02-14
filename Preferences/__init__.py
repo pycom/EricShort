@@ -1017,6 +1017,11 @@ class Prefs(object):
         "UserStyleSheet": "",
         "ZoomValuesDB": "{}",       # empty JSON dictionary
         "HistoryLimit": 30,
+        "WebSearchSuggestions": True,
+        "WebSearchEngine": "DuckDuckGo",
+        "WebSearchKeywords": [],    # array of two tuples (keyword,
+                                    # search engine name)
+        "SearchLanguage": QLocale().language(),
     }
     
     @classmethod
@@ -2653,17 +2658,17 @@ def getWebBrowser(key, prefClass=Prefs):
             return QColor(col)
         else:
             return prefClass.webBrowserDefaults[key]
-##    elif key in ["WebSearchKeywords"]:
-##        # return a list of tuples of (keyword, engine name)
-##        keywords = []
-##        size = prefClass.settings.beginReadArray("Help/" + key)
-##        for index in range(size):
-##            prefClass.settings.setArrayIndex(index)
-##            keyword = prefClass.settings.value("Keyword")
-##            engineName = prefClass.settings.value("Engine")
-##            keywords.append((keyword, engineName))
-##        prefClass.settings.endArray()
-##        return keywords
+    elif key in ["WebSearchKeywords"]:
+        # return a list of tuples of (keyword, engine name)
+        keywords = []
+        size = prefClass.settings.beginReadArray("WebBrowser/" + key)
+        for index in range(size):
+            prefClass.settings.setArrayIndex(index)
+            keyword = prefClass.settings.value("Keyword")
+            engineName = prefClass.settings.value("Engine")
+            keywords.append((keyword, engineName))
+        prefClass.settings.endArray()
+        return keywords
 ##    elif key in ["DownloadManagerDownloads"]:
 ##        # return a list of tuples of (URL, save location, done flag, page url)
 ##        downloads = []
@@ -2742,7 +2747,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "LocalContentCanAccessRemoteUrls",
                  "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
                  "ScrollAnimatorEnabled", "ErrorPageEnabled",
-                 "WarnOnMultipleClose", 
+                 "WarnOnMultipleClose", "WebSearchSuggestions",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
@@ -2768,19 +2773,19 @@ def setWebBrowser(key, value, prefClass=Prefs):
     """
     if key in ["StandardFont", "FixedFont"]:
         prefClass.settings.setValue("WebBrowser/" + key, value.toString())
-##    elif key == "SaveUrlColor":
-##        prefClass.settings.setValue("Help/" + key, value.name())
-##    elif key == "WebSearchKeywords":
-##        # value is list of tuples of (keyword, engine name)
-##        prefClass.settings.remove("Help/" + key)
-##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
-##        index = 0
-##        for v in value:
-##            prefClass.settings.setArrayIndex(index)
-##            prefClass.settings.setValue("Keyword", v[0])
-##            prefClass.settings.setValue("Engine", v[1])
-##            index += 1
-##        prefClass.settings.endArray()
+    elif key == "SaveUrlColor":
+        prefClass.settings.setValue("WebBrowser/" + key, value.name())
+    elif key == "WebSearchKeywords":
+        # value is list of tuples of (keyword, engine name)
+        prefClass.settings.remove("WebBrowser/" + key)
+        prefClass.settings.beginWriteArray("WebBrowser/" + key, len(value))
+        index = 0
+        for v in value:
+            prefClass.settings.setArrayIndex(index)
+            prefClass.settings.setValue("Keyword", v[0])
+            prefClass.settings.setValue("Engine", v[1])
+            index += 1
+        prefClass.settings.endArray()
 ##    elif key == "DownloadManagerDownloads":
 ##        # value is list of tuples of (URL, save location, done flag, page url)
 ##        prefClass.settings.remove("Help/" + key)

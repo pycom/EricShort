@@ -1492,57 +1492,55 @@ class WebBrowserWindow(E5MainWindow):
 ##                    self.__searchEngine.reindexDocumentation)
 ##            self.__actions.append(self.reindexDocumentationAct)
         
-        # TODO: Clear Private Data
-##        self.clearPrivateDataAct = E5Action(
-##            self.tr('Clear private data'),
-##            self.tr('&Clear private data'),
-##            0, 0,
-##            self, 'webbrowser_clear_private_data')
-##        self.clearPrivateDataAct.setStatusTip(self.tr(
-##            'Clear private data'))
-##        self.clearPrivateDataAct.setWhatsThis(self.tr(
-##            """<b>Clear private data</b>"""
-##            """<p>Clears the private data like browsing history, search"""
-##            """ history or the favicons database.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.clearPrivateDataAct.triggered.connect(
-##                self.__clearPrivateData)
-##        self.__actions.append(self.clearPrivateDataAct)
-##        
-##        self.clearIconsAct = E5Action(
-##            self.tr('Clear icons database'),
-##            self.tr('Clear &icons database'),
-##            0, 0,
-##            self, 'webbrowser_clear_icons_db')
-##        self.clearIconsAct.setStatusTip(self.tr(
-##            'Clear the database of favicons'))
-##        self.clearIconsAct.setWhatsThis(self.tr(
-##            """<b>Clear icons database</b>"""
-##            """<p>Clears the database of favicons of previously visited"""
-##            """ URLs.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.clearIconsAct.triggered.connect(self.__clearIconsDatabase)
-##        self.__actions.append(self.clearIconsAct)
+        self.clearPrivateDataAct = E5Action(
+            self.tr('Clear private data'),
+            self.tr('&Clear private data'),
+            0, 0,
+            self, 'webbrowser_clear_private_data')
+        self.clearPrivateDataAct.setStatusTip(self.tr(
+            'Clear private data'))
+        self.clearPrivateDataAct.setWhatsThis(self.tr(
+            """<b>Clear private data</b>"""
+            """<p>Clears the private data like browsing history, search"""
+            """ history or the favicons database.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.clearPrivateDataAct.triggered.connect(
+                self.__clearPrivateData)
+        self.__actions.append(self.clearPrivateDataAct)
         
-        # TODO: Open Search
-##        self.searchEnginesAct = E5Action(
-##            self.tr('Configure Search Engines'),
-##            self.tr('Configure Search &Engines...'),
-##            0, 0,
-##            self, 'webbrowser_search_engines')
-##        self.searchEnginesAct.setStatusTip(self.tr(
-##            'Configure the available search engines'))
-##        self.searchEnginesAct.setWhatsThis(self.tr(
-##            """<b>Configure Search Engines...</b>"""
-##            """<p>Opens a dialog to configure the available search"""
-##            """ engines.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.searchEnginesAct.triggered.connect(
-##                self.__showEnginesConfigurationDialog)
-##        self.__actions.append(self.searchEnginesAct)
+        self.clearIconsAct = E5Action(
+            self.tr('Clear icons database'),
+            self.tr('Clear &icons database'),
+            0, 0,
+            self, 'webbrowser_clear_icons_db')
+        self.clearIconsAct.setStatusTip(self.tr(
+            'Clear the database of favicons'))
+        self.clearIconsAct.setWhatsThis(self.tr(
+            """<b>Clear icons database</b>"""
+            """<p>Clears the database of favicons of previously visited"""
+            """ URLs.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.clearIconsAct.triggered.connect(self.__clearIconsDatabase)
+        self.__actions.append(self.clearIconsAct)
+        
+        self.searchEnginesAct = E5Action(
+            self.tr('Configure Search Engines'),
+            self.tr('Configure Search &Engines...'),
+            0, 0,
+            self, 'webbrowser_search_engines')
+        self.searchEnginesAct.setStatusTip(self.tr(
+            'Configure the available search engines'))
+        self.searchEnginesAct.setWhatsThis(self.tr(
+            """<b>Configure Search Engines...</b>"""
+            """<p>Opens a dialog to configure the available search"""
+            """ engines.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.searchEnginesAct.triggered.connect(
+                self.__showEnginesConfigurationDialog)
+        self.__actions.append(self.searchEnginesAct)
         
         # TODO: Passwords
 ##        self.passwordsAct = E5Action(
@@ -1863,8 +1861,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        menu.addAction(self.featurePermissionAct)
 ##        menu.addSeparator()
         menu.addAction(self.editMessageFilterAct)
-##        menu.addSeparator()
-##        menu.addAction(self.searchEnginesAct)
+        menu.addSeparator()
+        menu.addAction(self.searchEnginesAct)
 ##        menu.addSeparator()
 ##        menu.addAction(self.passwordsAct)
 ##        if SSL_AVAILABLE:
@@ -1890,8 +1888,8 @@ class WebBrowserWindow(E5MainWindow):
 ##            menu.addAction(self.manageQtHelpFiltersAct)
 ##            menu.addAction(self.reindexDocumentationAct)
 ##            menu.addSeparator()
-##        menu.addAction(self.clearPrivateDataAct)
-##        menu.addAction(self.clearIconsAct)
+        menu.addAction(self.clearPrivateDataAct)
+        menu.addAction(self.clearIconsAct)
         
 ##        menu = mb.addMenu(self.tr("&Tools"))
 ##        menu.setTearOffEnabled(True)
@@ -2030,14 +2028,14 @@ class WebBrowserWindow(E5MainWindow):
         self.__navigationSplitter = QSplitter(gotb)
         self.__navigationSplitter.addWidget(self.__tabWidget.stackedUrlBar())
         
-##        from .HelpWebSearchWidget import HelpWebSearchWidget
-##        self.searchEdit = HelpWebSearchWidget(self)
-##        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-##        sizePolicy.setHorizontalStretch(2)
-##        sizePolicy.setVerticalStretch(0)
-##        self.searchEdit.setSizePolicy(sizePolicy)
-##        self.searchEdit.search.connect(self.__linkActivated)
-##        self.__navigationSplitter.addWidget(self.searchEdit)
+        from .WebBrowserWebSearchWidget import WebBrowserWebSearchWidget
+        self.searchEdit = WebBrowserWebSearchWidget(self)
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(2)
+        sizePolicy.setVerticalStretch(0)
+        self.searchEdit.setSizePolicy(sizePolicy)
+        self.searchEdit.search.connect(self.__linkActivated)
+        self.__navigationSplitter.addWidget(self.searchEdit)
         gotb.addWidget(self.__navigationSplitter)
         
         self.__navigationSplitter.setSizePolicy(
@@ -2136,9 +2134,8 @@ class WebBrowserWindow(E5MainWindow):
         @param browser reference to the browser (WebBrowserView)
         @param title new title (string)
         """
-        pass
-##        self.historyManager().updateHistoryEntry(
-##            browser.url().toString(), title)
+        self.historyManager().updateHistoryEntry(
+            browser.url().toString(), title)
     
     @pyqtSlot()
     def newTab(self, link=None, requestData=None, addNextTo=None):
@@ -2146,8 +2143,7 @@ class WebBrowserWindow(E5MainWindow):
         Public slot called to open a new web browser tab.
         
         @param link file to be displayed in the new window (string or QUrl)
-        @param requestData tuple containing the request data (QNetworkRequest,
-            QNetworkAccessManager.Operation, QByteArray)
+        @param requestData page load request data (LoadRequest)
         @param addNextTo reference to the browser to open the tab after
             (HelpBrowser)
         """
@@ -2155,7 +2151,6 @@ class WebBrowserWindow(E5MainWindow):
             self.__tabWidget.newBrowserAfter(addNextTo, link, requestData)
         else:
             self.__tabWidget.newBrowser(link, requestData)
-        # TODO: check the above
     
     @pyqtSlot()
     def newWindow(self, link=None):
@@ -2176,7 +2171,7 @@ class WebBrowserWindow(E5MainWindow):
     
     # TODO: Private Window
     
-    # TODO: check if this is still needed
+    # TODO: check if this is still needed/possible
     def previewer(self):
         """
         Public method to get a reference to the previewer tab.
@@ -2505,8 +2500,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        
 ##        self.flashCookieManager().shutdown()
 ##        
-##        self.searchEdit.openSearchManager().close()
-##        
+        self.searchEdit.openSearchManager().close()
+        
 ##        if WebBrowserWindow.UseQtHelp:
 ##            self.__searchEngine.cancelIndexing()
 ##            self.__searchEngine.cancelSearching()
@@ -2514,8 +2509,8 @@ class WebBrowserWindow(E5MainWindow):
 ##            if self.__helpInstaller:
 ##                self.__helpInstaller.stop()
 ##        
-##        self.searchEdit.saveSearches()
-##        
+        self.searchEdit.saveSearches()
+        
         self.__tabWidget.closeAllBrowsers()
         
         state = self.saveState()
@@ -2806,9 +2801,8 @@ class WebBrowserWindow(E5MainWindow):
         
         self.__tabWidget.preferencesChanged()
         
-        # TODO: OpenSearch
-##        self.searchEdit.preferencesChanged()
-##        
+        self.searchEdit.preferencesChanged()
+        
         # TODO: VirusTotal
 ##        self.__virusTotal.preferencesChanged()
 ##        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
@@ -2923,12 +2917,12 @@ class WebBrowserWindow(E5MainWindow):
 ##            cls._cookieJar = CookieJar()
 ##        return cls.networkAccessManager().cookieJar()
 ##        
-##    def __clearIconsDatabase(self):
-##        """
-##        Private slot to clear the icons databse.
-##        """
-##        QWebSettings.clearIconDatabase()
-##        
+    def __clearIconsDatabase(self):
+        """
+        Private slot to clear the icons databse.
+        """
+        WebIconProvider.instance().clear()
+        
     @pyqtSlot(QUrl)
     def __linkActivated(self, url):
         """
@@ -3285,37 +3279,43 @@ class WebBrowserWindow(E5MainWindow):
             # go forward
             history.goToItem(history.forwardItems(historyCount)[offset - 1])
         
-##    def __clearPrivateData(self):
-##        """
-##        Private slot to clear the private data.
-##        """
-##        from .HelpClearPrivateDataDialog import HelpClearPrivateDataDialog
-##        dlg = HelpClearPrivateDataDialog(self)
-##        if dlg.exec_() == QDialog.Accepted:
-##            # browsing history, search history, favicons, disk cache, cookies,
-##            # passwords, web databases, downloads, Flash cookies
-##            (history, searches, favicons, cache, cookies,
-##             passwords, databases, downloads, flashCookies, zoomValues,
-##             historyPeriod) = dlg.getData()
-##            if history:
-##                self.historyManager().clear(historyPeriod)
-##                self.__tabWidget.clearClosedTabsList()
-##            if searches:
-##                self.searchEdit.clear()
+    def __clearPrivateData(self):
+        """
+        Private slot to clear the private data.
+        """
+        from .WebBrowserClearPrivateDataDialog import \
+            WebBrowserClearPrivateDataDialog
+        dlg = WebBrowserClearPrivateDataDialog(self)
+        if dlg.exec_() == QDialog.Accepted:
+            # browsing history, search history, favicons, disk cache, cookies,
+            # passwords, web databases, downloads, Flash cookies
+            (history, searches, favicons, cache, cookies,
+             passwords, databases, downloads, flashCookies, zoomValues,
+             historyPeriod) = dlg.getData()
+            if history:
+                self.historyManager().clear(historyPeriod)
+                self.__tabWidget.clearClosedTabsList()
+            if searches:
+                self.searchEdit.clear()
+            # TODO: Downloads
 ##            if downloads:
 ##                self.downloadManager().cleanup()
 ##                self.downloadManager().hide()
-##            if favicons:
-##                self.__clearIconsDatabase()
+            if favicons:
+                self.__clearIconsDatabase()
+            # TODO: Cache Cleaning
 ##            if cache:
 ##                try:
 ##                    self.networkAccessManager().cache().clear()
 ##                except AttributeError:
 ##                    pass
+            # TODO: Cookies
 ##            if cookies:
 ##                self.cookieJar().clear()
+            # TODO: Passwords
 ##            if passwords:
 ##                self.passwordManager().clear()
+            # TODO: Web Databases
 ##            if databases:
 ##                if hasattr(QWebDatabase, "removeAllDatabases"):
 ##                    QWebDatabase.removeAllDatabases()
@@ -3323,6 +3323,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                    for securityOrigin in QWebSecurityOrigin.allOrigins():
 ##                        for database in securityOrigin.databases():
 ##                            QWebDatabase.removeDatabase(database)
+            # TODO: Flash Cookie Manager
 ##            if flashCookies:
 ##                from .HelpLanguagesDialog import HelpLanguagesDialog
 ##                languages = Preferences.toList(
@@ -3336,27 +3337,27 @@ class WebBrowserWindow(E5MainWindow):
 ##                    "http://www.macromedia.com/support/documentation/"
 ##                    "{0}/flashplayer/help/settings_manager07.html".format(
 ##                        langCode))
-##            if zoomValues:
-##                ZoomManager.instance().clear()
-##        
-##    def __showEnginesConfigurationDialog(self):
-##        """
-##        Private slot to show the search engines configuration dialog.
-##        """
-##        from .OpenSearch.OpenSearchDialog import OpenSearchDialog
-##        
-##        dlg = OpenSearchDialog(self)
-##        dlg.exec_()
-##        
-##    def searchEnginesAction(self):
-##        """
-##        Public method to get a reference to the search engines configuration
-##        action.
-##        
-##        @return reference to the search engines configuration action (QAction)
-##        """
-##        return self.searchEnginesAct
-##        
+            if zoomValues:
+                ZoomManager.instance().clear()
+        
+    def __showEnginesConfigurationDialog(self):
+        """
+        Private slot to show the search engines configuration dialog.
+        """
+        from .OpenSearch.OpenSearchDialog import OpenSearchDialog
+        
+        dlg = OpenSearchDialog(self)
+        dlg.exec_()
+        
+    def searchEnginesAction(self):
+        """
+        Public method to get a reference to the search engines configuration
+        action.
+        
+        @return reference to the search engines configuration action (QAction)
+        """
+        return self.searchEnginesAct
+        
 ##    def __showPasswordsDialog(self):
 ##        """
 ##        Private slot to show the passwords management dialog.
@@ -3661,14 +3662,14 @@ class WebBrowserWindow(E5MainWindow):
         
         return self.mainWindow()
     
-##    def openSearchManager(self):
-##        """
-##        Public method to get a reference to the opensearch manager object.
-##        
-##        @return reference to the opensearch manager object (OpenSearchManager)
-##        """
-##        return self.searchEdit.openSearchManager()
-##    
+    def openSearchManager(self):
+        """
+        Public method to get a reference to the opensearch manager object.
+        
+        @return reference to the opensearch manager object (OpenSearchManager)
+        """
+        return self.searchEdit.openSearchManager()
+    
     def __aboutToShowTextEncodingMenu(self):
         """
         Private slot to populate the text encoding menu.
