@@ -136,6 +136,30 @@ class OpenSearchEngine(QObject):
         """
         Public method to set the engine search URL template.
         
+        The URL template is processed according to the specification:
+        <a
+          href="http://www.opensearch.org/Specifications/OpenSearch/1.1#OpenSearch_URL_template_syntax">
+        http://www.opensearch.org/Specifications/OpenSearch/1.1#OpenSearch_URL_template_syntax</a>
+
+        A list of template parameters currently supported and what they are
+        replaced with:
+        <table>
+        <tr><td><b>Parameter</b></td><td><b>Value</b></td></tr>
+        <tr><td>{count}</td><td>20</td></tr>
+        <tr><td>{startIndex}</td><td>0</td></tr>
+        <tr><td>{startPage}</td><td>0</td></tr>
+        <tr><td>{language}</td>
+          <td>the default language code (RFC 3066)</td></tr>
+        <tr><td>{country}</td>
+          <td>the default language code (RFC 3066) converted to lower
+              case</td></tr>
+        <tr><td>{inputEncoding}</td><td>UTF-8</td></tr>
+        <tr><td>{outputEncoding}</td><td>UTF-8</td></tr>
+        <tr><td>{searchTerms}</td><td>the string supplied by the user</td></tr>
+        <tr><td>{*:source}</td>
+          <td>application name, QCoreApplication::applicationName()</td></tr>
+        </table>
+        
         @param searchUrlTemplate search URL template of the engine (string)
         """
         self._searchUrlTemplate = searchUrlTemplate
