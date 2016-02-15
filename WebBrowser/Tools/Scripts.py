@@ -243,3 +243,112 @@ def sendPostData(url, data):
         values += valueSource.format(name, value)
     
     return source.format(url.toString(), values)
+
+
+def setupFormObserver():
+    """
+    Function generating a script to monitor a web form for user entries.
+    
+    @return script to monitor a web page
+    @rtype str
+    """
+    source = """
+        (function() {
+            function findUsername(inputs) {
+                for (var i = 0; i < inputs.length; ++i)
+                    if (inputs[i].type == 'text' && inputs[i].value.length &&
+                        inputs[i].name.indexOf('user') != -1)
+                        return inputs[i].value;
+                for (var i = 0; i < inputs.length; ++i)
+                    if (inputs[i].type == 'text' && inputs[i].value.length &&
+                        inputs[i].name.indexOf('name') != -1)
+                        return inputs[i].value;
+                for (var i = 0; i < inputs.length; ++i)
+                    if (inputs[i].type == 'text' && inputs[i].value.length)
+                        return inputs[i].value;
+                for (var i = 0; i < inputs.length; ++i)
+                    if (inputs[i].type == 'email' && inputs[i].value.length)
+                        return inputs[i].value;
+                return '';
+            }
+            
+            function registerForm(form) {
+                form.addEventListener('submit', function() {
+                    var form = this;
+                    var data = '';
+                    var password = '';
+                    var inputs = form.getElementsByTagName('input');
+                    for (var i = 0; i < inputs.length; ++i) {
+                        var input = inputs[i];
+                        var type = input.type.toLowerCase();
+                        if (type != 'text' && type != 'password' &&
+                            type != 'email')
+                            continue;
+                        if (!password && type == 'password')
+                            password = input.value;
+                        data += encodeURIComponent(input.name);
+                        data += '=';
+                        data += encodeURIComponent(input.value);
+                        data += '&';
+                    }
+                    if (!password)
+                        return;
+                    data = data.substring(0, data.length - 1);
+                    var url = window.location.href;
+                    var username = findUsername(inputs);
+                    external.autoFill.formSubmitted(url, username, password,
+                                                    data);
+                }, true);
+            }
+            
+            for (var i = 0; i < document.forms.length; ++i)
+                registerForm(document.forms[i]);
+            
+            var observer = new MutationObserver(function(mutations) {
+                for (var i = 0; i < mutations.length; ++i)
+                    for (var j = 0; j < mutations[i].addedNodes.length; ++j)
+                        if (mutations[i].addedNodes[j].tagName == 'form')
+                            registerForm(mutations[i].addedNodes[j]);
+            });
+            observer.observe(document.documentElement, { childList: true });
+            
+            })()"""
+    return source
+
+
+def completeFormData(data):
+    """
+    Function generating a script to fill in form data.
+    
+    @param data data to be filled into the form
+    @type QByteArray
+    @return script to fill a form
+    @rtype str
+    """
+    source = """
+        (function() {{
+            var data = '{0}'.split('&');
+            var inputs = document.getElementsByTagName('input');
+            
+            for (var i = 0; i < data.length; ++i) {{
+                var pair = data[i].split('=');
+                if (pair.length != 2)
+                    continue;
+                var key = decodeURIComponent(pair[0]);
+                var val = decodeURIComponent(pair[1]);
+                for (var j = 0; j < inputs.length; ++j) {{
+                    var input = inputs[j];
+                    var type = input.type.toLowerCase();
+                    if (type != 'text' && type != 'password' &&
+                        type != 'email')
+                        continue;
+                    if (input.name == key)
+                        input.value = val;
+                }}
+            }}
+            
+            }})()"""
+    
+    data = bytes(data).decode("utf-8")
+    data = data.replace("'", "\\'")
+    return source.format(data)

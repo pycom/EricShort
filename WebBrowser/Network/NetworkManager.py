@@ -9,9 +9,14 @@ Module implementing a network manager class.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtNetwork import QNetworkAccessManager
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkProxy
 
 from E5Gui import E5MessageBox
+
+from E5Network.E5NetworkProxyFactory import proxyAuthenticationRequired
+
+import Preferences
 
 
 class NetworkManager(QNetworkAccessManager):
@@ -29,10 +34,11 @@ class NetworkManager(QNetworkAccessManager):
         self.__ignoredSslErrors = {}
         # dictionary of temporarily ignore SSL errors
         
-        # TODO: Proxy Authentication
-##        self.proxyAuthenticationRequired.connect(proxyAuthenticationRequired)
-        # TODO: Authentication
-##        self.authenticationRequired.connect(self.authenticationRequired)
+        self.proxyAuthenticationRequired.connect(
+            lambda proxy, auth: self.proxyAuthentication(
+                proxy.hostName(), auth))
+        self.authenticationRequired.connect(
+            lambda reply, auth: self.authentication(reply.url(), auth))
     
     def certificateError(self, error, view):
         """
@@ -68,3 +74,62 @@ class NetworkManager(QNetworkAccessManager):
             return True
         
         return False
+    
+    def authentication(self, url, auth):
+        """
+        Public slot to handle an authentication request.
+        
+        @param url URL requesting authentication (QUrl)
+        @param auth reference to the authenticator object (QAuthenticator)
+        """
+        urlRoot = "{0}://{1}"\
+            .format(url.scheme(), url.authority())
+        realm = auth.realm()
+        if not realm and 'realm' in auth.options():
+            realm = auth.option("realm")
+        if realm:
+            info = self.tr("<b>Enter username and password for '{0}', "
+                           "realm '{1}'</b>").format(urlRoot, realm)
+        else:
+            info = self.tr("<b>Enter username and password for '{0}'</b>")\
+                .format(urlRoot)
+        
+        from UI.AuthenticationDialog import AuthenticationDialog
+        # TODO: Password Manager
+##        import WebBrowser.WebBrowserWindow
+        
+        dlg = AuthenticationDialog(info, auth.user(),
+                                   Preferences.getUser("SavePasswords"),
+                                   Preferences.getUser("SavePasswords"))
+        # TODO: Password Manager
+##        if Preferences.getUser("SavePasswords"):
+##            username, password = \
+##                WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
+##                .getLogin(url, realm)
+##            if username:
+##                dlg.setData(username, password)
+        if dlg.exec_() == QDialog.Accepted:
+            username, password = dlg.getData()
+            auth.setUser(username)
+            auth.setPassword(password)
+            # TODO: Password Manager
+##            if Preferences.getUser("SavePasswords"):
+##                WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
+##                .setLogin(url, realm, username, password)
+    
+    def proxyAuthentication(self, hostname, auth):
+        """
+        Public slot to handle a proxy authentication request.
+        
+        @param hostname name of the proxy host
+        @type str
+        @param auth reference to the authenticator object
+        @type QAuthenticator
+        """
+        proxy = QNetworkProxy.applicationProxy()
+        if proxy.user() and proxy.password():
+            auth.setUser(proxy.user())
+            auth.setPassword(proxy.password())
+            return
+        
+        proxyAuthenticationRequired(proxy, auth)

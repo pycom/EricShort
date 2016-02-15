@@ -201,6 +201,10 @@ class WebBrowserPage(QWebEnginePage):
 ##            self.__restoreFrameStateRequested)
         self.featurePermissionRequested.connect(
             self.__featurePermissionRequested)
+        
+        self.authenticationRequired.connect(
+            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()
+            .authentication)
     
     def acceptNavigationRequest(self, url, type_, isMainFrame):
         """

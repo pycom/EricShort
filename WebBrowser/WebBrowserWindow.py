@@ -85,7 +85,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    _helpEngine = None
     _bookmarksManager = None
     _historyManager = None
-##    _passwordManager = None
+    _passwordManager = None
 ##    _adblockManager = None
 ##    _downloadManager = None
 ##    _feedsManager = None
@@ -1541,22 +1541,21 @@ class WebBrowserWindow(E5MainWindow):
                 self.__showEnginesConfigurationDialog)
         self.__actions.append(self.searchEnginesAct)
         
-        # TODO: Passwords
-##        self.passwordsAct = E5Action(
-##            self.tr('Manage Saved Passwords'),
-##            UI.PixmapCache.getIcon("passwords.png"),
-##            self.tr('Manage Saved Passwords...'),
-##            0, 0,
-##            self, 'webbrowser_manage_passwords')
-##        self.passwordsAct.setStatusTip(self.tr(
-##            'Manage the saved passwords'))
-##        self.passwordsAct.setWhatsThis(self.tr(
-##            """<b>Manage Saved Passwords...</b>"""
-##            """<p>Opens a dialog to manage the saved passwords.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.passwordsAct.triggered.connect(self.__showPasswordsDialog)
-##        self.__actions.append(self.passwordsAct)
+        self.passwordsAct = E5Action(
+            self.tr('Manage Saved Passwords'),
+            UI.PixmapCache.getIcon("passwords.png"),
+            self.tr('Manage Saved Passwords...'),
+            0, 0,
+            self, 'webbrowser_manage_passwords')
+        self.passwordsAct.setStatusTip(self.tr(
+            'Manage the saved passwords'))
+        self.passwordsAct.setWhatsThis(self.tr(
+            """<b>Manage Saved Passwords...</b>"""
+            """<p>Opens a dialog to manage the saved passwords.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.passwordsAct.triggered.connect(self.__showPasswordsDialog)
+        self.__actions.append(self.passwordsAct)
         
         # TODO: AdBlock
 ##        self.adblockAct = E5Action(
@@ -1862,8 +1861,8 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.editMessageFilterAct)
         menu.addSeparator()
         menu.addAction(self.searchEnginesAct)
-##        menu.addSeparator()
-##        menu.addAction(self.passwordsAct)
+        menu.addSeparator()
+        menu.addAction(self.passwordsAct)
 ##        if SSL_AVAILABLE:
 ##            menu.addAction(self.certificatesAct)
 ##        menu.addSeparator()
@@ -2481,8 +2480,8 @@ class WebBrowserWindow(E5MainWindow):
         
 ##        self.historyManager().close()
 ##        
-##        self.passwordManager().close()
-##        
+        self.passwordManager().close()
+        
 ##        self.adBlockManager().close()
 ##        
 ##        self.userAgentsManager().close()
@@ -2821,13 +2820,12 @@ class WebBrowserWindow(E5MainWindow):
         @param oldPassword current master password (string)
         @param newPassword new master password (string)
         """
-        # TODO: PasswordManager
-##        from Preferences.ConfigurationDialog import ConfigurationDialog
-##        self.passwordManager().masterPasswordChanged(oldPassword, newPassword)
-##        if self.__fromEric and isinstance(self.sender(), ConfigurationDialog):
-##            # we were called from our local configuration dialog
-##            Preferences.convertPasswords(oldPassword, newPassword)
-##            Utilities.crypto.changeRememberedMaster(newPassword)
+        from Preferences.ConfigurationDialog import ConfigurationDialog
+        self.passwordManager().masterPasswordChanged(oldPassword, newPassword)
+        if self.__fromEric and isinstance(self.sender(), ConfigurationDialog):
+            # we were called from our local configuration dialog
+            Preferences.convertPasswords(oldPassword, newPassword)
+            Utilities.crypto.changeRememberedMaster(newPassword)
     
 ##    def __showAcceptedLanguages(self):
 ##        """
@@ -3239,7 +3237,7 @@ class WebBrowserWindow(E5MainWindow):
             item = backItems[index]
             act = QAction(self)
             act.setData(-1 * (index + 1))
-            icon = HelpWindow.icon(item.url())
+            icon = WebBrowserWindow.icon(item.url())
             act.setIcon(icon)
             act.setText(item.title())
             self.backMenu.addAction(act)
@@ -3256,7 +3254,7 @@ class WebBrowserWindow(E5MainWindow):
             item = forwardItems[index]
             act = QAction(self)
             act.setData(index + 1)
-            icon = HelpWindow.icon(item.url())
+            icon = WebBrowserWindow.icon(item.url())
             act.setIcon(icon)
             act.setText(item.title())
             self.forwardMenu.addAction(act)
@@ -3311,9 +3309,8 @@ class WebBrowserWindow(E5MainWindow):
             # TODO: Cookies
 ##            if cookies:
 ##                self.cookieJar().clear()
-            # TODO: Passwords
-##            if passwords:
-##                self.passwordManager().clear()
+            if passwords:
+                self.passwordManager().clear()
             # TODO: Web Databases
 ##            if databases:
 ##                if hasattr(QWebDatabase, "removeAllDatabases"):
@@ -3357,15 +3354,15 @@ class WebBrowserWindow(E5MainWindow):
         """
         return self.searchEnginesAct
         
-##    def __showPasswordsDialog(self):
-##        """
-##        Private slot to show the passwords management dialog.
-##        """
-##        from .Passwords.PasswordsDialog import PasswordsDialog
-##        
-##        dlg = PasswordsDialog(self)
-##        dlg.exec_()
-##        
+    def __showPasswordsDialog(self):
+        """
+        Private slot to show the passwords management dialog.
+        """
+        from .Passwords.PasswordsDialog import PasswordsDialog
+        
+        dlg = PasswordsDialog(self)
+        dlg.exec_()
+        
 ##    def __showCertificatesDialog(self):
 ##        """
 ##        Private slot to show the certificates management dialog.
@@ -3512,19 +3509,19 @@ class WebBrowserWindow(E5MainWindow):
         
         return cls._historyManager
         
-##    @classmethod
-##    def passwordManager(cls):
-##        """
-##        Class method to get a reference to the password manager.
-##        
-##        @return reference to the password manager (PasswordManager)
-##        """
-##        if cls._passwordManager is None:
-##            from .Passwords.PasswordManager import PasswordManager
-##            cls._passwordManager = PasswordManager()
-##        
-##        return cls._passwordManager
-##        
+    @classmethod
+    def passwordManager(cls):
+        """
+        Class method to get a reference to the password manager.
+        
+        @return reference to the password manager (PasswordManager)
+        """
+        if cls._passwordManager is None:
+            from .Passwords.PasswordManager import PasswordManager
+            cls._passwordManager = PasswordManager()
+        
+        return cls._passwordManager
+        
 ##    @classmethod
 ##    def adBlockManager(cls):
 ##        """
@@ -3551,7 +3548,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        """
 ##        Class method to get a reference to the download manager.
 ##        
-##        @return reference to the password manager (DownloadManager)
+##        @return reference to the download manager (DownloadManager)
 ##        """
 ##        if cls._downloadManager is None:
 ##            from .Download.DownloadManager import DownloadManager
