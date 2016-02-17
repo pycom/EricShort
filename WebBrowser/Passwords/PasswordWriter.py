@@ -57,7 +57,7 @@ class PasswordWriter(QXmlStreamWriter):
         self.writeStartDocument()
         self.writeDTD("<!DOCTYPE passwords>")
         self.writeStartElement("Password")
-        self.writeAttribute("version", "1.0")
+        self.writeAttribute("version", "2.0")
         
         if logins:
             self.__writeLogins(logins)
@@ -95,15 +95,8 @@ class PasswordWriter(QXmlStreamWriter):
             self.writeAttribute("key", key)
             self.writeAttribute("url", form.url.toString())
             self.writeAttribute("name", str(form.name))
-            self.writeAttribute(
-                "password", "yes" if form.hasAPassword else "no")
-            if form.elements:
-                self.writeStartElement("Elements")
-                for element in form.elements:
-                    self.writeEmptyElement("Element")
-                    self.writeAttribute("name", element[0])
-                    self.writeAttribute("value", element[1])
-                self.writeEndElement()
+            self.writeTextElement(
+                "PostData", bytes(form.postData).decode("utf-8"))
             self.writeEndElement()
         self.writeEndElement()
     

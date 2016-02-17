@@ -68,6 +68,7 @@ class ExternalJsObject(QObject):
         """
         return self.__autoFill
     
+    # TODO: OpenSearch
 ##void ExternalJsObject::AddSearchProvider(const QString &engineUrl)
 ##{ Slot
 ##    mApp->searchEnginesManager()->addEngine(QUrl(engineUrl));

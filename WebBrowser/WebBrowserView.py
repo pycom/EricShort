@@ -1524,8 +1524,7 @@ class WebBrowserView(QWebEngineView):
             self.__mw.historyManager().addHistoryEntry(self)
             # TODO: AdBlock
 ##            self.__mw.adBlockManager().page().hideBlockedPageEntries(self.page())
-            # TODO: Password Manager
-##            self.__mw.passwordManager().fill(self.page())
+            self.__mw.passwordManager().completePage(self.page())
     
     def isLoading(self):
         """

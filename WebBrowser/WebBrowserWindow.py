@@ -80,6 +80,7 @@ class WebBrowserWindow(E5MainWindow):
     _fromEric = False
     UseQtHelp = QTHELP_AVAILABLE
     
+    _webProfile = None
     _networkManager = None
 ##    _cookieJar = None
 ##    _helpEngine = None
@@ -135,21 +136,22 @@ class WebBrowserWindow(E5MainWindow):
         if self.__initShortcutsOnly:
             self.__initActions()
         else:
-            if self.isPrivate():
-                self.__webProfile = QWebEngineProfile(self)
-            else:
-                self.__webProfile = QWebEngineProfile.defaultProfile()
-            self.__webProfile.downloadRequested.connect(
-                self.__downloadRequested)
-            
-            # Setup QWebChannel user script
-            script = QWebEngineScript()
-            script.setName("_eric_webchannel")
-            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
-            script.setWorldId(QWebEngineScript.MainWorld)
-            script.setRunsOnSubFrames(True)
-            script.setSourceCode(Scripts.setupWebChannel())
-            self.__webProfile.scripts().insert(script)
+            self.webProfile(private)
+##            if self.isPrivate():
+##                self.__webProfile = QWebEngineProfile(self)
+##            else:
+##                self.__webProfile = QWebEngineProfile.defaultProfile()
+##            self.__webProfile.downloadRequested.connect(
+##                self.__downloadRequested)
+##            
+##            # Setup QWebChannel user script
+##            script = QWebEngineScript()
+##            script.setName("_eric_webchannel")
+##            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
+##            script.setWorldId(QWebEngineScript.MainWorld)
+##            script.setRunsOnSubFrames(True)
+##            script.setSourceCode(Scripts.setupWebChannel())
+##            self.__webProfile.scripts().insert(script)
             
             from .SearchWidget import SearchWidget
             # TODO: QtHelp
@@ -259,6 +261,8 @@ class WebBrowserWindow(E5MainWindow):
             
             self.__setIconDatabasePath()
             self.__initWebEngineSettings()
+            
+            self.passwordManager()
             
             self.__initActions()
             self.__initMenus()
@@ -4029,9 +4033,9 @@ class WebBrowserWindow(E5MainWindow):
             .replace("\n", "")
         name = "_eric_userstylesheet"
         
-        oldScript = self.__webProfile.scripts().findScript(name)
+        oldScript = self.webProfile().scripts().findScript(name)
         if not oldScript.isNull():
-            self.__webProfile.scripts().remove(oldScript)
+            self.webProfile().scripts().remove(oldScript)
         
         if userStyle:
             script = QWebEngineScript()
@@ -4040,7 +4044,7 @@ class WebBrowserWindow(E5MainWindow):
             script.setWorldId(QWebEngineScript.ApplicationWorld)
             script.setRunsOnSubFrames(True)
             script.setSourceCode(Scripts.setStyleSheet(userStyle))
-            self.__webProfile.scripts().insert(script)
+            self.webProfile().scripts().insert(script)
     
     ##########################################
     ## Support for desktop notifications below
@@ -4088,9 +4092,10 @@ class WebBrowserWindow(E5MainWindow):
     ## Support for download files below
     ###################################
     
-    def __downloadRequested(self, download):
+    @classmethod
+    def downloadRequested(self, download):
         """
-        Private slot to handle a download request.
+        Class method to handle a download request.
         
         @param download reference to the download data
         @type QWebEngineDownloadItem
@@ -4098,3 +4103,36 @@ class WebBrowserWindow(E5MainWindow):
         pass
         # TODO: DownloadManager
 ##        self.downloadManager().download(download, mainWindow=self)
+    
+    ########################################
+    ## Support for web engine profiles below
+    ########################################
+    
+    @classmethod
+    def webProfile(cls, private=False):
+        """
+        Class method handling the web engine profile.
+        
+        @param private flag indicating the privacy mode
+        @type bool
+        @return reference to the web profile object
+        @rtype QWebEngineProfile
+        """
+        if cls._webProfile is None:
+            if private:
+                cls._webProfile = QWebEngineProfile()
+            else:
+                cls._webProfile = QWebEngineProfile.defaultProfile()
+            cls._webProfile.downloadRequested.connect(
+                cls.downloadRequested)
+            
+            # Setup QWebChannel user script
+            script = QWebEngineScript()
+            script.setName("_eric_webchannel")
+            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
+            script.setWorldId(QWebEngineScript.MainWorld)
+            script.setRunsOnSubFrames(True)
+            script.setSourceCode(Scripts.setupWebChannel())
+            cls._webProfile.scripts().insert(script)
+        
+        return cls._webProfile

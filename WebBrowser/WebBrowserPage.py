@@ -769,7 +769,7 @@ class WebBrowserPage(QWebEnginePage):
         Public method to setup a web channel to our external object.
         """
         oldChannel = self.webChannel()
-        newChannel = QWebChannel()
+        newChannel = QWebChannel(self)
         newChannel.registerObject("eric_object", ExternalJsObject(self))
         self.setWebChannel(newChannel)
         

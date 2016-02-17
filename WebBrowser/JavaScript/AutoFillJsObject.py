@@ -46,14 +46,7 @@ class AutoFillJsObject(QObject):
         @param data data to be submitted
         @type QByteArray
         """
-        # TODO: AutoFill
-        pass
-##void AutoFillJsObject::formSubmitted(const QString &frameUrl, const QString &username, const QString &password, const QByteArray &data)
-##{
-##    PageFormData formData;
-##    formData.username = username;
-##    formData.password = password;
-##    formData.postData = data;
-##
-##    mApp->autoFill()->saveForm(m_jsObject->page(), QUrl(frameUrl), formData);
-##}
+        import WebBrowser.WebBrowserWindow
+        WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
+        .formSubmitted(urlStr, userName, password, data,
+                       self.__jsObject.page())

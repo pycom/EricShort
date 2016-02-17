@@ -12,11 +12,9 @@ from __future__ import unicode_literals
 import os
 
 from PyQt5.QtCore import pyqtSignal, QObject, QByteArray, QUrl, \
-    QCoreApplication, QXmlStreamReader, qVersion
+    QCoreApplication, QXmlStreamReader
 from PyQt5.QtWidgets import QApplication
-from PyQt5.QtNetwork import QNetworkRequest
-##from PyQt5.QtWebKit import QWebSettings
-##from PyQt5.QtWebKitWidgets import QWebPage
+from PyQt5.QtWebEngineWidgets import QWebEngineScript
 
 from E5Gui import E5MessageBox
 from E5Gui.E5ProgressDialog import E5ProgressDialog
@@ -25,6 +23,9 @@ from Utilities.AutoSaver import AutoSaver
 import Utilities
 import Utilities.crypto
 import Preferences
+
+import WebBrowser.WebBrowserWindow
+from ..Tools import Scripts
 
 
 class PasswordManager(QObject):
@@ -44,6 +45,16 @@ class PasswordManager(QObject):
         @param parent reference to the parent object (QObject)
         """
         super(PasswordManager, self).__init__(parent)
+        
+        # setup userscript to monitor forms
+        script = QWebEngineScript()
+        script.setName("_eric_passwordmonitor")
+        script.setInjectionPoint(QWebEngineScript.DocumentReady)
+        script.setWorldId(QWebEngineScript.MainWorld)
+        script.setRunsOnSubFrames(True)
+        script.setSourceCode(Scripts.setupFormObserver())
+        profile = WebBrowser.WebBrowserWindow.WebBrowserWindow.webProfile()
+        profile.scripts().insert(script)
         
         self.__logins = {}
         self.__loginForms = {}
@@ -244,113 +255,69 @@ class PasswordManager(QObject):
         return self.__logins[site][0], Utilities.crypto.pwConvert(
             self.__logins[site][1], encode=False)
     
-    # TODO: Password Manager: processing of form data
-    def post(self, request, data):
+    def formSubmitted(self, urlStr, userName, password, data, page):
         """
-        Public method to check, if the data to be sent contains login data.
+        Public method to record login data.
         
-        @param request reference to the network request (QNetworkRequest)
-        @param data data to be sent (QByteArray)
+        @param urlStr form submission URL
+        @type str
+        @param userName name of the user
+        @type str
+        @param password user password
+        @type str
+        @param data data to be submitted
+        @type QByteArray
+        @param page reference to the calling page
+        @type QWrbEnginePage
         """
-##        # shall passwords be saved?
-##        if not Preferences.getUser("SavePasswords"):
-##            return
-##        
-##        # observe privacy
-##        # TODO: Privacy, i.e. isPrivate()
-####        if QWebSettings.globalSettings().testAttribute(
-####                QWebSettings.PrivateBrowsingEnabled):
-####            return
-##        
-##        if not self.__loaded:
-##            self.__load()
-##        
-##        # determine the url
-##        refererHeader = request.rawHeader(b"Referer")
-##        if refererHeader.isEmpty():
-##            return
-##        url = QUrl.fromEncoded(refererHeader)
-##        url = self.__stripUrl(url)
-##        
-##        # check that url isn't in __never
-##        if url.toString() in self.__never:
-##            return
-##        
-##        # check the request type
-##        navType = request.attribute(QNetworkRequest.User + 101)
-##        if navType is None:
-##            return
-##        if navType != QWebPage.NavigationTypeFormSubmitted:
-##            return
-##        
-##        # determine the QWebPage
-##        webPage = request.attribute(QNetworkRequest.User + 100)
-##        if webPage is None:
-##            return
-##        
-##        # determine the requests content type
-##        contentTypeHeader = request.rawHeader(b"Content-Type")
-##        if contentTypeHeader.isEmpty():
-##            return
-##        multipart = contentTypeHeader.startsWith(b"multipart/form-data")
-##        if multipart:
-##            boundary = contentTypeHeader.split(" ")[1].split("=")[1]
-##        else:
-##            boundary = None
-##        
-##        # find the matching form on the web page
-##        form = self.__findForm(webPage, data, boundary=boundary)
-##        if not form.isValid():
-##            return
-##        form.url = QUrl(url)
-##        
-##        # check, if the form has a password
-##        if not form.hasAPassword:
-##            return
-##        
-##        # prompt, if the form has never be seen
-##        key = self.__createKey(url, "")
-##        if key not in self.__loginForms:
-##            mb = E5MessageBox.E5MessageBox(
-##                E5MessageBox.Question,
-##                self.tr("Save password"),
-##                self.tr(
-##                    """<b>Would you like to save this password?</b><br/>"""
-##                    """To review passwords you have saved and remove them, """
-##                    """use the password management dialog of the Settings"""
-##                    """ menu."""),
-##                modal=True)
-##            neverButton = mb.addButton(
-##                self.tr("Never for this site"),
-##                E5MessageBox.DestructiveRole)
-##            noButton = mb.addButton(
-##                self.tr("Not now"), E5MessageBox.RejectRole)
-##            mb.addButton(E5MessageBox.Yes)
-##            mb.exec_()
-##            if mb.clickedButton() == neverButton:
-##                self.__never.append(url.toString())
-##                return
-##            elif mb.clickedButton() == noButton:
-##                return
-##        
-##        # extract user name and password
-##        user = ""
-##        password = ""
-##        for index in range(len(form.elements)):
-##            element = form.elements[index]
-##            type_ = form.elementTypes[element[0]]
-##            if user == "" and \
-##               type_ == "text":
-##                user = element[1]
-##            elif password == "" and \
-##                    type_ == "password":
-##                password = element[1]
-##                form.elements[index] = (element[0], "--PASSWORD--")
-##        if user and password:
-##            self.__logins[key] = \
-##                (user, Utilities.crypto.pwConvert(password, encode=True))
-##            self.__loginForms[key] = form
-##            self.changed.emit()
+        # shall passwords be saved?
+        if not Preferences.getUser("SavePasswords"):
+            return
+        
+        if WebBrowser.WebBrowserWindow.WebBrowserWindow.mainWindow()\
+                .isPrivate():
+            return
+        
+        if urlStr in self.__never:
+            return
+        
+        if userName and password:
+            url = QUrl(urlStr)
+            url = self.__stripUrl(url)
+            key = self.__createKey(url, "")
+            if key not in self.__loginForms:
+                mb = E5MessageBox.E5MessageBox(
+                    E5MessageBox.Question,
+                    self.tr("Save password"),
+                    self.tr(
+                        """<b>Would you like to save this password?</b><br/>"""
+                        """To review passwords you have saved and remove"""
+                        """ them, use the password management dialog of the"""
+                        """ Settings menu."""),
+                    modal=True, parent=page.view())
+                neverButton = mb.addButton(
+                    self.tr("Never for this site"),
+                    E5MessageBox.DestructiveRole)
+                noButton = mb.addButton(
+                    self.tr("Not now"), E5MessageBox.RejectRole)
+                mb.addButton(E5MessageBox.Yes)
+                mb.exec_()
+                if mb.clickedButton() == neverButton:
+                    self.__never.append(url.toString())
+                    return
+                elif mb.clickedButton() == noButton:
+                    return
+        
+            self.__logins[key] = \
+                (userName,
+                 Utilities.crypto.pwConvert(password, encode=True))
+            from .LoginForm import LoginForm
+            form = LoginForm()
+            form.url = url
+            form.name = userName
+            form.postData = QByteArray(data)
+            self.__loginForms[key] = form
+            self.changed.emit()
     
     def __stripUrl(self, url):
         """
@@ -371,171 +338,31 @@ class PasswordManager(QObject):
         cleanUrl.setFragment("")
         return cleanUrl
     
-    # TODO: Password Manager: processing of form data
-##    def __findForm(self, webPage, data, boundary=None):
-##        """
-##        Private method to find the form used for logging in.
-##        
-##        @param webPage reference to the web page (QWebPage)
-##        @param data data to be sent (QByteArray)
-##        @keyparam boundary boundary string (QByteArray) for multipart
-##            encoded data, None for urlencoded data
-##        @return parsed form (LoginForm)
-##        """
-##        from .LoginForm import LoginForm
-##        form = LoginForm()
-##        if boundary is not None:
-##            args = self.__extractMultipartQueryItems(data, boundary)
-##        else:
-##            if qVersion() >= "5.0.0":
-##                from PyQt5.QtCore import QUrlQuery
-##                argsUrl = QUrl.fromEncoded(
-##                    QByteArray(b"foo://bar.com/?" + QUrl.fromPercentEncoding(
-##                        data.replace(b"+", b"%20")).encode("utf-8")))
-##                encodedArgs = QUrlQuery(argsUrl).queryItems()
-##            else:
-##                argsUrl = QUrl.fromEncoded(
-##                    QByteArray(b"foo://bar.com/?" + data.replace(b"+", b"%20"))
-##                )
-##                encodedArgs = argsUrl.queryItems()
-##            args = set()
-##            for arg in encodedArgs:
-##                key = arg[0]
-##                value = arg[1]
-##                args.add((key, value))
-##        
-##        # extract the forms
-##        from Helpviewer.JavaScriptResources import parseForms_js
-##        lst = webPage.mainFrame().evaluateJavaScript(parseForms_js)
-##        for map in lst:
-##            formHasPasswords = False
-##            formName = map["name"]
-##            formIndex = map["index"]
-##            if isinstance(formIndex, float) and formIndex.is_integer():
-##                formIndex = int(formIndex)
-##            elements = map["elements"]
-##            formElements = set()
-##            formElementTypes = {}
-##            deadElements = set()
-##            for elementMap in elements:
-##                try:
-##                    name = elementMap["name"]
-##                    value = elementMap["value"]
-##                    type_ = elementMap["type"]
-##                except KeyError:
-##                    continue
-##                if type_ == "password":
-##                    formHasPasswords = True
-##                t = (name, value)
-##                try:
-##                    if elementMap["autocomplete"] == "off":
-##                        deadElements.add(t)
-##                except KeyError:
-##                    pass
-##                if name:
-##                    formElements.add(t)
-##                    formElementTypes[name] = type_
-##            if formElements.intersection(args) == args:
-##                form.hasAPassword = formHasPasswords
-##                if not formName:
-##                    form.name = formIndex
-##                else:
-##                    form.name = formName
-##                args.difference_update(deadElements)
-##                for elt in deadElements:
-##                    if elt[0] in formElementTypes:
-##                        del formElementTypes[elt[0]]
-##                form.elements = list(args)
-##                form.elementTypes = formElementTypes
-##                break
-##        
-##        return form
-##    
-##    def __extractMultipartQueryItems(self, data, boundary):
-##        """
-##        Private method to extract the query items for a post operation.
-##        
-##        @param data data to be sent (QByteArray)
-##        @param boundary boundary string (QByteArray)
-##        @return set of name, value pairs (set of tuple of string, string)
-##        """
-##        args = set()
-##        
-##        dataStr = bytes(data).decode()
-##        boundaryStr = bytes(boundary).decode()
-##        
-##        parts = dataStr.split(boundaryStr + "\r\n")
-##        for part in parts:
-##            if part.startswith("Content-Disposition"):
-##                lines = part.split("\r\n")
-##                name = lines[0].split("=")[1][1:-1]
-##                value = lines[2]
-##                args.add((name, value))
-##        
-##        return args
-##    
-##    def fill(self, page):
-##        """
-##        Public slot to fill login forms with saved data.
-##        
-##        @param page reference to the web page (QWebPage)
-##        """
-##        if page is None or page.mainFrame() is None:
-##            return
-##        
-##        if not self.__loaded:
-##            self.__load()
-##        
-##        url = page.mainFrame().url()
-##        url = self.__stripUrl(url)
-##        key = self.__createKey(url, "")
-##        if key not in self.__loginForms or \
-##           key not in self.__logins:
-##            return
-##        
-##        form = self.__loginForms[key]
-##        if form.url != url:
-##            return
-##        
-##        if form.name == "":
-##            formName = "0"
-##        else:
-##            try:
-##                formName = "{0:d}".format(int(form.name))
-##            except ValueError:
-##                formName = '"{0}"'.format(form.name)
-##        for element in form.elements:
-##            name = element[0]
-##            value = element[1]
-##            
-##            disabled = page.mainFrame().evaluateJavaScript(
-##                'document.forms[{0}].elements["{1}"].disabled'.format(
-##                    formName, name))
-##            if disabled:
-##                continue
-##            
-##            readOnly = page.mainFrame().evaluateJavaScript(
-##                'document.forms[{0}].elements["{1}"].readOnly'.format(
-##                    formName, name))
-##            if readOnly:
-##                continue
-##            
-##            type_ = page.mainFrame().evaluateJavaScript(
-##                'document.forms[{0}].elements["{1}"].type'.format(
-##                    formName, name))
-##            if type_ == "" or \
-##               type_ in ["hidden", "reset", "submit"]:
-##                continue
-##            if type_ == "password":
-##                value = Utilities.crypto.pwConvert(
-##                    self.__logins[key][1], encode=False)
-##            setType = type_ == "checkbox" and "checked" or "value"
-##            value = value.replace("\\", "\\\\")
-##            value = value.replace('"', '\\"')
-##            javascript = \
-##                'document.forms[{0}].elements["{1}"].{2}="{3}";'.format(
-##                    formName, name, setType, value)
-##            page.mainFrame().evaluateJavaScript(javascript)
+    def completePage(self, page):
+        """
+        Public slot to complete login forms with saved data.
+        
+        @param page reference to the web page (WebBrowserPage)
+        """
+        if page is None:
+            return
+        
+        if not self.__loaded:
+            self.__load()
+        
+        url = page.url()
+        url = self.__stripUrl(url)
+        key = self.__createKey(url, "")
+        if key not in self.__loginForms or \
+           key not in self.__logins:
+            return
+        
+        form = self.__loginForms[key]
+        if form.url != url:
+            return
+        
+        script = Scripts.completeFormData(form.postData)
+        page.runJavaScript(script)
     
     def masterPasswordChanged(self, oldPassword, newPassword):
         """

@@ -10,7 +10,7 @@ Module implementing a class to read login data files.
 from __future__ import unicode_literals
 
 from PyQt5.QtCore import QXmlStreamReader, QIODevice, QFile, \
-    QCoreApplication, QUrl
+    QCoreApplication, QUrl, QByteArray
 
 
 class PasswordReader(QXmlStreamReader):
@@ -49,12 +49,12 @@ class PasswordReader(QXmlStreamReader):
             if self.isStartElement():
                 version = self.attributes().value("version")
                 if self.name() == "Password" and \
-                   (not version or version == "1.0"):
+                   (not version or version == "2.0"):
                     self.__readPasswords()
                 else:
                     self.raiseError(QCoreApplication.translate(
                         "PasswordReader",
-                        "The file is not a Passwords version 1.0 file."))
+                        "The file is not a Passwords version 2.0 file."))
         
         return self.__logins, self.__loginForms, self.__never
     
@@ -112,6 +112,7 @@ class PasswordReader(QXmlStreamReader):
         if not self.isStartElement() and self.name() != "Forms":
             return
         
+        # TODO: Passwords: adjust reader to new login form
         while not self.atEnd():
             self.readNext()
             if self.isStartElement():
@@ -122,14 +123,10 @@ class PasswordReader(QXmlStreamReader):
                     form = LoginForm()
                     form.url = QUrl(attributes.value("url"))
                     form.name = attributes.value("name")
-                    form.hasAPassword = attributes.value("password") == "yes"
-                elif self.name() == "Elements":
-                    continue
-                elif self.name() == "Element":
-                    attributes = self.attributes()
-                    name = attributes.value("name")
-                    value = attributes.value("value")
-                    form.elements.append((name, value))
+                    
+                elif self.name() == "PostData":
+                    form.postData = QByteArray(
+                        self.readElementText().encode("utf-8"))
                 else:
                     self.__skipUnknownElement()
             
