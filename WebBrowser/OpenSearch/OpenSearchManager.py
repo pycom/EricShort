@@ -226,7 +226,6 @@ class OpenSearchManager(QObject):
         
         return True
     
-    # TODO: Open Search: implement this right
     def addEngineFromForm(self, res, view):
         """
         Private method to add a new search engine from a form.

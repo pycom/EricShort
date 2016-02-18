@@ -15,9 +15,11 @@ a web channel.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import pyqtSlot, QObject, QUrl
 
 from .AutoFillJsObject import AutoFillJsObject
+
+import WebBrowser.WebBrowserWindow
 
 
 class ExternalJsObject(QObject):
@@ -45,6 +47,7 @@ class ExternalJsObject(QObject):
         """
         return self.__page
     
+    @pyqtSlot(result=QObject)
     def speedDial(self):
         """
         Public method returning a reference to a speed dial object.
@@ -59,6 +62,7 @@ class ExternalJsObject(QObject):
 ##        return WebBrowser.WebBrowserWindow.WebBrowserWindow.speedDial()
         return None
     
+    @pyqtSlot(result=QObject)
     def autoFill(self):
         """
         Public method returning a reference to the auto fill object.
@@ -68,11 +72,16 @@ class ExternalJsObject(QObject):
         """
         return self.__autoFill
     
-    # TODO: OpenSearch
-##void ExternalJsObject::AddSearchProvider(const QString &engineUrl)
-##{ Slot
-##    mApp->searchEnginesManager()->addEngine(QUrl(engineUrl));
-##}
+    @pyqtSlot(str)
+    def AddSearchProvider(self, engineUrl):
+        """
+        Public slot to add a search provider.
+        
+        @param engineUrl engineUrl of the XML file defining the search provider
+        @type str
+        """
+        WebBrowser.WebBrowserWindow.WebBrowserWindow.openSearchManager()\
+        .addEngine(QUrl(engineUrl))
 ##
 ##int ExternalJsObject::IsSearchProviderInstalled(const QString &engineURL)
 ##{ Slot

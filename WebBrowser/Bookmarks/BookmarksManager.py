@@ -186,8 +186,6 @@ class BookmarksManager(QObject):
         
         for node in others:
             self.__menu.add(node)
-        
-        self.__convertFromOldBookmarks()
     
     def save(self):
         """
@@ -395,32 +393,6 @@ class BookmarksManager(QObject):
                 self.tr("Exporting Bookmarks"),
                 self.tr("""Error exporting bookmarks to <b>{0}</b>.""")
                 .format(fileName))
-    
-    # TODO: Bookmarks: remove this obsolete method
-    def __convertFromOldBookmarks(self):
-        """
-        Private method to convert the old bookmarks into the new ones.
-        """
-        bmNames = Preferences.Prefs.settings.value('Bookmarks/Names')
-        bmFiles = Preferences.Prefs.settings.value('Bookmarks/Files')
-        
-        if bmNames is not None and bmFiles is not None:
-            if len(bmNames) == len(bmFiles):
-                convertedRootNode = BookmarkNode(BookmarkNode.Folder)
-                convertedRootNode.title = self.tr("Converted {0}")\
-                    .format(QDate.currentDate().toString(
-                        Qt.SystemLocaleShortDate))
-                for i in range(len(bmNames)):
-                    node = BookmarkNode(BookmarkNode.Bookmark,
-                                        convertedRootNode)
-                    node.title = bmNames[i]
-                    url = QUrl(bmFiles[i])
-                    if not url.scheme():
-                        url.setScheme("file")
-                    node.url = url.toString()
-                self.addBookmark(self.menu(), convertedRootNode)
-                
-                Preferences.Prefs.settings.remove('Bookmarks')
     
     def iconChanged(self, url):
         """

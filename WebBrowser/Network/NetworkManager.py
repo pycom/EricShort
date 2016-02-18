@@ -95,27 +95,24 @@ class NetworkManager(QNetworkAccessManager):
                 .format(urlRoot)
         
         from UI.AuthenticationDialog import AuthenticationDialog
-        # TODO: Password Manager
-##        import WebBrowser.WebBrowserWindow
+        import WebBrowser.WebBrowserWindow
         
         dlg = AuthenticationDialog(info, auth.user(),
                                    Preferences.getUser("SavePasswords"),
                                    Preferences.getUser("SavePasswords"))
-        # TODO: Password Manager
-##        if Preferences.getUser("SavePasswords"):
-##            username, password = \
-##                WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
-##                .getLogin(url, realm)
-##            if username:
-##                dlg.setData(username, password)
+        if Preferences.getUser("SavePasswords"):
+            username, password = \
+                WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
+                .getLogin(url, realm)
+            if username:
+                dlg.setData(username, password)
         if dlg.exec_() == QDialog.Accepted:
             username, password = dlg.getData()
             auth.setUser(username)
             auth.setPassword(password)
-            # TODO: Password Manager
-##            if Preferences.getUser("SavePasswords"):
-##                WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
-##                .setLogin(url, realm, username, password)
+            if Preferences.getUser("SavePasswords"):
+                WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
+                .setLogin(url, realm, username, password)
     
     def proxyAuthentication(self, hostname, auth):
         """

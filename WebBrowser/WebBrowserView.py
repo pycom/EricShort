@@ -1045,7 +1045,6 @@ class WebBrowserView(QWebEngineView):
 ##        url = act.data()
 ##        self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
     
-    # TODO: this needs to be changed
     def __pauseMedia(self):
         """
         Private slot to pause or play the selected media.
@@ -1071,22 +1070,21 @@ class WebBrowserView(QWebEngineView):
 ##        url = act.data()
 ##        self.__mw.requestVirusTotalScan(url)
     
-    # TODO OpenSearch
-##    def __searchRequested(self, act):
-##        """
-##        Private slot to search for some text with a selected search engine.
-##        
-##        @param act reference to the action that triggered this slot (QAction)
-##        """
-##        searchText = self.selectedText()
-##        
-##        if not searchText:
-##            return
-##        
-##        engineName = act.data()
-##        if engineName:
-##            engine = self.__mw.openSearchManager().engine(engineName)
-##            self.search.emit(engine.searchUrl(searchText))
+    def __searchRequested(self, act):
+        """
+        Private slot to search for some text with a selected search engine.
+        
+        @param act reference to the action that triggered this slot (QAction)
+        """
+        searchText = self.selectedText()
+        
+        if not searchText:
+            return
+        
+        engineName = act.data()
+        if engineName:
+            engine = self.__mw.openSearchManager().engine(engineName)
+            self.search.emit(engine.searchUrl(searchText))
     
     def __addSearchEngine(self):
         """

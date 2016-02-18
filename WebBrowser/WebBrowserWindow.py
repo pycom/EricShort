@@ -53,8 +53,8 @@ from UI.Info import Version
 ##
 ##from .data import icons_rc          # __IGNORE_WARNING__
 ##from .data import html_rc           # __IGNORE_WARNING__
-##from .data import javascript_rc     # __IGNORE_WARNING__
-##
+from .data import javascript_rc     # __IGNORE_WARNING__
+
 
 from .Tools import Scripts, WebBrowserTools, WebIconProvider
 
@@ -2513,7 +2513,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        
         self.searchEdit.saveSearches()
         
-        self.__tabWidget.closeAllBrowsers()
+        self.__tabWidget.closeAllBrowsers(shutdown=True)
         
         state = self.saveState()
         Preferences.setWebBrowser("WebBrowserState", state)

@@ -445,18 +445,24 @@ class WebBrowserTabWidget(E5TabWidget):
         """
         self.closeBrowserAt(self.currentIndex())
     
-    def closeAllBrowsers(self):
+    def closeAllBrowsers(self, shutdown=False):
         """
         Public slot called to handle the close all action.
+        
+        @param shutdown flag indicating a shutdown action
+        @type bool
         """
         for index in range(self.count() - 1, -1, -1):
-            self.closeBrowserAt(index)
+            self.closeBrowserAt(index, shutdown=shutdown)
     
-    def closeBrowserAt(self, index):
+    def closeBrowserAt(self, index, shutdown=False):
         """
         Public slot to close a browser based on its index.
         
-        @param index index of browser to close (integer)
+        @param index index of browser to close
+        @type int
+        @param shutdown flag indicating a shutdown action
+        @type bool
         """
         browser = self.widget(index)
         if browser is None:
@@ -487,7 +493,7 @@ class WebBrowserTabWidget(E5TabWidget):
         browser.deleteLater()
         del browser
         
-        if self.count() == 0:
+        if self.count() == 0 and not shutdown:
             self.newBrowser()
         else:
             self.currentChanged[int].emit(self.currentIndex())

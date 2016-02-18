@@ -50,47 +50,6 @@ except ImportError:
 ###############################################################################
 ##
 ##
-##class JavaScriptExternalObject(QObject):
-##    """
-##    Class implementing an external javascript object to add search providers.
-##    """
-##    def __init__(self, mw, parent=None):
-##        """
-##        Constructor
-##        
-##        @param mw reference to the main window 8HelpWindow)
-##        @param parent reference to the parent object (QObject)
-##        """
-##        super(JavaScriptExternalObject, self).__init__(parent)
-##        
-##        self.__mw = mw
-##    
-##    @pyqtSlot(str)
-##    def AddSearchProvider(self, url):
-##        """
-##        Public slot to add a search provider.
-##        
-##        @param url url of the XML file defining the search provider (string)
-##        """
-##        self.__mw.openSearchManager().addEngine(QUrl(url))
-##
-##
-##class LinkedResource(object):
-##    """
-##    Class defining a data structure for linked resources.
-##    """
-##    def __init__(self):
-##        """
-##        Constructor
-##        """
-##        self.rel = ""
-##        self.type_ = ""
-##        self.href = ""
-##        self.title = ""
-##
-###############################################################################
-##
-##
 ##class JavaScriptEricObject(QObject):
 ##    """
 ##    Class implementing an external javascript object to search via the
@@ -173,7 +132,7 @@ class WebBrowserPage(QWebEnginePage):
         """
         super(WebBrowserPage, self).__init__(parent)
         
-        self.setupWebChannel()
+        self.__setupWebChannel()
         
 ##        self.setPluginFactory(self.webPluginFactory())
 ##        
@@ -764,13 +723,14 @@ class WebBrowserPage(QWebEnginePage):
         """
         return WebHitTestResult(self, pos)
     
-    def setupWebChannel(self):
+    def __setupWebChannel(self):
         """
-        Public method to setup a web channel to our external object.
+        Private method to setup a web channel to our external object.
         """
+        self.__externalJsObject = ExternalJsObject(self)
         oldChannel = self.webChannel()
         newChannel = QWebChannel(self)
-        newChannel.registerObject("eric_object", ExternalJsObject(self))
+        newChannel.registerObject("eric_object", self.__externalJsObject)
         self.setWebChannel(newChannel)
         
         if oldChannel:
@@ -788,3 +748,10 @@ class WebBrowserPage(QWebEnginePage):
         """
         return WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()\
             .certificateError(error, self.view())
+    
+    ##############################################
+    ## Methods below deal with JavaScript messages
+    ##############################################
+    
+    def javaScriptConsoleMessage(self, level, message, lineNumber,  sourceId):
+        print("JS-console:", message, lineNumber, sourceId)

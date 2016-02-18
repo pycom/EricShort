@@ -112,7 +112,6 @@ class PasswordReader(QXmlStreamReader):
         if not self.isStartElement() and self.name() != "Forms":
             return
         
-        # TODO: Passwords: adjust reader to new login form
         while not self.atEnd():
             self.readNext()
             if self.isStartElement():
