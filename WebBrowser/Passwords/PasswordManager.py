@@ -381,7 +381,6 @@ class PasswordManager(QObject):
         if not self.__loaded:
             self.__load()
         
-        # TODO: change this to include postData
         progress = E5ProgressDialog(
             self.tr("Re-encoding saved passwords..."),
             None, 0, len(self.__logins) + len(self.__loginForms),

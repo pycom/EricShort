@@ -55,9 +55,12 @@ from Project.ProjectBrowserFlags import SourcesBrowserFlag, FormsBrowserFlag, \
     ResourcesBrowserFlag, TranslationsBrowserFlag, InterfacesBrowserFlag, \
     OthersBrowserFlag, AllBrowsersFlag
 
-from Helpviewer.FlashCookieManager.FlashCookieUtilities import \
-    flashDataPathForOS
-
+try:
+    from Helpviewer.FlashCookieManager.FlashCookieUtilities import \
+        flashDataPathForOS
+except ImportError:
+    from WebBrowser.FlashCookieManager.FlashCookieUtilities import \
+        flashDataPathForOS
 
 class Prefs(object):
     """
@@ -1022,6 +1025,13 @@ class Prefs(object):
         "WebSearchKeywords": [],    # array of two tuples (keyword,
                                     # search engine name)
         "SearchLanguage": QLocale().language(),
+        # Flash Cookie Manager
+        "FlashCookiesDeleteOnStartExit": False,
+        "FlashCookieAutoRefresh": False,
+        "FlashCookieNotify": False,
+        "FlashCookiesWhitelist": [],
+        "FlashCookiesBlacklist": [],
+        "FlashCookiesDataPath": flashDataPathForOS(),
     }
     
     @classmethod
@@ -2672,7 +2682,7 @@ def getWebBrowser(key, prefClass=Prefs):
 ##    elif key in ["DownloadManagerDownloads"]:
 ##        # return a list of tuples of (URL, save location, done flag, page url)
 ##        downloads = []
-##        length = prefClass.settings.beginReadArray("Help/" + key)
+##        length = prefClass.settings.beginReadArray("WebBrowser/" + key)
 ##        for index in range(length):
 ##            prefClass.settings.setArrayIndex(index)
 ##            url = prefClass.settings.value("URL")
@@ -2687,7 +2697,7 @@ def getWebBrowser(key, prefClass=Prefs):
 ##    elif key == "RssFeeds":
 ##        # return a list of tuples of (URL, title, icon)
 ##        feeds = []
-##        length = prefClass.settings.beginReadArray("Help/" + key)
+##        length = prefClass.settings.beginReadArray("WebBrowser/" + key)
 ##        for index in range(length):
 ##            prefClass.settings.setArrayIndex(index)
 ##            url = prefClass.settings.value("URL")
@@ -2699,11 +2709,11 @@ def getWebBrowser(key, prefClass=Prefs):
 ##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
 ##        from Utilities.crypto import pwConvert
 ##        return pwConvert(prefClass.settings.value(
-##            "Help/" + key, prefClass.helpDefaults[key]), encode=False)
+##            "WebBrowser/" + key, prefClass.helpDefaults[key]), encode=False)
 ##    elif key == "HelpViewerType":
 ##        # special treatment to adjust for missing QtWebKit
 ##        value = int(prefClass.settings.value(
-##            "Help/" + key, prefClass.helpDefaults[key]))
+##            "WebBrowser/" + key, prefClass.helpDefaults[key]))
 ##        if QWebSettings is None:
 ##            value = prefClass.helpDefaults[key]
 ##        return value
@@ -2748,6 +2758,8 @@ def getWebBrowser(key, prefClass=Prefs):
                  "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
                  "ScrollAnimatorEnabled", "ErrorPageEnabled",
                  "WarnOnMultipleClose", "WebSearchSuggestions",
+                 "FlashCookiesDeleteOnStartExit", "FlashCookieAutoRefresh",
+                 "FlashCookieNotify",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
@@ -2756,8 +2768,10 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "GreaseMonkeyDisabledScripts", "NoCacheHosts",
 ##                 "FlashCookiesWhitelist", "FlashCookiesBlacklist",
 ##                 ]:
-##        return toList(prefClass.settings.value(
-##            "Help/" + key, prefClass.helpDefaults[key]))
+    elif key in ["FlashCookiesWhitelist", "FlashCookiesBlacklist",
+                 ]:
+        return toList(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.helpDefaults[key]))
     else:
         return prefClass.settings.value("WebBrowser/" + key,
                                         prefClass.webBrowserDefaults[key])
@@ -2789,7 +2803,7 @@ def setWebBrowser(key, value, prefClass=Prefs):
 ##    elif key == "DownloadManagerDownloads":
 ##        # value is list of tuples of (URL, save location, done flag, page url)
 ##        prefClass.settings.remove("Help/" + key)
-##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
+##        prefClass.settings.beginWriteArray("WebBrowser/" + key, len(value))
 ##        index = 0
 ##        for v in value:
 ##            prefClass.settings.setArrayIndex(index)
@@ -2801,7 +2815,7 @@ def setWebBrowser(key, value, prefClass=Prefs):
 ##        prefClass.settings.endArray()
 ##    elif key == "RssFeeds":
 ##        # value is list of tuples of (URL, title, icon)
-##        prefClass.settings.remove("Help/" + key)
+##        prefClass.settings.remove("WebBrowser/" + key)
 ##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
 ##        index = 0
 ##        for v in value:
@@ -2814,7 +2828,7 @@ def setWebBrowser(key, value, prefClass=Prefs):
 ##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
 ##        from Utilities.crypto import pwConvert
 ##        prefClass.settings.setValue(
-##            "Help/" + key, pwConvert(value, encode=True))
+##            "WebBrowser/" + key, pwConvert(value, encode=True))
     else:
         prefClass.settings.setValue("WebBrowser/" + key, value)
     

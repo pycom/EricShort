@@ -97,7 +97,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    _greaseMonkeyManager = None
     _notification = None
     _featurePermissionManager = None
-##    _flashCookieManager = None
+    _flashCookieManager = None
     
     def __init__(self, home, path, parent, name, fromEric=False,
                  initShortcutsOnly=False, searchWord=None,
@@ -1282,21 +1282,20 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showCookiesConfiguration)
 ##        self.__actions.append(self.cookiesAct)
         
-        # TODO: Flash Cookies
-##        self.flashCookiesAct = E5Action(
-##            self.tr('Flash Cookies'),
-##            UI.PixmapCache.getIcon("flashCookie.png"),
-##            self.tr('&Flash Cookies...'), 0, 0, self, 'webbrowser_flash_cookies')
-##        self.flashCookiesAct.setStatusTip(self.tr(
-##            'Manage flash cookies'))
-##        self.flashCookiesAct.setWhatsThis(self.tr(
-##            """<b>Flash Cookies</b>"""
-##            """<p>Show a dialog to manage the flash cookies.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.flashCookiesAct.triggered.connect(
-##                self.__showFlashCookiesManagement)
-##        self.__actions.append(self.flashCookiesAct)
+        self.flashCookiesAct = E5Action(
+            self.tr('Flash Cookies'),
+            UI.PixmapCache.getIcon("flashCookie.png"),
+            self.tr('&Flash Cookies...'), 0, 0, self, 'webbrowser_flash_cookies')
+        self.flashCookiesAct.setStatusTip(self.tr(
+            'Manage flash cookies'))
+        self.flashCookiesAct.setWhatsThis(self.tr(
+            """<b>Flash Cookies</b>"""
+            """<p>Show a dialog to manage the flash cookies.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.flashCookiesAct.triggered.connect(
+                self.__showFlashCookiesManagement)
+        self.__actions.append(self.flashCookiesAct)
         
         # TODO: Offline Storage
 ##        self.offlineStorageAct = E5Action(
@@ -1856,7 +1855,7 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.prefAct)
 ##        menu.addAction(self.acceptedLanguagesAct)
 ##        menu.addAction(self.cookiesAct)
-##        menu.addAction(self.flashCookiesAct)
+        menu.addAction(self.flashCookiesAct)
 ##        menu.addAction(self.offlineStorageAct)
 ##        menu.addAction(self.personalDataAct)
 ##        menu.addAction(self.greaseMonkeyAct)
@@ -1996,7 +1995,7 @@ class WebBrowserWindow(E5MainWindow):
         settingstb.addAction(self.prefAct)
 ##        settingstb.addAction(self.acceptedLanguagesAct)
 ##        settingstb.addAction(self.cookiesAct)
-##        settingstb.addAction(self.flashCookiesAct)
+        settingstb.addAction(self.flashCookiesAct)
 ##        settingstb.addAction(self.offlineStorageAct)
 ##        settingstb.addAction(self.personalDataAct)
 ##        settingstb.addAction(self.greaseMonkeyAct)
@@ -2849,11 +2848,11 @@ class WebBrowserWindow(E5MainWindow):
 ##        dlg = CookiesConfigurationDialog(self)
 ##        dlg.exec_()
     
-##    def __showFlashCookiesManagement(self):
-##        """
-##        Private slot to show the flash cookies management dialog.
-##        """
-##        self.flashCookieManager().showFlashCookieManagerDialog()
+    def __showFlashCookiesManagement(self):
+        """
+        Private slot to show the flash cookies management dialog.
+        """
+        self.flashCookieManager().showFlashCookieManagerDialog()
     
 ##    def __showOfflineStorageConfiguration(self):
 ##        """
@@ -3323,20 +3322,8 @@ class WebBrowserWindow(E5MainWindow):
 ##                    for securityOrigin in QWebSecurityOrigin.allOrigins():
 ##                        for database in securityOrigin.databases():
 ##                            QWebDatabase.removeDatabase(database)
-            # TODO: Flash Cookie Manager
-##            if flashCookies:
-##                from .HelpLanguagesDialog import HelpLanguagesDialog
-##                languages = Preferences.toList(
-##                    Preferences.Prefs.settings.value(
-##                        "Help/AcceptLanguages",
-##                        HelpLanguagesDialog.defaultAcceptLanguages()))
-##                if languages:
-##                    language = languages[0]
-##                    langCode = language.split("[")[1][:2]
-##                self.newTab(
-##                    "http://www.macromedia.com/support/documentation/"
-##                    "{0}/flashplayer/help/settings_manager07.html".format(
-##                        langCode))
+            if flashCookies:
+                self.flashCookieManager().removeAllCookies()
             if zoomValues:
                 ZoomManager.instance().clear()
         
@@ -3603,21 +3590,21 @@ class WebBrowserWindow(E5MainWindow):
         
         return cls._featurePermissionManager
         
-##    @classmethod
-##    def flashCookieManager(cls):
-##        """
-##        Class method to get a reference to the flash cookies manager.
-##        
-##        @return reference to the flash cookies manager
-##        @rtype FlashCookieManager
-##        """
-##        if cls._flashCookieManager is None:
-##            from .FlashCookieManager.FlashCookieManager import \
-##                FlashCookieManager
-##            cls._flashCookieManager = FlashCookieManager()
-##        
-##        return cls._flashCookieManager
-##        
+    @classmethod
+    def flashCookieManager(cls):
+        """
+        Class method to get a reference to the flash cookies manager.
+        
+        @return reference to the flash cookies manager
+        @rtype FlashCookieManager
+        """
+        if cls._flashCookieManager is None:
+            from .FlashCookieManager.FlashCookieManager import \
+                FlashCookieManager
+            cls._flashCookieManager = FlashCookieManager()
+        
+        return cls._flashCookieManager
+        
     @classmethod
     def mainWindow(cls):
         """

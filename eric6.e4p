@@ -1293,6 +1293,13 @@
     <Source>WebBrowser/FeaturePermissions/FeaturePermissionManager.py</Source>
     <Source>WebBrowser/FeaturePermissions/FeaturePermissionsDialog.py</Source>
     <Source>WebBrowser/FeaturePermissions/__init__.py</Source>
+    <Source>WebBrowser/FlashCookieManager/FlashCookie.py</Source>
+    <Source>WebBrowser/FlashCookieManager/FlashCookieManager.py</Source>
+    <Source>WebBrowser/FlashCookieManager/FlashCookieManagerDialog.py</Source>
+    <Source>WebBrowser/FlashCookieManager/FlashCookieNotification.py</Source>
+    <Source>WebBrowser/FlashCookieManager/FlashCookieReader.py</Source>
+    <Source>WebBrowser/FlashCookieManager/FlashCookieUtilities.py</Source>
+    <Source>WebBrowser/FlashCookieManager/__init__.py</Source>
     <Source>WebBrowser/History/HistoryCompleter.py</Source>
     <Source>WebBrowser/History/HistoryDialog.py</Source>
     <Source>WebBrowser/History/HistoryFilterModel.py</Source>
@@ -1753,6 +1760,7 @@
     <Form>WebBrowser/Bookmarks/BookmarksDialog.ui</Form>
     <Form>WebBrowser/Bookmarks/BookmarksImportDialog.ui</Form>
     <Form>WebBrowser/FeaturePermissions/FeaturePermissionsDialog.ui</Form>
+    <Form>WebBrowser/FlashCookieManager/FlashCookieManagerDialog.ui</Form>
     <Form>WebBrowser/History/HistoryDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchEditDialog.ui</Form>
