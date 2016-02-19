@@ -296,8 +296,7 @@ def setupFormObserver():
                     data = data.substring(0, data.length - 1);
                     var url = window.location.href;
                     var username = findUsername(inputs);
-                    external.autoFill.formSubmitted(url, username, password,
-                                                    data);
+                    external.formSubmitted(url, username, password, data);
                 }, true);
             }
             

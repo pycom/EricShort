@@ -124,14 +124,15 @@ class PasswordReader(QXmlStreamReader):
                     form.name = attributes.value("name")
                     
                 elif self.name() == "PostData":
-                    form.postData = QByteArray(
-                        self.readElementText().encode("utf-8"))
+                    form.postData = self.readElementText()
                 else:
                     self.__skipUnknownElement()
             
             if self.isEndElement():
                 if self.name() == "Form":
                     self.__loginForms[key] = form
+                    continue
+                elif self.name() == "PostData":
                     continue
                 elif self.name() in ["Elements", "Element"]:
                     continue

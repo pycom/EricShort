@@ -1301,7 +1301,6 @@
     <Source>WebBrowser/History/HistoryModel.py</Source>
     <Source>WebBrowser/History/HistoryTreeModel.py</Source>
     <Source>WebBrowser/History/__init__.py</Source>
-    <Source>WebBrowser/JavaScript/AutoFillJsObject.py</Source>
     <Source>WebBrowser/JavaScript/ExternalJsObject.py</Source>
     <Source>WebBrowser/JavaScript/__init__.py</Source>
     <Source>WebBrowser/Network/FollowRedirectReply.py</Source>

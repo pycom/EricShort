@@ -268,7 +268,7 @@ class PasswordManager(QObject):
         @param data data to be submitted
         @type QByteArray
         @param page reference to the calling page
-        @type QWrbEnginePage
+        @type QWebEnginePage
         """
         # shall passwords be saved?
         if not Preferences.getUser("SavePasswords"):
@@ -277,6 +277,9 @@ class PasswordManager(QObject):
         if WebBrowser.WebBrowserWindow.WebBrowserWindow.mainWindow()\
                 .isPrivate():
             return
+        
+        if not self.__loaded:
+            self.__load()
         
         if urlStr in self.__never:
             return
@@ -315,7 +318,9 @@ class PasswordManager(QObject):
             form = LoginForm()
             form.url = url
             form.name = userName
-            form.postData = QByteArray(data)
+            form.postData = Utilities.crypto.pwConvert(
+                bytes(data).decode("utf-8"), encode=True)
+##            form.postData = QByteArray(data)
             self.__loginForms[key] = form
             self.changed.emit()
     
@@ -361,7 +366,9 @@ class PasswordManager(QObject):
         if form.url != url:
             return
         
-        script = Scripts.completeFormData(form.postData)
+        postData = QByteArray(Utilities.crypto.pwConvert(
+                form.postData, encode=False).encode("utf-8"))
+        script = Scripts.completeFormData(postData)
         page.runJavaScript(script)
     
     def masterPasswordChanged(self, oldPassword, newPassword):
@@ -374,14 +381,17 @@ class PasswordManager(QObject):
         if not self.__loaded:
             self.__load()
         
+        # TODO: change this to include postData
         progress = E5ProgressDialog(
             self.tr("Re-encoding saved passwords..."),
-            None, 0, len(self.__logins), self.tr("%v/%m Passwords"),
+            None, 0, len(self.__logins) + len(self.__loginForms),
+            self.tr("%v/%m Passwords"),
             QApplication.activeModalWidget())
         progress.setMinimumDuration(0)
         progress.setWindowTitle(self.tr("Passwords"))
         count = 0
         
+        # step 1: do the logins
         for key in self.__logins:
             progress.setValue(count)
             QCoreApplication.processEvents()
@@ -390,6 +400,16 @@ class PasswordManager(QObject):
             self.__logins[key] = (username, hash)
             count += 1
         
-        progress.setValue(len(self.__logins))
+        # step 2: do the login forms
+        for key in self.__loginForms:
+            progress.setValue(count)
+            QCoreApplication.processEvents()
+            postData = self.__loginForms[key].postData
+            postData = Utilities.crypto.pwRecode(
+                postData, oldPassword, newPassword)
+            self.__loginForms[key].postData = postData
+            count += 1
+        
+        progress.setValue(len(self.__logins) + len(self.__loginForms))
         QCoreApplication.processEvents()
         self.changed.emit()

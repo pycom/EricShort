@@ -316,12 +316,12 @@ class WebBrowserTabWidget(E5TabWidget):
         from .UrlBar.UrlBar import UrlBar
         urlbar = UrlBar(self.__mainWindow, self)
         if self.__historyCompleter is None:
-            import Helpviewer.HelpWindow
+            import WebBrowser.WebBrowserWindow
             from .History.HistoryCompleter import HistoryCompletionModel, \
                 HistoryCompleter
             self.__historyCompletionModel = HistoryCompletionModel(self)
             self.__historyCompletionModel.setSourceModel(
-                Helpviewer.HelpWindow.HelpWindow.historyManager()
+                WebBrowser.WebBrowserWindow.WebBrowserWindow.historyManager()
                 .historyFilterModel())
             self.__historyCompleter = HistoryCompleter(
                 self.__historyCompletionModel, self)

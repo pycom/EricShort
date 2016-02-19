@@ -54,8 +54,8 @@ class BookmarkInfoDialog(QDialog, Ui_BookmarkInfoDialog):
         """
         Private slot to remove the current bookmark.
         """
-        import Helpviewer.HelpWindow
-        Helpviewer.HelpWindow.HelpWindow.bookmarksManager()\
+        import WebBrowser.WebBrowserWindow
+        WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()\
             .removeBookmark(self.__bookmark)
         self.close()
     

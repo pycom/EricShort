@@ -39,12 +39,13 @@ class PasswordsDialog(QDialog, Ui_PasswordsDialog):
             self.passwordsTable.removeSelected)
         self.removeAllButton.clicked.connect(self.passwordsTable.removeAll)
         
-        import Helpviewer.HelpWindow
+        import WebBrowser.WebBrowserWindow
         from .PasswordModel import PasswordModel
         
         self.passwordsTable.verticalHeader().hide()
         self.__passwordModel = PasswordModel(
-            Helpviewer.HelpWindow.HelpWindow.passwordManager(), self)
+            WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager(),
+            self)
         self.__proxyModel = QSortFilterProxyModel(self)
         self.__proxyModel.setSourceModel(self.__passwordModel)
         self.searchEdit.textChanged.connect(

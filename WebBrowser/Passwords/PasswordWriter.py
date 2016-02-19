@@ -95,8 +95,7 @@ class PasswordWriter(QXmlStreamWriter):
             self.writeAttribute("key", key)
             self.writeAttribute("url", form.url.toString())
             self.writeAttribute("name", str(form.name))
-            self.writeTextElement(
-                "PostData", bytes(form.postData).decode("utf-8"))
+            self.writeTextElement("PostData", form.postData)
             self.writeEndElement()
         self.writeEndElement()
     

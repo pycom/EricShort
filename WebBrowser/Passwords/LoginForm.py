@@ -9,7 +9,7 @@ Module implementing a data structure for login forms.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import QUrl, QByteArray
+from PyQt5.QtCore import QUrl
 
 
 class LoginForm(object):
@@ -22,7 +22,7 @@ class LoginForm(object):
         """
         self.url = QUrl()
         self.name = ""
-        self.postData = QByteArray()
+        self.postData = ""
     
     def isValid(self):
         """
@@ -31,4 +31,4 @@ class LoginForm(object):
         @return flag indicating a valid form (boolean)
         """
         return not self.url.isEmpty() and \
-            not self.postData.isEmpty()
+            bool(self.postData)

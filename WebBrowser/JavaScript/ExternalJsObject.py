@@ -9,15 +9,13 @@ a web channel.
 """
 
 #
-# This code was ported from QupZilla.
+# This code was ported from QupZilla and modified.
 # Copyright (C) David Rosca <nowrep@gmail.com>
 #
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot, QObject, QUrl
-
-from .AutoFillJsObject import AutoFillJsObject
+from PyQt5.QtCore import pyqtSlot, QObject, QUrl, QByteArray
 
 import WebBrowser.WebBrowserWindow
 
@@ -36,7 +34,6 @@ class ExternalJsObject(QObject):
         super(ExternalJsObject, self).__init__(page)
         
         self.__page = page
-        self.__autoFill = AutoFillJsObject(self)
     
     def page(self):
         """
@@ -62,16 +59,6 @@ class ExternalJsObject(QObject):
 ##        return WebBrowser.WebBrowserWindow.WebBrowserWindow.speedDial()
         return None
     
-    @pyqtSlot(result=QObject)
-    def autoFill(self):
-        """
-        Public method returning a reference to the auto fill object.
-        
-        @return reference to the auto fill object
-        @rtype AutoFillJsObject
-        """
-        return self.__autoFill
-    
     @pyqtSlot(str)
     def AddSearchProvider(self, engineUrl):
         """
@@ -82,9 +69,22 @@ class ExternalJsObject(QObject):
         """
         WebBrowser.WebBrowserWindow.WebBrowserWindow.openSearchManager()\
         .addEngine(QUrl(engineUrl))
-##
-##int ExternalJsObject::IsSearchProviderInstalled(const QString &engineURL)
-##{ Slot
-##    qDebug() << "NOT IMPLEMENTED: IsSearchProviderInstalled()" << engineURL;
-##    return 0;
-##}
+    
+    @pyqtSlot(str, str, str, QByteArray)
+    def formSubmitted(self, urlStr, userName, password, data):
+        """
+        Public slot passing form data to the password manager.
+        
+        @param urlStr form submission URL
+        @type str
+        @param userName name of the user
+        @type str
+        @param password user password
+        @type str
+        @param data data to be submitted
+        @type QByteArray
+        """
+        import WebBrowser.WebBrowserWindow
+        WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
+        .formSubmitted(urlStr, userName, password, data,
+                       self.page())
