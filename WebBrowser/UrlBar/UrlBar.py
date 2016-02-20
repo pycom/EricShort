@@ -13,7 +13,8 @@ try:
 except NameError:
     pass
 
-from PyQt5.QtCore import pyqtSlot, Qt, QPointF, QUrl, QDateTime, qVersion
+from PyQt5.QtCore import pyqtSlot, Qt, QPointF, QUrl, QDateTime, QTimer, \
+    qVersion
 from PyQt5.QtGui import QColor, QPalette, QLinearGradient, QIcon
 from PyQt5.QtWidgets import QDialog, QApplication
 try:
@@ -74,11 +75,10 @@ class UrlBar(E5LineEdit):
 ##        self.addWidget(self.__privacyButton, E5LineEdit.RightSide)
 ##        self.__privacyButton.setVisible(self.__privateMode)
         
-        # TODO: RSS
-##        self.__rssButton = E5LineEditButton(self)
-##        self.__rssButton.setIcon(UI.PixmapCache.getIcon("rss16.png"))
-##        self.addWidget(self.__rssButton, E5LineEdit.RightSide)
-##        self.__rssButton.setVisible(False)
+        self.__rssButton = E5LineEditButton(self)
+        self.__rssButton.setIcon(UI.PixmapCache.getIcon("rss16.png"))
+        self.addWidget(self.__rssButton, E5LineEdit.RightSide)
+        self.__rssButton.setVisible(False)
         
         self.__bookmarkButton = E5LineEditButton(self)
         self.addWidget(self.__bookmarkButton, E5LineEdit.RightSide)
@@ -90,8 +90,7 @@ class UrlBar(E5LineEdit):
         self.__clearButton.setVisible(False)
         
         self.__bookmarkButton.clicked.connect(self.__showBookmarkInfo)
-        # TODO: RSS
-##        self.__rssButton.clicked.connect(self.__rssClicked)
+        self.__rssButton.clicked.connect(self.__rssClicked)
         # TODO: Privacy
 ##        self.__privacyButton.clicked.connect(self.__privacyClicked)
         self.__clearButton.clicked.connect(self.clear)
@@ -156,6 +155,7 @@ class UrlBar(E5LineEdit):
         # TODO: SSL
 ##        self.__sslLabel.setVisible(False)
         self.__bookmarkButton.setVisible(False)
+        self.__rssButton.setVisible(False)
     
     def __checkBookmark(self):
         """
@@ -189,9 +189,8 @@ class UrlBar(E5LineEdit):
             self.__checkBookmark()
             self.__bookmarkButton.setVisible(True)
         
-        # TODO: RSS
-##        if ok:
-##            self.__rssButton.setVisible(self.__browser.checkRSS())
+        if ok:
+            QTimer.singleShot(0, self.__setRssButton)
         
         # TODO: SSL certificate stuff (if possible)
 ##        if ok and \
@@ -456,12 +455,18 @@ class UrlBar(E5LineEdit):
         self.selectAll()
         
         evt.acceptProposedAction()
-##    
-##    def __rssClicked(self):
-##        """
-##        Private slot to handle clicking the RSS icon.
-##        """
-##        from WebBrowser.Feeds.FeedsDialog import FeedsDialog
-##        feeds = self.__browser.getRSS()
-##        dlg = FeedsDialog(feeds, self.__browser)
-##        dlg.exec_()
+    
+    def __setRssButton(self):
+        """
+        Private slot to show the RSS button.
+        """
+        self.__rssButton.setVisible(self.__browser.checkRSS())
+    
+    def __rssClicked(self):
+        """
+        Private slot to handle clicking the RSS icon.
+        """
+        from WebBrowser.Feeds.FeedsDialog import FeedsDialog
+        feeds = self.__browser.getRSS()
+        dlg = FeedsDialog(feeds, self.__browser)
+        dlg.exec_()

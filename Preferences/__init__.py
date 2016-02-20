@@ -1025,6 +1025,7 @@ class Prefs(object):
         "WebSearchKeywords": [],    # array of two tuples (keyword,
                                     # search engine name)
         "SearchLanguage": QLocale().language(),
+        "RssFeeds": [],
         # Flash Cookie Manager: identical to helpDefaults
         # PIM:                  identical to helpDefaults
         # VirusTotal:           identical to helpDefaults
@@ -1054,7 +1055,7 @@ class Prefs(object):
         cls.webBrowserDefaults.update({
             "AutoLoadImages": webEngineSettings.testAttribute(
                 QWebEngineSettings.AutoLoadImages),
-            "SaveUrlColor": QColor(248, 248, 210),
+            "SaveUrlColor": QColor(184, 248, 169),
 ##            "JavaEnabled":
 ##            websettings.testAttribute(QWebSettings.JavaEnabled),
             "JavaScriptEnabled": webEngineSettings.testAttribute(
@@ -2695,18 +2696,18 @@ def getWebBrowser(key, prefClass=Prefs):
 ##            downloads.append((url, location, done, pageUrl))
 ##        prefClass.settings.endArray()
 ##        return downloads
-##    elif key == "RssFeeds":
-##        # return a list of tuples of (URL, title, icon)
-##        feeds = []
-##        length = prefClass.settings.beginReadArray("WebBrowser/" + key)
-##        for index in range(length):
-##            prefClass.settings.setArrayIndex(index)
-##            url = prefClass.settings.value("URL")
-##            title = prefClass.settings.value("Title")
-##            icon = prefClass.settings.value("Icon")
-##            feeds.append((url, title, icon))
-##        prefClass.settings.endArray()
-##        return feeds
+    elif key == "RssFeeds":
+        # return a list of tuples of (URL, title, icon)
+        feeds = []
+        length = prefClass.settings.beginReadArray("WebBrowser/" + key)
+        for index in range(length):
+            prefClass.settings.setArrayIndex(index)
+            url = prefClass.settings.value("URL")
+            title = prefClass.settings.value("Title")
+            icon = prefClass.settings.value("Icon")
+            feeds.append((url, title, icon))
+        prefClass.settings.endArray()
+        return feeds
 ##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
 ##        from Utilities.crypto import pwConvert
 ##        return pwConvert(prefClass.settings.value(
@@ -2815,18 +2816,18 @@ def setWebBrowser(key, value, prefClass=Prefs):
 ##            prefClass.settings.setValue("PageURL", v[3])
 ##            index += 1
 ##        prefClass.settings.endArray()
-##    elif key == "RssFeeds":
-##        # value is list of tuples of (URL, title, icon)
-##        prefClass.settings.remove("WebBrowser/" + key)
-##        prefClass.settings.beginWriteArray("Help/" + key, len(value))
-##        index = 0
-##        for v in value:
-##            prefClass.settings.setArrayIndex(index)
-##            prefClass.settings.setValue("URL", v[0])
-##            prefClass.settings.setValue("Title", v[1])
-##            prefClass.settings.setValue("Icon", v[2])
-##            index += 1
-##        prefClass.settings.endArray()
+    elif key == "RssFeeds":
+        # value is list of tuples of (URL, title, icon)
+        prefClass.settings.remove("WebBrowser/" + key)
+        prefClass.settings.beginWriteArray("Help/" + key, len(value))
+        index = 0
+        for v in value:
+            prefClass.settings.setArrayIndex(index)
+            prefClass.settings.setValue("URL", v[0])
+            prefClass.settings.setValue("Title", v[1])
+            prefClass.settings.setValue("Icon", v[2])
+            index += 1
+        prefClass.settings.endArray()
 ##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
 ##        from Utilities.crypto import pwConvert
 ##        prefClass.settings.setValue(

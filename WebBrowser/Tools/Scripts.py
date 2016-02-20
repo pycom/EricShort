@@ -351,3 +351,36 @@ def completeFormData(data):
     data = bytes(data).decode("utf-8")
     data = data.replace("'", "\\'")
     return source.format(data)
+
+###########################################################################
+## scripts below are specific for eric
+###########################################################################
+
+
+def getFeedLinks():
+    """
+    Function generating a script to extract all RSS and Atom feed links.
+    
+    @return script to extract all RSS and Atom feed links
+    @rtype str
+    """
+    source = """
+        (function() {
+            var out = [];
+            var links = document.getElementsByTagName('link');
+            for (var i = 0; i < links.length; ++i) {
+                var e = links[i];
+                if ((e.rel == 'alternate') &&
+                    ((e.type == 'application/atom+xml') ||
+                     (e.type == 'application/rss+xml')
+                    )
+                   ) {
+                    out.push({
+                        url: e.getAttribute('href'),
+                        title: e.getAttribute('title')
+                    });
+                }
+            }
+            return out;
+        })()"""
+    return source

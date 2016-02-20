@@ -1887,14 +1887,20 @@ class WebBrowserView(QWebEngineView):
     ###########################################################################
     
     # TODO: RSS, extract links from page to implement RSS stuff
-##    def checkRSS(self):
-##        """
-##        Public method to check, if the loaded page contains feed links.
-##        
-##        @return flag indicating the existence of feed links (boolean)
-##        """
-##        self.__rss = []
-##        
+    def checkRSS(self):
+        """
+        Public method to check, if the loaded page contains feed links.
+        
+        @return flag indicating the existence of feed links (boolean)
+        """
+        self.__rss = []
+        
+        script = Scripts.getFeedLinks()
+        feeds = self.page().execJavaScript(script)
+        
+        for feed in feeds:
+            if feed["url"] and feed["title"]:
+                self.__rss.append((feed["title"], feed["url"]))
 ##        frame = self.page()
 ##        linkElementsList = frame.findAllElements("link").toList()
 ##        
@@ -1910,8 +1916,8 @@ class WebBrowserView(QWebEngineView):
 ##            if href == "" or title == "":
 ##                continue
 ##            self.__rss.append((title, href))
-##        
-##        return len(self.__rss) > 0
+        
+        return len(self.__rss) > 0
     
     def getRSS(self):
         """

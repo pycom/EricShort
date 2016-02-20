@@ -146,7 +146,7 @@ class WebBrowserPage(QWebEnginePage):
 ##        self.__proxy = NetworkAccessManagerProxy(self)
 ##        self.__proxy.setWebPage(self)
 ##        self.__proxy.setPrimaryNetworkAccessManager(
-##            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkAccessManager())
+##            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager())
 ##        self.setNetworkAccessManager(self.__proxy)
         
         self.__sslConfiguration = None

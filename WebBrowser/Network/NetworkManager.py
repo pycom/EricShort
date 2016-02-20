@@ -16,6 +16,8 @@ from E5Gui import E5MessageBox
 
 from E5Network.E5NetworkProxyFactory import proxyAuthenticationRequired
 
+from WebBrowser.WebBrowserWindow import WebBrowserWindow
+
 import Preferences
 
 
@@ -30,6 +32,14 @@ class NetworkManager(QNetworkAccessManager):
         @param parent reference to the parent object (QObject)
         """
         super(NetworkManager, self).__init__(parent)
+        
+        if not WebBrowserWindow.mainWindow().fromEric():
+            from PyQt5.QtNetwork import QNetworkProxyFactory
+            from E5Network.E5NetworkProxyFactory import E5NetworkProxyFactory
+            
+            self.__proxyFactory = E5NetworkProxyFactory()
+            QNetworkProxyFactory.setApplicationProxyFactory(
+                self.__proxyFactory)
         
         self.languagesChanged()
         

@@ -89,7 +89,7 @@ class WebBrowserWindow(E5MainWindow):
     _passwordManager = None
 ##    _adblockManager = None
 ##    _downloadManager = None
-##    _feedsManager = None
+    _feedsManager = None
 ##    _userAgentsManager = None
 ##    _syncManager = None
 ##    _speedDial = None
@@ -243,6 +243,8 @@ class WebBrowserWindow(E5MainWindow):
             else:
                 self.restoreGeometry(g)
             
+            WebBrowserWindow.BrowserWindows.append(self)
+            
             self.__setIconDatabasePath()
             self.__initWebEngineSettings()
             
@@ -261,8 +263,6 @@ class WebBrowserWindow(E5MainWindow):
 ##            
             self.__tabWidget.newBrowser(home)
             self.__tabWidget.currentBrowser().setFocus()
-            
-            WebBrowserWindow.BrowserWindows.append(self)
             
             # TODO: AdBlock
 ##            self.__adBlockIcon = AdBlockIcon(self)
@@ -1639,24 +1639,23 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showDownloadsWindow)
 ##        self.__actions.append(self.showDownloadManagerAct)
         
-        # TODO: RSS Feeds Manager
-##        self.feedsManagerAct = E5Action(
-##            self.tr('RSS Feeds Dialog'),
-##            UI.PixmapCache.getIcon("rss22.png"),
-##            self.tr('&RSS Feeds Dialog...'),
-##            QKeySequence(self.tr("Ctrl+Shift+F", "Help|RSS Feeds Dialog")),
-##            0, self, 'webbrowser_rss_feeds')
-##        self.feedsManagerAct.setStatusTip(self.tr(
-##            'Open a dialog showing the configured RSS feeds.'))
-##        self.feedsManagerAct.setWhatsThis(self.tr(
-##            """<b>RSS Feeds Dialog...</b>"""
-##            """<p>Open a dialog to show the configured RSS feeds."""
-##            """ It can be used to mange the feeds and to show their"""
-##            """ contents.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.feedsManagerAct.triggered.connect(self.__showFeedsManager)
-##        self.__actions.append(self.feedsManagerAct)
+        self.feedsManagerAct = E5Action(
+            self.tr('RSS Feeds Dialog'),
+            UI.PixmapCache.getIcon("rss22.png"),
+            self.tr('&RSS Feeds Dialog...'),
+            QKeySequence(self.tr("Ctrl+Shift+F", "Help|RSS Feeds Dialog")),
+            0, self, 'webbrowser_rss_feeds')
+        self.feedsManagerAct.setStatusTip(self.tr(
+            'Open a dialog showing the configured RSS feeds.'))
+        self.feedsManagerAct.setWhatsThis(self.tr(
+            """<b>RSS Feeds Dialog...</b>"""
+            """<p>Open a dialog to show the configured RSS feeds."""
+            """ It can be used to mange the feeds and to show their"""
+            """ contents.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.feedsManagerAct.triggered.connect(self.__showFeedsManager)
+        self.__actions.append(self.feedsManagerAct)
         
         # TODO: Site Info
 ##        self.siteInfoAct = E5Action(
@@ -1884,7 +1883,7 @@ class WebBrowserWindow(E5MainWindow):
         
         menu = mb.addMenu(self.tr("&Tools"))
         menu.setTearOffEnabled(True)
-##        menu.addAction(self.feedsManagerAct)
+        menu.addAction(self.feedsManagerAct)
 ##        menu.addAction(self.siteInfoAct)
 ##        menu.addSeparator()
 ##        menu.addAction(self.synchronizationAct)
@@ -1995,7 +1994,7 @@ class WebBrowserWindow(E5MainWindow):
         toolstb = self.addToolBar(self.tr("Tools"))
         toolstb.setObjectName("ToolsToolBar")
         toolstb.setIconSize(UI.Config.ToolBarIconSize)
-##        toolstb.addAction(self.feedsManagerAct)
+        toolstb.addAction(self.feedsManagerAct)
 ##        toolstb.addAction(self.siteInfoAct)
 ##        toolstb.addSeparator()
 ##        toolstb.addAction(self.synchronizationAct)
@@ -2789,7 +2788,7 @@ class WebBrowserWindow(E5MainWindow):
         self.__initWebEngineSettings()
         
         # TODO: NetworkManager
-##        self.networkAccessManager().preferencesChanged()
+##        self.networkManager().preferencesChanged()
 ##        
         self.historyManager().preferencesChanged()
         
@@ -2908,7 +2907,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        """
 ##            from .CookieJar.CookieJar import CookieJar
 ##            cls._cookieJar = CookieJar()
-##        return cls.networkAccessManager().cookieJar()
+##        return cls.networkManager().cookieJar()
 ##        
     def __clearIconsDatabase(self):
         """
@@ -3301,7 +3300,7 @@ class WebBrowserWindow(E5MainWindow):
             # TODO: Cache Cleaning
 ##            if cache:
 ##                try:
-##                    self.networkAccessManager().cache().clear()
+##                    self.networkManager().cache().clear()
 ##                except AttributeError:
 ##                    pass
             # TODO: Cookies
@@ -3403,7 +3402,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        Private slot to show the network monitor dialog.
 ##        """
 ##        from E5Network.E5NetworkMonitor import E5NetworkMonitor
-##        monitor = E5NetworkMonitor.instance(self.networkAccessManager())
+##        monitor = E5NetworkMonitor.instance(self.networkManager())
 ##        monitor.show()
 ##        
 ##    def __showDownloadsWindow(self):
@@ -3768,39 +3767,38 @@ class WebBrowserWindow(E5MainWindow):
         else:
             super(WebBrowserWindow, self).mousePressEvent(evt)
     
-    # TODO: RSS
-##    @classmethod
-##    def feedsManager(cls):
-##        """
-##        Class method to get a reference to the RSS feeds manager.
-##        
-##        @return reference to the RSS feeds manager (FeedsManager)
-##        """
-##        if cls._feedsManager is None:
-##            from .Feeds.FeedsManager import FeedsManager
-##            cls._feedsManager = FeedsManager()
-##        
-##        return cls._feedsManager
-##    
-##    def __showFeedsManager(self):
-##        """
-##        Private slot to show the feeds manager dialog.
-##        """
-##        feedsManager = self.feedsManager()
-##        feedsManager.openUrl.connect(self.openUrl)
-##        feedsManager.newUrl.connect(self.openUrlNewTab)
-##        feedsManager.rejected.connect(self.__feedsManagerClosed)
-##        feedsManager.show()
-##    
-##    def __feedsManagerClosed(self):
-##        """
-##        Private slot to handle closing the feeds manager dialog.
-##        """
-##        feedsManager = self.sender()
-##        feedsManager.openUrl.disconnect(self.openUrl)
-##        feedsManager.newUrl.disconnect(self.openUrlNewTab)
-##        feedsManager.rejected.disconnect(self.__feedsManagerClosed)
-##    
+    @classmethod
+    def feedsManager(cls):
+        """
+        Class method to get a reference to the RSS feeds manager.
+        
+        @return reference to the RSS feeds manager (FeedsManager)
+        """
+        if cls._feedsManager is None:
+            from .Feeds.FeedsManager import FeedsManager
+            cls._feedsManager = FeedsManager()
+        
+        return cls._feedsManager
+    
+    def __showFeedsManager(self):
+        """
+        Private slot to show the feeds manager dialog.
+        """
+        feedsManager = self.feedsManager()
+        feedsManager.openUrl.connect(self.openUrl)
+        feedsManager.newUrl.connect(self.openUrlNewTab)
+        feedsManager.rejected.connect(self.__feedsManagerClosed)
+        feedsManager.show()
+    
+    def __feedsManagerClosed(self):
+        """
+        Private slot to handle closing the feeds manager dialog.
+        """
+        feedsManager = self.sender()
+        feedsManager.openUrl.disconnect(self.openUrl)
+        feedsManager.newUrl.disconnect(self.openUrlNewTab)
+        feedsManager.rejected.disconnect(self.__feedsManagerClosed)
+    
     # TODO: Site Info
 ##    def __showSiteinfoDialog(self):
 ##        """
