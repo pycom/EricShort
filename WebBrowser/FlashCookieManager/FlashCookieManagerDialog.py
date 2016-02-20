@@ -394,8 +394,10 @@ class FlashCookieManagerDialog(QDialog, Ui_FlashCookieManagerDialog):
         self.whiteList.clear()
         self.blackList.clear()
         
-        self.whiteList.addItems(Preferences.getHelp("FlashCookiesWhitelist"))
-        self.blackList.addItems(Preferences.getHelp("FlashCookiesBlacklist"))
+        self.whiteList.addItems(
+            Preferences.getWebBrowser("FlashCookiesWhitelist"))
+        self.blackList.addItems(
+            Preferences.getWebBrowser("FlashCookiesBlacklist"))
         
         self.on_whiteList_itemSelectionChanged()
         self.on_blackList_itemSelectionChanged()

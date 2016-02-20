@@ -1025,13 +1025,9 @@ class Prefs(object):
         "WebSearchKeywords": [],    # array of two tuples (keyword,
                                     # search engine name)
         "SearchLanguage": QLocale().language(),
-        # Flash Cookie Manager
-        "FlashCookiesDeleteOnStartExit": False,
-        "FlashCookieAutoRefresh": False,
-        "FlashCookieNotify": False,
-        "FlashCookiesWhitelist": [],
-        "FlashCookiesBlacklist": [],
-        "FlashCookiesDataPath": flashDataPathForOS(),
+        # Flash Cookie Manager: identical to helpDefaults
+        # PIM:                  identical to helpDefaults
+        # VirusTotal:           identical to helpDefaults
     }
     
     @classmethod
@@ -2654,6 +2650,11 @@ def getWebBrowser(key, prefClass=Prefs):
     @param prefClass preferences class used as the storage area
     @return the requested help setting
     """
+    # the following entries are identical to the ones of the help viewer
+    # and are being redirected there
+    if key.startswith(("FlashCookies", "Pim", "VirusTotal")):
+        return getHelp(key, prefClass)
+    
     if not prefClass.webEngineSettingsIntitialized:
         prefClass.initWebEngineSettingsDefaults()
     
@@ -2758,8 +2759,6 @@ def getWebBrowser(key, prefClass=Prefs):
                  "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
                  "ScrollAnimatorEnabled", "ErrorPageEnabled",
                  "WarnOnMultipleClose", "WebSearchSuggestions",
-                 "FlashCookiesDeleteOnStartExit", "FlashCookieAutoRefresh",
-                 "FlashCookieNotify",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
@@ -2768,10 +2767,8 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "GreaseMonkeyDisabledScripts", "NoCacheHosts",
 ##                 "FlashCookiesWhitelist", "FlashCookiesBlacklist",
 ##                 ]:
-    elif key in ["FlashCookiesWhitelist", "FlashCookiesBlacklist",
-                 ]:
-        return toList(prefClass.settings.value(
-            "WebBrowser/" + key, prefClass.helpDefaults[key]))
+##        return toList(prefClass.settings.value(
+##            "WebBrowser/" + key, prefClass.helpDefaults[key]))
     else:
         return prefClass.settings.value("WebBrowser/" + key,
                                         prefClass.webBrowserDefaults[key])
@@ -2785,6 +2782,11 @@ def setWebBrowser(key, value, prefClass=Prefs):
     @param value the value to be set
     @param prefClass preferences class used as the storage area
     """
+    # the following entries are identical to the ones of the help viewer
+    # and are being redirected there
+    if key.startswith(("FlashCookies", "Pim", "VirusTotal")):
+        setHelp(key, value, prefClass)
+    
     if key in ["StandardFont", "FixedFont"]:
         prefClass.settings.setValue("WebBrowser/" + key, value.toString())
     elif key == "SaveUrlColor":

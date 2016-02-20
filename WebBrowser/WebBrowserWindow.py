@@ -93,7 +93,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    _userAgentsManager = None
 ##    _syncManager = None
 ##    _speedDial = None
-##    _personalInformationManager = None
+    _personalInformationManager = None
 ##    _greaseMonkeyManager = None
     _notification = None
     _featurePermissionManager = None
@@ -1314,24 +1314,23 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showOfflineStorageConfiguration)
 ##        self.__actions.append(self.offlineStorageAct)
         
-        # TODO: PIM
-##        self.personalDataAct = E5Action(
-##            self.tr('Personal Information'),
-##            UI.PixmapCache.getIcon("pim.png"),
-##            self.tr('Personal Information...'),
-##            0, 0,
-##            self, 'webbrowser_personal_information')
-##        self.personalDataAct.setStatusTip(self.tr(
-##            'Configure personal information for completing form fields'))
-##        self.personalDataAct.setWhatsThis(self.tr(
-##            """<b>Personal Information...</b>"""
-##            """<p>Opens a dialog to configure the personal information"""
-##            """ used for completing form fields.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.personalDataAct.triggered.connect(
-##                self.__showPersonalInformationDialog)
-##        self.__actions.append(self.personalDataAct)
+        self.personalDataAct = E5Action(
+            self.tr('Personal Information'),
+            UI.PixmapCache.getIcon("pim.png"),
+            self.tr('Personal Information...'),
+            0, 0,
+            self, 'webbrowser_personal_information')
+        self.personalDataAct.setStatusTip(self.tr(
+            'Configure personal information for completing form fields'))
+        self.personalDataAct.setWhatsThis(self.tr(
+            """<b>Personal Information...</b>"""
+            """<p>Opens a dialog to configure the personal information"""
+            """ used for completing form fields.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.personalDataAct.triggered.connect(
+                self.__showPersonalInformationDialog)
+        self.__actions.append(self.personalDataAct)
         
         # TODO: GreaseMonkey
 ##        self.greaseMonkeyAct = E5Action(
@@ -1857,7 +1856,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        menu.addAction(self.cookiesAct)
         menu.addAction(self.flashCookiesAct)
 ##        menu.addAction(self.offlineStorageAct)
-##        menu.addAction(self.personalDataAct)
+        menu.addAction(self.personalDataAct)
 ##        menu.addAction(self.greaseMonkeyAct)
         menu.addAction(self.featurePermissionAct)
 ##        menu.addSeparator()
@@ -1997,7 +1996,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        settingstb.addAction(self.cookiesAct)
         settingstb.addAction(self.flashCookiesAct)
 ##        settingstb.addAction(self.offlineStorageAct)
-##        settingstb.addAction(self.personalDataAct)
+        settingstb.addAction(self.personalDataAct)
 ##        settingstb.addAction(self.greaseMonkeyAct)
         settingstb.addAction(self.featurePermissionAct)
         
@@ -3376,12 +3375,12 @@ class WebBrowserWindow(E5MainWindow):
 ##        from .HelpBrowserWV import HelpWebPage
 ##        HelpWebPage.webPluginFactory().plugin("ClickToFlash").configure()
 ##        
-##    def __showPersonalInformationDialog(self):
-##        """
-##        Private slot to show the Personal Information configuration dialog.
-##        """
-##        self.personalInformationManager().showConfigurationDialog()
-##        
+    def __showPersonalInformationDialog(self):
+        """
+        Private slot to show the Personal Information configuration dialog.
+        """
+        self.personalInformationManager().showConfigurationDialog()
+        
 ##    def __showGreaseMonkeyConfigDialog(self):
 ##        """
 ##        Private slot to show the GreaseMonkey scripts configuration dialog.
@@ -3547,21 +3546,21 @@ class WebBrowserWindow(E5MainWindow):
 ##        
 ##        return cls._downloadManager
 ##        
-##    @classmethod
-##    def personalInformationManager(cls):
-##        """
-##        Class method to get a reference to the personal information manager.
-##        
-##        @return reference to the personal information manager
-##            (PersonalInformationManager)
-##        """
-##        if cls._personalInformationManager is None:
-##            from .PersonalInformationManager.PersonalInformationManager \
-##                import PersonalInformationManager
-##            cls._personalInformationManager = PersonalInformationManager()
-##        
-##        return cls._personalInformationManager
-##        
+    @classmethod
+    def personalInformationManager(cls):
+        """
+        Class method to get a reference to the personal information manager.
+        
+        @return reference to the personal information manager
+            (PersonalInformationManager)
+        """
+        if cls._personalInformationManager is None:
+            from .PersonalInformationManager.PersonalInformationManager \
+                import PersonalInformationManager
+            cls._personalInformationManager = PersonalInformationManager()
+        
+        return cls._personalInformationManager
+        
 ##    @classmethod
 ##    def greaseMonkeyManager(cls):
 ##        """

@@ -54,7 +54,7 @@ class FlashCookieManager(QObject):
         # start the timer if needed
         self.__startStopTimer()
         
-        if Preferences.getHelp("FlashCookiesDeleteOnStartExit"):
+        if Preferences.getWebBrowser("FlashCookiesDeleteOnStartExit"):
             self.__loadFlashCookies()
             self.__removeAllButWhitelisted()
     
@@ -65,7 +65,7 @@ class FlashCookieManager(QObject):
         if self.__flashCookieManagerDialog is not None:
             self.__flashCookieManagerDialog.close()
         
-        if Preferences.getHelp("FlashCookiesDeleteOnStartExit"):
+        if Preferences.getWebBrowser("FlashCookiesDeleteOnStartExit"):
             self.__removeAllButWhitelisted()
     
     def setFlashCookies(self, cookies):
@@ -119,7 +119,8 @@ class FlashCookieManager(QObject):
         @return flag indicating a blacklisted cookie
         @rtype bool
         """
-        return cookie.origin in Preferences.getHelp("FlashCookiesBlacklist")
+        return cookie.origin in \
+            Preferences.getWebBrowser("FlashCookiesBlacklist")
     
     def __isWhitelisted(self, cookie):
         """
@@ -130,7 +131,8 @@ class FlashCookieManager(QObject):
         @return flag indicating a whitelisted cookie
         @rtype bool
         """
-        return cookie.origin in Preferences.getHelp("FlashCookiesWhitelist")
+        return cookie.origin in \
+            Preferences.getWebBrowser("FlashCookiesWhitelist")
     
     def __removeAllButWhitelisted(self):
         """
@@ -169,7 +171,7 @@ class FlashCookieManager(QObject):
         @return Flash Player data path
         @rtype str
         """
-        return Preferences.getHelp("FlashCookiesDataPath")
+        return Preferences.getWebBrowser("FlashCookiesDataPath")
     
     def preferencesChanged(self):
         """
@@ -218,7 +220,7 @@ class FlashCookieManager(QObject):
             if newCookie:
                 newCookieList.append(cookie.path + "/" + cookie.name)
         
-        if newCookieList and Preferences.getHelp("FlashCookieNotify"):
+        if newCookieList and Preferences.getWebBrowser("FlashCookieNotify"):
             self.__newCookiesList.extend(newCookieList)
             win = WebBrowser.WebBrowserWindow.WebBrowserWindow.mainWindow()
             if win is None:
@@ -250,7 +252,7 @@ class FlashCookieManager(QObject):
         """
         Private slot to start or stop the auto refresh timer.
         """
-        if Preferences.getHelp("FlashCookieAutoRefresh"):
+        if Preferences.getWebBrowser("FlashCookieAutoRefresh"):
             if not self.__timer.isActive():
                 if not bool(self.__flashCookies):
                     self.__loadFlashCookies()

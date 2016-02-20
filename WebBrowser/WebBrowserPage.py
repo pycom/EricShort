@@ -47,6 +47,7 @@ try:
 except ImportError:
     SSL_AVAILABLE = False
 
+# TODO: ExternalJsObject: move this to the object
 ###############################################################################
 ##
 ##
@@ -727,7 +728,6 @@ class WebBrowserPage(QWebEnginePage):
         """
         Private method to setup a web channel to our external object.
         """
-##        self.__externalJsObject = ExternalJsObject(self)
         oldChannel = self.webChannel()
         newChannel = QWebChannel(self)
         newChannel.registerObject("eric_object", ExternalJsObject(self))
@@ -753,5 +753,6 @@ class WebBrowserPage(QWebEnginePage):
     ## Methods below deal with JavaScript messages
     ##############################################
     
+    # TODO: JavaScript messages: do this right and add the others
     def javaScriptConsoleMessage(self, level, message, lineNumber,  sourceId):
         print("JS-console:", message, lineNumber, sourceId)

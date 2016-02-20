@@ -149,8 +149,7 @@ class WebBrowserView(QWebEngineView):
         
         self.__clickedFrame = None
         
-        # TODO: PIM
-##        self.__mw.personalInformationManager().connectPage(self.page())
+        self.__mw.personalInformationManager().connectPage(self.page())
         # TODO: GreaseMonkey
 ##        self.__mw.greaseMonkeyManager().connectPage(self.page())
         
@@ -638,9 +637,9 @@ class WebBrowserView(QWebEngineView):
             menu.addAction(self.__mw.cutAct)
             menu.addAction(self.__mw.copyAct)
             menu.addAction(self.__mw.pasteAct)
-            # TODO: PIM
-##            menu.addSeparator()
-##            self.__mw.personalInformationManager().createSubMenu(menu, self, hit)
+            menu.addSeparator()
+            self.__mw.personalInformationManager().createSubMenu(
+                menu, self, hitTest)
             
             if hitTest.tagName() == "input":
                 menu.addSeparator()
@@ -1273,9 +1272,9 @@ class WebBrowserView(QWebEngineView):
         
         @param evt reference to the key event (QKeyEvent)
         """
-        # TODO: PIM
-##        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
-##            return
+        if self.__mw.personalInformationManager().viewKeyPressEvent(self, evt):
+            evt.accept()
+            return
         
         # TODO: Access Keys
 ##        if self.__enableAccessKeys:
