@@ -21,7 +21,7 @@ import UI.PixmapCache
 
 class FeedsDialog(QDialog, Ui_FeedsDialog):
     """
-    Class documentation goes here.
+    Class implementing a dialog to add RSS feeds.
     """
     def __init__(self, availableFeeds, browser, parent=None):
         """
