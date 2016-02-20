@@ -1239,22 +1239,21 @@ class WebBrowserWindow(E5MainWindow):
             self.prefAct.triggered.connect(self.__showPreferences)
         self.__actions.append(self.prefAct)
         
-        # TODO: Languages
-##        self.acceptedLanguagesAct = E5Action(
-##            self.tr('Languages'),
-##            UI.PixmapCache.getIcon("flag.png"),
-##            self.tr('&Languages...'), 0, 0,
-##            self, 'webbrowser_accepted_languages')
-##        self.acceptedLanguagesAct.setStatusTip(self.tr(
-##            'Configure the accepted languages for web pages'))
-##        self.acceptedLanguagesAct.setWhatsThis(self.tr(
-##            """<b>Languages</b>"""
-##            """<p>Configure the accepted languages for web pages.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.acceptedLanguagesAct.triggered.connect(
-##                self.__showAcceptedLanguages)
-##        self.__actions.append(self.acceptedLanguagesAct)
+        self.acceptedLanguagesAct = E5Action(
+            self.tr('Languages'),
+            UI.PixmapCache.getIcon("flag.png"),
+            self.tr('&Languages...'), 0, 0,
+            self, 'webbrowser_accepted_languages')
+        self.acceptedLanguagesAct.setStatusTip(self.tr(
+            'Configure the accepted languages for web pages'))
+        self.acceptedLanguagesAct.setWhatsThis(self.tr(
+            """<b>Languages</b>"""
+            """<p>Configure the accepted languages for web pages.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.acceptedLanguagesAct.triggered.connect(
+                self.__showAcceptedLanguages)
+        self.__actions.append(self.acceptedLanguagesAct)
         
         # TODO: Cookies
 ##        self.cookiesAct = E5Action(
@@ -1275,7 +1274,8 @@ class WebBrowserWindow(E5MainWindow):
         self.flashCookiesAct = E5Action(
             self.tr('Flash Cookies'),
             UI.PixmapCache.getIcon("flashCookie.png"),
-            self.tr('&Flash Cookies...'), 0, 0, self, 'webbrowser_flash_cookies')
+            self.tr('&Flash Cookies...'), 0, 0, self,
+            'webbrowser_flash_cookies')
         self.flashCookiesAct.setStatusTip(self.tr(
             'Manage flash cookies'))
         self.flashCookiesAct.setWhatsThis(self.tr(
@@ -1842,7 +1842,7 @@ class WebBrowserWindow(E5MainWindow):
         menu = mb.addMenu(self.tr('&Settings'))
         menu.setTearOffEnabled(True)
         menu.addAction(self.prefAct)
-##        menu.addAction(self.acceptedLanguagesAct)
+        menu.addAction(self.acceptedLanguagesAct)
 ##        menu.addAction(self.cookiesAct)
         menu.addAction(self.flashCookiesAct)
 ##        menu.addAction(self.offlineStorageAct)
@@ -1984,7 +1984,7 @@ class WebBrowserWindow(E5MainWindow):
         settingstb.setObjectName("SettingsToolBar")
         settingstb.setIconSize(UI.Config.ToolBarIconSize)
         settingstb.addAction(self.prefAct)
-##        settingstb.addAction(self.acceptedLanguagesAct)
+        settingstb.addAction(self.acceptedLanguagesAct)
 ##        settingstb.addAction(self.cookiesAct)
         settingstb.addAction(self.flashCookiesAct)
 ##        settingstb.addAction(self.offlineStorageAct)
@@ -2822,14 +2822,14 @@ class WebBrowserWindow(E5MainWindow):
             Preferences.convertPasswords(oldPassword, newPassword)
             Utilities.crypto.changeRememberedMaster(newPassword)
     
-##    def __showAcceptedLanguages(self):
-##        """
-##        Private slot to configure the accepted languages for web pages.
-##        """
-##        from .HelpLanguagesDialog import HelpLanguagesDialog
-##        dlg = HelpLanguagesDialog(self)
-##        dlg.exec_()
-##        self.networkAccessManager().languagesChanged()
+    def __showAcceptedLanguages(self):
+        """
+        Private slot to configure the accepted languages for web pages.
+        """
+        from .WebBrowserLanguagesDialog import WebBrowserLanguagesDialog
+        dlg = WebBrowserLanguagesDialog(self)
+        dlg.exec_()
+        self.networkManager().languagesChanged()
     
 ##    def __showCookiesConfiguration(self):
 ##        """

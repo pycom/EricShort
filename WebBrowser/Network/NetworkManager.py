@@ -31,6 +31,8 @@ class NetworkManager(QNetworkAccessManager):
         """
         super(NetworkManager, self).__init__(parent)
         
+        self.languagesChanged()
+        
         self.__ignoredSslErrors = {}
         # dictionary of temporarily ignore SSL errors
         
@@ -130,3 +132,20 @@ class NetworkManager(QNetworkAccessManager):
             return
         
         proxyAuthenticationRequired(proxy, auth)
+    
+    def languagesChanged(self):
+        """
+        Public slot to (re-)load the list of accepted languages.
+        """
+        from WebBrowser.WebBrowserLanguagesDialog import \
+            WebBrowserLanguagesDialog
+        languages = Preferences.toList(
+            Preferences.Prefs.settings.value(
+                "WebBrowser/AcceptLanguages",
+                WebBrowserLanguagesDialog.defaultAcceptLanguages()))
+        self.__acceptLanguage = WebBrowserLanguagesDialog.httpString(languages)
+        
+        # TODO: Qt 5.6
+##        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+##        WebBrowserWindow.webProfile().setHttpAcceptLanguage(
+##            self.__acceptLanguage)

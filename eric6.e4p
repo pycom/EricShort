@@ -1354,6 +1354,7 @@
     <Source>WebBrowser/VirusTotal/VirusTotalWhoisDialog.py</Source>
     <Source>WebBrowser/VirusTotal/__init__.py</Source>
     <Source>WebBrowser/WebBrowserClearPrivateDataDialog.py</Source>
+    <Source>WebBrowser/WebBrowserLanguagesDialog.py</Source>
     <Source>WebBrowser/WebBrowserPage.py</Source>
     <Source>WebBrowser/WebBrowserTabBar.py</Source>
     <Source>WebBrowser/WebBrowserTabWidget.py</Source>
@@ -1781,6 +1782,7 @@
     <Form>WebBrowser/VirusTotal/VirusTotalIpReportDialog.ui</Form>
     <Form>WebBrowser/VirusTotal/VirusTotalWhoisDialog.ui</Form>
     <Form>WebBrowser/WebBrowserClearPrivateDataDialog.ui</Form>
+    <Form>WebBrowser/WebBrowserLanguagesDialog.ui</Form>
     <Form>WebBrowser/ZoomManager/ZoomValuesDialog.ui</Form>
   </Forms>
   <Translations>
