@@ -1348,6 +1348,11 @@
     <Source>WebBrowser/UrlBar/StackedUrlBar.py</Source>
     <Source>WebBrowser/UrlBar/UrlBar.py</Source>
     <Source>WebBrowser/UrlBar/__init__.py</Source>
+    <Source>WebBrowser/VirusTotal/VirusTotalApi.py</Source>
+    <Source>WebBrowser/VirusTotal/VirusTotalDomainReportDialog.py</Source>
+    <Source>WebBrowser/VirusTotal/VirusTotalIpReportDialog.py</Source>
+    <Source>WebBrowser/VirusTotal/VirusTotalWhoisDialog.py</Source>
+    <Source>WebBrowser/VirusTotal/__init__.py</Source>
     <Source>WebBrowser/WebBrowserClearPrivateDataDialog.py</Source>
     <Source>WebBrowser/WebBrowserPage.py</Source>
     <Source>WebBrowser/WebBrowserTabBar.py</Source>
@@ -1772,6 +1777,9 @@
     <Form>WebBrowser/SearchWidget.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkActionSelectionDialog.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkInfoDialog.ui</Form>
+    <Form>WebBrowser/VirusTotal/VirusTotalDomainReportDialog.ui</Form>
+    <Form>WebBrowser/VirusTotal/VirusTotalIpReportDialog.ui</Form>
+    <Form>WebBrowser/VirusTotal/VirusTotalWhoisDialog.ui</Form>
     <Form>WebBrowser/WebBrowserClearPrivateDataDialog.ui</Form>
     <Form>WebBrowser/ZoomManager/ZoomValuesDialog.ui</Form>
   </Forms>

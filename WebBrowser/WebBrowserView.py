@@ -88,8 +88,8 @@ class WebBrowserView(QWebEngineView):
         self.installEventFilter(self)
         
         # TODO: Speeddial
-##        import Helpviewer.HelpWindow
-##        self.__speedDial = Helpviewer.HelpWindow.HelpWindow.speedDial()
+##        import WebBrowser.WebBrowserWindow
+##        self.__speedDial = WebBrowser.WebBrowserWindow.WebBrowserWindow.speedDial()
         
         self.__page = WebBrowserPage(self)
         self.setPage(self.__page)
@@ -105,9 +105,6 @@ class WebBrowserView(QWebEngineView):
         
         self.__currentZoom = 100
         self.__zoomLevels = WebBrowserView.ZoomLevels[:]
-##        
-##        self.__javaScriptBinding = None
-##        self.__javaScriptEricObject = None
         
 ##        self.__mw.zoomTextOnlyChanged.connect(self.__applyZoom)
         
@@ -125,9 +122,6 @@ class WebBrowserView(QWebEngineView):
         
 ##        self.page().setForwardUnsupportedContent(True)
 ##        self.page().unsupportedContent.connect(self.__unsupportedContent)
-        
-##        self.page().frameCreated.connect(self.__addExternalBinding)
-##        self.__addExternalBinding(self.page().mainFrame())
         
 ##        self.page().databaseQuotaExceeded.connect(self.__databaseQuotaExceeded)
         
@@ -330,11 +324,6 @@ class WebBrowserView(QWebEngineView):
                         """ for URL <b>{0}</b>.</p>""")
                     .format(name.toString()))
             return
-##        elif name.scheme() == "javascript":
-##            scriptSource = QUrl.fromPercentEncoding(name.toString(
-##                QUrl.FormattingOptions(QUrl.TolerantMode | QUrl.RemoveScheme)))
-##            self.page().mainFrame().evaluateJavaScript(scriptSource)
-##            return
         else:
             if name.toString().endswith(".pdf") or \
                name.toString().endswith(".PDF") or \
@@ -689,13 +678,12 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Link"),
             self.__sendLink).setData(hitTest.linkUrl())
-        # TODO: VirusTotal
-##        if Preferences.getWebBrowser("VirusTotalEnabled") and \
-##           Preferences.getWebBrowser("VirusTotalServiceKey") != "":
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("virustotal.png"),
-##                self.tr("Scan Link with VirusTotal"),
-##                self.__virusTotal).setData(hitTest.linkUrl())
+        if Preferences.getWebBrowser("VirusTotalEnabled") and \
+           Preferences.getWebBrowser("VirusTotalServiceKey") != "":
+            menu.addAction(
+                UI.PixmapCache.getIcon("virustotal.png"),
+                self.tr("Scan Link with VirusTotal"),
+                self.__virusTotal).setData(hitTest.linkUrl())
         
     def __createImageContextMenu(self, menu, hitTest):
         """
@@ -735,13 +723,12 @@ class WebBrowserView(QWebEngineView):
 ##            UI.PixmapCache.getIcon("adBlockPlus.png"),
 ##            self.tr("Block Image"), self.__blockImage)\
 ##            .setData(hitTest.imageUrl().toString())
-        # TODO: VirusTotal
-##        if Preferences.getWebBrowser("VirusTotalEnabled") and \
-##           Preferences.getWebBrowser("VirusTotalServiceKey") != "":
-##            menu.addAction(
-##                UI.PixmapCache.getIcon("virustotal.png"),
-##                self.tr("Scan Image with VirusTotal"),
-##                self.__virusTotal).setData(hitTest.imageUrl())
+        if Preferences.getWebBrowser("VirusTotalEnabled") and \
+           Preferences.getWebBrowser("VirusTotalServiceKey") != "":
+            menu.addAction(
+                UI.PixmapCache.getIcon("virustotal.png"),
+                self.tr("Scan Image with VirusTotal"),
+                self.__virusTotal).setData(hitTest.imageUrl())
     
     def __createMediaContextMenu(self, menu, hitTest):
         """
@@ -1029,10 +1016,10 @@ class WebBrowserView(QWebEngineView):
 ##        """
 ##        Private slot to add a block rule for an image URL.
 ##        """
-##        import Helpviewer.HelpWindow
+##        import WebBrowser.WebBrowserWindow
 ##        act = self.sender()
 ##        url = act.data()
-##        dlg = Helpviewer.HelpWindow.HelpWindow.adBlockManager().showDialog()
+##        dlg = WebBrowser.WebBrowserWindow.WebBrowserWindow.adBlockManager().showDialog()
 ##        dlg.addCustomRule(url)
     
     # TODO: DownloadManager
@@ -1060,14 +1047,13 @@ class WebBrowserView(QWebEngineView):
         script = Scripts.toggleMediaMute(self.__clickedPos)
         self.page().runJavaScript(script)
     
-    # TODO: VirusTotal
-##    def __virusTotal(self):
-##        """
-##        Private slot to scan the selected URL with VirusTotal.
-##        """
-##        act = self.sender()
-##        url = act.data()
-##        self.__mw.requestVirusTotalScan(url)
+    def __virusTotal(self):
+        """
+        Private slot to scan the selected URL with VirusTotal.
+        """
+        act = self.sender()
+        url = act.data()
+        self.__mw.requestVirusTotalScan(url)
     
     def __searchRequested(self, act):
         """
@@ -1152,14 +1138,6 @@ class WebBrowserView(QWebEngineView):
         dlg.setTitle(self.title())
         dlg.setDescription(description)
         dlg.exec_()
-##        from .Bookmarks.AddBookmarkDialog import AddBookmarkDialog
-##        dlg = AddBookmarkDialog()
-##        dlg.setUrl(bytes(self.url().toEncoded()).decode())
-##        dlg.setTitle(self.title())
-##        meta = self.page().mainFrame().metaData()
-##        if "description" in meta:
-##            dlg.setDescription(meta["description"][0])
-##        dlg.exec_()
     
     def dragEnterEvent(self, evt):
         """

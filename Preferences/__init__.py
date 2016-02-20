@@ -2652,7 +2652,7 @@ def getWebBrowser(key, prefClass=Prefs):
     """
     # the following entries are identical to the ones of the help viewer
     # and are being redirected there
-    if key.startswith(("FlashCookies", "Pim", "VirusTotal")):
+    if key.startswith(("FlashCookie", "Pim", "VirusTotal")):
         return getHelp(key, prefClass)
     
     if not prefClass.webEngineSettingsIntitialized:
@@ -2784,7 +2784,7 @@ def setWebBrowser(key, value, prefClass=Prefs):
     """
     # the following entries are identical to the ones of the help viewer
     # and are being redirected there
-    if key.startswith(("FlashCookies", "Pim", "VirusTotal")):
+    if key.startswith(("FlashCookie", "Pim", "VirusTotal")):
         setHelp(key, value, prefClass)
     
     if key in ["StandardFont", "FixedFont"]:

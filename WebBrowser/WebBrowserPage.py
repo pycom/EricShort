@@ -140,13 +140,13 @@ class WebBrowserPage(QWebEnginePage):
 ##        self.__lastRequest = None
 ##        self.__lastRequestType = QWebPage.NavigationTypeOther
 ##        
-##        import Helpviewer.HelpWindow
+##        import WebBrowser.WebBrowserWindow
 ##        from .Network.NetworkAccessManagerProxy import \
 ##            NetworkAccessManagerProxy
 ##        self.__proxy = NetworkAccessManagerProxy(self)
 ##        self.__proxy.setWebPage(self)
 ##        self.__proxy.setPrimaryNetworkAccessManager(
-##            Helpviewer.HelpWindow.HelpWindow.networkAccessManager())
+##            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkAccessManager())
 ##        self.setNetworkAccessManager(self.__proxy)
         
         self.__sslConfiguration = None
@@ -452,8 +452,8 @@ class WebBrowserPage(QWebEnginePage):
 ##        @param url URL to determine user agent for (QUrl)
 ##        @return user agent string (string)
 ##        """
-##        import Helpviewer.HelpWindow
-##        agent = Helpviewer.HelpWindow.HelpWindow.userAgentsManager()\
+##        import WebBrowser.WebBrowserWindow
+##        agent = WebBrowser.WebBrowserWindow.WebBrowserWindow.userAgentsManager()\
 ##            .userAgentForUrl(url)
 ##        if agent == "":
 ##            # no agent string specified for the given host -> use global one
@@ -463,6 +463,7 @@ class WebBrowserPage(QWebEnginePage):
 ##                agent = QWebPage.userAgentForUrl(self, url)
 ##        return agent
 ##    
+    # TODO: SSL
 ##    def __managerFinished(self, reply):
 ##        """
 ##        Private slot to handle a finished reply.
@@ -496,8 +497,8 @@ class WebBrowserPage(QWebEnginePage):
 ##           reply.url() == self.mainFrame().url():
 ##            modified = reply.header(QNetworkRequest.LastModifiedHeader)
 ##            if modified and modified.isValid():
-##                import Helpviewer.HelpWindow
-##                manager = Helpviewer.HelpWindow.HelpWindow.bookmarksManager()
+##                import WebBrowser.WebBrowserWindow
+##                manager = WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()
 ##                from .Bookmarks.BookmarkNode import BookmarkNode
 ##                for bookmark in manager.bookmarksForUrl(reply.url()):
 ##                    manager.setTimestamp(bookmark, BookmarkNode.TsModified,

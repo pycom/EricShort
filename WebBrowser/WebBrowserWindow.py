@@ -38,7 +38,7 @@ from E5Gui.E5MainWindow import E5MainWindow
 from E5Gui.E5Application import e5App
 from E5Gui.E5ZoomWidget import E5ZoomWidget
 
-##from E5Network.E5NetworkIcon import E5NetworkIcon
+from E5Network.E5NetworkIcon import E5NetworkIcon
 
 import Preferences
 from Preferences import Shortcuts
@@ -137,21 +137,6 @@ class WebBrowserWindow(E5MainWindow):
             self.__initActions()
         else:
             self.webProfile(private)
-##            if self.isPrivate():
-##                self.__webProfile = QWebEngineProfile(self)
-##            else:
-##                self.__webProfile = QWebEngineProfile.defaultProfile()
-##            self.__webProfile.downloadRequested.connect(
-##                self.__downloadRequested)
-##            
-##            # Setup QWebChannel user script
-##            script = QWebEngineScript()
-##            script.setName("_eric_webchannel")
-##            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
-##            script.setWorldId(QWebEngineScript.MainWorld)
-##            script.setRunsOnSubFrames(True)
-##            script.setSourceCode(Scripts.setupWebChannel())
-##            self.__webProfile.scripts().insert(script)
             
             from .SearchWidget import SearchWidget
             # TODO: QtHelp
@@ -162,8 +147,7 @@ class WebBrowserWindow(E5MainWindow):
             from .WebBrowserTabWidget import WebBrowserTabWidget
             # TODO: AdBlock
 ##            from .AdBlock.AdBlockIcon import AdBlockIcon
-            # TODO: VirusTotal
-##            from .VirusTotal.VirusTotalApi import VirusTotalAPI
+            from .VirusTotal.VirusTotalApi import VirusTotalAPI
             
             # TODO: allow using Qt Help even if not called from eric6
             WebBrowserWindow.setUseQtHelp(self.__fromEric)
@@ -268,8 +252,9 @@ class WebBrowserWindow(E5MainWindow):
             self.__initMenus()
             self.__initToolbars()
             
-##            self.historyManager()
-##            
+            self.historyManager()
+            
+            # TODO: Sync
 ##            syncMgr = self.syncManager()
 ##            syncMgr.syncMessage.connect(self.statusBar().showMessage)
 ##            syncMgr.syncError.connect(self.statusBar().showMessage)
@@ -279,6 +264,7 @@ class WebBrowserWindow(E5MainWindow):
             
             WebBrowserWindow.BrowserWindows.append(self)
             
+            # TODO: AdBlock
 ##            self.__adBlockIcon = AdBlockIcon(self)
 ##            self.statusBar().addPermanentWidget(self.__adBlockIcon)
 ##            self.__adBlockIcon.setEnabled(
@@ -288,9 +274,9 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.__tabWidget.sourceChanged.connect(
 ##                self.__adBlockIcon.sourceChanged)
 ##            
-##            self.networkIcon = E5NetworkIcon(self)
-##            self.statusBar().addPermanentWidget(self.networkIcon)
-##            
+            self.networkIcon = E5NetworkIcon(self)
+            self.statusBar().addPermanentWidget(self.networkIcon)
+            
             QDesktopServices.setUrlHandler("http", self.__linkActivated)
             QDesktopServices.setUrlHandler("https", self.__linkActivated)
             
@@ -317,21 +303,22 @@ class WebBrowserWindow(E5MainWindow):
             state = Preferences.getWebBrowser("WebBrowserState")
             self.restoreState(state)
             
+            # TODO: QtHelp
 ##            self.__initHelpDb()
             
-##            self.__virusTotal = VirusTotalAPI(self)
-##            self.__virusTotal.submitUrlError.connect(
-##                self.__virusTotalSubmitUrlError)
-##            self.__virusTotal.urlScanReport.connect(
-##                self.__virusTotalUrlScanReport)
-##            self.__virusTotal.fileScanReport.connect(
-##                self.__virusTotalFileScanReport)
-##            
+            self.__virusTotal = VirusTotalAPI(self)
+            self.__virusTotal.submitUrlError.connect(
+                self.__virusTotalSubmitUrlError)
+            self.__virusTotal.urlScanReport.connect(
+                self.__virusTotalUrlScanReport)
+            self.__virusTotal.fileScanReport.connect(
+                self.__virusTotalFileScanReport)
+            
             self.__previewer = None
             self.__shutdownCalled = False
             
-##            self.flashCookieManager()
-##            
+            self.flashCookieManager()
+            
             # TODO: QtHelp, do these once Qt 5.6 is available
 ##            if WebBrowserWindow.UseQtHelp:
 ##                QTimer.singleShot(0, self.__lookForNewDocumentation)
@@ -341,6 +328,7 @@ class WebBrowserWindow(E5MainWindow):
             self.__lastActiveWindow = None
             e5App().focusChanged[QWidget, QWidget].connect(
                 self.__appFocusChanged)
+            #TODO: Sync
 ##            
 ##            QTimer.singleShot(0, syncMgr.loadSettings)
     
@@ -386,6 +374,7 @@ class WebBrowserWindow(E5MainWindow):
         """
         standardFont = Preferences.getWebBrowser("StandardFont")
         fixedFont = Preferences.getWebBrowser("FixedFont")
+        # TODO: Fonts: add support for other font types
 
         settings = QWebEngineSettings.globalSettings()
 ##        settings.setAttribute(QWebSettings.DeveloperExtrasEnabled, True)
@@ -578,6 +567,7 @@ class WebBrowserWindow(E5MainWindow):
         if not self.__initShortcutsOnly:
             self.openTabAct.triggered.connect(self.__openFileNewTab)
         self.__actions.append(self.openTabAct)
+        # TODO: Save
 ##        
 ##        self.saveAsAct = E5Action(
 ##            self.tr('Save As'),
@@ -1386,7 +1376,7 @@ class WebBrowserWindow(E5MainWindow):
                 self.__showFeaturePermissionDialog)
         self.__actions.append(self.featurePermissionAct)
         
-        # TODO: re-enable once Qt 5.6 is available
+        # TODO: QtHelp: re-enable once Qt 5.6 is available
 ##        if WebBrowserWindow.UseQtHelp or self.__initShortcutsOnly:
 ##            self.syncTocAct = E5Action(
 ##                self.tr('Sync with Table of Contents'),
@@ -1883,6 +1873,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        menu.addAction(self.userAgentManagerAct)
 ##        menu.addSeparator()
         
+        # TODO: QtHelp
 ##        if WebBrowserWindow.UseQtHelp:
 ##            menu.addAction(self.manageQtHelpDocsAct)
 ##            menu.addAction(self.manageQtHelpFiltersAct)
@@ -1891,8 +1882,8 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.clearPrivateDataAct)
         menu.addAction(self.clearIconsAct)
         
-##        menu = mb.addMenu(self.tr("&Tools"))
-##        menu.setTearOffEnabled(True)
+        menu = mb.addMenu(self.tr("&Tools"))
+        menu.setTearOffEnabled(True)
 ##        menu.addAction(self.feedsManagerAct)
 ##        menu.addAction(self.siteInfoAct)
 ##        menu.addSeparator()
@@ -1975,6 +1966,7 @@ class WebBrowserWindow(E5MainWindow):
         findtb.addAction(self.findNextAct)
         findtb.addAction(self.findPrevAct)
         
+        # TODO: QtHelp
 ##        if WebBrowserWindow.UseQtHelp:
 ##            filtertb = self.addToolBar(self.tr("Filter"))
 ##            filtertb.setObjectName("FilterToolBar")
@@ -2000,9 +1992,9 @@ class WebBrowserWindow(E5MainWindow):
 ##        settingstb.addAction(self.greaseMonkeyAct)
         settingstb.addAction(self.featurePermissionAct)
         
-##        toolstb = self.addToolBar(self.tr("Tools"))
-##        toolstb.setObjectName("ToolsToolBar")
-##        toolstb.setIconSize(UI.Config.ToolBarIconSize)
+        toolstb = self.addToolBar(self.tr("Tools"))
+        toolstb.setObjectName("ToolsToolBar")
+        toolstb.setIconSize(UI.Config.ToolBarIconSize)
 ##        toolstb.addAction(self.feedsManagerAct)
 ##        toolstb.addAction(self.siteInfoAct)
 ##        toolstb.addSeparator()
@@ -2067,28 +2059,28 @@ class WebBrowserWindow(E5MainWindow):
         self.addToolBarBreak()
         self.addToolBar(self.bookmarksToolBar)
         
-##        self.addToolBarBreak()
-##        vttb = self.addToolBar(self.tr("VirusTotal"))
-##        vttb.setObjectName("VirusTotalToolBar")
-##        vttb.setIconSize(UI.Config.ToolBarIconSize)
-##        vttb.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-##        self.virustotalScanCurrentAct = vttb.addAction(
-##            UI.PixmapCache.getIcon("virustotal.png"),
-##            self.tr("Scan current site"),
-##            self.__virusTotalScanCurrentSite)
-##        self.virustotalIpReportAct = vttb.addAction(
-##            UI.PixmapCache.getIcon("virustotal.png"),
-##            self.tr("IP Address Report"),
-##            self.__virusTotalIpAddressReport)
-##        self.virustotalDomainReportAct = vttb.addAction(
-##            UI.PixmapCache.getIcon("virustotal.png"),
-##            self.tr("Domain Report"),
-##            self.__virusTotalDomainReport)
-##        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
-##           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
-##            self.virustotalScanCurrentAct.setEnabled(False)
-##            self.virustotalIpReportAct.setEnabled(False)
-##            self.virustotalDomainReportAct.setEnabled(False)
+        self.addToolBarBreak()
+        vttb = self.addToolBar(self.tr("VirusTotal"))
+        vttb.setObjectName("VirusTotalToolBar")
+        vttb.setIconSize(UI.Config.ToolBarIconSize)
+        vttb.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        self.virustotalScanCurrentAct = vttb.addAction(
+            UI.PixmapCache.getIcon("virustotal.png"),
+            self.tr("Scan current site"),
+            self.__virusTotalScanCurrentSite)
+        self.virustotalIpReportAct = vttb.addAction(
+            UI.PixmapCache.getIcon("virustotal.png"),
+            self.tr("IP Address Report"),
+            self.__virusTotalIpAddressReport)
+        self.virustotalDomainReportAct = vttb.addAction(
+            UI.PixmapCache.getIcon("virustotal.png"),
+            self.tr("Domain Report"),
+            self.__virusTotalDomainReport)
+        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
+           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
+            self.virustotalScanCurrentAct.setEnabled(False)
+            self.virustotalIpReportAct.setEnabled(False)
+            self.virustotalDomainReportAct.setEnabled(False)
         
     def __nextTab(self):
         """
@@ -2480,8 +2472,8 @@ class WebBrowserWindow(E5MainWindow):
         self.bookmarksToolBar.setModel(None)
         self.bookmarksManager().close()
         
-##        self.historyManager().close()
-##        
+        self.historyManager().close()
+        
         self.passwordManager().close()
         
 ##        self.adBlockManager().close()
@@ -2495,13 +2487,14 @@ class WebBrowserWindow(E5MainWindow):
         ZoomManager.instance().close()
         
         WebIconProvider.instance().close()
-##        
-##        self.__virusTotal.close()
-##        
-##        self.flashCookieManager().shutdown()
-##        
+        
+        self.__virusTotal.close()
+        
+        self.flashCookieManager().shutdown()
+        
         self.searchEdit.openSearchManager().close()
         
+        # TODO: QtHelp
 ##        if WebBrowserWindow.UseQtHelp:
 ##            self.__searchEngine.cancelIndexing()
 ##            self.__searchEngine.cancelSearching()
@@ -2669,6 +2662,7 @@ class WebBrowserWindow(E5MainWindow):
         Private slot to handle the select all action.
         """
         self.currentBrowser().selectAll()
+    # TODO: Private Browsing
 ##    
 ##    def __privateBrowsing(self):
 ##        """
@@ -2803,17 +2797,16 @@ class WebBrowserWindow(E5MainWindow):
         
         self.searchEdit.preferencesChanged()
         
-        # TODO: VirusTotal
-##        self.__virusTotal.preferencesChanged()
-##        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
-##           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
-##            self.virustotalScanCurrentAct.setEnabled(False)
-##            self.virustotalIpReportAct.setEnabled(False)
-##            self.virustotalDomainReportAct.setEnabled(False)
-##        else:
-##            self.virustotalScanCurrentAct.setEnabled(True)
-##            self.virustotalIpReportAct.setEnabled(True)
-##            self.virustotalDomainReportAct.setEnabled(True)
+        self.__virusTotal.preferencesChanged()
+        if not Preferences.getWebBrowser("VirusTotalEnabled") or \
+           Preferences.getWebBrowser("VirusTotalServiceKey") == "":
+            self.virustotalScanCurrentAct.setEnabled(False)
+            self.virustotalIpReportAct.setEnabled(False)
+            self.virustotalDomainReportAct.setEnabled(False)
+        else:
+            self.virustotalScanCurrentAct.setEnabled(True)
+            self.virustotalIpReportAct.setEnabled(True)
+            self.virustotalDomainReportAct.setEnabled(True)
     
     def masterPasswordChanged(self, oldPassword, newPassword):
         """
@@ -2876,6 +2869,7 @@ class WebBrowserWindow(E5MainWindow):
         else:
             cls.useQtHelp = False
     
+    # TODO: QtHelp
 ##    @classmethod
 ##    def helpEngine(cls):
 ##        """
@@ -2938,6 +2932,7 @@ class WebBrowserWindow(E5MainWindow):
             self.currentBrowser().setUrl(url)
             self.__activating = False
         
+    # TODO: QtHelp
 ##    def __linksActivated(self, links, keyword):
 ##        """
 ##        Private slot to select a topic to be shown.
@@ -2960,6 +2955,7 @@ class WebBrowserWindow(E5MainWindow):
         """
         self.currentBrowser().setFocus()
         
+    # TODO: QtHelp
 ##    def __syncTOC(self):
 ##        """
 ##        Private slot to synchronize the TOC with the currently shown page.
@@ -3771,7 +3767,8 @@ class WebBrowserWindow(E5MainWindow):
             self.currentBrowser().triggerPageAction(QWebEnginePage.Forward)
         else:
             super(WebBrowserWindow, self).mousePressEvent(evt)
-
+    
+    # TODO: RSS
 ##    @classmethod
 ##    def feedsManager(cls):
 ##        """
@@ -3804,6 +3801,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        feedsManager.newUrl.disconnect(self.openUrlNewTab)
 ##        feedsManager.rejected.disconnect(self.__feedsManagerClosed)
 ##    
+    # TODO: Site Info
 ##    def __showSiteinfoDialog(self):
 ##        """
 ##        Private slot to show the site info dialog.
@@ -3812,6 +3810,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.__siteinfoDialog = SiteInfoDialog(self.currentBrowser(), self)
 ##        self.__siteinfoDialog.show()
 ##
+    # TODO: User Agents
 ##    @classmethod
 ##    def userAgentsManager(cls):
 ##        """
@@ -3834,6 +3833,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        dlg = UserAgentsDialog(self)
 ##        dlg.exec_()
 ##    
+    # TODO: Sync
 ##    @classmethod
 ##    def syncManager(cls):
 ##        """
@@ -3853,6 +3853,7 @@ class WebBrowserWindow(E5MainWindow):
 ##        """
 ##        self.syncManager().showSyncDialog()
 ##    
+    # TODO: SpeedDial
 ##    @classmethod
 ##    def speedDial(cls):
 ##        """
@@ -3902,6 +3903,7 @@ class WebBrowserWindow(E5MainWindow):
                     number = self.__tabWidget.count()
                 self.__tabWidget.setCurrentIndex(number - 1)
                 return
+        # TODO: SpeeedDial
 ##            
 ##            if evt.modifiers() == Qt.KeyboardModifiers(Qt.MetaModifier):
 ##                url = self.speedDial().urlForShortcut(number - 1)
@@ -3911,87 +3913,87 @@ class WebBrowserWindow(E5MainWindow):
         
         super(WebBrowserWindow, self).keyPressEvent(evt)
     
-##    ###########################################################################
-##    ## Interface to VirusTotal below                                         ##
-##    ###########################################################################
-##    
-##    def __virusTotalScanCurrentSite(self):
-##        """
-##        Private slot to ask VirusTotal for a scan of the URL of the current
-##        browser.
-##        """
-##        cb = self.currentBrowser()
-##        if cb is not None:
-##            url = cb.url()
-##            if url.scheme() in ["http", "https", "ftp"]:
-##                self.requestVirusTotalScan(url)
-##    
-##    def requestVirusTotalScan(self, url):
-##        """
-##        Public method to submit a request to scan an URL by VirusTotal.
-##        
-##        @param url URL to be scanned (QUrl)
-##        """
-##        self.__virusTotal.submitUrl(url)
-##    
-##    def __virusTotalSubmitUrlError(self, msg):
-##        """
-##        Private slot to handle an URL scan submission error.
-##        
-##        @param msg error message (str)
-##        """
-##        E5MessageBox.critical(
-##            self,
-##            self.tr("VirusTotal Scan"),
-##            self.tr("""<p>The VirusTotal scan could not be"""
-##                    """ scheduled.<p>\n<p>Reason: {0}</p>""").format(msg))
-##    
-##    def __virusTotalUrlScanReport(self, url):
-##        """
-##        Private slot to initiate the display of the URL scan report page.
-##        
-##        @param url URL of the URL scan report page (string)
-##        """
-##        self.newTab(url)
-##    
-##    def __virusTotalFileScanReport(self, url):
-##        """
-##        Private slot to initiate the display of the file scan report page.
-##        
-##        @param url URL of the file scan report page (string)
-##        """
-##        self.newTab(url)
-##    
-##    def __virusTotalIpAddressReport(self):
-##        """
-##        Private slot to retrieve an IP address report.
-##        """
-##        ip, ok = QInputDialog.getText(
-##            self,
-##            self.tr("IP Address Report"),
-##            self.tr("Enter a valid IPv4 address in dotted quad notation:"),
-##            QLineEdit.Normal)
-##        if ok and ip:
-##            if ip.count(".") == 3:
-##                self.__virusTotal.getIpAddressReport(ip)
-##            else:
-##                E5MessageBox.information(
-##                    self,
-##                    self.tr("IP Address Report"),
-##                    self.tr("""The given IP address is not in dotted quad"""
-##                            """ notation."""))
-##    
-##    def __virusTotalDomainReport(self):
-##        """
-##        Private slot to retrieve a domain report.
-##        """
-##        domain, ok = QInputDialog.getText(
-##            self,
-##            self.tr("Domain Report"),
-##            self.tr("Enter a valid domain name:"),
-##            QLineEdit.Normal)
-##        if ok and domain:
-##            self.__virusTotal.getDomainReport(domain)
+    ###########################################################################
+    ## Interface to VirusTotal below                                         ##
+    ###########################################################################
+    
+    def __virusTotalScanCurrentSite(self):
+        """
+        Private slot to ask VirusTotal for a scan of the URL of the current
+        browser.
+        """
+        cb = self.currentBrowser()
+        if cb is not None:
+            url = cb.url()
+            if url.scheme() in ["http", "https", "ftp"]:
+                self.requestVirusTotalScan(url)
+    
+    def requestVirusTotalScan(self, url):
+        """
+        Public method to submit a request to scan an URL by VirusTotal.
+        
+        @param url URL to be scanned (QUrl)
+        """
+        self.__virusTotal.submitUrl(url)
+    
+    def __virusTotalSubmitUrlError(self, msg):
+        """
+        Private slot to handle an URL scan submission error.
+        
+        @param msg error message (str)
+        """
+        E5MessageBox.critical(
+            self,
+            self.tr("VirusTotal Scan"),
+            self.tr("""<p>The VirusTotal scan could not be"""
+                    """ scheduled.<p>\n<p>Reason: {0}</p>""").format(msg))
+    
+    def __virusTotalUrlScanReport(self, url):
+        """
+        Private slot to initiate the display of the URL scan report page.
+        
+        @param url URL of the URL scan report page (string)
+        """
+        self.newTab(url)
+    
+    def __virusTotalFileScanReport(self, url):
+        """
+        Private slot to initiate the display of the file scan report page.
+        
+        @param url URL of the file scan report page (string)
+        """
+        self.newTab(url)
+    
+    def __virusTotalIpAddressReport(self):
+        """
+        Private slot to retrieve an IP address report.
+        """
+        ip, ok = QInputDialog.getText(
+            self,
+            self.tr("IP Address Report"),
+            self.tr("Enter a valid IPv4 address in dotted quad notation:"),
+            QLineEdit.Normal)
+        if ok and ip:
+            if ip.count(".") == 3:
+                self.__virusTotal.getIpAddressReport(ip)
+            else:
+                E5MessageBox.information(
+                    self,
+                    self.tr("IP Address Report"),
+                    self.tr("""The given IP address is not in dotted quad"""
+                            """ notation."""))
+    
+    def __virusTotalDomainReport(self):
+        """
+        Private slot to retrieve a domain report.
+        """
+        domain, ok = QInputDialog.getText(
+            self,
+            self.tr("Domain Report"),
+            self.tr("Enter a valid domain name:"),
+            QLineEdit.Normal)
+        if ok and domain:
+            self.__virusTotal.getDomainReport(domain)
     
     ###########################################################################
     ## Style sheet handling below                                            ##

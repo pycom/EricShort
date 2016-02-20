@@ -165,7 +165,7 @@ class UrlBar(E5LineEdit):
         if manager.bookmarkForUrl(self.__browser.url()) is not None:
             self.__bookmarkButton.setIcon(self.__bmActiveIcon)
             bookmarks = manager.bookmarksForUrl(self.__browser.url())
-            from Helpviewer.Bookmarks.BookmarkNode import BookmarkNode
+            from WebBrowser.Bookmarks.BookmarkNode import BookmarkNode
             for bookmark in bookmarks:
                 manager.setTimestamp(bookmark, BookmarkNode.TsVisited,
                                      QDateTime.currentDateTime())
@@ -461,7 +461,7 @@ class UrlBar(E5LineEdit):
 ##        """
 ##        Private slot to handle clicking the RSS icon.
 ##        """
-##        from Helpviewer.Feeds.FeedsDialog import FeedsDialog
+##        from WebBrowser.Feeds.FeedsDialog import FeedsDialog
 ##        feeds = self.__browser.getRSS()
 ##        dlg = FeedsDialog(feeds, self.__browser)
 ##        dlg.exec_()
