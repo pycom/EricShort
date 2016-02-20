@@ -1886,7 +1886,6 @@ class WebBrowserView(QWebEngineView):
     ## RSS related methods below
     ###########################################################################
     
-    # TODO: RSS, extract links from page to implement RSS stuff
     def checkRSS(self):
         """
         Public method to check, if the loaded page contains feed links.
@@ -1901,21 +1900,6 @@ class WebBrowserView(QWebEngineView):
         for feed in feeds:
             if feed["url"] and feed["title"]:
                 self.__rss.append((feed["title"], feed["url"]))
-##        frame = self.page()
-##        linkElementsList = frame.findAllElements("link").toList()
-##        
-##        for linkElement in linkElementsList:
-##            # only atom+xml and rss+xml will be processed
-##            if linkElement.attribute("rel") != "alternate" or \
-##               (linkElement.attribute("type") != "application/rss+xml" and
-##                    linkElement.attribute("type") != "application/atom+xml"):
-##                continue
-##            
-##            title = linkElement.attribute("title")
-##            href = linkElement.attribute("href")
-##            if href == "" or title == "":
-##                continue
-##            self.__rss.append((title, href))
         
         return len(self.__rss) > 0
     

@@ -2787,9 +2787,6 @@ class WebBrowserWindow(E5MainWindow):
         
         self.__initWebEngineSettings()
         
-        # TODO: NetworkManager
-##        self.networkManager().preferencesChanged()
-##        
         self.historyManager().preferencesChanged()
         
         self.__tabWidget.preferencesChanged()
