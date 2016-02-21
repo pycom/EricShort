@@ -1318,18 +1318,18 @@ class WebBrowserView(QWebEngineView):
         super(WebBrowserView, self).focusOutEvent(evt)
     
     # TODO: Gestures: Obsoleted by eventFilter() (?)
-##    def event(self, evt):
-##        """
-##        Public method handling events.
-##        
-##        @param evt reference to the event (QEvent)
-##        @return flag indicating, if the event was handled (boolean)
-##        """
-##        if evt.type() == QEvent.Gesture:
-##            self.gestureEvent(evt)
-##            return True
-##        
-##        return super(WebBrowserView, self).event(evt)
+    def event(self, evt):
+        """
+        Public method handling events.
+        
+        @param evt reference to the event (QEvent)
+        @return flag indicating, if the event was handled (boolean)
+        """
+        if evt.type() == QEvent.Gesture:
+            self._gestureEvent(evt)
+            return True
+        
+        return super(WebBrowserView, self).event(evt)
     
     def _gestureEvent(self, evt):
         """
@@ -1364,6 +1364,7 @@ class WebBrowserView(QWebEngineView):
             if child and child.inherits(
                     "QtWebEngineCore::RenderWidgetHostViewQtDelegateWidget"):
                 self.__rwhvqt = child
+                self.grabGesture(Qt.PinchGesture)
                 self.__rwhvqt.installEventFilter(self)
         
         # forward events to WebBrowserView
