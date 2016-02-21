@@ -2819,7 +2819,7 @@ def setWebBrowser(key, value, prefClass=Prefs):
     elif key == "RssFeeds":
         # value is list of tuples of (URL, title, icon)
         prefClass.settings.remove("WebBrowser/" + key)
-        prefClass.settings.beginWriteArray("Help/" + key, len(value))
+        prefClass.settings.beginWriteArray("WebBrowser/" + key, len(value))
         index = 0
         for v in value:
             prefClass.settings.setArrayIndex(index)

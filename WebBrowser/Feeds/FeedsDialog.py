@@ -9,7 +9,7 @@ Module implementing a dialog to add RSS feeds.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import QUrl
+from PyQt5.QtCore import QUrl, qVersion
 from PyQt5.QtWidgets import QDialog, QPushButton, QLabel
 
 from E5Gui import E5MessageBox
@@ -61,16 +61,21 @@ class FeedsDialog(QDialog, Ui_FeedsDialog):
         button = self.sender()
         urlString = button.feed[1]
         url = QUrl(urlString)
-        if not url.host():
-            if not urlString.startswith("/"):
-                urlString = "/" + urlString
-            urlString = self.__browser.url().host() + urlString
-            tmpUrl = QUrl(urlString)
-            if not tmpUrl.scheme():
-                urlString = "http://" + urlString
-            tmpUrl = QUrl(urlString)
-            if not tmpUrl.scheme() or not tmpUrl.host():
-                return
+        if url.isRelative():
+            url = self.__browser.url().resolved(url)
+            if qVersion() >= "5.0.0":
+                urlString = url.toDisplayString(QUrl.FullyDecoded)
+            else:
+                urlString = url.toString()
+##            if not urlString.startswith("/"):
+##                urlString = "/" + urlString
+##            urlString = self.__browser.url().host() + urlString
+##            tmpUrl = QUrl(urlString)
+##            if not tmpUrl.scheme():
+##                urlString = "http://" + urlString
+##            tmpUrl = QUrl(urlString)
+##            if not tmpUrl.scheme() or not tmpUrl.host():
+##                return
         if not url.isValid():
             return
         

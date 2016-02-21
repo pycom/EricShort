@@ -17,7 +17,6 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt, QUrl, QXmlStreamReader
 from PyQt5.QtGui import QIcon, QCursor
 from PyQt5.QtWidgets import QDialog, QTreeWidgetItem, QMenu, QApplication
 from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply
-##from PyQt5.QtWebKit import QWebSettings
 
 from E5Gui import E5MessageBox
 
