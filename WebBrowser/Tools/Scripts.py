@@ -54,7 +54,7 @@ def setupWebChannel():
                registerExternal(channel.objects.eric_object);
             }});
 
-            }})()"""
+        }})()"""
     
     return source.format(readAllFileContents(":/javascript/qwebchannel.js"))
 
@@ -226,7 +226,7 @@ def sendPostData(url, data):
             var val;
             {1}
             form.submit();
-            }})()"""
+        }})()"""
     
     valueSource = """
         val = document.createElement('input');
@@ -311,7 +311,7 @@ def setupFormObserver():
             });
             observer.observe(document.documentElement, { childList: true });
             
-            })()"""
+        })()"""
     return source
 
 
@@ -346,7 +346,7 @@ def completeFormData(data):
                 }}
             }}
             
-            }})()"""
+        }})()"""
     
     data = bytes(data).decode("utf-8")
     data = data.replace("'", "\\'")

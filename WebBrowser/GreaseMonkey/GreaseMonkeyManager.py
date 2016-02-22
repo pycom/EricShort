@@ -18,6 +18,9 @@ from PyQt5.QtNetwork import QNetworkAccessManager
 import Utilities
 import Preferences
 
+from WebBrowser.WebBrowserWindow import WebBrowserWindow
+from .GreaseMonkeyUrlInterceptor import GreaseMonkeyUrlInterceptor
+
 
 class GreaseMonkeyManager(QObject):
     """
@@ -34,22 +37,21 @@ class GreaseMonkeyManager(QObject):
         super(GreaseMonkeyManager, self).__init__(parent)
         
         self.__disabledScripts = []
-        self.__endScripts = []
-        self.__startScripts = []
+        self.__scripts = []
         self.__downloaders = []
         
+        self.__interceptor = GreaseMonkeyUrlInterceptor(self)
+        WebBrowserWindow.networkManager().installUrlInterceptor(
+            self.__interceptor)
+        
         QTimer.singleShot(0, self.__load)
-##    , m_interceptor(new GM_UrlInterceptor(this))
-##{
-##    mApp->networkManager()->installUrlInterceptor(m_interceptor);
-##
-##    QTimer::singleShot(0, this, SLOT(load()));
-##}
-##
-##GM_Manager::~GM_Manager()
-##{
-##    mApp->networkManager()->removeUrlInterceptor(m_interceptor);
-##}
+    
+    def __del__(self):
+        """
+        Special method called during object destruction.
+        """
+        WebBrowserWindow.networkManager().removeUrlInterceptor(
+            self.__interceptor)
     
     def showConfigurationDialog(self, parent=None):
         """
@@ -143,7 +145,7 @@ class GreaseMonkeyManager(QObject):
         
         @return list of all scripts (list of GreaseMonkeyScript)
         """
-        return self.__startScripts[:] + self.__endScripts[:]
+        return self.__scripts[:]
     
     def containsScript(self, fullName):
         """
@@ -152,12 +154,10 @@ class GreaseMonkeyManager(QObject):
         @param fullName full name of the script (string)
         @return flag indicating the existence (boolean)
         """
-        for script in self.__startScripts:
+        for script in self.__scripts:
             if script.fullName() == fullName:
                 return True
-        for script in self.__endScripts:
-            if script.fullName() == fullName:
-                return True
+        
         return False
     
     def enableScript(self, script):
@@ -170,14 +170,9 @@ class GreaseMonkeyManager(QObject):
         fullName = script.fullName()
         if fullName in self.__disabledScripts:
             self.__disabledScripts.remove(fullName)
-##void GM_Manager::enableScript(GM_Script* script)
-##{
-##    script->setEnabled(true);
-##    m_disabledScripts.removeOne(script->fullName());
-##
-##    QWebEngineScriptCollection *collection = mApp->webProfile()->scripts();
-##    collection->insert(script->webScript());
-##}
+        
+        collection = WebBrowserWindow.webProfile().scripts()
+        collection.insert(script.webScript())
     
     def disableScript(self, script):
         """
@@ -189,13 +184,9 @@ class GreaseMonkeyManager(QObject):
         fullName = script.fullName()
         if fullName not in self.__disabledScripts:
             self.__disabledScripts.append(fullName)
-##void GM_Manager::disableScript(GM_Script* script)
-##{
-##    script->setEnabled(false);
-##    m_disabledScripts.append(script->fullName());
-##
-##    QWebEngineScriptCollection *collection = mApp->webProfile()->scripts();
-##    collection->remove(collection->findScript(script->fullName()));
+        
+        collection = WebBrowserWindow.webProfile().scripts()
+        collection.remove(collection.findScript(fullName))
     
     def addScript(self, script):
         """
@@ -204,83 +195,48 @@ class GreaseMonkeyManager(QObject):
         @param script script to be added (GreaseMonkeyScript)
         @return flag indicating success (boolean)
         """
-        if not script:
+        if not script or not script.isValid():
             return False
         
-        from .GreaseMonkeyScript import GreaseMonkeyScript
-        if script.startAt() == GreaseMonkeyScript.DocumentStart:
-            self.__startScripts.append(script)
-        else:
-            self.__endScripts.append(script)
+        self.__scripts.append(script)
+        script.scriptChanged.connect(self.__scriptChanged)
+        
+        collection = WebBrowserWindow.webProfile().scripts()
+        collection.insert(script.webScript())
         
         self.scriptsChanged.emit()
         return True
-##bool GM_Manager::addScript(GM_Script* script)
-##{
-##    if (!script || !script->isValid()) {
-##        return false;
-##    }
-##
-##    m_scripts.append(script);
-##    connect(script, &GM_Script::scriptChanged, this, &GM_Manager::scriptChanged);
-##
-##    QWebEngineScriptCollection *collection = mApp->webProfile()->scripts();
-##    collection->insert(script->webScript());
-##
-##    emit scriptsChanged();
-##    return true;
-##}
     
-    def removeScript(self, script):
+    def removeScript(self, script, removeFile=True):
         """
         Public method to remove a script.
         
         @param script script to be removed (GreaseMonkeyScript)
+        @param removeFile flag indicating to remove the script file as well
+            (bool)
         @return flag indicating success (boolean)
         """
         if not script:
             return False
         
-        from .GreaseMonkeyScript import GreaseMonkeyScript
-        if script.startAt() == GreaseMonkeyScript.DocumentStart:
-            try:
-                self.__startScripts.remove(script)
-            except ValueError:
-                pass
-        else:
-            try:
-                self.__endScripts.remove(script)
-            except ValueError:
-                pass
+        try:
+            self.__scripts.remove(script)
+        except ValueError:
+            pass
         
         fullName = script.fullName()
+        collection = WebBrowserWindow.webProfile().scripts()
+        collection.remove(collection.findScript(fullName))
+        
         if fullName in self.__disabledScripts:
             self.__disabledScripts.remove(fullName)
-        QFile.remove(script.fileName())
+        
+        if removeFile:
+            QFile.remove(script.fileName())
+            del script
         
         self.scriptsChanged.emit()
         return True
-##bool GM_Manager::removeScript(GM_Script* script, bool removeFile)
-##{
-##    if (!script) {
-##        return false;
-##    }
-##
-##    m_scripts.removeOne(script);
-##
-##    QWebEngineScriptCollection *collection = mApp->webProfile()->scripts();
-##    collection->remove(collection->findScript(script->fullName()));
-##
-##    m_disabledScripts.removeOne(script->fullName());
-##
-##    if (removeFile) {
-##        QFile::remove(script->fileName());
-##        delete script;
-##    }
-##
-##    emit scriptsChanged();
-##    return true;
-##}
     
     def canRunOnScheme(self, scheme):
         """
@@ -290,32 +246,6 @@ class GreaseMonkeyManager(QObject):
         @return flag indicating, that scripts can be run (boolean)
         """
         return scheme in ["http", "https", "data", "ftp"]
-    
-##    def pageLoadStarted(self):
-##        """
-##        Public slot to handle the start of loading a page.
-##        """
-##        frame = self.sender()
-##        if not frame:
-##            return
-##        
-##        urlScheme = frame.url().scheme()
-##        urlString = bytes(frame.url().toEncoded()).decode()
-##        
-##        if not self.canRunOnScheme(urlScheme):
-##            return
-##        
-##        from .GreaseMonkeyJavaScript import bootstrap_js
-##        for script in self.__startScripts:
-##            if script.match(urlString):
-##                frame.evaluateJavaScript(bootstrap_js + script.script())
-##        
-##        for script in self.__endScripts:
-##            if script.match(urlString):
-##                javascript = 'window.addEventListener("DOMContentLoaded",' \
-##                    'function(e) {{ {0} }}, false);'.format(
-##                        bootstrap_js + script.script())
-##                frame.evaluateJavaScript(javascript)
     
     def __load(self):
         """
@@ -329,101 +259,34 @@ class GreaseMonkeyManager(QObject):
             scriptsDir.mkdir("requires")
         
         self.__disabledScripts = \
-            Preferences.getHelp("GreaseMonkeyDisabledScripts")
+            Preferences.getWebBrowser("GreaseMonkeyDisabledScripts")
         
         from .GreaseMonkeyScript import GreaseMonkeyScript
         for fileName in scriptsDir.entryList(["*.js"], QDir.Files):
             absolutePath = scriptsDir.absoluteFilePath(fileName)
             script = GreaseMonkeyScript(self, absolutePath)
             
+            if not script.isValid():
+                del script
+                continue
+            
+            self.__scripts.append(script)
+            
             if script.fullName() in self.__disabledScripts:
                 script.setEnabled(False)
-            
-            if script.startAt() == GreaseMonkeyScript.DocumentStart:
-                self.__startScripts.append(script)
             else:
-                self.__endScripts.append(script)
-##void GM_Manager::load()
-##{
-##    QDir gmDir(m_settingsPath + QL1S("/greasemonkey"));
-##    if (!gmDir.exists()) {
-##        gmDir.mkdir(m_settingsPath + QL1S("/greasemonkey"));
-##    }
-##
-##    if (!gmDir.exists("requires")) {
-##        gmDir.mkdir("requires");
-##    }
-##
-##    m_bootstrapScript = QzTools::readAllFileContents(":gm/data/bootstrap.min.js");
-##    m_valuesScript = QzTools::readAllFileContents(":gm/data/values.min.js");
-##
-##    QSettings settings(m_settingsPath + QL1S("/extensions.ini"), QSettings::IniFormat);
-##    settings.beginGroup("GreaseMonkey");
-##    m_disabledScripts = settings.value("disabledScripts", QStringList()).toStringList();
-##
-##    foreach (const QString &fileName, gmDir.entryList(QStringList("*.js"), QDir::Files)) {
-##        const QString absolutePath = gmDir.absoluteFilePath(fileName);
-##        GM_Script* script = new GM_Script(this, absolutePath);
-##
-##        if (!script->isValid()) {
-##            delete script;
-##            continue;
-##        }
-##
-##        m_scripts.append(script);
-##
-##        if (m_disabledScripts.contains(script->fullName())) {
-##            script->setEnabled(false);
-##        }
-##        else {
-##            mApp->webProfile()->scripts()->insert(script->webScript());
-##        }
-##    }
-##}
+                collection = WebBrowserWindow.webProfile().scripts()
+                collection.insert(script.webScript())
     
     def __scriptChanged(self):
         """
         Private slot handling a changed script.
         """
-##void GM_Manager::scriptChanged()
-##{
-##    GM_Script *script = qobject_cast<GM_Script*>(sender());
-##    if (!script)
-##        return;
-##
-##    QWebEngineScriptCollection *collection = mApp->webProfile()->scripts();
-##    collection->remove(collection->findScript(script->fullName()));
-##    collection->insert(script->webScript());
-##}
-    
-##    def connectPage(self, page):
-##        """
-##        Public method to allow the GreaseMonkey manager to connect to the page.
-##        
-##        @param page reference to the web page (HelpWebPage)
-##        """
-##        page.mainFrame().javaScriptWindowObjectCleared.connect(
-##            self.pageLoadStarted)
-##    
-##    def createRequest(self, op, request, outgoingData=None):
-##        """
-##        Public method to create a request.
-##        
-##        @param op the operation to be performed
-##            (QNetworkAccessManager.Operation)
-##        @param request reference to the request object (QNetworkRequest)
-##        @param outgoingData reference to an IODevice containing data to be sent
-##            (QIODevice)
-##        @return reference to the created reply object (QNetworkReply)
-##        """
-##        if op == QNetworkAccessManager.GetOperation and \
-##           request.rawHeader(b"X-Eric6-UserLoadAction") == QByteArray(b"1"):
-##            urlString = request.url().toString(
-##                QUrl.RemoveFragment | QUrl.RemoveQuery)
-##            if urlString.endswith(".user.js"):
-##                self.downloadScript(request)
-##                from Helpviewer.Network.EmptyNetworkReply import \
-##                    EmptyNetworkReply
-##                return EmptyNetworkReply(self)
-##        
-##        return None
+        script = self.sender()
+        if not script:
+            return
+        
+        fullName = script.fullName()
+        collection = WebBrowserWindow.webProfile().scripts()
+        collection.remove(collection.findScript(fullName))
+        collection.insert(script.webScript())

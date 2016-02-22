@@ -1026,6 +1026,8 @@ class Prefs(object):
                                     # search engine name)
         "SearchLanguage": QLocale().language(),
         "RssFeeds": [],
+        # Grease Monkey
+        "GreaseMonkeyDisabledScripts": [],
         # Flash Cookie Manager: identical to helpDefaults
         # PIM:                  identical to helpDefaults
         # VirusTotal:           identical to helpDefaults
@@ -2767,9 +2769,10 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "ClickToFlashWhitelist", "SendRefererWhitelist",
 ##                 "GreaseMonkeyDisabledScripts", "NoCacheHosts",
 ##                 "FlashCookiesWhitelist", "FlashCookiesBlacklist",
-##                 ]:
-##        return toList(prefClass.settings.value(
-##            "WebBrowser/" + key, prefClass.helpDefaults[key]))
+    elif key in ["GreaseMonkeyDisabledScripts",
+                 ]:
+        return toList(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.helpDefaults[key]))
     else:
         return prefClass.settings.value("WebBrowser/" + key,
                                         prefClass.webBrowserDefaults[key])

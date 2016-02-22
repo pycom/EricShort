@@ -3,71 +3,78 @@
 # Copyright (c) 2016 Detlev Offenbach <detlev@die-offenbachs.de>
 #
 
+"""
+Module implementing a file system watcher with a delay.
+"""
+
 from __future__ import unicode_literals
 
-##class DelayedFileWatcher : public QFileSystemWatcher
-##{
-##    Q_OBJECT
-##
-##public:
-##    explicit DelayedFileWatcher(QObject* parent = 0);
-##    explicit DelayedFileWatcher(const QStringList &paths, QObject* parent = 0);
-##
-##signals:
-##    void delayedDirectoryChanged(const QString &path);
-##    void delayedFileChanged(const QString &path);
-##
-##private slots:
-##    void slotDirectoryChanged(const QString &path);
-##    void slotFileChanged(const QString &path);
-##
-##    void dequeueDirectory();
-##    void dequeueFile();
-##
-##private:
-##    void init();
-##
-##    QQueue<QString> m_dirQueue;
-##    QQueue<QString> m_fileQueue;
-##};
-##
-##
-##DelayedFileWatcher::DelayedFileWatcher(QObject* parent)
-##    : QFileSystemWatcher(parent)
-##{
-##    init();
-##}
-##
-##DelayedFileWatcher::DelayedFileWatcher(const QStringList &paths, QObject* parent)
-##    : QFileSystemWatcher(paths, parent)
-##{
-##    init();
-##}
-##
-##void DelayedFileWatcher::init()
-##{
-##    connect(this, SIGNAL(directoryChanged(QString)), this, SLOT(slotDirectoryChanged(QString)));
-##    connect(this, SIGNAL(fileChanged(QString)), this, SLOT(slotFileChanged(QString)));
-##}
-##
-##void DelayedFileWatcher::slotDirectoryChanged(const QString &path)
-##{
-##    m_dirQueue.enqueue(path);
-##    QTimer::singleShot(500, this, SLOT(dequeueDirectory()));
-##}
-##
-##void DelayedFileWatcher::slotFileChanged(const QString &path)
-##{
-##    m_fileQueue.enqueue(path);
-##    QTimer::singleShot(500, this, SLOT(dequeueFile()));
-##}
-##
-##void DelayedFileWatcher::dequeueDirectory()
-##{
-##    emit delayedDirectoryChanged(m_dirQueue.dequeue());
-##}
-##
-##void DelayedFileWatcher::dequeueFile()
-##{
-##    emit delayedFileChanged(m_fileQueue.dequeue());
-##}
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, QFileSystemWatcher, QTimer
+
+
+class DelayedFileWatcher(QFileSystemWatcher):
+    """
+    Class implementing a file system watcher with a delay.
+    
+    @signal delayedDirectoryChanged(path) emitted to indicate a changed
+        directory
+    @signal delayedFileChanged(path) emitted to indicate a changed file
+    """
+    delayedDirectoryChanged = pyqtSignal(str)
+    delayedFileChanged = pyqtSignal(str)
+    
+    def __init__(self, paths=None, parent=None):
+        """
+        Constructor
+        
+        @param paths list of paths to be watched
+        @type list of str
+        @param parent reference to the parent object
+        @type QObject
+        """
+        if paths:
+            super(DelayedFileWatcher, self).__init__(paths, parent)
+        else:
+            super(DelayedFileWatcher, self).__init__(parent)
+        
+        self.__dirQueue = []
+        self.__fileQueue = []
+        
+        self.directoryChanged.connect(self.__directoryChanged)
+        self.fileChanged.connect(self.__fileChanged)
+    
+    @pyqtSlot(str)
+    def __directoryChanged(self, path):
+        """
+        Private slot handling a changed directory.
+        
+        @param path name of the changed directory
+        @type str
+        """
+        self.__dirQueue.append(path)
+        QTimer.singleShot(500, self.__dequeueDirectory)
+    
+    @pyqtSlot(str)
+    def __fileChanged(self, path):
+        """
+        Private slot handling a changed file.
+        
+        @param path name of the changed file
+        @type str
+        """
+        self.__fileQueue.append(path)
+        QTimer.singleShot(500, self.__dequeueFile)
+    
+    @pyqtSlot()
+    def __dequeueDirectory(self):
+        """
+        Private slot to signal a directory change.
+        """
+        self.delayedDirectoryChanged.emit(self.__dirQueue.pop(0))
+    
+    @pyqtSlot()
+    def __dequeueFile(self):
+        """
+        Private slot to signal a file change.
+        """
+        self.delayedFileChanged.emit(self.__fileQueue.pop(0))

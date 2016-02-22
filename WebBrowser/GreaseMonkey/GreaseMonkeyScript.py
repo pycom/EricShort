@@ -9,17 +9,24 @@ Module implementing the GreaseMonkey script.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import QUrl, QRegExp
+from PyQt5.QtCore import pyqtSignal, pyqtSlot, QObject, QUrl, QRegExp, \
+    QByteArray,  QCryptographicHash
+from PyQt5.QtWebEngineWidgets import QWebEngineScript
 
 from .GreaseMonkeyUrlMatcher import GreaseMonkeyUrlMatcher
+from .GreaseMonkeyJavaScript import bootstrap_js, values_js
+
+from ..Tools.DelayedFileWatcher import DelayedFileWatcher
 
 
-class GreaseMonkeyScript(object):
+class GreaseMonkeyScript(QObject):
     """
     Class implementing the GreaseMonkey script.
     """
     DocumentStart = 0
     DocumentEnd = 1
+    
+    scriptChanged = pyqtSignal()
     
     def __init__(self, manager, path):
         """
@@ -28,7 +35,10 @@ class GreaseMonkeyScript(object):
         @param manager reference to the manager object (GreaseMonkeyManager)
         @param path path of the Javascript file (string)
         """
+        super(GreaseMonkeyScript, self).__init__(manager)
+        
         self.__manager = manager
+        self.__fileWatcher = DelayedFileWatcher(parent=None)
         
         self.__name = ""
         self.__namespace = "GreaseMonkeyNS"
@@ -39,6 +49,7 @@ class GreaseMonkeyScript(object):
         self.__exclude = []
         
         self.__downloadUrl = QUrl()
+        self.__updateUrl = QUrl()
         self.__startAt = GreaseMonkeyScript.DocumentEnd
         
         self.__script = ""
@@ -46,10 +57,12 @@ class GreaseMonkeyScript(object):
         self.__enabled = True
         self.__valid = False
         self.__metaData = ""
+        self.__noFrames = False
         
-        self.__parseScript(path)
-##    , m_fileWatcher(new DelayedFileWatcher(this))
-##    connect(m_fileWatcher, SIGNAL(delayedFileChanged(QString)), this, SLOT(watchedFileChanged(QString)));
+        self.__parseScript()
+        
+        self.__fileWatcher.delayedFileChanged.connect(
+            self.__watchedFileChanged)
     
     def isValid(self):
         """
@@ -107,6 +120,14 @@ class GreaseMonkeyScript(object):
         """
         return QUrl(self.__downloadUrl)
     
+    def updateUrl(self):
+        """
+        Public method to get the update URL of the script.
+        
+        @return update URL of the script (QUrl)
+        """
+        return QUrl(self.__updateUrl)
+    
     def startAt(self):
         """
         Public method to get the start point of the script.
@@ -115,13 +136,22 @@ class GreaseMonkeyScript(object):
         """
         return self.__startAt
     
+    def noFrames(self):
+        """
+        Public method to get the noFrames flag.
+        
+        @return flag indicating to not run on sub frames
+        @rtype bool
+        """
+        return self.__noFrames
+    
     def isEnabled(self):
         """
         Public method to check, if the script is enabled.
         
         @return flag indicating an enabled state (boolean)
         """
-        return self.__enabled
+        return self.__enabled and self.__valid
     
     def setEnabled(self, enable):
         """
@@ -161,10 +191,14 @@ class GreaseMonkeyScript(object):
         """
         return self.__script
     
-##QString GM_Script::metaData() const
-##{
-##    return m_metadata;
-##}
+    def metaData(self):
+        """
+        Public method to get the script meta information.
+        
+        @return script meta information
+        @rtype str
+        """
+        return self.__metaData
     
     def fileName(self):
         """
@@ -181,7 +215,7 @@ class GreaseMonkeyScript(object):
         @param urlString URL (string)
         @return flag indicating a match (boolean)
         """
-        if not self.__enabled:
+        if not self.isEnabled():
             return False
         
         for matcher in self.__exclude:
@@ -194,6 +228,22 @@ class GreaseMonkeyScript(object):
         
         return False
     
+    @pyqtSlot(str)
+    def __watchedFileChanged(self, fileName):
+        """
+        Private slot handling changes of the script file.
+        
+        @param fileName path of the script file
+        @type str
+        """
+        if self.__fileName == fileName:
+            self.__parseScript()
+            
+            self.__manager.removeScript(self, False)
+            self.__manager.addScript(self)
+            
+            self.scriptChanged.emit()
+    
     def __parseScript(self, path):
         """
         Private method to parse the given script and populate the data
@@ -201,6 +251,24 @@ class GreaseMonkeyScript(object):
         
         @param path path of the Javascript file (string)
         """
+        self.__name = ""
+        self.__namespace = "GreaseMonkeyNS"
+        self.__description = ""
+        self.__version = ""
+        
+        self.__include = []
+        self.__exclude = []
+        
+        self.__downloadUrl = QUrl()
+        self.__updateUrl = QUrl()
+        self.__startAt = GreaseMonkeyScript.DocumentEnd
+        
+        self.__script = ""
+        self.__enabled = True
+        self.__valid = False
+        self.__metaData = ""
+        self.__noFrames = False
+        
         try:
             f = open(path, "r", encoding="utf-8")
             fileData = f.read()
@@ -208,6 +276,9 @@ class GreaseMonkeyScript(object):
         except (IOError, OSError):
             # silently ignore because it shouldn't happen
             return
+        
+        if self.__fileName not in self.__fileWatcher.files():
+            self.__fileWatcher.addPath(self.__fileName)
         
         rx = QRegExp("// ==UserScript==(.*)// ==/UserScript==")
         rx.indexIn(fileData)
@@ -219,6 +290,9 @@ class GreaseMonkeyScript(object):
         
         requireList = []
         for line in metaDataBlock.splitlines():
+            if not line.strip():
+                continue
+            
             if not line.startswith("// @"):
                 continue
             
@@ -247,9 +321,9 @@ class GreaseMonkeyScript(object):
             elif key == "@version":
                 self.__version = value
             
-            elif key == "@updateURL":
-                self.__downloadUrl = QUrl(value)
-            
+##            elif key == "@updateURL":
+##                self.__downloadUrl = QUrl(value)
+##            
             elif key in ["@include", "@match"]:
                 self.__include.append(GreaseMonkeyUrlMatcher(value))
             
@@ -267,6 +341,9 @@ class GreaseMonkeyScript(object):
             
             elif key == "@downloadURL" and self.__downloadUrl.isEmpty():
                 self.__downloadUrl = QUrl(value)
+            
+            elif key == "@updateURL" and self.__updateUrl.isEmpty():
+                self.__updateUrl = QUrl(value)
         
         if not self.__include:
             self.__include.append(GreaseMonkeyUrlMatcher("*"))
@@ -275,31 +352,32 @@ class GreaseMonkeyScript(object):
         index = fileData.find(marker) + len(marker)
         self.__metaData = fileData[:index]
         script = fileData[index:].strip()
-        script = "{0}{1}".format(
-            self.__manager.requireScripts(requireList),
-            script)
-        self.__script = "(function(){{{0}}})();".format(script)
-        self.__valid = len(script) > 0
-##    const QString nspace = QCryptographicHash::hash(fullName().toUtf8(), QCryptographicHash::Md4).toHex();
-##    const QString gmValues = m_manager->valuesScript().arg(nspace);
-##
-##    m_script = QSL("(function(){%1\n%2\n%3\n})();").arg(gmValues, m_manager->requireScripts(requireList), script);
-##    m_valid = true;
+        
+        nspace = bytes(QCryptographicHash.hash(
+            QByteArray(self.fullName().encode("utf-8")),
+            QCryptographicHash.Md4).toHex()).decode("ascii")
+        valuesScript = values_js.format(nspace)
+        self.__script = "(function(){{{0}\n{1}\n{2}\n}})();".format(
+            valuesScript, self.__manager.requireScripts(requireList), script
+        )
+        self.__valid = True
     
     def webScript(self):
         """
-        Public method to create a script object
+        Public method to create a script object.
         
         @return prepared script object
         @rtype QWebEngineScript
         """
-##QWebEngineScript GM_Script::webScript() const
-##{
-##    QWebEngineScript script;
-##    script.setName(fullName());
-##    script.setInjectionPoint(startAt() == DocumentStart ? QWebEngineScript::DocumentCreation : QWebEngineScript::DocumentReady);
-##    script.setWorldId(QWebEngineScript::MainWorld);
-##    script.setRunsOnSubFrames(!m_noframes);
-##    script.setSourceCode(QSL("%1\n%2\n%3").arg(m_metadata, m_manager->bootstrapScript(), m_script));
-##    return script;
-##}
+        script = QWebEngineScript()
+        script.setName(self.fullName())
+        if self.startAt() == GreaseMonkeyScript.DocumentStart:
+            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
+        else:
+            script.setInjectionPoint(QWebEngineScript.DocumentReady)
+        script.setWorldId(QWebEngineScript.MainWorld)
+        script.setRunsOnSubFrames(not self.__noFrames)
+        script.setSourceCode("{0}\n{1}\n{2}".format(
+            self.__metaData, bootstrap_js, self.__script
+        ))
+        return script

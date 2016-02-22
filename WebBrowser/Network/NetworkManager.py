@@ -159,3 +159,11 @@ class NetworkManager(QNetworkAccessManager):
 ##        from WebBrowser.WebBrowserWindow import WebBrowserWindow
 ##        WebBrowserWindow.webProfile().setHttpAcceptLanguage(
 ##            self.__acceptLanguage)
+    
+    def installUrlInterceptor(self, interceptor):
+        # TODO: Qt 5.6, URL Interceptor
+        pass
+    
+    def removeUrlInterceptor(self, interceptor):
+        # TODO: Qt 5.6, URL Interceptor
+        pass
