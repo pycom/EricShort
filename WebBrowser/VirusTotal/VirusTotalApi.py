@@ -83,7 +83,7 @@ class VirusTotalAPI(QObject):
         """
         Private method to load the settings.
         """
-        if Preferences.getHelp("VirusTotalSecure"):
+        if Preferences.getWebBrowser("VirusTotalSecure"):
             protocol = "https"
         else:
             protocol = "http"
@@ -159,7 +159,7 @@ class VirusTotalAPI(QObject):
         request.setHeader(QNetworkRequest.ContentTypeHeader,
                           "application/x-www-form-urlencoded")
         params = QByteArray("apikey={0}&url=".format(
-            Preferences.getHelp("VirusTotalServiceKey")).encode("utf-8"))\
+            Preferences.getWebBrowser("VirusTotalServiceKey")).encode("utf-8"))\
             .append(QUrl.toPercentEncoding(url.toString()))
         
         import WebBrowser.WebBrowserWindow
@@ -203,7 +203,7 @@ class VirusTotalAPI(QObject):
         request.setHeader(QNetworkRequest.ContentTypeHeader,
                           "application/x-www-form-urlencoded")
         params = QByteArray("apikey={0}&resource={1}".format(
-            Preferences.getHelp("VirusTotalServiceKey"), scanId)
+            Preferences.getWebBrowser("VirusTotalServiceKey"), scanId)
             .encode("utf-8"))
         
         import WebBrowser.WebBrowserWindow
@@ -236,7 +236,7 @@ class VirusTotalAPI(QObject):
         request.setHeader(QNetworkRequest.ContentTypeHeader,
                           "application/x-www-form-urlencoded")
         params = QByteArray("apikey={0}&resource={1}".format(
-            Preferences.getHelp("VirusTotalServiceKey"), scanId)
+            Preferences.getWebBrowser("VirusTotalServiceKey"), scanId)
             .encode("utf-8"))
         
         import WebBrowser.WebBrowserWindow
@@ -268,7 +268,7 @@ class VirusTotalAPI(QObject):
         self.__lastIP = ipAddress
         
         queryItems = [
-            ("apikey", Preferences.getHelp("VirusTotalServiceKey")),
+            ("apikey", Preferences.getWebBrowser("VirusTotalServiceKey")),
             ("ip", ipAddress),
         ]
         url = QUrl(self.GetIpAddressReportUrl)
@@ -331,7 +331,7 @@ class VirusTotalAPI(QObject):
         self.__lastDomain = domain
         
         queryItems = [
-            ("apikey", Preferences.getHelp("VirusTotalServiceKey")),
+            ("apikey", Preferences.getWebBrowser("VirusTotalServiceKey")),
             ("domain", domain),
         ]
         url = QUrl(self.GetDomainReportUrl)

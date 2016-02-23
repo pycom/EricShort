@@ -419,7 +419,7 @@ class FlashCookieManagerDialog(QDialog, Ui_FlashCookieManagerDialog):
         for row in range(self.blackList.count()):
             blackList.append(self.blackList.item(row).text())
         
-        Preferences.setHelp("FlashCookiesWhitelist", whiteList)
-        Preferences.setHelp("FlashCookiesBlacklist", blackList)
+        Preferences.setWebBrowser("FlashCookiesWhitelist", whiteList)
+        Preferences.setWebBrowser("FlashCookiesBlacklist", blackList)
         
         evt.accept()

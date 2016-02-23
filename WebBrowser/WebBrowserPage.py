@@ -443,7 +443,7 @@ class WebBrowserPage(QWebEnginePage):
 ##        
 ##        @param agent new current user agent string (string)
 ##        """
-##        Preferences.setHelp("UserAgent", agent)
+##        Preferences.setWebBrowser("UserAgent", agent)
 ##    
 ##    def userAgentForUrl(self, url):
 ##        """

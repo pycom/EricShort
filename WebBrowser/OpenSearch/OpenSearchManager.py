@@ -369,12 +369,12 @@ class OpenSearchManager(QObject):
         
         self.saveDirectory(self.enginesDirectory())
         
-        Preferences.setHelp("WebSearchEngine", self.__current)
+        Preferences.setWebBrowser("WebSearchEngine", self.__current)
         keywords = []
         for k in self.__keywords:
             if self.__keywords[k]:
                 keywords.append((k, self.__keywords[k].name()))
-        Preferences.setHelp("WebSearchKeywords", keywords)
+        Preferences.setWebBrowser("WebSearchKeywords", keywords)
     
     def loadDirectory(self, dirName):
         """
