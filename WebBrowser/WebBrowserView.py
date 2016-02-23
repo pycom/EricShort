@@ -144,8 +144,6 @@ class WebBrowserView(QWebEngineView):
         self.__clickedFrame = None
         
         self.__mw.personalInformationManager().connectPage(self.page())
-        # TODO: GreaseMonkey
-##        self.__mw.greaseMonkeyManager().connectPage(self.page())
         
         # TODO: WebInspector
 ##        self.__inspector = None

@@ -3,31 +3,37 @@
 # Copyright (c) 2016 Detlev Offenbach <detlev@die-offenbachs.de>
 #
 
+"""
+Module implementing a handler for GreaseMonkey related URLs.
+"""
+
 from __future__ import unicode_literals
 
-##class GM_UrlInterceptor : public UrlInterceptor
-##{
-##public:
-##    explicit GM_UrlInterceptor(GM_Manager* manager);
-##
-##    void interceptRequest(QWebEngineUrlRequestInfo &info);
-##
-##private:
-##    GM_Manager *m_manager;
-##
-##};
+from ..Network.UrlInterceptor import UrlInterceptor
 
 
-##GM_UrlInterceptor::GM_UrlInterceptor(GM_Manager *manager)
-##    : UrlInterceptor(manager)
-##    , m_manager(manager)
-##{
-##}
-##
-##void GM_UrlInterceptor::interceptRequest(QWebEngineUrlRequestInfo &info)
-##{
-##    if (info.requestUrl().toString().endsWith(QLatin1String(".user.js"))) {
-##        m_manager->downloadScript(info.requestUrl());
-##        info.block(true);
-##    }
-##}
+class GreaseMonkeyUrlInterceptor(UrlInterceptor):
+    """
+    Class implementing a handler for GreaseMonkey related URLs.
+    """
+    def __init__(self, manager):
+        """
+        Constructor
+        
+        @param manager reference to the GreaseMonkey manager
+        @type GreaseMonkeyManager
+        """
+        super(GreaseMonkeyUrlInterceptor, self).__init__(manager)
+        
+        self.__manager = manager
+    
+    def interceptRequest(self, info):
+        """
+        Public method to handle a GreaseMonkey request.
+        
+        @param info request info object
+        @type QWebEngineUrlRequestInfo
+        """
+        if info.requestUrl().toString.endswith(".user.js"):
+            self.__manager.downloadScript(info.requestUrl())
+            info.block(True)

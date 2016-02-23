@@ -11,9 +11,7 @@ from __future__ import unicode_literals
 
 import os
 
-from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QFile, QDir, QSettings, \
-    QUrl, QByteArray
-from PyQt5.QtNetwork import QNetworkAccessManager
+from PyQt5.QtCore import pyqtSignal, QObject, QTimer, QFile, QDir, QSettings
 
 import Utilities
 import Preferences
@@ -22,6 +20,7 @@ from WebBrowser.WebBrowserWindow import WebBrowserWindow
 from .GreaseMonkeyUrlInterceptor import GreaseMonkeyUrlInterceptor
 
 
+# TODO: GreaseMonkey: needs testing with Qt 5.6
 class GreaseMonkeyManager(QObject):
     """
     Class implementing the manager for GreaseMonkey scripts.
@@ -64,14 +63,15 @@ class GreaseMonkeyManager(QObject):
         self.__configDiaolg = GreaseMonkeyConfigurationDialog(self, parent)
         self.__configDiaolg.show()
     
-    def downloadScript(self, request):
+    def downloadScript(self, url):
         """
         Public method to download a GreaseMonkey script.
         
-        @param request reference to the request (QNetworkRequest)
+        @param url URL to download script from
+        @type QUrl
         """
         from .GreaseMonkeyDownloader import GreaseMonkeyDownloader
-        downloader = GreaseMonkeyDownloader(request, self)
+        downloader = GreaseMonkeyDownloader(url, self)
         downloader.finished.connect(self.__downloaderFinished)
         self.__downloaders.append(downloader)
     

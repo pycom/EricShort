@@ -27,20 +27,21 @@ class GreaseMonkeyDownloader(QObject):
     """
     finished = pyqtSignal()
     
-    def __init__(self, request, manager):
+    def __init__(self, url, manager):
         """
         Constructor
         
-        @param request reference to the request object (QNetworkRequest)
+        @param url URL to download script from
+        @type QUrl
         @param manager reference to the GreaseMonkey manager
-            (GreaseMonkeyManager)
+        @type GreaseMonkeyManager
         """
         super(GreaseMonkeyDownloader, self).__init__()
         
         self.__manager = manager
         
         self.__reply = FollowRedirectReply(
-            request.url(), WebBrowserWindow.networkAccessManager())
+            url, WebBrowserWindow.networkAccessManager())
         self.__reply.finished.connect(self.__scriptDownloaded)
         
         self.__fileName = ""

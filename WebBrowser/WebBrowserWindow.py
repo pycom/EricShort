@@ -94,7 +94,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    _syncManager = None
 ##    _speedDial = None
     _personalInformationManager = None
-##    _greaseMonkeyManager = None
+    _greaseMonkeyManager = None
     _notification = None
     _featurePermissionManager = None
     _flashCookieManager = None
@@ -248,13 +248,15 @@ class WebBrowserWindow(E5MainWindow):
             self.__setIconDatabasePath()
             self.__initWebEngineSettings()
             
+            # initialize some of our class objects
             self.passwordManager()
+            self.historyManager()
+            self.greaseMonkeyManager()
             
             self.__initActions()
             self.__initMenus()
             self.__initToolbars()
             
-            self.historyManager()
             
             # TODO: Sync
 ##            syncMgr = self.syncManager()
@@ -1322,24 +1324,23 @@ class WebBrowserWindow(E5MainWindow):
                 self.__showPersonalInformationDialog)
         self.__actions.append(self.personalDataAct)
         
-        # TODO: GreaseMonkey
-##        self.greaseMonkeyAct = E5Action(
-##            self.tr('GreaseMonkey Scripts'),
-##            UI.PixmapCache.getIcon("greaseMonkey.png"),
-##            self.tr('GreaseMonkey Scripts...'),
-##            0, 0,
-##            self, 'webbrowser_greasemonkey')
-##        self.greaseMonkeyAct.setStatusTip(self.tr(
-##            'Configure the GreaseMonkey Scripts'))
-##        self.greaseMonkeyAct.setWhatsThis(self.tr(
-##            """<b>GreaseMonkey Scripts...</b>"""
-##            """<p>Opens a dialog to configure the available GreaseMonkey"""
-##            """ Scripts.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.greaseMonkeyAct.triggered.connect(
-##                self.__showGreaseMonkeyConfigDialog)
-##        self.__actions.append(self.greaseMonkeyAct)
+        self.greaseMonkeyAct = E5Action(
+            self.tr('GreaseMonkey Scripts'),
+            UI.PixmapCache.getIcon("greaseMonkey.png"),
+            self.tr('GreaseMonkey Scripts...'),
+            0, 0,
+            self, 'webbrowser_greasemonkey')
+        self.greaseMonkeyAct.setStatusTip(self.tr(
+            'Configure the GreaseMonkey Scripts'))
+        self.greaseMonkeyAct.setWhatsThis(self.tr(
+            """<b>GreaseMonkey Scripts...</b>"""
+            """<p>Opens a dialog to configure the available GreaseMonkey"""
+            """ Scripts.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.greaseMonkeyAct.triggered.connect(
+                self.__showGreaseMonkeyConfigDialog)
+        self.__actions.append(self.greaseMonkeyAct)
         
         self.editMessageFilterAct = E5Action(
             self.tr('Edit Message Filters'),
@@ -1846,9 +1847,9 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.flashCookiesAct)
 ##        menu.addAction(self.offlineStorageAct)
         menu.addAction(self.personalDataAct)
-##        menu.addAction(self.greaseMonkeyAct)
+        menu.addAction(self.greaseMonkeyAct)
         menu.addAction(self.featurePermissionAct)
-##        menu.addSeparator()
+        menu.addSeparator()
         menu.addAction(self.editMessageFilterAct)
         menu.addSeparator()
         menu.addAction(self.searchEnginesAct)
@@ -1988,7 +1989,7 @@ class WebBrowserWindow(E5MainWindow):
         settingstb.addAction(self.flashCookiesAct)
 ##        settingstb.addAction(self.offlineStorageAct)
         settingstb.addAction(self.personalDataAct)
-##        settingstb.addAction(self.greaseMonkeyAct)
+        settingstb.addAction(self.greaseMonkeyAct)
         settingstb.addAction(self.featurePermissionAct)
         
         toolstb = self.addToolBar(self.tr("Tools"))
@@ -3373,12 +3374,12 @@ class WebBrowserWindow(E5MainWindow):
         """
         self.personalInformationManager().showConfigurationDialog()
         
-##    def __showGreaseMonkeyConfigDialog(self):
-##        """
-##        Private slot to show the GreaseMonkey scripts configuration dialog.
-##        """
-##        self.greaseMonkeyManager().showConfigurationDialog()
-##        
+    def __showGreaseMonkeyConfigDialog(self):
+        """
+        Private slot to show the GreaseMonkey scripts configuration dialog.
+        """
+        self.greaseMonkeyManager().showConfigurationDialog()
+        
     def __showFeaturePermissionDialog(self):
         """
         Private slot to show the feature permission dialog.
@@ -3553,19 +3554,19 @@ class WebBrowserWindow(E5MainWindow):
         
         return cls._personalInformationManager
         
-##    @classmethod
-##    def greaseMonkeyManager(cls):
-##        """
-##        Class method to get a reference to the GreaseMonkey manager.
-##        
-##        @return reference to the GreaseMonkey manager (GreaseMonkeyManager)
-##        """
-##        if cls._greaseMonkeyManager is None:
-##            from .GreaseMonkey.GreaseMonkeyManager import GreaseMonkeyManager
-##            cls._greaseMonkeyManager = GreaseMonkeyManager()
-##        
-##        return cls._greaseMonkeyManager
-##        
+    @classmethod
+    def greaseMonkeyManager(cls):
+        """
+        Class method to get a reference to the GreaseMonkey manager.
+        
+        @return reference to the GreaseMonkey manager (GreaseMonkeyManager)
+        """
+        if cls._greaseMonkeyManager is None:
+            from .GreaseMonkey.GreaseMonkeyManager import GreaseMonkeyManager
+            cls._greaseMonkeyManager = GreaseMonkeyManager()
+        
+        return cls._greaseMonkeyManager
+        
     @classmethod
     def featurePermissionManager(cls):
         """
