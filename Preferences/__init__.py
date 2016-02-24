@@ -1028,6 +1028,11 @@ class Prefs(object):
         "RssFeeds": [],
         # Grease Monkey
         "GreaseMonkeyDisabledScripts": [],
+        # Downloads
+        "DownloadManagerRemovePolicy": 0,      # never delete downloads
+        "DownloadManagerSize": QSize(400, 300),
+        "DownloadManagerPosition": QPoint(),
+        "DownloadManagerDownloads": [],
         # Flash Cookie Manager: identical to helpDefaults
         # PIM:                  identical to helpDefaults
         # VirusTotal:           identical to helpDefaults
@@ -2683,21 +2688,21 @@ def getWebBrowser(key, prefClass=Prefs):
             keywords.append((keyword, engineName))
         prefClass.settings.endArray()
         return keywords
-##    elif key in ["DownloadManagerDownloads"]:
-##        # return a list of tuples of (URL, save location, done flag, page url)
-##        downloads = []
-##        length = prefClass.settings.beginReadArray("WebBrowser/" + key)
-##        for index in range(length):
-##            prefClass.settings.setArrayIndex(index)
-##            url = prefClass.settings.value("URL")
-##            location = prefClass.settings.value("Location")
-##            done = toBool(prefClass.settings.value("Done"))
-##            pageUrl = prefClass.settings.value("PageURL")
-##            if pageUrl is None:
-##                pageUrl = QUrl()
-##            downloads.append((url, location, done, pageUrl))
-##        prefClass.settings.endArray()
-##        return downloads
+    elif key in ["DownloadManagerDownloads"]:
+        # return a list of tuples of (URL, save location, done flag, page url)
+        downloads = []
+        length = prefClass.settings.beginReadArray("WebBrowser/" + key)
+        for index in range(length):
+            prefClass.settings.setArrayIndex(index)
+            url = prefClass.settings.value("URL")
+            location = prefClass.settings.value("Location")
+            done = toBool(prefClass.settings.value("Done"))
+            pageUrl = prefClass.settings.value("PageURL")
+            if pageUrl is None:
+                pageUrl = QUrl()
+            downloads.append((url, location, done, pageUrl))
+        prefClass.settings.endArray()
+        return downloads
     elif key == "RssFeeds":
         # return a list of tuples of (URL, title, icon)
         feeds = []
@@ -2729,7 +2734,8 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "SearchLanguage", "SyncType", "SyncFtpPort",
 ##                 "SyncFtpIdleTimeout", "SyncEncryptionKeyLength"]:
     elif key in ["StartupBehavior", "MinimumFontSize",
-                 "MinimumLogicalFontSize", "HistoryLimit"]:
+                 "MinimumLogicalFontSize", "HistoryLimit",
+                 "DownloadManagerRemovePolicy",]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["SingleHelpWindow", "SaveGeometry", "WebSearchSuggestions",
@@ -2806,19 +2812,19 @@ def setWebBrowser(key, value, prefClass=Prefs):
             prefClass.settings.setValue("Engine", v[1])
             index += 1
         prefClass.settings.endArray()
-##    elif key == "DownloadManagerDownloads":
-##        # value is list of tuples of (URL, save location, done flag, page url)
-##        prefClass.settings.remove("Help/" + key)
-##        prefClass.settings.beginWriteArray("WebBrowser/" + key, len(value))
-##        index = 0
-##        for v in value:
-##            prefClass.settings.setArrayIndex(index)
-##            prefClass.settings.setValue("URL", v[0])
-##            prefClass.settings.setValue("Location", v[1])
-##            prefClass.settings.setValue("Done", v[2])
-##            prefClass.settings.setValue("PageURL", v[3])
-##            index += 1
-##        prefClass.settings.endArray()
+    elif key == "DownloadManagerDownloads":
+        # value is list of tuples of (URL, save location, done flag, page url)
+        prefClass.settings.remove("Help/" + key)
+        prefClass.settings.beginWriteArray("WebBrowser/" + key, len(value))
+        index = 0
+        for v in value:
+            prefClass.settings.setArrayIndex(index)
+            prefClass.settings.setValue("URL", v[0])
+            prefClass.settings.setValue("Location", v[1])
+            prefClass.settings.setValue("Done", v[2])
+            prefClass.settings.setValue("PageURL", v[3])
+            index += 1
+        prefClass.settings.endArray()
     elif key == "RssFeeds":
         # value is list of tuples of (URL, title, icon)
         prefClass.settings.remove("WebBrowser/" + key)

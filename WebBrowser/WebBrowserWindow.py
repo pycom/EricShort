@@ -88,7 +88,7 @@ class WebBrowserWindow(E5MainWindow):
     _historyManager = None
     _passwordManager = None
 ##    _adblockManager = None
-##    _downloadManager = None
+    _downloadManager = None
     _feedsManager = None
 ##    _userAgentsManager = None
 ##    _syncManager = None
@@ -1624,21 +1624,20 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showNetworkMonitor)
 ##        self.__actions.append(self.toolsMonitorAct)
         
-        # TODO: Download Manager
-##        self.showDownloadManagerAct = E5Action(
-##            self.tr('Downloads'),
-##            self.tr('Downloads'),
-##            0, 0, self, 'webbrowser_show_downloads')
-##        self.showDownloadManagerAct.setStatusTip(self.tr(
-##            'Shows the downloads window'))
-##        self.showDownloadManagerAct.setWhatsThis(self.tr(
-##            """<b>Downloads</b>"""
-##            """<p>Shows the downloads window.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.showDownloadManagerAct.triggered.connect(
-##                self.__showDownloadsWindow)
-##        self.__actions.append(self.showDownloadManagerAct)
+        self.showDownloadManagerAct = E5Action(
+            self.tr('Downloads'),
+            self.tr('Downloads'),
+            0, 0, self, 'webbrowser_show_downloads')
+        self.showDownloadManagerAct.setStatusTip(self.tr(
+            'Shows the downloads window'))
+        self.showDownloadManagerAct.setWhatsThis(self.tr(
+            """<b>Downloads</b>"""
+            """<p>Shows the downloads window.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.showDownloadManagerAct.triggered.connect(
+                self.__showDownloadsWindow)
+        self.__actions.append(self.showDownloadManagerAct)
         
         self.feedsManagerAct = E5Action(
             self.tr('RSS Feeds Dialog'),
@@ -1893,14 +1892,14 @@ class WebBrowserWindow(E5MainWindow):
         
         menu = mb.addMenu(self.tr("&Window"))
         menu.setTearOffEnabled(True)
-##        menu.addAction(self.showDownloadManagerAct)
+        menu.addAction(self.showDownloadManagerAct)
 ##        if WebBrowserWindow.UseQtHelp:
 ##            menu.addSeparator()
 ##            menu.addAction(self.showTocAct)
 ##            menu.addAction(self.showIndexAct)
 ##            menu.addAction(self.showSearchAct)
-##        
-##        mb.addSeparator()
+        
+        mb.addSeparator()
         
         menu = mb.addMenu(self.tr('&Help'))
         menu.setTearOffEnabled(True)
@@ -2460,11 +2459,11 @@ class WebBrowserWindow(E5MainWindow):
         if not self.__tabWidget.shallShutDown():
             return False
         
-##        if not self.downloadManager().allowQuit():
-##            return False
-##        
-##        self.downloadManager().shutdown()
-##        
+        if not self.downloadManager().allowQuit():
+            return False
+        
+        self.downloadManager().shutdown()
+        
 ##        self.__closeNetworkMonitor()
 ##        
 ##        self.cookieJar().close()
@@ -3289,10 +3288,9 @@ class WebBrowserWindow(E5MainWindow):
                 self.__tabWidget.clearClosedTabsList()
             if searches:
                 self.searchEdit.clear()
-            # TODO: Downloads
-##            if downloads:
-##                self.downloadManager().cleanup()
-##                self.downloadManager().hide()
+            if downloads:
+                self.downloadManager().cleanup()
+                self.downloadManager().hide()
             if favicons:
                 self.__clearIconsDatabase()
             # TODO: Cache Cleaning
@@ -3403,12 +3401,12 @@ class WebBrowserWindow(E5MainWindow):
 ##        monitor = E5NetworkMonitor.instance(self.networkManager())
 ##        monitor.show()
 ##        
-##    def __showDownloadsWindow(self):
-##        """
-##        Private slot to show the downloads dialog.
-##        """
-##        self.downloadManager().show()
-##        
+    def __showDownloadsWindow(self):
+        """
+        Private slot to show the downloads dialog.
+        """
+        self.downloadManager().show()
+        
 ##    def __closeNetworkMonitor(self):
 ##        """
 ##        Private slot to close the network monitor dialog.
@@ -3526,19 +3524,19 @@ class WebBrowserWindow(E5MainWindow):
 ##        """
 ##        return self.__adBlockIcon
 ##    
-##    @classmethod
-##    def downloadManager(cls):
-##        """
-##        Class method to get a reference to the download manager.
-##        
-##        @return reference to the download manager (DownloadManager)
-##        """
-##        if cls._downloadManager is None:
-##            from .Download.DownloadManager import DownloadManager
-##            cls._downloadManager = DownloadManager()
-##        
-##        return cls._downloadManager
-##        
+    @classmethod
+    def downloadManager(cls):
+        """
+        Class method to get a reference to the download manager.
+        
+        @return reference to the download manager (DownloadManager)
+        """
+        if cls._downloadManager is None:
+            from .Download.DownloadManager import DownloadManager
+            cls._downloadManager = DownloadManager()
+        
+        return cls._downloadManager
+        
     @classmethod
     def personalInformationManager(cls):
         """
@@ -4084,9 +4082,7 @@ class WebBrowserWindow(E5MainWindow):
         @param download reference to the download data
         @type QWebEngineDownloadItem
         """
-        pass
-        # TODO: DownloadManager
-##        self.downloadManager().download(download, mainWindow=self)
+        self.downloadManager().download(download)
     
     ########################################
     ## Support for web engine profiles below

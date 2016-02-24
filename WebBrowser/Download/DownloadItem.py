@@ -8,26 +8,22 @@ Module implementing a widget controlling a download.
 """
 
 from __future__ import unicode_literals
-try:
-    str = unicode
-except NameError:
-    pass
 
-from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt, QTime, QFile, QFileInfo, \
-    QUrl, QIODevice, QCryptographicHash, PYQT_VERSION_STR
+from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt, QTime, QFileInfo, QUrl, \
+    PYQT_VERSION_STR
 from PyQt5.QtGui import QPalette, QDesktopServices
 from PyQt5.QtWidgets import QWidget, QStyle, QDialog
-from PyQt5.QtNetwork import QNetworkRequest, QNetworkReply
+from PyQt5.QtWebEngineWidgets import QWebEngineDownloadItem
 
 from E5Gui import E5FileDialog
 
 from .Ui_DownloadItem import Ui_DownloadItem
 
 from .DownloadUtilities import timeString, dataString
-##from ..HelpUtilities import parseContentDisposition
+from WebBrowser.WebBrowserWindow import WebBrowserWindow
 
 import UI.PixmapCache
-import Preferences
+import Utilities.MimeTypes
 
 
 class DownloadItem(QWidget, Ui_DownloadItem):
@@ -46,19 +42,14 @@ class DownloadItem(QWidget, Ui_DownloadItem):
     DownloadSuccessful = 1
     DownloadCancelled = 2
     
-    def __init__(self, reply=None, requestFilename=False, webPage=None,
-                 download=False, parent=None, mainWindow=None):
+    def __init__(self, downloadItem, parent=None):
         """
         Constructor
         
-        @keyparam reply reference to the network reply object (QNetworkReply)
-        @keyparam requestFilename flag indicating to ask the user for a
-            filename (boolean)
-        @keyparam webPage reference to the web page object the download
-            originated from (QWebPage)
-        @keyparam download flag indicating a download operation (boolean)
+        @param downloadItem reference to the download object containing the
+        download data.
         @keyparam parent reference to the parent widget (QWidget)
-        @keyparam mainWindow reference to the main window (HelpWindow)
+        @type QWebEngineDownloadItem
         """
         super(DownloadItem, self).__init__(parent)
         self.setupUi(self)
@@ -69,93 +60,60 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         
         self.progressBar.setMaximum(0)
         
-        self.__isFtpDownload = reply is not None and \
-            reply.url().scheme() == "ftp"
-        
-        self.tryAgainButton.setIcon(UI.PixmapCache.getIcon("restart.png"))
-        self.tryAgainButton.setEnabled(False)
-        self.tryAgainButton.setVisible(False)
         self.stopButton.setIcon(UI.PixmapCache.getIcon("stopLoading.png"))
-        self.pauseButton.setIcon(UI.PixmapCache.getIcon("pause.png"))
         self.openButton.setIcon(UI.PixmapCache.getIcon("open.png"))
         self.openButton.setEnabled(False)
         self.openButton.setVisible(False)
-        if self.__isFtpDownload:
-            self.stopButton.setEnabled(False)
-            self.stopButton.setVisible(False)
-            self.pauseButton.setEnabled(False)
-            self.pauseButton.setVisible(False)
         
         self.__state = DownloadItem.Downloading
         
         icon = self.style().standardIcon(QStyle.SP_FileIcon)
         self.fileIcon.setPixmap(icon.pixmap(48, 48))
         
-        self.__mainWindow = mainWindow
-        self.__reply = reply
-        self.__requestFilename = requestFilename
-        self.__page = webPage
-        self.__pageUrl = webPage and webPage.mainFrame().url() or QUrl()
-        self.__toDownload = download
+        self.__downloadItem = downloadItem
+        self.__pageUrl = \
+            WebBrowserWindow.mainWindow().getWindow().currentBrowser().url() \
+            or QUrl()
         self.__bytesReceived = 0
         self.__bytesTotal = -1
         self.__downloadTime = QTime()
-        self.__output = QFile()
         self.__fileName = ""
         self.__originalFileName = ""
-        self.__startedSaving = False
         self.__finishedDownloading = False
         self.__gettingFileName = False
         self.__canceledFileSelect = False
         self.__autoOpen = False
         
-        self.__sha1Hash = QCryptographicHash(QCryptographicHash.Sha1)
-        self.__md5Hash = QCryptographicHash(QCryptographicHash.Md5)
-        
-        if not requestFilename:
-            self.__requestFilename = \
-                Preferences.getUI("RequestDownloadFilename")
-        
         self.__initialize()
     
-    def __initialize(self, tryAgain=False):
+    def __initialize(self):
         """
-        Private method to (re)initialize the widget.
-        
-        @param tryAgain flag indicating a retry (boolean)
+        Private method to initialize the widget.
         """
-        if self.__reply is None:
+        if self.__downloadItem is None:
             return
         
-        self.__startedSaving = False
         self.__finishedDownloading = False
         self.__bytesReceived = 0
         self.__bytesTotal = -1
         
-        self.__sha1Hash.reset()
-        self.__md5Hash.reset()
-        
         # start timer for the download estimation
         self.__downloadTime.start()
         
-        # attach to the reply object
-        self.__url = self.__reply.url()
-        self.__reply.setParent(self)
-        self.__reply.setReadBufferSize(16 * 1024 * 1024)
-        self.__reply.readyRead.connect(self.__readyRead)
-        self.__reply.error.connect(self.__networkError)
-        self.__reply.downloadProgress.connect(self.__downloadProgress)
-        self.__reply.metaDataChanged.connect(self.__metaDataChanged)
-        self.__reply.finished.connect(self.__finished)
+        # attach to the download item object
+        self.__url = self.__downloadItem.url()
+        self.__downloadItem.downloadProgress.connect(self.__downloadProgress)
+        self.__downloadItem.finished.connect(self.__finished)
         
         # reset info
         self.infoLabel.clear()
         self.progressBar.setValue(0)
         self.__getFileName()
-        
-        if self.__reply.error() != QNetworkReply.NoError:
-            self.__networkError()
-            self.__finished()
+        if not self.__fileName:
+            self.__downloadItem.cancel()
+        else:
+            self.__downloadItem.setPath(self.__fileName)
+            self.__downloadItem.accept()
     
     def __getFileName(self):
         """
@@ -164,7 +122,6 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         if self.__gettingFileName:
             return
         
-        from WebBrowser.WebBrowserWindow import WebBrowserWindow
         downloadDirectory = WebBrowserWindow\
             .downloadManager().downloadDirectory()
         
@@ -180,49 +137,47 @@ class DownloadItem(QWidget, Ui_DownloadItem):
             self.__originalFileName = originalFileName
             ask = True
         self.__autoOpen = False
-        if not self.__toDownload:
-            from .DownloadAskActionDialog import DownloadAskActionDialog
-            url = self.__reply.url()
-            dlg = DownloadAskActionDialog(
-                QFileInfo(originalFileName).fileName(),
-                self.__reply.header(QNetworkRequest.ContentTypeHeader),
-                "{0}://{1}".format(url.scheme(), url.authority()),
-                self)
-            if dlg.exec_() == QDialog.Rejected or dlg.getAction() == "cancel":
-                self.progressBar.setVisible(False)
-                self.__reply.close()
-                self.on_stopButton_clicked()
-                self.filenameLabel.setText(
-                    self.tr("Download canceled: {0}").format(
-                        QFileInfo(defaultFileName).fileName()))
-                self.__canceledFileSelect = True
-                return
-            
-            if dlg.getAction() == "scan":
-                self.__mainWindow.requestVirusTotalScan(url)
-                
-                self.progressBar.setVisible(False)
-                self.__reply.close()
-                self.on_stopButton_clicked()
-                self.filenameLabel.setText(
-                    self.tr("VirusTotal scan scheduled: {0}").format(
-                        QFileInfo(defaultFileName).fileName()))
-                self.__canceledFileSelect = True
-                return
-            
-            self.__autoOpen = dlg.getAction() == "open"
-            if PYQT_VERSION_STR >= "5.0.0":
-                from PyQt5.QtCore import QStandardPaths
-                tempLocation = QStandardPaths.storageLocation(
-                    QStandardPaths.TempLocation)
-            else:
-                from PyQt5.QtGui import QDesktopServices
-                tempLocation = QDesktopServices.storageLocation(
-                    QDesktopServices.TempLocation)
-            fileName = tempLocation + '/' + \
-                QFileInfo(fileName).completeBaseName()
+        from .DownloadAskActionDialog import DownloadAskActionDialog
+        url = self.__downloadItem.url()
+        mimetype = Utilities.MimeTypes.mimeType(originalFileName)
+        dlg = DownloadAskActionDialog(
+            QFileInfo(originalFileName).fileName(),
+            mimetype,
+            "{0}://{1}".format(url.scheme(), url.authority()),
+            self)
+        if dlg.exec_() == QDialog.Rejected or dlg.getAction() == "cancel":
+            self.progressBar.setVisible(False)
+            self.on_stopButton_clicked()
+            self.filenameLabel.setText(
+                self.tr("Download canceled: {0}").format(
+                    QFileInfo(defaultFileName).fileName()))
+            self.__canceledFileSelect = True
+            return
         
-        if ask and not self.__autoOpen and self.__requestFilename:
+        if dlg.getAction() == "scan":
+            self.__mainWindow.requestVirusTotalScan(url)
+            
+            self.progressBar.setVisible(False)
+            self.on_stopButton_clicked()
+            self.filenameLabel.setText(
+                self.tr("VirusTotal scan scheduled: {0}").format(
+                    QFileInfo(defaultFileName).fileName()))
+            self.__canceledFileSelect = True
+            return
+        
+        self.__autoOpen = dlg.getAction() == "open"
+        if PYQT_VERSION_STR >= "5.0.0":
+            from PyQt5.QtCore import QStandardPaths
+            tempLocation = QStandardPaths.standardLocations(
+                QStandardPaths.TempLocation)[0]
+        else:
+            from PyQt5.QtGui import QDesktopServices
+            tempLocation = QDesktopServices.storageLocation(
+                QDesktopServices.TempLocation)
+        fileName = tempLocation + '/' + \
+            QFileInfo(fileName).completeBaseName()
+        
+        if ask and not self.__autoOpen:
             self.__gettingFileName = True
             fileName = E5FileDialog.getSaveFileName(
                 None,
@@ -232,7 +187,6 @@ class DownloadItem(QWidget, Ui_DownloadItem):
             self.__gettingFileName = False
             if not fileName:
                 self.progressBar.setVisible(False)
-                self.__reply.close()
                 self.on_stopButton_clicked()
                 self.filenameLabel.setText(
                     self.tr("Download canceled: {0}")
@@ -245,7 +199,6 @@ class DownloadItem(QWidget, Ui_DownloadItem):
             .setDownloadDirectory(fileInfo.absoluteDir().absolutePath())
         self.filenameLabel.setText(fileInfo.fileName())
         
-        self.__output.setFileName(fileName + ".part")
         self.__fileName = fileName
         
         # check file path for saving
@@ -260,8 +213,6 @@ class DownloadItem(QWidget, Ui_DownloadItem):
                 return
         
         self.filenameLabel.setText(QFileInfo(self.__fileName).fileName())
-        if self.__requestFilename:
-            self.__readyRead()
     
     def __saveFileName(self, directory):
         """
@@ -270,7 +221,7 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         @param directory name of the directory to store the file into (string)
         @return proposed filename and original filename (string, string)
         """
-        path = parseContentDisposition(self.__reply)
+        path = self.__downloadItem.path()
         info = QFileInfo(path)
         baseName = info.completeBaseName()
         endName = info.suffix()
@@ -282,78 +233,15 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         name = directory + baseName
         if endName:
             name += '.' + endName
-            if not self.__requestFilename:
-                # do not overwrite, if the user is not being asked
-                i = 1
-                while QFile.exists(name):
-                    # file exists already, don't overwrite
-                    name = directory + baseName + ('-{0:d}'.format(i))
-                    if endName:
-                        name += '.' + endName
-                    i += 1
         return name, origName
     
     def __open(self):
         """
         Private slot to open the downloaded file.
         """
-        info = QFileInfo(self.__output)
+        info = QFileInfo(self.__fileName)
         url = QUrl.fromLocalFile(info.absoluteFilePath())
         QDesktopServices.openUrl(url)
-    
-    @pyqtSlot()
-    def on_tryAgainButton_clicked(self):
-        """
-        Private slot to retry the download.
-        """
-        self.retry()
-    
-    def retry(self):
-        """
-        Public slot to retry the download.
-        """
-        if not self.tryAgainButton.isEnabled():
-            return
-        
-        self.tryAgainButton.setEnabled(False)
-        self.tryAgainButton.setVisible(False)
-        self.openButton.setEnabled(False)
-        self.openButton.setVisible(False)
-        if not self.__isFtpDownload:
-            self.stopButton.setEnabled(True)
-            self.stopButton.setVisible(True)
-            self.pauseButton.setEnabled(True)
-            self.pauseButton.setVisible(True)
-        self.progressBar.setVisible(True)
-        
-        if self.__page:
-            nam = self.__page.networkAccessManager()
-        else:
-            from WebBrowser.WebBrowserWindow import WebBrowserWindow
-            nam = WebBrowserWindow.networkAccessManager()
-        reply = nam.get(QNetworkRequest(self.__url))
-        if self.__output.exists():
-            self.__output.remove()
-        self.__output = QFile()
-        self.__reply = reply
-        self.__initialize(tryAgain=True)
-        self.__state = DownloadItem.Downloading
-        self.statusChanged.emit()
-    
-    @pyqtSlot(bool)
-    def on_pauseButton_clicked(self, checked):
-        """
-        Private slot to pause the download.
-        
-        @param checked flag indicating the state of the button (boolean)
-        """
-        if checked:
-            self.__reply.readyRead.disconnect(self.__readyRead)
-            self.__reply.setReadBufferSize(16 * 1024)
-        else:
-            self.__reply.readyRead.connect(self.__readyRead)
-            self.__reply.setReadBufferSize(16 * 1024 * 1024)
-            self.__readyRead()
     
     @pyqtSlot()
     def on_stopButton_clicked(self):
@@ -367,18 +255,13 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         Public slot to stop the download.
         """
         self.setUpdatesEnabled(False)
-        if not self.__isFtpDownload:
-            self.stopButton.setEnabled(False)
-            self.stopButton.setVisible(False)
-            self.pauseButton.setEnabled(False)
-            self.pauseButton.setVisible(False)
-        self.tryAgainButton.setEnabled(True)
-        self.tryAgainButton.setVisible(True)
+        self.stopButton.setEnabled(False)
+        self.stopButton.setVisible(False)
         self.openButton.setEnabled(False)
         self.openButton.setVisible(False)
         self.setUpdatesEnabled(True)
         self.__state = DownloadItem.DownloadCancelled
-        self.__reply.abort()
+        self.__downloadItem.cancel()
         self.downloadFinished.emit()
     
     @pyqtSlot()
@@ -403,63 +286,6 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         info = QFileInfo(self.__fileName)
         url = QUrl.fromLocalFile(info.absolutePath())
         QDesktopServices.openUrl(url)
-    
-    def __readyRead(self):
-        """
-        Private slot to read the available data.
-        """
-        if self.__requestFilename and not self.__output.fileName():
-            return
-        
-        if not self.__output.isOpen():
-            # in case someone else has already put a file there
-            if not self.__requestFilename:
-                self.__getFileName()
-            if not self.__output.open(QIODevice.WriteOnly):
-                self.infoLabel.setText(
-                    self.tr("Error opening save file: {0}")
-                    .format(self.__output.errorString()))
-                self.on_stopButton_clicked()
-                self.statusChanged.emit()
-                return
-            self.statusChanged.emit()
-        
-        buffer = self.__reply.readAll()
-        self.__sha1Hash.addData(buffer)
-        self.__md5Hash.addData(buffer)
-        bytesWritten = self.__output.write(buffer)
-        if bytesWritten == -1:
-            self.infoLabel.setText(
-                self.tr("Error saving: {0}")
-                    .format(self.__output.errorString()))
-            self.on_stopButton_clicked()
-        else:
-            self.__startedSaving = True
-            if self.__finishedDownloading:
-                self.__finished()
-    
-    def __networkError(self):
-        """
-        Private slot to handle a network error.
-        """
-        self.infoLabel.setText(
-            self.tr("Network Error: {0}")
-                .format(self.__reply.errorString()))
-        self.tryAgainButton.setEnabled(True)
-        self.tryAgainButton.setVisible(True)
-        self.downloadFinished.emit()
-    
-    def __metaDataChanged(self):
-        """
-        Private slot to handle a change of the meta data.
-        """
-        locationHeader = self.__reply.header(QNetworkRequest.LocationHeader)
-        if locationHeader and locationHeader.isValid():
-            self.__url = QUrl(locationHeader)
-            from WebBrowser.WebBrowserWindow import WebBrowserWindow
-            self.__reply = WebBrowserWindow\
-                .networkAccessManager().get(QNetworkRequest(self.__url))
-            self.__initialize()
     
     def __downloadProgress(self, bytesReceived, bytesTotal):
         """
@@ -488,10 +314,7 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         @return total number of bytes (integer)
         """
         if self.__bytesTotal == -1:
-            self.__bytesTotal = self.__reply.header(
-                QNetworkRequest.ContentLengthHeader)
-            if self.__bytesTotal is None:
-                self.__bytesTotal = -1
+            self.__bytesTotal = self.__downloadItem.totalBytes()
         return self.__bytesTotal
     
     def bytesReceived(self):
@@ -541,9 +364,6 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         """
         Private method to update the info label.
         """
-        if self.__reply.error() != QNetworkReply.NoError:
-            return
-        
         bytesTotal = self.bytesTotal()
         running = not self.downloadedSuccessfully()
         
@@ -566,13 +386,8 @@ class DownloadItem(QWidget, Ui_DownloadItem):
                     remaining)
         else:
             if self.__bytesReceived == bytesTotal or bytesTotal == -1:
-                info = self.tr("{0} downloaded\nSHA1: {1}\nMD5: {2}")\
-                    .format(dataString(self.__output.size()),
-                            str(self.__sha1Hash.result().toHex(),
-                                encoding="ascii"),
-                            str(self.__md5Hash.result().toHex(),
-                                encoding="ascii")
-                            )
+                info = self.tr("{0} downloaded")\
+                    .format(dataString(self.__output.size()))
             else:
                 info = self.tr("{0} of {1} - Stopped")\
                     .format(dataString(self.__bytesReceived),
@@ -608,23 +423,15 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         Private slot to handle the download finished.
         """
         self.__finishedDownloading = True
-        if not self.__startedSaving:
-            return
         
-        noError = self.__reply.error() == QNetworkReply.NoError
+        noError = (self.__downloadItem.state() == 
+                   QWebEngineDownloadItem.DownloadCompleted)
         
         self.progressBar.setVisible(False)
-        if not self.__isFtpDownload:
-            self.stopButton.setEnabled(False)
-            self.stopButton.setVisible(False)
-            self.pauseButton.setEnabled(False)
-            self.pauseButton.setVisible(False)
+        self.stopButton.setEnabled(False)
+        self.stopButton.setVisible(False)
         self.openButton.setEnabled(noError)
         self.openButton.setVisible(noError)
-        self.__output.close()
-        if QFile.exists(self.__fileName):
-            QFile.remove(self.__fileName)
-        self.__output.rename(self.__fileName)
         self.__updateInfoLabel()
         self.__state = DownloadItem.DownloadSuccessful
         self.statusChanged.emit()
@@ -685,19 +492,14 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         self.__url = data[0]
         self.__fileName = data[1]
         self.__pageUrl = data[3]
-        self.__isFtpDownload = self.__url.scheme() == "ftp"
         
         self.filenameLabel.setText(QFileInfo(self.__fileName).fileName())
         self.infoLabel.setText(self.__fileName)
         
         self.stopButton.setEnabled(False)
         self.stopButton.setVisible(False)
-        self.pauseButton.setEnabled(False)
-        self.pauseButton.setVisible(False)
         self.openButton.setEnabled(data[2])
         self.openButton.setVisible(data[2])
-        self.tryAgainButton.setEnabled(not data[2])
-        self.tryAgainButton.setVisible(not data[2])
         if data[2]:
             self.__state = DownloadItem.DownloadSuccessful
         else:

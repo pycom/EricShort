@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>82</height>
+    <height>87</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -73,29 +73,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QToolButton" name="tryAgainButton">
-     <property name="toolTip">
-      <string>Press to repeat the download</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QToolButton" name="pauseButton">
-     <property name="toolTip">
-      <string>Press to pause the download</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="checkable">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QToolButton" name="stopButton">
      <property name="toolTip">
       <string>Press to cancel the download</string>
@@ -118,8 +95,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>tryAgainButton</tabstop>
-  <tabstop>pauseButton</tabstop>
   <tabstop>stopButton</tabstop>
   <tabstop>openButton</tabstop>
  </tabstops>
