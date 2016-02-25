@@ -14,6 +14,7 @@ except NameError:
     pass
 
 import os
+import shutil
 
 from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt, QByteArray, QSize, QTimer, \
     QUrl, QThread, QTextCodec
@@ -56,7 +57,7 @@ from UI.Info import Version
 from .data import javascript_rc     # __IGNORE_WARNING__
 
 
-from .Tools import Scripts, WebBrowserTools, WebIconProvider
+from .Tools import Scripts, WebBrowserTools, WebIconProvider, WebBrowserPaths
 
 from .ZoomManager import ZoomManager
 
@@ -3293,12 +3294,10 @@ class WebBrowserWindow(E5MainWindow):
                 self.downloadManager().hide()
             if favicons:
                 self.__clearIconsDatabase()
-            # TODO: Cache Cleaning
-##            if cache:
-##                try:
-##                    self.networkManager().cache().clear()
-##                except AttributeError:
-##                    pass
+            if cache:
+                cachePath = self.webProfile().cachePath()
+                if cachePath:
+                    shutil.rmtree(cachePath)
             # TODO: Cookies
 ##            if cookies:
 ##                self.cookieJar().clear()
