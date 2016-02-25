@@ -42,7 +42,7 @@ class DownloadItem(QWidget, Ui_DownloadItem):
     DownloadSuccessful = 1
     DownloadCancelled = 2
     
-    def __init__(self, downloadItem, parent=None):
+    def __init__(self, downloadItem=None, parent=None):
         """
         Constructor
         
@@ -72,8 +72,7 @@ class DownloadItem(QWidget, Ui_DownloadItem):
         
         self.__downloadItem = downloadItem
         self.__pageUrl = \
-            WebBrowserWindow.mainWindow().getWindow().currentBrowser().url() \
-            or QUrl()
+            WebBrowserWindow.mainWindow().getWindow().currentBrowser().url()
         self.__bytesReceived = 0
         self.__bytesTotal = -1
         self.__downloadTime = QTime()

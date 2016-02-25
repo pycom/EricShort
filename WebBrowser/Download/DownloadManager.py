@@ -9,7 +9,7 @@ Module implementing the download manager class.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot, Qt, QModelIndex, QFileInfo
+from PyQt5.QtCore import pyqtSlot, Qt, QModelIndex, QFileInfo, QUrl
 from PyQt5.QtGui import QCursor, QKeySequence
 from PyQt5.QtWidgets import QDialog, QStyle, QFileIconProvider, QMenu, \
     QApplication, QShortcut
@@ -86,22 +86,17 @@ class DownloadManager(QDialog, Ui_DownloadManager):
         if selectedRowsCount == 1:
             row = self.downloadsView.selectionModel().selectedRows()[0].row()
             itm = self.__downloads[row]
-            if itm.downloadCanceled():
+            if itm.downloadedSuccessfully():
                 menu.addAction(
-                    UI.PixmapCache.getIcon("restart.png"),
-                    self.tr("Retry"), self.__contextMenuRetry)
-            else:
-                if itm.downloadedSuccessfully():
-                    menu.addAction(
-                        UI.PixmapCache.getIcon("open.png"),
-                        self.tr("Open"), self.__contextMenuOpen)
-                elif itm.downloading():
-                    menu.addAction(
-                        UI.PixmapCache.getIcon("stopLoading.png"),
-                        self.tr("Cancel"), self.__contextMenuCancel)
-                    menu.addSeparator()
+                    UI.PixmapCache.getIcon("open.png"),
+                    self.tr("Open"), self.__contextMenuOpen)
+            elif itm.downloading():
                 menu.addAction(
-                    self.tr("Open Containing Folder"),
+                    UI.PixmapCache.getIcon("stopLoading.png"),
+                    self.tr("Cancel"), self.__contextMenuCancel)
+                menu.addSeparator()
+            menu.addAction(
+                self.tr("Open Containing Folder"),
                     self.__contextMenuOpenFolder)
             menu.addSeparator()
             menu.addAction(
@@ -239,11 +234,6 @@ class DownloadManager(QDialog, Ui_DownloadManager):
             max(oldHeight, itm.minimumSizeHint().height() * 1.5))
         
         remove = False
-        # TODO: Private Browsing
-##        globalSettings = QWebSettings.globalSettings()
-##        if not itm.downloading() and \
-##           globalSettings.testAttribute(QWebSettings.PrivateBrowsingEnabled):
-##            remove = True
         
         if itm.downloadedSuccessfully() and \
            self.removePolicy() == DownloadManager.RemoveSuccessFullDownload:
@@ -295,11 +285,14 @@ class DownloadManager(QDialog, Ui_DownloadManager):
         if self.removePolicy() == DownloadManager.RemoveExit:
             return
         
-        # TODO: Downloads: check saving downloads
-##        downloads = []
-##        for download in self.__downloads:
-##            downloads.append(download.getData())
-##        Preferences.setWebBrowser("DownloadManagerDownloads", downloads)
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        if WebBrowserWindow.mainWindow().isPrivate():
+            return
+        
+        downloads = []
+        for download in self.__downloads:
+            downloads.append(download.getData())
+        Preferences.setWebBrowser("DownloadManagerDownloads", downloads)
     
     def __load(self):
         """
@@ -314,15 +307,14 @@ class DownloadManager(QDialog, Ui_DownloadManager):
         pos = Preferences.getWebBrowser("DownloadManagerPosition")
         self.move(pos)
         
-        # TODO: Downloads: check laoding downloads
-##        downloads = Preferences.getWebBrowser("DownloadManagerDownloads")
-##        for download in downloads:
-##            if not download[0].isEmpty() and \
-##               download[1] != "":
-##                from .DownloadItem import DownloadItem
-##                itm = DownloadItem(parent=self)
-##                itm.setData(download)
-##                self.__addItem(itm)
+        downloads = Preferences.getWebBrowser("DownloadManagerDownloads")
+        for download in downloads:
+            if not download[0].isEmpty() and \
+               download[1] != "":
+                from .DownloadItem import DownloadItem
+                itm = DownloadItem(parent=self)
+                itm.setData(download)
+                self.__addItem(itm)
         self.cleanupButton.setEnabled(
             (len(self.__downloads) - self.activeDownloads()) > 0)
         
@@ -422,7 +414,6 @@ class DownloadManager(QDialog, Ui_DownloadManager):
     ## Context menu related methods below
     ###########################################################################
     
-    # TODO: Downloads: check the context menu actions
     def __currentItem(self):
         """
         Private method to get a reference to the current item.
@@ -435,14 +426,6 @@ class DownloadManager(QDialog, Ui_DownloadManager):
             return self.__downloads[row]
         
         return None
-    
-    def __contextMenuRetry(self):
-        """
-        Private method to retry of the download.
-        """
-        itm = self.__currentItem()
-        if itm is not None:
-            itm.retry()
     
     def __contextMenuOpen(self):
         """
@@ -483,7 +466,7 @@ class DownloadManager(QDialog, Ui_DownloadManager):
         """
         itm = self.__currentItem()
         if itm is not None:
-            url = itm.getPageUrl().toString()
+            url = itm.getPageUrl().toDisplayString(QUrl.FullyDecoded)
             QApplication.clipboard().setText(url)
     
     def __contextMenuSelectAll(self):

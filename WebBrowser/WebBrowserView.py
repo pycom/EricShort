@@ -659,7 +659,7 @@ class WebBrowserView(QWebEngineView):
         # TODO: context menu: Open Link in New Window
         # TODO: context menu: Open Link in Private Window
         menu.addSeparator()
-        # TODO: Download Link
+        # TODO: Qt 5.6
 ##        menu.addAction(
 ##            UI.PixmapCache.getIcon("download.png"),
 ##            self.tr("Save Lin&k"), self.__downloadLink)
@@ -767,11 +767,10 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Media Address"), self.__sendLink)\
             .setData(hitTest.mediaUrl())
-        # TODO: DownloadManager
+        # TODO: Qt 5.6
 ##        menu.addAction(
 ##            UI.PixmapCache.getIcon("download.png"),
-##            self.tr("Save Media"), self.__downloadMedia)\
-##            .setData(hitTest.mediaUrl())
+##            self.tr("Save Media"), self.__downloadMedia)
     
     def __createSelectedTextContextMenu(self, menu, hitTest):
         """
@@ -1011,23 +1010,24 @@ class WebBrowserView(QWebEngineView):
             data = data.toString()
         QApplication.clipboard().setText(data)
     
+    # TODO: Qt 5.6
 ##    def __downloadLink(self):
 ##        """
 ##        Private slot to download a link and save it to disk.
 ##        """
-##        self.pageAction(QWebPage.DownloadLinkToDisk).trigger()
+##        self.triggerPageAction(QWebEnginePage.DownloadLinkToDisk)
 ##    
 ##    def __downloadImage(self):
 ##        """
 ##        Private slot to download an image and save it to disk.
 ##        """
-##        self.pageAction(QWebPage.DownloadImageToDisk).trigger()
+##        self.triggerPageAction(QWebEnginePage.DownloadImageToDisk)
 ##    
 ##    def __copyImage(self):
 ##        """
 ##        Private slot to copy an image to the clipboard.
 ##        """
-##        self.pageAction(QWebPage.CopyImageToClipboard).trigger()
+##        self.triggerPageAction(QWebEnginePage.CopyImageToClipboard)
     
     # TODO: AdBlock
 ##    def __blockImage(self):
@@ -1040,15 +1040,14 @@ class WebBrowserView(QWebEngineView):
 ##        dlg = WebBrowser.WebBrowserWindow.WebBrowserWindow.adBlockManager().showDialog()
 ##        dlg.addCustomRule(url)
     
-    # TODO: DownloadManager
+    # TODO: Qt 5.6
 ##    def __downloadMedia(self):
 ##        """
 ##        Private slot to download a media and save it to disk.
 ##        """
-##        act = self.sender()
-##        url = act.data()
-##        self.__mw.downloadManager().download(url, True, mainWindow=self.__mw)
+##        self.triggerPageAction(QWebEnginePage.DownloadMediaToDisk)
     
+    # TODO: Qt 5.6: do this with triggerPageAction()
     def __pauseMedia(self):
         """
         Private slot to pause or play the selected media.
@@ -1057,6 +1056,7 @@ class WebBrowserView(QWebEngineView):
         script = Scripts.toggleMediaPause(self.__clickedPos)
         self.page().runJavaScript(script)
     
+    # TODO: Qt 5.6: do this with triggerPageAction()
     def __muteMedia(self):
         """
         Private slot to (un)mute the selected media.
