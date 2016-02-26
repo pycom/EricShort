@@ -57,7 +57,7 @@ from UI.Info import Version
 from .data import javascript_rc     # __IGNORE_WARNING__
 
 
-from .Tools import Scripts, WebBrowserTools, WebIconProvider, WebBrowserPaths
+from .Tools import Scripts, WebBrowserTools, WebIconProvider
 
 from .ZoomManager import ZoomManager
 
@@ -92,7 +92,7 @@ class WebBrowserWindow(E5MainWindow):
     _downloadManager = None
     _feedsManager = None
 ##    _userAgentsManager = None
-##    _syncManager = None
+    _syncManager = None
 ##    _speedDial = None
     _personalInformationManager = None
     _greaseMonkeyManager = None
@@ -1692,23 +1692,22 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__showUserAgentsDialog)
 ##        self.__actions.append(self.userAgentManagerAct)
         
-        # TODO: Synchronisation
-##        self.synchronizationAct = E5Action(
-##            self.tr('Synchronize data'),
-##            UI.PixmapCache.getIcon("sync.png"),
-##            self.tr('&Synchronize Data...'),
-##            0, 0, self, 'webbrowser_synchronize_data')
-##        self.synchronizationAct.setStatusTip(self.tr(
-##            'Shows a dialog to synchronize data via the network'))
-##        self.synchronizationAct.setWhatsThis(self.tr(
-##            """<b>Synchronize Data...</b>"""
-##            """<p>This shows a dialog to synchronize data via the"""
-##            """ network.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.synchronizationAct.triggered.connect(
-##                self.__showSyncDialog)
-##        self.__actions.append(self.synchronizationAct)
+        self.synchronizationAct = E5Action(
+            self.tr('Synchronize data'),
+            UI.PixmapCache.getIcon("sync.png"),
+            self.tr('&Synchronize Data...'),
+            0, 0, self, 'webbrowser_synchronize_data')
+        self.synchronizationAct.setStatusTip(self.tr(
+            'Shows a dialog to synchronize data via the network'))
+        self.synchronizationAct.setWhatsThis(self.tr(
+            """<b>Synchronize Data...</b>"""
+            """<p>This shows a dialog to synchronize data via the"""
+            """ network.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.synchronizationAct.triggered.connect(
+                self.__showSyncDialog)
+        self.__actions.append(self.synchronizationAct)
         
         self.zoomValuesAct = E5Action(
             self.tr('Manage Saved Zoom Values'),
@@ -1885,9 +1884,10 @@ class WebBrowserWindow(E5MainWindow):
         menu = mb.addMenu(self.tr("&Tools"))
         menu.setTearOffEnabled(True)
         menu.addAction(self.feedsManagerAct)
+        # TODO: Site Info
 ##        menu.addAction(self.siteInfoAct)
-##        menu.addSeparator()
-##        menu.addAction(self.synchronizationAct)
+        menu.addSeparator()
+        menu.addAction(self.synchronizationAct)
 ##        menu.addSeparator()
 ##        menu.addAction(self.toolsMonitorAct)
         
@@ -1996,9 +1996,10 @@ class WebBrowserWindow(E5MainWindow):
         toolstb.setObjectName("ToolsToolBar")
         toolstb.setIconSize(UI.Config.ToolBarIconSize)
         toolstb.addAction(self.feedsManagerAct)
+        # TODO: SiteInfo
 ##        toolstb.addAction(self.siteInfoAct)
-##        toolstb.addSeparator()
-##        toolstb.addAction(self.synchronizationAct)
+        toolstb.addSeparator()
+        toolstb.addAction(self.synchronizationAct)
         
         helptb = self.addToolBar(self.tr("Help"))
         helptb.setObjectName("HelpToolBar")
@@ -2603,7 +2604,6 @@ class WebBrowserWindow(E5MainWindow):
         Private slot called to toggle fullscreen mode.
         """
         if self.__isFullScreen():
-            # TODO: Full Screen - web pages need to be toggled separately (Qt 5.6)
             # switch back to normal
             self.setWindowState(self.windowState() & ~Qt.WindowFullScreen)
             self.menuBar().show()
@@ -2617,7 +2617,6 @@ class WebBrowserWindow(E5MainWindow):
             self.fullScreenAct.setIcon(
                 UI.PixmapCache.getIcon("windowRestore.png"))
             self.fullScreenAct.setIconText(self.tr('Restore Window'))
-            # TODO: Full Screen - web pages need to be toggled separately (Qt 5.6)
     
     def __isFullScreen(self):
         """
@@ -3826,26 +3825,25 @@ class WebBrowserWindow(E5MainWindow):
 ##        dlg = UserAgentsDialog(self)
 ##        dlg.exec_()
 ##    
-    # TODO: Sync
-##    @classmethod
-##    def syncManager(cls):
-##        """
-##        Class method to get a reference to the data synchronization manager.
-##        
-##        @return reference to the data synchronization manager (SyncManager)
-##        """
-##        if cls._syncManager is None:
-##            from .Sync.SyncManager import SyncManager
-##            cls._syncManager = SyncManager()
-##        
-##        return cls._syncManager
-##    
-##    def __showSyncDialog(self):
-##        """
-##        Private slot to show the synchronization dialog.
-##        """
-##        self.syncManager().showSyncDialog()
-##    
+    @classmethod
+    def syncManager(cls):
+        """
+        Class method to get a reference to the data synchronization manager.
+        
+        @return reference to the data synchronization manager (SyncManager)
+        """
+        if cls._syncManager is None:
+            from .Sync.SyncManager import SyncManager
+            cls._syncManager = SyncManager()
+        
+        return cls._syncManager
+    
+    def __showSyncDialog(self):
+        """
+        Private slot to show the synchronization dialog.
+        """
+        self.syncManager().showSyncDialog()
+    
     # TODO: SpeedDial
 ##    @classmethod
 ##    def speedDial(cls):

@@ -1360,6 +1360,19 @@
     <Source>WebBrowser/PersonalInformationManager/PersonalInformationManager.py</Source>
     <Source>WebBrowser/PersonalInformationManager/__init__.py</Source>
     <Source>WebBrowser/SearchWidget.py</Source>
+    <Source>WebBrowser/Sync/DirectorySyncHandler.py</Source>
+    <Source>WebBrowser/Sync/FtpSyncHandler.py</Source>
+    <Source>WebBrowser/Sync/SyncAssistantDialog.py</Source>
+    <Source>WebBrowser/Sync/SyncCheckPage.py</Source>
+    <Source>WebBrowser/Sync/SyncDataPage.py</Source>
+    <Source>WebBrowser/Sync/SyncDirectorySettingsPage.py</Source>
+    <Source>WebBrowser/Sync/SyncEncryptionPage.py</Source>
+    <Source>WebBrowser/Sync/SyncFtpSettingsPage.py</Source>
+    <Source>WebBrowser/Sync/SyncGlobals.py</Source>
+    <Source>WebBrowser/Sync/SyncHandler.py</Source>
+    <Source>WebBrowser/Sync/SyncHostTypePage.py</Source>
+    <Source>WebBrowser/Sync/SyncManager.py</Source>
+    <Source>WebBrowser/Sync/__init__.py</Source>
     <Source>WebBrowser/Tools/DelayedFileWatcher.py</Source>
     <Source>WebBrowser/Tools/Scripts.py</Source>
     <Source>WebBrowser/Tools/WebBrowserTools.py</Source>
@@ -1810,6 +1823,12 @@
     <Form>WebBrowser/Passwords/PasswordsDialog.ui</Form>
     <Form>WebBrowser/PersonalInformationManager/PersonalDataDialog.ui</Form>
     <Form>WebBrowser/SearchWidget.ui</Form>
+    <Form>WebBrowser/Sync/SyncCheckPage.ui</Form>
+    <Form>WebBrowser/Sync/SyncDataPage.ui</Form>
+    <Form>WebBrowser/Sync/SyncDirectorySettingsPage.ui</Form>
+    <Form>WebBrowser/Sync/SyncEncryptionPage.ui</Form>
+    <Form>WebBrowser/Sync/SyncFtpSettingsPage.ui</Form>
+    <Form>WebBrowser/Sync/SyncHostTypePage.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkActionSelectionDialog.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkInfoDialog.ui</Form>
     <Form>WebBrowser/VirusTotal/VirusTotalDomainReportDialog.ui</Form>

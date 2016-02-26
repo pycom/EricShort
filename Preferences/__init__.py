@@ -1033,6 +1033,25 @@ class Prefs(object):
         "DownloadManagerSize": QSize(400, 300),
         "DownloadManagerPosition": QPoint(),
         "DownloadManagerDownloads": [],
+        # Sync
+        "SyncEnabled": False,
+        "SyncBookmarks": True,
+        "SyncHistory": True,
+        "SyncPasswords": False,
+        "SyncUserAgents": True,
+        "SyncSpeedDial": True,
+        "SyncEncryptData": False,
+        "SyncEncryptionKey": "",
+        "SyncEncryptionKeyLength": 32,      # 16, 24 or 32
+        "SyncEncryptPasswordsOnly": False,
+        "SyncType": 0,
+        "SyncFtpServer": "",
+        "SyncFtpUser": "",
+        "SyncFtpPassword": "",
+        "SyncFtpPath": "",
+        "SyncFtpPort": 21,
+        "SyncFtpIdleTimeout": 30,
+        "SyncDirectoryPath": "",
         # Flash Cookie Manager: identical to helpDefaults
         # PIM:                  identical to helpDefaults
         # VirusTotal:           identical to helpDefaults
@@ -2715,10 +2734,10 @@ def getWebBrowser(key, prefClass=Prefs):
             feeds.append((url, title, icon))
         prefClass.settings.endArray()
         return feeds
-##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
-##        from Utilities.crypto import pwConvert
-##        return pwConvert(prefClass.settings.value(
-##            "WebBrowser/" + key, prefClass.helpDefaults[key]), encode=False)
+    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
+        from Utilities.crypto import pwConvert
+        return pwConvert(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.helpDefaults[key]), encode=False)
 ##    elif key == "HelpViewerType":
 ##        # special treatment to adjust for missing QtWebKit
 ##        value = int(prefClass.settings.value(
@@ -2727,38 +2746,29 @@ def getWebBrowser(key, prefClass=Prefs):
 ##            value = prefClass.helpDefaults[key]
 ##        return value
 ##    elif key in ["DiskCacheSize", "AcceptCookies",
-##                 "KeepCookiesUntil", "StartupBehavior", "HistoryLimit",
+##                 "KeepCookiesUntil", "StartupBehavior",
 ##                 "OfflineStorageDatabaseQuota",
 ##                 "OfflineWebApplicationCacheQuota", "CachePolicy",
-##                 "DownloadManagerRemovePolicy", "AdBlockUpdatePeriod",
-##                 "SearchLanguage", "SyncType", "SyncFtpPort",
-##                 "SyncFtpIdleTimeout", "SyncEncryptionKeyLength"]:
+##                 "AdBlockUpdatePeriod",
+##                  ]:
     elif key in ["StartupBehavior", "MinimumFontSize",
                  "MinimumLogicalFontSize", "HistoryLimit",
-                 "DownloadManagerRemovePolicy",]:
+                 "DownloadManagerRemovePolicy","SyncType", "SyncFtpPort",
+                 "SyncFtpIdleTimeout", "SyncEncryptionKeyLength",
+                 "SearchLanguage",]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
-##    elif key in ["SingleHelpWindow", "SaveGeometry", "WebSearchSuggestions",
-##                 "DiskCacheEnabled", "FilterTrackingCookies",
+##    elif key in ["DiskCacheEnabled", "FilterTrackingCookies",
 ##                 "PrintBackgrounds", "AdBlockEnabled", "AutoLoadImages",
-##                 "JavaEnabled", "JavaScriptEnabled",
-##                 "JavaScriptCanOpenWindows", "JavaScriptCanCloseWindows",
-##                 "JavaScriptCanAccessClipboard",
+##                 "JavaEnabled",
+##                 "JavaScriptCanCloseWindows",
 ##                 "PluginsEnabled", "DnsPrefetchEnabled",
 ##                 "OfflineStorageDatabaseEnabled",
 ##                 "OfflineWebApplicationCacheEnabled", "LocalStorageEnabled",
-##                 "ShowPreview", "AccessKeysEnabled", "VirusTotalEnabled",
-##                 "VirusTotalSecure", "DoNotTrack", "SendReferer",
-##                 "SpatialNavigationEnabled", "LinksIncludedInFocusChain",
-##                 "LocalContentCanAccessRemoteUrls",
-##                 "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
-##                 "SiteSpecificQuirksEnabled", "SyncEnabled", "SyncBookmarks",
-##                 "SyncHistory", "SyncPasswords", "SyncUserAgents",
-##                 "SyncSpeedDial", "SyncEncryptData",
-##                 "SyncEncryptPasswordsOnly",
-##                 "WarnOnMultipleClose", "ClickToFlashEnabled",
-##                 "FlashCookiesDeleteOnStartExit", "FlashCookieAutoRefresh",
-##                 "FlashCookieNotify",
+##                 "ShowPreview", "AccessKeysEnabled",
+##                 "DoNotTrack", "SendReferer",
+##                 "SiteSpecificQuirksEnabled",
+##                 "ClickToFlashEnabled",
 ##                 ]:
     elif key in ["SingleHelpWindow", "SaveGeometry", "JavaScriptEnabled",
                  "JavaScriptCanOpenWindows", "JavaScriptCanAccessClipboard",
@@ -2768,13 +2778,15 @@ def getWebBrowser(key, prefClass=Prefs):
                  "LocalContentCanAccessFileUrls", "XSSAuditingEnabled",
                  "ScrollAnimatorEnabled", "ErrorPageEnabled",
                  "WarnOnMultipleClose", "WebSearchSuggestions",
+                 "SyncEnabled", "SyncBookmarks", "SyncHistory",
+                 "SyncPasswords", "SyncUserAgents", "SyncSpeedDial",
+                 "SyncEncryptData",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["AdBlockSubscriptions", "AdBlockExceptions",
 ##                 "ClickToFlashWhitelist", "SendRefererWhitelist",
-##                 "GreaseMonkeyDisabledScripts", "NoCacheHosts",
-##                 "FlashCookiesWhitelist", "FlashCookiesBlacklist",
+##                 "NoCacheHosts",
     elif key in ["GreaseMonkeyDisabledScripts",
                  ]:
         return toList(prefClass.settings.value(
@@ -2837,10 +2849,10 @@ def setWebBrowser(key, value, prefClass=Prefs):
             prefClass.settings.setValue("Icon", v[2])
             index += 1
         prefClass.settings.endArray()
-##    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
-##        from Utilities.crypto import pwConvert
-##        prefClass.settings.setValue(
-##            "WebBrowser/" + key, pwConvert(value, encode=True))
+    elif key in ["SyncFtpPassword", "SyncEncryptionKey"]:
+        from Utilities.crypto import pwConvert
+        prefClass.settings.setValue(
+            "WebBrowser/" + key, pwConvert(value, encode=True))
     else:
         prefClass.settings.setValue("WebBrowser/" + key, value)
     
@@ -3482,6 +3494,16 @@ def convertPasswords(oldPassword, newPassword, prefClass=Prefs):
             pwRecode(
                 prefClass.settings.value("Help/" + key,
                                          prefClass.helpDefaults[key]),
+                oldPassword,
+                newPassword
+            )
+        )
+    for key in ["SyncFtpPassword", "SyncEncryptionKey"]:
+        prefClass.settings.setValue(
+            "WebBrowser/" + key,
+            pwRecode(
+                prefClass.settings.value("WebBrowser/" + key,
+                                         prefClass.webBrowserDefaults[key]),
                 oldPassword,
                 newPassword
             )
