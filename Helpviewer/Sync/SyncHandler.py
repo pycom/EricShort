@@ -61,7 +61,7 @@ class SyncHandler(QObject):
                 "RemoteExists": self.tr(
                     "Remote bookmarks file exists! Syncing local copy..."),
                 "RemoteMissing": self.tr(
-                    "Remote bookmarks file does NOT exists. Exporting"
+                    "Remote bookmarks file does NOT exist. Exporting"
                     " local copy..."),
                 "LocalNewer": self.tr(
                     "Local bookmarks file is NEWER. Exporting local copy..."),
@@ -74,7 +74,7 @@ class SyncHandler(QObject):
                 "RemoteExists": self.tr(
                     "Remote history file exists! Syncing local copy..."),
                 "RemoteMissing": self.tr(
-                    "Remote history file does NOT exists. Exporting"
+                    "Remote history file does NOT exist. Exporting"
                     " local copy..."),
                 "LocalNewer": self.tr(
                     "Local history file is NEWER. Exporting local copy..."),
@@ -87,7 +87,7 @@ class SyncHandler(QObject):
                 "RemoteExists": self.tr(
                     "Remote logins file exists! Syncing local copy..."),
                 "RemoteMissing": self.tr(
-                    "Remote logins file does NOT exists. Exporting"
+                    "Remote logins file does NOT exist. Exporting"
                     " local copy..."),
                 "LocalNewer": self.tr(
                     "Local logins file is NEWER. Exporting local copy..."),
@@ -101,7 +101,7 @@ class SyncHandler(QObject):
                     "Remote user agent settings file exists! Syncing local"
                     " copy..."),
                 "RemoteMissing": self.tr(
-                    "Remote user agent settings file does NOT exists."
+                    "Remote user agent settings file does NOT exist."
                     " Exporting local copy..."),
                 "LocalNewer": self.tr(
                     "Local user agent settings file is NEWER. Exporting"
@@ -117,7 +117,7 @@ class SyncHandler(QObject):
                     "Remote speed dial settings file exists! Syncing local"
                     " copy..."),
                 "RemoteMissing": self.tr(
-                    "Remote speed dial settings file does NOT exists."
+                    "Remote speed dial settings file does NOT exist."
                     " Exporting local copy..."),
                 "LocalNewer": self.tr(
                     "Local speed dial settings file is NEWER. Exporting"
