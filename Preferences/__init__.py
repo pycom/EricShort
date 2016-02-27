@@ -2780,7 +2780,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "WarnOnMultipleClose", "WebSearchSuggestions",
                  "SyncEnabled", "SyncBookmarks", "SyncHistory",
                  "SyncPasswords", "SyncUserAgents", "SyncSpeedDial",
-                 "SyncEncryptData",
+                 "SyncEncryptData", "SyncEncryptPasswordsOnly",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))

@@ -165,7 +165,7 @@ class DirectorySyncHandler(SyncHandler):
                     Preferences.getWebBrowser("SyncDirectoryPath"),
                     self._remoteFiles[type_])).lastModified().toTime_t())
         else:
-            if os.path.exists(os.path.join(
+            if not os.path.exists(os.path.join(
                     Preferences.getWebBrowser("SyncDirectoryPath"),
                     self._remoteFiles[type_])):
                 self.syncStatus.emit(
