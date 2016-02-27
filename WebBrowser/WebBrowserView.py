@@ -2108,3 +2108,11 @@ class WebBrowserView(QWebEngineView):
 ##        return True
 ##    
 ##    return False
+    
+    ######################
+    
+    def renderWidgetPixmap(self):
+        return self.__rwhvqt.grabFramebuffer()
+    
+    def repaintRenderWidget(self):
+        self.__rwhvqt.repaint()

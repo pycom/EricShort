@@ -588,38 +588,38 @@ class WebBrowserWindow(E5MainWindow):
 ##            self.saveAsAct.triggered.connect(self.__savePageAs)
 ##        self.__actions.append(self.saveAsAct)
 ##        
-##        self.savePageScreenAct = E5Action(
-##            self.tr('Save Page Screen'),
-##            UI.PixmapCache.getIcon("fileSavePixmap.png"),
-##            self.tr('Save Page Screen...'),
-##            0, 0, self, 'webbrowser_file_save_page_screen')
-##        self.savePageScreenAct.setStatusTip(
-##            self.tr('Save the current page as a screen shot'))
-##        self.savePageScreenAct.setWhatsThis(self.tr(
-##            """<b>Save Page Screen...</b>"""
-##            """<p>Saves the current page as a screen shot.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.savePageScreenAct.triggered.connect(self.__savePageScreen)
-##        self.__actions.append(self.savePageScreenAct)
-##        
-##        self.saveVisiblePageScreenAct = E5Action(
-##            self.tr('Save Visible Page Screen'),
-##            UI.PixmapCache.getIcon("fileSaveVisiblePixmap.png"),
-##            self.tr('Save Visible Page Screen...'),
-##            0, 0, self, 'webbrowser_file_save_visible_page_screen')
-##        self.saveVisiblePageScreenAct.setStatusTip(
-##            self.tr('Save the visible part of the current page as a'
-##                    ' screen shot'))
-##        self.saveVisiblePageScreenAct.setWhatsThis(self.tr(
-##            """<b>Save Visible Page Screen...</b>"""
-##            """<p>Saves the visible part of the current page as a"""
-##            """ screen shot.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.saveVisiblePageScreenAct.triggered.connect(
-##                self.__saveVisiblePageScreen)
-##        self.__actions.append(self.saveVisiblePageScreenAct)
+        self.savePageScreenAct = E5Action(
+            self.tr('Save Page Screen'),
+            UI.PixmapCache.getIcon("fileSavePixmap.png"),
+            self.tr('Save Page Screen...'),
+            0, 0, self, 'webbrowser_file_save_page_screen')
+        self.savePageScreenAct.setStatusTip(
+            self.tr('Save the current page as a screen shot'))
+        self.savePageScreenAct.setWhatsThis(self.tr(
+            """<b>Save Page Screen...</b>"""
+            """<p>Saves the current page as a screen shot.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.savePageScreenAct.triggered.connect(self.__savePageScreen)
+        self.__actions.append(self.savePageScreenAct)
+        
+        self.saveVisiblePageScreenAct = E5Action(
+            self.tr('Save Visible Page Screen'),
+            UI.PixmapCache.getIcon("fileSaveVisiblePixmap.png"),
+            self.tr('Save Visible Page Screen...'),
+            0, 0, self, 'webbrowser_file_save_visible_page_screen')
+        self.saveVisiblePageScreenAct.setStatusTip(
+            self.tr('Save the visible part of the current page as a'
+                    ' screen shot'))
+        self.saveVisiblePageScreenAct.setWhatsThis(self.tr(
+            """<b>Save Visible Page Screen...</b>"""
+            """<p>Saves the visible part of the current page as a"""
+            """ screen shot.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.saveVisiblePageScreenAct.triggered.connect(
+                self.__saveVisiblePageScreen)
+        self.__actions.append(self.saveVisiblePageScreenAct)
         
         bookmarksManager = self.bookmarksManager()
         self.importBookmarksAct = E5Action(
@@ -1754,9 +1754,9 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.openTabAct)
         menu.addSeparator()
 ##        menu.addAction(self.saveAsAct)
-##        menu.addAction(self.savePageScreenAct)
-##        menu.addAction(self.saveVisiblePageScreenAct)
-##        menu.addSeparator()
+        menu.addAction(self.savePageScreenAct)
+        menu.addAction(self.saveVisiblePageScreenAct)
+        menu.addSeparator()
 ##        menu.addAction(self.printPreviewAct)
 ##        menu.addAction(self.printAct)
 ##        menu.addAction(self.printPdfAct)
@@ -1922,8 +1922,8 @@ class WebBrowserWindow(E5MainWindow):
         filetb.addAction(self.openTabAct)
         filetb.addSeparator()
 ##        filetb.addAction(self.saveAsAct)
-##        filetb.addAction(self.savePageScreenAct)
-##        filetb.addSeparator()
+        filetb.addAction(self.savePageScreenAct)
+        filetb.addSeparator()
 ##        filetb.addAction(self.printPreviewAct)
 ##        filetb.addAction(self.printAct)
 ##        filetb.addAction(self.printPdfAct)
@@ -1931,12 +1931,12 @@ class WebBrowserWindow(E5MainWindow):
         filetb.addAction(self.closeAct)
         filetb.addAction(self.exitAct)
         
-##        self.savePageScreenMenu = QMenu(self)
-##        self.savePageScreenMenu.addAction(self.savePageScreenAct)
-##        self.savePageScreenMenu.addAction(self.saveVisiblePageScreenAct)
-##        savePageScreenButton = filetb.widgetForAction(self.savePageScreenAct)
-##        savePageScreenButton.setMenu(self.savePageScreenMenu)
-##        savePageScreenButton.setPopupMode(QToolButton.MenuButtonPopup)
+        self.savePageScreenMenu = QMenu(self)
+        self.savePageScreenMenu.addAction(self.savePageScreenAct)
+        self.savePageScreenMenu.addAction(self.saveVisiblePageScreenAct)
+        savePageScreenButton = filetb.widgetForAction(self.savePageScreenAct)
+        savePageScreenButton.setMenu(self.savePageScreenMenu)
+        savePageScreenButton.setPopupMode(QToolButton.MenuButtonPopup)
         
         edittb = self.addToolBar(self.tr("Edit"))
         edittb.setObjectName("EditToolBar")
@@ -2237,25 +2237,26 @@ class WebBrowserWindow(E5MainWindow):
 ##        if browser is not None:
 ##            browser.saveAs()
 ##    
-##    @pyqtSlot()
-##    def __savePageScreen(self, visibleOnly=False):
-##        """
-##        Private slot to save the current page as a screen shot.
-##        
-##        @param visibleOnly flag indicating to just save the visible part
-##            of the page (boolean)
-##        """
-##        from .PageScreenDialog import PageScreenDialog
-##        self.__pageScreen = PageScreenDialog(
-##            self.currentBrowser(), visibleOnly=visibleOnly)
-##        self.__pageScreen.show()
-##        
-##    def __saveVisiblePageScreen(self):
-##        """
-##        Private slot to save the visible part of the current page as a screen
-##        shot.
-##        """
-##        self.__savePageScreen(visibleOnly=True)
+    @pyqtSlot()
+    def __savePageScreen(self, visibleOnly=False):
+        """
+        Private slot to save the current page as a screen shot.
+        
+        @param visibleOnly flag indicating to just save the visible part
+            of the page (boolean)
+        """
+        from .PageScreenDialog import PageScreenDialog
+        self.__pageScreen = PageScreenDialog(
+            self.currentBrowser(), visibleOnly=visibleOnly)
+        self.__pageScreen.show()
+        
+    @pyqtSlot()
+    def __saveVisiblePageScreen(self):
+        """
+        Private slot to save the visible part of the current page as a screen
+        shot.
+        """
+        self.__savePageScreen(visibleOnly=True)
         
     def __about(self):
         """

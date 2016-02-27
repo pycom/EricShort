@@ -1349,6 +1349,7 @@
     <Source>WebBrowser/OpenSearch/OpenSearchReader.py</Source>
     <Source>WebBrowser/OpenSearch/OpenSearchWriter.py</Source>
     <Source>WebBrowser/OpenSearch/__init__.py</Source>
+    <Source>WebBrowser/PageScreenDialog.py</Source>
     <Source>WebBrowser/Passwords/LoginForm.py</Source>
     <Source>WebBrowser/Passwords/PasswordManager.py</Source>
     <Source>WebBrowser/Passwords/PasswordModel.py</Source>
@@ -1821,6 +1822,7 @@
     <Form>WebBrowser/History/HistoryDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchEditDialog.ui</Form>
+    <Form>WebBrowser/PageScreenDialog.ui</Form>
     <Form>WebBrowser/Passwords/PasswordsDialog.ui</Form>
     <Form>WebBrowser/PersonalInformationManager/PersonalDataDialog.ui</Form>
     <Form>WebBrowser/SearchWidget.ui</Form>
