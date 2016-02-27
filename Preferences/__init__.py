@@ -1026,6 +1026,7 @@ class Prefs(object):
                                     # search engine name)
         "SearchLanguage": QLocale().language(),
         "RssFeeds": [],
+        "ShowPreview": True,
         # Grease Monkey
         "GreaseMonkeyDisabledScripts": [],
         # Downloads
@@ -2765,7 +2766,7 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "PluginsEnabled", "DnsPrefetchEnabled",
 ##                 "OfflineStorageDatabaseEnabled",
 ##                 "OfflineWebApplicationCacheEnabled", "LocalStorageEnabled",
-##                 "ShowPreview", "AccessKeysEnabled",
+##                 "AccessKeysEnabled",
 ##                 "DoNotTrack", "SendReferer",
 ##                 "SiteSpecificQuirksEnabled",
 ##                 "ClickToFlashEnabled",
@@ -2781,6 +2782,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "SyncEnabled", "SyncBookmarks", "SyncHistory",
                  "SyncPasswords", "SyncUserAgents", "SyncSpeedDial",
                  "SyncEncryptData", "SyncEncryptPasswordsOnly",
+                 "ShowPreview",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))

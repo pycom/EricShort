@@ -37,42 +37,41 @@ class WebBrowserTabBar(E5WheelTabBar):
         
         self.setMouseTracking(True)
     
-    # TODO: page preview
-##    def __showTabPreview(self):
-##        """
-##        Private slot to show the tab preview.
-##        """
-##        indexedBrowser = self.__tabWidget.browserAt(
-##            self.__currentTabPreviewIndex)
-##        currentBrowser = self.__tabWidget.currentBrowser()
-##        
-##        if indexedBrowser is None or currentBrowser is None:
-##            return
-##        
-##        # no previews during load
-##        if indexedBrowser.progress() != 0:
-##            return
-##        
-##        w = self.tabSizeHint(self.__currentTabPreviewIndex).width()
-##        h = int(w * currentBrowser.height() / currentBrowser.width())
-##        
-##        self.__previewPopup = E5PassivePopup(self)
-##        self.__previewPopup.setFrameShape(QFrame.StyledPanel)
-##        self.__previewPopup.setFrameShadow(QFrame.Plain)
-##        self.__previewPopup.setFixedSize(w, h)
-##        
-##        from .HelpSnap import renderTabPreview
-##        label = QLabel()
-##        label.setPixmap(renderTabPreview(indexedBrowser.page(), w, h))
-##        
-##        self.__previewPopup.setView(label)
-##        self.__previewPopup.layout().setAlignment(Qt.AlignTop)
-##        self.__previewPopup.layout().setContentsMargins(0, 0, 0, 0)
-##        
-##        tr = self.tabRect(self.__currentTabPreviewIndex)
-##        pos = QPoint(tr.x(), tr.y() + tr.height())
-##        
-##        self.__previewPopup.show(self.mapToGlobal(pos))
+    def __showTabPreview(self):
+        """
+        Private slot to show the tab preview.
+        """
+        indexedBrowser = self.__tabWidget.browserAt(
+            self.__currentTabPreviewIndex)
+        currentBrowser = self.__tabWidget.currentBrowser()
+        
+        if indexedBrowser is None or currentBrowser is None:
+            return
+        
+        # no previews during load
+        if indexedBrowser.progress() != 0:
+            return
+        
+        w = self.tabSizeHint(self.__currentTabPreviewIndex).width()
+        h = int(w * currentBrowser.height() / currentBrowser.width())
+        
+        self.__previewPopup = E5PassivePopup(self)
+        self.__previewPopup.setFrameShape(QFrame.StyledPanel)
+        self.__previewPopup.setFrameShadow(QFrame.Plain)
+        self.__previewPopup.setFixedSize(w, h)
+        
+        from .WebBrowserSnap import renderTabPreview
+        label = QLabel()
+        label.setPixmap(renderTabPreview(indexedBrowser, w, h))
+        
+        self.__previewPopup.setView(label)
+        self.__previewPopup.layout().setAlignment(Qt.AlignTop)
+        self.__previewPopup.layout().setContentsMargins(0, 0, 0, 0)
+        
+        tr = self.tabRect(self.__currentTabPreviewIndex)
+        pos = QPoint(tr.x(), tr.y() + tr.height())
+        
+        self.__previewPopup.show(self.mapToGlobal(pos))
     
     def mouseMoveEvent(self, evt):
         """
@@ -85,30 +84,29 @@ class WebBrowserTabBar(E5WheelTabBar):
         
         super(WebBrowserTabBar, self).mouseMoveEvent(evt)
         
-        # TODO: page preview
-##        if Preferences.getWebBrowser("ShowPreview"):
-##            # Find the tab under the mouse
-##            i = 0
-##            tabIndex = -1
-##            while i < self.count() and tabIndex == -1:
-##                if self.tabRect(i).contains(evt.pos()):
-##                    tabIndex = i
-##                i += 1
-##            
-##            # If found and not the current tab then show tab preview
-##            if tabIndex != -1 and \
-##               tabIndex != self.currentIndex() and \
-##               self.__currentTabPreviewIndex != tabIndex and \
-##               evt.buttons() == Qt.NoButton:
-##                self.__currentTabPreviewIndex = tabIndex
-##                QTimer.singleShot(200, self.__showTabPreview)
-##            
-##            # If current tab or not found then hide previous tab preview
-##            if tabIndex == self.currentIndex() or \
-##               tabIndex == -1:
-##                if self.__previewPopup is not None:
-##                    self.__previewPopup.hide()
-##                self.__currentTabPreviewIndex = -1
+        if Preferences.getWebBrowser("ShowPreview"):
+            # Find the tab under the mouse
+            i = 0
+            tabIndex = -1
+            while i < self.count() and tabIndex == -1:
+                if self.tabRect(i).contains(evt.pos()):
+                    tabIndex = i
+                i += 1
+            
+            # If found and not the current tab then show tab preview
+            if tabIndex != -1 and \
+               tabIndex != self.currentIndex() and \
+               self.__currentTabPreviewIndex != tabIndex and \
+               evt.buttons() == Qt.NoButton:
+                self.__currentTabPreviewIndex = tabIndex
+                QTimer.singleShot(200, self.__showTabPreview)
+            
+            # If current tab or not found then hide previous tab preview
+            if tabIndex == self.currentIndex() or \
+               tabIndex == -1:
+                if self.__previewPopup is not None:
+                    self.__previewPopup.hide()
+                self.__currentTabPreviewIndex = -1
     
     def leaveEvent(self, evt):
         """
@@ -116,12 +114,11 @@ class WebBrowserTabBar(E5WheelTabBar):
         
         @param evt reference to the leave event (QEvent)
         """
-        # TODO: page preview
-##        if Preferences.getWebBrowser("ShowPreview"):
-##            # If leave tabwidget then hide previous tab preview
-##            if self.__previewPopup is not None:
-##                self.__previewPopup.hide()
-##            self.__currentTabPreviewIndex = -1
+        if Preferences.getWebBrowser("ShowPreview"):
+            # If leave tabwidget then hide previous tab preview
+            if self.__previewPopup is not None:
+                self.__previewPopup.hide()
+            self.__currentTabPreviewIndex = -1
         
         super(WebBrowserTabBar, self).leaveEvent(evt)
     
@@ -131,11 +128,10 @@ class WebBrowserTabBar(E5WheelTabBar):
         
         @param evt reference to the mouse press event (QMouseEvent)
         """
-        # TODO: page preview
-##        if Preferences.getWebBrowser("ShowPreview"):
-##            if self.__previewPopup is not None:
-##                self.__previewPopup.hide()
-##            self.__currentTabPreviewIndex = -1
+        if Preferences.getWebBrowser("ShowPreview"):
+            if self.__previewPopup is not None:
+                self.__previewPopup.hide()
+            self.__currentTabPreviewIndex = -1
         
         super(WebBrowserTabBar, self).mousePressEvent(evt)
     
@@ -149,12 +145,11 @@ class WebBrowserTabBar(E5WheelTabBar):
         @param evt reference to the event to be handled (QEvent)
         @return flag indicating, if the event was handled (boolean)
         """
-        # TODO: page preview
-##        if evt.type() == QEvent.ToolTip and \
-##           Preferences.getWebBrowser("ShowPreview"):
-##            # suppress tool tips if we are showing previews
-##            evt.setAccepted(True)
-##            return True
+        if evt.type() == QEvent.ToolTip and \
+           Preferences.getWebBrowser("ShowPreview"):
+            # suppress tool tips if we are showing previews
+            evt.setAccepted(True)
+            return True
         
         return super(WebBrowserTabBar, self).event(evt)
     
@@ -164,9 +159,7 @@ class WebBrowserTabBar(E5WheelTabBar):
         
         @param index index of the removed tab (integer)
         """
-        pass
-        # TODO: page preview
-##        if Preferences.getWebBrowser("ShowPreview"):
-##            if self.__previewPopup is not None:
-##                self.__previewPopup.hide()
-##            self.__currentTabPreviewIndex = -1
+        if Preferences.getWebBrowser("ShowPreview"):
+            if self.__previewPopup is not None:
+                self.__previewPopup.hide()
+            self.__currentTabPreviewIndex = -1
