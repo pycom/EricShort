@@ -1401,6 +1401,7 @@
     <Source>WebBrowser/WebBrowserView.py</Source>
     <Source>WebBrowser/WebBrowserWebSearchWidget.py</Source>
     <Source>WebBrowser/WebBrowserWindow.py</Source>
+    <Source>WebBrowser/WebInspector.py</Source>
     <Source>WebBrowser/ZoomManager/ZoomManager.py</Source>
     <Source>WebBrowser/ZoomManager/ZoomValuesDialog.py</Source>
     <Source>WebBrowser/ZoomManager/ZoomValuesModel.py</Source>

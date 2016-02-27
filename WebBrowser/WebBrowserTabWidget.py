@@ -65,6 +65,10 @@ class WebBrowserTabWidget(E5TabWidget):
         
         self.__mainWindow = parent
         
+        if Preferences.getWebBrowser("WebInspectorEnabled"):
+            os.environ["QTWEBENGINE_REMOTE_DEBUGGING"] = \
+                str(Preferences.getWebBrowser("WebInspectorPort"))
+        
         self.setUsesScrollButtons(True)
         self.setDocumentMode(True)
         self.setElideMode(Qt.ElideNone)
@@ -485,8 +489,7 @@ class WebBrowserTabWidget(E5TabWidget):
         
         self.__closedTabsManager.recordBrowser(browser, index)
         
-        # TODO: WebInspector
-##        browser.closeWebInspector()
+        browser.closeWebInspector()
         browser.home()
         self.removeTab(index)
         self.browserClosed.emit(browser)

@@ -1027,6 +1027,8 @@ class Prefs(object):
         "SearchLanguage": QLocale().language(),
         "RssFeeds": [],
         "ShowPreview": True,
+        "WebInspectorPort": 42024,
+        "WebInspectorEnabled": False,
         # Grease Monkey
         "GreaseMonkeyDisabledScripts": [],
         # Downloads
@@ -1258,6 +1260,7 @@ class Prefs(object):
         "HexEditorGeometry": QByteArray(),
         "MainGeometry": QByteArray(),
         "MainMaximized": False,
+        "WebInspectorGeometry": QByteArray(),
     }
 
     # if true, revert layouts to factory defaults
@@ -2756,7 +2759,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "MinimumLogicalFontSize", "HistoryLimit",
                  "DownloadManagerRemovePolicy","SyncType", "SyncFtpPort",
                  "SyncFtpIdleTimeout", "SyncEncryptionKeyLength",
-                 "SearchLanguage",]:
+                 "SearchLanguage", "WebInspectorPort"]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["DiskCacheEnabled", "FilterTrackingCookies",
@@ -2782,7 +2785,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "SyncEnabled", "SyncBookmarks", "SyncHistory",
                  "SyncPasswords", "SyncUserAgents", "SyncSpeedDial",
                  "SyncEncryptData", "SyncEncryptPasswordsOnly",
-                 "ShowPreview",
+                 "ShowPreview", "WebInspectorEnabled",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))

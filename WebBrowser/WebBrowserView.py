@@ -35,6 +35,8 @@ from .Tools import WebBrowserTools, Scripts
 
 from .Network.LoadRequest import LoadRequest, LoadRequestOperations
 
+from . import WebInspector
+
 import Preferences
 import UI.PixmapCache
 import Globals
@@ -102,6 +104,7 @@ class WebBrowserView(QWebEngineView):
         self.__siteIcon = QIcon()
         self.__menu = QMenu(self)
         self.__clickedPos = QPoint()
+        self.__firstLoad = False
         
         self.__currentZoom = 100
         self.__zoomLevels = WebBrowserView.ZoomLevels[:]
@@ -145,10 +148,16 @@ class WebBrowserView(QWebEngineView):
         
         self.__mw.personalInformationManager().connectPage(self.page())
         
-        # TODO: WebInspector
-##        self.__inspector = None
+        self.__inspector = None
+        WebInspector.registerView(self)
         
         self.grabGesture(Qt.PinchGesture)
+    
+    def __del__(self):
+        """
+        Special method doing some cleanup stuff.
+        """
+        WebInspector.unregisterView(self)
     
 ##    def __addExternalBinding(self, frame=None):
 ##        """
@@ -208,6 +217,10 @@ class WebBrowserView(QWebEngineView):
         """
         if isinstance(urlOrRequest, QUrl):
             super(WebBrowserView, self).load(urlOrRequest)
+            
+            if not self.__firstLoad:
+                self.__firstLoad = True
+                WebInspector.pushView(self)
         elif isinstance(urlOrRequest, LoadRequest):
             reqUrl = urlOrRequest.url()
             if reqUrl.isEmpty():
@@ -588,11 +601,10 @@ class WebBrowserView(QWebEngineView):
 ##        if not hitTest.isContentEditable() and not hitTest.isContentSelected():
 ##            self.__menu.addAction(self.__mw.adBlockIcon().menuAction())
         
-        # TODO: WebInspector
-##        self.__menu.addSeparator()
-##        menu.addAction(
-##            UI.PixmapCache.getIcon("webInspector.png"),
-##            self.tr("Inspect Element..."), self.__webInspector)
+        self.__menu.addSeparator()
+        self.__menu.addAction(
+            UI.PixmapCache.getIcon("webInspector.png"),
+            self.tr("Inspect Element..."), self.__webInspector)
         
         if not self.__menu.isEmpty():
             pos = evt.globalPos()
@@ -1100,30 +1112,29 @@ class WebBrowserView(QWebEngineView):
             lambda res: self.__mw.openSearchManager().addEngineFromForm(
                 res, self))
     
-    # TODO: WebInspector
-##    def __webInspector(self):
-##        """
-##        Private slot to show the web inspector window.
-##        """
-##        if self.__inspector is None:
-##            from .HelpInspector import HelpInspector
-##            self.__inspector = HelpInspector()
-##            self.__inspector.setPage(self.page())
-##            self.__inspector.show()
-##        elif self.__inspector.isVisible():
-##            self.__inspector.hide()
-##        else:
-##            self.__inspector.show()
-##    
-##    def closeWebInspector(self):
-##        """
-##        Public slot to close the web inspector.
-##        """
-##        if self.__inspector is not None:
-##            if self.__inspector.isVisible():
-##                self.__inspector.hide()
-##            self.__inspector.deleteLater()
-##            self.__inspector = None
+    def __webInspector(self):
+        """
+        Private slot to show the web inspector window.
+        """
+        if self.__inspector is None:
+            from .WebInspector import WebInspector
+            self.__inspector = WebInspector()
+            self.__inspector.setView(self, True)
+            self.__inspector.show()
+        elif self.__inspector.isVisible():
+            self.__inspector.hide()
+        else:
+            self.__inspector.show()
+    
+    def closeWebInspector(self):
+        """
+        Public slot to close the web inspector.
+        """
+        if self.__inspector is not None:
+            if self.__inspector.isVisible():
+                self.__inspector.hide()
+            self.__inspector.deleteLater()
+            self.__inspector = None
     
     def addBookmark(self):
         """
