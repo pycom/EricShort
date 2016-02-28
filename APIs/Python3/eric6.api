@@ -2871,7 +2871,6 @@ eric6.Helpviewer.HelpWindow.HelpWindow.openUrlNewTab?4(url, title)
 eric6.Helpviewer.HelpWindow.HelpWindow.passwordManager?4()
 eric6.Helpviewer.HelpWindow.HelpWindow.personalInformationManager?4()
 eric6.Helpviewer.HelpWindow.HelpWindow.preferencesChanged?4()
-eric6.Helpviewer.HelpWindow.HelpWindow.previewer?4()
 eric6.Helpviewer.HelpWindow.HelpWindow.privacyChanged?7
 eric6.Helpviewer.HelpWindow.HelpWindow.reloadUserStyleSheet?4()
 eric6.Helpviewer.HelpWindow.HelpWindow.requestVirusTotalScan?4(url)

@@ -169,7 +169,6 @@ class HelpWindow(E5MainWindow):
             self.tabWidget.currentChanged[int].connect(self.__currentChanged)
             self.tabWidget.titleChanged.connect(self.__titleChanged)
             self.tabWidget.showMessage.connect(self.statusBar().showMessage)
-            self.tabWidget.browserClosed.connect(self.__browserClosed)
             self.tabWidget.browserZoomValueChanged.connect(
                 self.__zoomWidget.setValue)
             
@@ -291,7 +290,6 @@ class HelpWindow(E5MainWindow):
             self.__virusTotal.fileScanReport.connect(
                 self.__virusTotalFileScanReport)
             
-            self.__previewer = None
             self.__shutdownCalled = False
             
             self.flashCookieManager()
@@ -1998,30 +1996,6 @@ class HelpWindow(E5MainWindow):
             linkName = link
         h = HelpWindow(linkName, ".", self.parent(), "qbrowser", self.fromEric)
         h.show()
-    
-    def previewer(self):
-        """
-        Public method to get a reference to the previewer tab.
-        
-        @return reference to the previewer tab (HelpBrowserWV)
-        """
-        if self.__previewer is None:
-            if self.tabWidget.count() != 1 or \
-               self.currentBrowser().url().toString() not in [
-                    "", "eric:home", "eric:speeddial", "about:blank"]:
-                self.newTab()
-            self.__previewer = self.currentBrowser()
-        self.tabWidget.setCurrentWidget(self.__previewer)
-        return self.__previewer
-    
-    def __browserClosed(self, browser):
-        """
-        Private slot handling the closure of a browser tab.
-        
-        @param browser reference to the browser window (QWidget)
-        """
-        if browser is self.__previewer:
-            self.__previewer = None
     
     def __openFile(self):
         """
