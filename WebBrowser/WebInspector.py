@@ -47,12 +47,6 @@ class WebInspector(QWebEngineView):
         self.page().windowCloseRequested.connect(self.close)
         self.page().loadFinished.connect(self.__loadFinished)
     
-    def __del__(self):
-        """
-        Special method doing some cleanup stuff.
-        """
-        unregisterView(self)
-
     def closeEvent(self, evt):
         """
         Protected method to save the geometry when closed.
@@ -155,6 +149,9 @@ def registerView(view):
     @param view reference to the view
     @type WebBrowserView
     """
+    if _VIEWS is None:
+        return
+    
     _VIEWS.insert(0, view)
 
 
@@ -165,6 +162,9 @@ def unregisterView(view):
     @param view reference to the view
     @type WebBrowserView
     """
+    if _VIEWS is None:
+        return
+    
     if view in _VIEWS:
         _VIEWS.remove(view)
 
@@ -176,6 +176,9 @@ def pushView(view):
     @param view reference to the view
     @type WebBrowserView
     """
+    if _VIEWS is None:
+        return
+    
     if view in _VIEWS:
         _VIEWS.remove(view)
     _VIEWS.insert(0, view)

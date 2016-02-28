@@ -2686,6 +2686,15 @@ def getWebBrowser(key, prefClass=Prefs):
     if key.startswith(("FlashCookie", "Pim", "VirusTotal")):
         return getHelp(key, prefClass)
     
+    # Web inspector stuff must come before initializing web engine settings
+    # because that starts the chromium web process
+    if key == "WebInspectorPort":
+        return int(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
+    elif key == "WebInspectorEnabled":
+        return toBool(prefClass.settings.value(
+            "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
+    
     if not prefClass.webEngineSettingsIntitialized:
         prefClass.initWebEngineSettingsDefaults()
     

@@ -22,6 +22,7 @@ from E5Gui import E5MessageBox
 from E5Gui.E5Application import e5App
 
 from .WebBrowserView import WebBrowserView
+from . import WebInspector
 
 import UI.PixmapCache
 
@@ -64,10 +65,6 @@ class WebBrowserTabWidget(E5TabWidget):
         self.setCustomTabBar(True, self.__tabBar)
         
         self.__mainWindow = parent
-        
-        if Preferences.getWebBrowser("WebInspectorEnabled"):
-            os.environ["QTWEBENGINE_REMOTE_DEBUGGING"] = \
-                str(Preferences.getWebBrowser("WebInspectorPort"))
         
         self.setUsesScrollButtons(True)
         self.setDocumentMode(True)
@@ -490,7 +487,7 @@ class WebBrowserTabWidget(E5TabWidget):
         self.__closedTabsManager.recordBrowser(browser, index)
         
         browser.closeWebInspector()
-        browser.home()
+        WebInspector.unregisterView(browser)
         self.removeTab(index)
         self.browserClosed.emit(browser)
         browser.deleteLater()

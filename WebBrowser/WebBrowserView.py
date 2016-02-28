@@ -153,12 +153,6 @@ class WebBrowserView(QWebEngineView):
         
         self.grabGesture(Qt.PinchGesture)
     
-    def __del__(self):
-        """
-        Special method doing some cleanup stuff.
-        """
-        WebInspector.unregisterView(self)
-    
 ##    def __addExternalBinding(self, frame=None):
 ##        """
 ##        Private slot to add javascript bindings for adding search providers.
@@ -601,10 +595,11 @@ class WebBrowserView(QWebEngineView):
 ##        if not hitTest.isContentEditable() and not hitTest.isContentSelected():
 ##            self.__menu.addAction(self.__mw.adBlockIcon().menuAction())
         
-        self.__menu.addSeparator()
-        self.__menu.addAction(
-            UI.PixmapCache.getIcon("webInspector.png"),
-            self.tr("Inspect Element..."), self.__webInspector)
+        if Preferences.getWebBrowser("WebInspectorEnabled"):
+            self.__menu.addSeparator()
+            self.__menu.addAction(
+                UI.PixmapCache.getIcon("webInspector.png"),
+                self.tr("Inspect Element..."), self.__webInspector)
         
         if not self.__menu.isEmpty():
             pos = evt.globalPos()
@@ -840,19 +835,6 @@ class WebBrowserView(QWebEngineView):
                 self.tr("Dictionary"), self.__openLinkInNewTab)\
                 .setData(wiktionaryUrl)
             menu.addSeparator()
-##    QString langCode = mApp->currentLanguage().left(2).toUtf8();
-##    QUrl googleTranslateUrl = QUrl(QString("https://translate.google.com/#auto/%1/%2").arg(langCode, selectedText));
-##    Action* gtwact = new Action(QIcon(":icons/sites/translate.png"), tr("Google Translate"));
-##    gtwact->setData(googleTranslateUrl);
-##    connect(gtwact, SIGNAL(triggered()), this, SLOT(openUrlInSelectedTab()));
-##    connect(gtwact, SIGNAL(ctrlTriggered()), this, SLOT(openUrlInBackgroundTab()));
-##    menu->addAction(gtwact);
-##
-##    Action* dictact = new Action(QIcon::fromTheme("accessories-dictionary"), tr("Dictionary"));
-##    dictact->setData(QUrl("http://" + (!langCode.isEmpty() ? langCode + "." : langCode) + "wiktionary.org/wiki/Special:Search?search=" + selectedText));
-##    connect(dictact, SIGNAL(triggered()), this, SLOT(openUrlInSelectedTab()));
-##    connect(dictact, SIGNAL(ctrlTriggered()), this, SLOT(openUrlInBackgroundTab()));
-##    menu->addAction(dictact);
         
         guessedUrl = QUrl.fromUserInput(self.selectedText().strip())
         if self.__isUrlValid(guessedUrl):
@@ -910,14 +892,35 @@ class WebBrowserView(QWebEngineView):
         # TODO: Site Info
 ##        menu.addSeparator()
 ##        menu.addAction(self.__mw.siteInfoAct)
-##    if (url().scheme() == QLatin1String("http") || url().scheme() == QLatin1String("https")) {
-##        const QUrl w3url = QUrl::fromEncoded("http://validator.w3.org/check?uri=" + QUrl::toPercentEncoding(url().toEncoded()));
-##        menu->addAction(QIcon(":icons/sites/w3.png"), tr("Validate page"), this, SLOT(openUrlInSelectedTab()))->setData(w3url);
-##
-##        QByteArray langCode = mApp->currentLanguage().left(2).toUtf8();
-##        const QUrl gturl = QUrl::fromEncoded("http://translate.google.com/translate?sl=auto&tl=" + langCode + "&u=" + QUrl::toPercentEncoding(url().toEncoded()));
-##        menu->addAction(QIcon(":icons/sites/translate.png"), tr("Translate page"), this, SLOT(openUrlInSelectedTab()))->setData(gturl);
-##    }
+        if self.url().scheme() in ["http", "https"]:
+            menu.addSeparator()
+            
+            w3url = QUrl.fromEncoded(
+                b"http://validator.w3.org/check?uri=" +
+                QUrl.toPercentEncoding(bytes(self.url().toEncoded()).decode()))
+            menu.addAction(
+                UI.PixmapCache.getIcon("w3.png"),
+                self.tr("Validate Page"), self.__openLinkInNewTab)\
+                .setData(w3url)
+            
+            from .WebBrowserLanguagesDialog import WebBrowserLanguagesDialog
+            languages = Preferences.toList(
+                Preferences.Prefs.settings.value(
+                    "WebBrowser/AcceptLanguages",
+                    WebBrowserLanguagesDialog.defaultAcceptLanguages()))
+            if languages:
+                language = languages[0]
+                langCode = language.split("[")[1][:2]
+                googleTranslatorUrl = QUrl.fromEncoded(
+                    b"http://translate.google.com/translate?sl=auto&tl=" +
+                    langCode.encode() +
+                    b"&u=" +
+                    QUrl.toPercentEncoding(
+                        bytes(self.url().toEncoded()).decode()))
+                menu.addAction(
+                    UI.PixmapCache.getIcon("translate.png"),
+                    self.tr("Google Translate"), self.__openLinkInNewTab)\
+                    .setData(googleTranslatorUrl)
         
     def __checkForForm(self, act, pos):
         """
@@ -1121,10 +1124,8 @@ class WebBrowserView(QWebEngineView):
             self.__inspector = WebInspector()
             self.__inspector.setView(self, True)
             self.__inspector.show()
-        elif self.__inspector.isVisible():
-            self.__inspector.hide()
         else:
-            self.__inspector.show()
+            self.closeWebInspector()
     
     def closeWebInspector(self):
         """
@@ -1133,6 +1134,7 @@ class WebBrowserView(QWebEngineView):
         if self.__inspector is not None:
             if self.__inspector.isVisible():
                 self.__inspector.hide()
+            WebInspector.unregisterView(self.__inspector)
             self.__inspector.deleteLater()
             self.__inspector = None
     
@@ -1388,8 +1390,6 @@ class WebBrowserView(QWebEngineView):
                 self._mousePressEvent(evt)
             elif evt.type() == QEvent.MouseButtonRelease:
                 self._mouseReleaseEvent(evt)
-##            elif evt.type() == QEvent.MouseMove:
-##                self.__mouseMoveEvent(evt)
             elif evt.type() == QEvent.Wheel:
                 self._wheelEvent(evt)
             elif evt.type() == QEvent.Gesture:
@@ -1403,7 +1403,6 @@ class WebBrowserView(QWebEngineView):
             if evt.type() in [QEvent.KeyPress, QEvent.KeyRelease,
                               QEvent.MouseButtonPress,
                               QEvent.MouseButtonRelease,
-##                              QEvent.MouseMove,
                               QEvent.Wheel, QEvent.Gesture]:
                 return True
         
@@ -2119,11 +2118,3 @@ class WebBrowserView(QWebEngineView):
 ##        return True
 ##    
 ##    return False
-    
-    ######################
-    
-    def renderWidgetPixmap(self):
-        return self.__rwhvqt.grabFramebuffer()
-    
-    def repaintRenderWidget(self):
-        self.__rwhvqt.repaint()

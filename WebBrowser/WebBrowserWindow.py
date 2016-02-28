@@ -137,6 +137,11 @@ class WebBrowserWindow(E5MainWindow):
         if self.__initShortcutsOnly:
             self.__initActions()
         else:
+            if Preferences.getWebBrowser("WebInspectorEnabled"):
+                os.putenv(
+                    "QTWEBENGINE_REMOTE_DEBUGGING",
+                    str(Preferences.getWebBrowser("WebInspectorPort")))
+            
             self.webProfile(private)
             
             from .SearchWidget import SearchWidget
@@ -258,12 +263,10 @@ class WebBrowserWindow(E5MainWindow):
             self.__initMenus()
             self.__initToolbars()
             
+            syncMgr = self.syncManager()
+            syncMgr.syncMessage.connect(self.statusBar().showMessage)
+            syncMgr.syncError.connect(self.statusBar().showMessage)
             
-            # TODO: Sync
-##            syncMgr = self.syncManager()
-##            syncMgr.syncMessage.connect(self.statusBar().showMessage)
-##            syncMgr.syncError.connect(self.statusBar().showMessage)
-##            
             self.__tabWidget.newBrowser(home)
             self.__tabWidget.currentBrowser().setFocus()
             
@@ -2483,8 +2486,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.userAgentsManager().close()
 ##        
 ##        self.speedDial().close()
-##        
-##        self.syncManager().close()
+        
+        self.syncManager().close()
         
         ZoomManager.instance().close()
         
