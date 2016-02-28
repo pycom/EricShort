@@ -1361,6 +1361,8 @@
     <Source>WebBrowser/PersonalInformationManager/PersonalInformationManager.py</Source>
     <Source>WebBrowser/PersonalInformationManager/__init__.py</Source>
     <Source>WebBrowser/SearchWidget.py</Source>
+    <Source>WebBrowser/SiteInfo/SiteInfoDialog.py</Source>
+    <Source>WebBrowser/SiteInfo/__init__.py</Source>
     <Source>WebBrowser/Sync/DirectorySyncHandler.py</Source>
     <Source>WebBrowser/Sync/FtpSyncHandler.py</Source>
     <Source>WebBrowser/Sync/SyncAssistantDialog.py</Source>
@@ -1827,6 +1829,7 @@
     <Form>WebBrowser/Passwords/PasswordsDialog.ui</Form>
     <Form>WebBrowser/PersonalInformationManager/PersonalDataDialog.ui</Form>
     <Form>WebBrowser/SearchWidget.ui</Form>
+    <Form>WebBrowser/SiteInfo/SiteInfoDialog.ui</Form>
     <Form>WebBrowser/Sync/SyncCheckPage.ui</Form>
     <Form>WebBrowser/Sync/SyncDataPage.ui</Form>
     <Form>WebBrowser/Sync/SyncDirectorySettingsPage.ui</Form>

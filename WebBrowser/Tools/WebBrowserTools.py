@@ -16,6 +16,7 @@ except NameError:
 import os
 
 from PyQt5.QtCore import QFile, QByteArray, QUrl
+from PyQt5.QtGui import QPixmap
 
 
 def readAllFileContents(filename):
@@ -132,3 +133,19 @@ def filterCharsFromFilename(name):
         .replace("<", "")\
         .replace(">", "")\
         .replace("|", "")
+
+
+def pixmapFromByteArray(data):
+    """
+    Module function to convert a byte array to a pixmap.
+    
+    @param data data for the pixmap
+    @type bytes or QByteArray
+    @return extracted pixmap
+    @rtype QPixmap
+    """
+    pixmap = QPixmap()
+    barray = QByteArray.fromBase64(data)
+    pixmap.loadFromData(barray)
+    
+    return pixmap

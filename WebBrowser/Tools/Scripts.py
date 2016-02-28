@@ -158,6 +158,29 @@ def getFormData(pos):
     return source.format(pos.x(), pos.y())
 
 
+def getAllImages():
+    """
+    Function generating a script to extract all image tags of a web page.
+    
+    @return script to extract image tags
+    @rtype str
+    """
+    source = """
+        (function() {
+            var out = [];
+            var imgs = document.getElementsByTagName('img');
+            for (var i = 0; i < imgs.length; ++i) {
+                var e = imgs[i];
+                out.push({
+                    src: e.src,
+                    alt: e.alt
+                });
+            }
+            return out;
+        })()"""
+    return source
+
+
 def getAllMetaAttributes():
     """
     Function generating a script to extract all meta attributes of a web page.
@@ -174,7 +197,8 @@ def getAllMetaAttributes():
                 out.push({
                     name: e.getAttribute('name'),
                     content: e.getAttribute('content'),
-                    httpequiv: e.getAttribute('http-equiv')
+                    httpequiv: e.getAttribute('http-equiv'),
+                    charset: e.getAttribute('charset')
                 });
             }
             return out;

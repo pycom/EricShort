@@ -1661,23 +1661,22 @@ class WebBrowserWindow(E5MainWindow):
             self.feedsManagerAct.triggered.connect(self.__showFeedsManager)
         self.__actions.append(self.feedsManagerAct)
         
-        # TODO: Site Info
-##        self.siteInfoAct = E5Action(
-##            self.tr('Siteinfo Dialog'),
-##            UI.PixmapCache.getIcon("helpAbout.png"),
-##            self.tr('&Siteinfo Dialog...'),
-##            QKeySequence(self.tr("Ctrl+Shift+I", "Help|Siteinfo Dialog")),
-##            0, self, 'webbrowser_siteinfo')
-##        self.siteInfoAct.setStatusTip(self.tr(
-##            'Open a dialog showing some information about the current site.'))
-##        self.siteInfoAct.setWhatsThis(self.tr(
-##            """<b>Siteinfo Dialog...</b>"""
-##            """<p>Opens a dialog showing some information about the current"""
-##            """ site.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.siteInfoAct.triggered.connect(self.__showSiteinfoDialog)
-##        self.__actions.append(self.siteInfoAct)
+        self.siteInfoAct = E5Action(
+            self.tr('Siteinfo Dialog'),
+            UI.PixmapCache.getIcon("helpAbout.png"),
+            self.tr('&Siteinfo Dialog...'),
+            QKeySequence(self.tr("Ctrl+Shift+I", "Help|Siteinfo Dialog")),
+            0, self, 'webbrowser_siteinfo')
+        self.siteInfoAct.setStatusTip(self.tr(
+            'Open a dialog showing some information about the current site.'))
+        self.siteInfoAct.setWhatsThis(self.tr(
+            """<b>Siteinfo Dialog...</b>"""
+            """<p>Opens a dialog showing some information about the current"""
+            """ site.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.siteInfoAct.triggered.connect(self.__showSiteinfoDialog)
+        self.__actions.append(self.siteInfoAct)
         
         # TODO: User Agents
 ##        self.userAgentManagerAct = E5Action(
@@ -1887,8 +1886,7 @@ class WebBrowserWindow(E5MainWindow):
         menu = mb.addMenu(self.tr("&Tools"))
         menu.setTearOffEnabled(True)
         menu.addAction(self.feedsManagerAct)
-        # TODO: Site Info
-##        menu.addAction(self.siteInfoAct)
+        menu.addAction(self.siteInfoAct)
         menu.addSeparator()
         menu.addAction(self.synchronizationAct)
 ##        menu.addSeparator()
@@ -1999,8 +1997,7 @@ class WebBrowserWindow(E5MainWindow):
         toolstb.setObjectName("ToolsToolBar")
         toolstb.setIconSize(UI.Config.ToolBarIconSize)
         toolstb.addAction(self.feedsManagerAct)
-        # TODO: SiteInfo
-##        toolstb.addAction(self.siteInfoAct)
+        toolstb.addAction(self.siteInfoAct)
         toolstb.addSeparator()
         toolstb.addAction(self.synchronizationAct)
         
@@ -3797,15 +3794,14 @@ class WebBrowserWindow(E5MainWindow):
         feedsManager.newUrl.disconnect(self.openUrlNewTab)
         feedsManager.rejected.disconnect(self.__feedsManagerClosed)
     
-    # TODO: Site Info
-##    def __showSiteinfoDialog(self):
-##        """
-##        Private slot to show the site info dialog.
-##        """
-##        from .SiteInfo.SiteInfoDialog import SiteInfoDialog
-##        self.__siteinfoDialog = SiteInfoDialog(self.currentBrowser(), self)
-##        self.__siteinfoDialog.show()
-##
+    def __showSiteinfoDialog(self):
+        """
+        Private slot to show the site info dialog.
+        """
+        from .SiteInfo.SiteInfoDialog import SiteInfoDialog
+        self.__siteinfoDialog = SiteInfoDialog(self.currentBrowser(), self)
+        self.__siteinfoDialog.show()
+
     # TODO: User Agents
 ##    @classmethod
 ##    def userAgentsManager(cls):

@@ -889,9 +889,8 @@ class WebBrowserView(QWebEngineView):
         menu.addAction(self.__mw.findAct)
         menu.addSeparator()
         menu.addAction(self.__mw.pageSourceAct)
-        # TODO: Site Info
-##        menu.addSeparator()
-##        menu.addAction(self.__mw.siteInfoAct)
+        menu.addSeparator()
+        menu.addAction(self.__mw.siteInfoAct)
         if self.url().scheme() in ["http", "https"]:
             menu.addSeparator()
             
