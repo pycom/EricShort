@@ -99,8 +99,7 @@ class WebBrowserWebSearchWidget(E5ClearableLineEdit):
             return
         
         import WebBrowser.WebBrowserWindow
-        if WebBrowser.WebBrowserWindow.WebBrowserWindow\
-                .mainWindow().getWindow().isPrivate():
+        if WebBrowser.WebBrowserWindow.WebBrowserWindow.isPrivate():
             return
         
         if searchText in self.__recentSearches:

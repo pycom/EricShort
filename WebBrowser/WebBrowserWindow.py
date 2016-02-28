@@ -15,9 +15,10 @@ except NameError:
 
 import os
 import shutil
+import sys
 
 from PyQt5.QtCore import pyqtSlot, pyqtSignal, Qt, QByteArray, QSize, QTimer, \
-    QUrl, QThread, QTextCodec
+    QUrl, QThread, QTextCodec, QProcess
 from PyQt5.QtGui import QDesktopServices, QKeySequence, QFont, QFontMetrics, \
     QIcon
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QSizePolicy, QDockWidget, \
@@ -59,6 +60,8 @@ from .Tools import Scripts, WebBrowserTools, WebIconProvider
 
 from .ZoomManager import ZoomManager
 
+from eric6config import getConfig
+
 
 class WebBrowserWindow(E5MainWindow):
     """
@@ -70,7 +73,6 @@ class WebBrowserWindow(E5MainWindow):
     """
 ##    zoomTextOnlyChanged = pyqtSignal(bool)
     webBrowserClosed = pyqtSignal()
-##    privacyChanged = pyqtSignal(bool)
     
     BrowserWindows = []
 
@@ -78,6 +80,7 @@ class WebBrowserWindow(E5MainWindow):
 ##    
     _fromEric = False
     UseQtHelp = QTHELP_AVAILABLE
+    _isPrivate = False
     
     _webProfile = None
     _networkManager = None
@@ -100,7 +103,7 @@ class WebBrowserWindow(E5MainWindow):
     
     def __init__(self, home, path, parent, name, fromEric=False,
                  initShortcutsOnly=False, searchWord=None,
-                 private=False):
+                 private=False, settingsDir=""):
         """
         Constructor
         
@@ -114,11 +117,13 @@ class WebBrowserWindow(E5MainWindow):
             keyboard shortcuts (boolean)
         @keyparam searchWord word to search for (string)
         @keyparam private flag indicating a private browsing window (bool)
+        @keyparam settingsDir directory to be used for the settings files (str)
         """
         super(WebBrowserWindow, self).__init__(parent)
         self.setObjectName(name)
         self.setWindowTitle(self.tr("eric6 Web Browser"))
         
+        self.__settingsDir = settingsDir
         self.__fromEric = fromEric
         WebBrowserWindow._fromEric = fromEric
         self.__initShortcutsOnly = initShortcutsOnly
@@ -127,7 +132,7 @@ class WebBrowserWindow(E5MainWindow):
         self.__mHistory = []
         self.__lastConfigurationPageName = ""
         
-        self.__isPrivate = private
+        WebBrowserWindow._isPrivate = private
         
         self.__eventMouseButtons = Qt.NoButton
         self.__eventKeyboardModifiers = Qt.NoModifier
@@ -528,13 +533,29 @@ class WebBrowserWindow(E5MainWindow):
         self.newAct.setStatusTip(self.tr('Open a new web browser window'))
         self.newAct.setWhatsThis(self.tr(
             """<b>New Window</b>"""
-            """<p>This opens a new web browser window.</p>"""
+            """<p>This opens a new web browser window in the current"""
+            """ privacy mode.</p>"""
         ))
         if not self.__initShortcutsOnly:
             self.newAct.triggered.connect(self.newWindow)
         self.__actions.append(self.newAct)
         
-        # TODO: Private Window
+        self.newPrivateAct = E5Action(
+            self.tr('New Private Window'),
+            UI.PixmapCache.getIcon("privateMode.png"),
+            self.tr('New &Private Window'),
+            QKeySequence(self.tr("Ctrl+Shift+P", "File|New Private Window")),
+            0, self, 'webbrowser_file_new_private_window')
+        self.newPrivateAct.setStatusTip(self.tr(
+            'Open a new private web browser window'))
+        self.newPrivateAct.setWhatsThis(self.tr(
+            """<b>New Private Window</b>"""
+            """<p>This opens a new private web browser window by starting"""
+            """ a new web browser instance in private mode.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.newPrivateAct.triggered.connect(self.newPrivateWindow)
+        self.__actions.append(self.newPrivateAct)
         
         self.openAct = E5Action(
             self.tr('Open File'),
@@ -727,24 +748,6 @@ class WebBrowserWindow(E5MainWindow):
             self.closeAllAct.triggered.connect(
                 self.__tabWidget.closeAllBrowsers)
         self.__actions.append(self.closeAllAct)
-        
-        # TODO: Private Browsing
-##        self.privateBrowsingAct = E5Action(
-##            self.tr('Private Browsing'),
-##            UI.PixmapCache.getIcon("privateBrowsing.png"),
-##            self.tr('Private &Browsing'),
-##            0, 0, self, 'webbrowser_file_private_browsing')
-##        self.privateBrowsingAct.setStatusTip(self.tr('Private Browsing'))
-##        self.privateBrowsingAct.setWhatsThis(self.tr(
-##            """<b>Private Browsing</b>"""
-##            """<p>Enables private browsing. In this mode no history is"""
-##            """ recorded anymore.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.privateBrowsingAct.triggered.connect(
-##                self.__privateBrowsing)
-##        self.privateBrowsingAct.setCheckable(True)
-##        self.__actions.append(self.privateBrowsingAct)
         
         self.exitAct = E5Action(
             self.tr('Quit'),
@@ -1749,6 +1752,7 @@ class WebBrowserWindow(E5MainWindow):
         menu.setTearOffEnabled(True)
         menu.addAction(self.newTabAct)
         menu.addAction(self.newAct)
+        menu.addAction(self.newPrivateAct)
         menu.addAction(self.openAct)
         menu.addAction(self.openTabAct)
         menu.addSeparator()
@@ -1918,6 +1922,7 @@ class WebBrowserWindow(E5MainWindow):
         filetb.setIconSize(UI.Config.ToolBarIconSize)
         filetb.addAction(self.newTabAct)
         filetb.addAction(self.newAct)
+        filetb.addAction(self.newPrivateAct)
         filetb.addAction(self.openAct)
         filetb.addAction(self.openTabAct)
         filetb.addSeparator()
@@ -2149,7 +2154,8 @@ class WebBrowserWindow(E5MainWindow):
         """
         Public slot called to open a new web browser window.
         
-        @param link file to be displayed in the new window (string or QUrl)
+        @param link URL to be displayed in the new window
+        @type str or QUrl
         """
         if link is None:
             linkName = ""
@@ -2158,10 +2164,45 @@ class WebBrowserWindow(E5MainWindow):
         else:
             linkName = link
         h = WebBrowserWindow(linkName, ".", self.parent(), "webbrowser",
-                             self.__fromEric)
+                             self.__fromEric, private=self.isPrivate())
         h.show()
     
-    # TODO: Private Window
+    @pyqtSlot()
+    def newPrivateWindow(self, link=None):
+        """
+        Public slot called to open a new private web browser window.
+        
+        
+        @param link URL to be displayed in the new window
+        @type str or QUrl
+        """
+        if link is None:
+            linkName = ""
+        elif isinstance(link, QUrl):
+            linkName = link.toString()
+        else:
+            linkName = link
+        
+        applPath = os.path.join(getConfig("ericDir"), "eric6_browser.py")
+        args = []
+        args.append(applPath)
+        args.append("--config={0}".format(Utilities.getConfigDir()))
+        if self.__settingsDir:
+            args.append("--settings={0}".format(self.__settingsDir))
+        args.append("--private")
+        if linkName:
+            args.append(linkName)
+        
+        if not os.path.isfile(applPath) or \
+                not QProcess.startDetached(sys.executable, args):
+            E5MessageBox.critical(
+                self,
+                self.tr('New Private Window'),
+                self.tr(
+                    '<p>Could not start the process.<br>'
+                    'Ensure that it is available as <b>{0}</b>.</p>'
+                ).format(applPath),
+                self.tr('OK'))
     
     def __openFile(self):
         """
@@ -2636,54 +2677,16 @@ class WebBrowserWindow(E5MainWindow):
         Private slot to handle the select all action.
         """
         self.currentBrowser().selectAll()
-    # TODO: Private Browsing
-##    
-##    def __privateBrowsing(self):
-##        """
-##        Private slot to switch private browsing.
-##        """
-##        settings = QWebSettings.globalSettings()
-##        pb = settings.testAttribute(QWebSettings.PrivateBrowsingEnabled)
-##        if not pb:
-##            txt = self.tr(
-##                """<b>Are you sure you want to turn on private"""
-##                """ browsing?</b><p>When private browsing is turned on,"""
-##                """ web pages are not added to the history, searches"""
-##                """ are not added to the list of recent searches and"""
-##                """ web site icons and cookies are not stored."""
-##                """ HTML5 offline storage will be deactivated."""
-##                """ Until you close the window, you can still click"""
-##                """ the Back and Forward buttons to return to the"""
-##                """ web pages you have opened.</p>""")
-##            res = E5MessageBox.yesNo(self, "", txt)
-##            if res:
-##                self.setPrivateMode(True)
-##        else:
-##            self.setPrivateMode(False)
-##    
-##    def setPrivateMode(self, on):
-##        """
-##        Public method to set the privacy mode.
-##        
-##        @param on flag indicating the privacy state (boolean)
-##        """
-##        QWebSettings.globalSettings().setAttribute(
-##            QWebSettings.PrivateBrowsingEnabled, on)
-##        if on:
-##            self.__setIconDatabasePath(False)
-##        else:
-##            self.__setIconDatabasePath(True)
-##        self.privateBrowsingAct.setChecked(on)
-##        self.privacyChanged.emit(on)
     
-    def isPrivate(self):
+    @classmethod
+    def isPrivate(cls):
         """
         Public method to check the private browsing mode.
         
         @return flag indicating private browsing mode
         @rtype bool
         """
-        return self.__isPrivate
+        return cls._isPrivate
     
     def currentBrowser(self):
         """

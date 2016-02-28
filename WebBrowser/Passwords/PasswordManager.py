@@ -274,8 +274,7 @@ class PasswordManager(QObject):
         if not Preferences.getUser("SavePasswords"):
             return
         
-        if WebBrowser.WebBrowserWindow.WebBrowserWindow.mainWindow()\
-                .isPrivate():
+        if WebBrowser.WebBrowserWindow.WebBrowserWindow.isPrivate():
             return
         
         if not self.__loaded:
@@ -320,7 +319,6 @@ class PasswordManager(QObject):
             form.name = userName
             form.postData = Utilities.crypto.pwConvert(
                 bytes(data).decode("utf-8"), encode=True)
-##            form.postData = QByteArray(data)
             self.__loginForms[key] = form
             self.changed.emit()
     

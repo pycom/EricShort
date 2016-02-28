@@ -162,8 +162,7 @@ class FeaturePermissionManager(QObject):
             return
         
         import WebBrowser.WebBrowserWindow
-        if WebBrowser.WebBrowserWindow.WebBrowserWindow\
-                .mainWindow().getWindow().isPrivate():
+        if WebBrowser.WebBrowserWindow.WebBrowserWindow.isPrivate():
             return
         
         for (feature, permission), key in \

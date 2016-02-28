@@ -286,7 +286,7 @@ class DownloadManager(QDialog, Ui_DownloadManager):
             return
         
         from WebBrowser.WebBrowserWindow import WebBrowserWindow
-        if WebBrowserWindow.mainWindow().isPrivate():
+        if WebBrowserWindow.isPrivate():
             return
         
         downloads = []

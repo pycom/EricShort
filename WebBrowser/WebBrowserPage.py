@@ -30,7 +30,7 @@ import sip
 from E5Gui import E5MessageBox, E5FileDialog
 
 import WebBrowser
-import WebBrowser.WebBrowserWindow
+from WebBrowser.WebBrowserWindow import WebBrowserWindow
 
 from .JavaScript.ExternalJsObject import ExternalJsObject
 
@@ -131,7 +131,8 @@ class WebBrowserPage(QWebEnginePage):
         
         @param parent parent widget of this window (QWidget)
         """
-        super(WebBrowserPage, self).__init__(parent)
+        super(WebBrowserPage, self).__init__(
+            WebBrowserWindow.webProfile(), parent)
         
         self.__setupWebChannel()
         
@@ -140,13 +141,12 @@ class WebBrowserPage(QWebEnginePage):
 ##        self.__lastRequest = None
 ##        self.__lastRequestType = QWebPage.NavigationTypeOther
 ##        
-##        import WebBrowser.WebBrowserWindow
 ##        from .Network.NetworkAccessManagerProxy import \
 ##            NetworkAccessManagerProxy
 ##        self.__proxy = NetworkAccessManagerProxy(self)
 ##        self.__proxy.setWebPage(self)
 ##        self.__proxy.setPrimaryNetworkAccessManager(
-##            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager())
+##            WebBrowserWindow.networkManager())
 ##        self.setNetworkAccessManager(self.__proxy)
         
         self.__sslConfiguration = None
@@ -163,12 +163,10 @@ class WebBrowserPage(QWebEnginePage):
             self.__featurePermissionRequested)
         
         self.authenticationRequired.connect(
-            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()
-            .authentication)
+            WebBrowserWindow.networkManager().authentication)
         
         self.proxyAuthenticationRequired.connect(
-            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()
-            .proxyAuthentication)
+            WebBrowserWindow.networkManager().proxyAuthentication)
     
     def acceptNavigationRequest(self, url, type_, isMainFrame):
         """
@@ -197,8 +195,7 @@ class WebBrowserPage(QWebEnginePage):
         
         # AdBlock
         if url.scheme() == "abp":
-            if WebBrowser.WebBrowserWindow.WebBrowserWindow.adBlockManager()\
-                    .addSubscriptionFromUrl(url):
+            if WebBrowserWindow.adBlockManager().addSubscriptionFromUrl(url):
                 return False
 ##        
 ##        if type_ == QWebPage.NavigationTypeFormResubmitted:
@@ -456,9 +453,7 @@ class WebBrowserPage(QWebEnginePage):
 ##        @param url URL to determine user agent for (QUrl)
 ##        @return user agent string (string)
 ##        """
-##        import WebBrowser.WebBrowserWindow
-##        agent = WebBrowser.WebBrowserWindow.WebBrowserWindow.userAgentsManager()\
-##            .userAgentForUrl(url)
+##        agent = WebBrowserWindow.userAgentsManager().userAgentForUrl(url)
 ##        if agent == "":
 ##            # no agent string specified for the given host -> use global one
 ##            agent = Preferences.getWebBrowser("UserAgent")
@@ -501,8 +496,7 @@ class WebBrowserPage(QWebEnginePage):
 ##           reply.url() == self.mainFrame().url():
 ##            modified = reply.header(QNetworkRequest.LastModifiedHeader)
 ##            if modified and modified.isValid():
-##                import WebBrowser.WebBrowserWindow
-##                manager = WebBrowser.WebBrowserWindow.WebBrowserWindow.bookmarksManager()
+##                manager = WebBrowserWindow.bookmarksManager()
 ##                from .Bookmarks.BookmarkNode import BookmarkNode
 ##                for bookmark in manager.bookmarksForUrl(reply.url()):
 ##                    manager.setTimestamp(bookmark, BookmarkNode.TsModified,
@@ -677,8 +671,7 @@ class WebBrowserPage(QWebEnginePage):
         @param feature requested feature
         @type QWebEnginePage.Feature
         """
-        manager = WebBrowser.WebBrowserWindow.WebBrowserWindow\
-            .featurePermissionManager()
+        manager = WebBrowserWindow.featurePermissionManager()
         manager.requestFeaturePermission(self, url, feature)
     
     def execJavaScript(self, script):
@@ -751,8 +744,8 @@ class WebBrowserPage(QWebEnginePage):
         @return flag indicating to ignore this error
         @rtype bool
         """
-        return WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()\
-            .certificateError(error, self.view())
+        return WebBrowserWindow.networkManager().certificateError(
+            error, self.view())
     
     ##############################################
     ## Methods below deal with JavaScript messages

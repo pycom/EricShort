@@ -67,8 +67,7 @@ class ClosedTabsManager(QObject):
         @param position index of the tab to be closed (integer)
         """
         import WebBrowser.WebBrowserWindow
-        if WebBrowser.WebBrowserWindow.WebBrowserWindow\
-                .mainWindow().getWindow().isPrivate():
+        if WebBrowser.WebBrowserWindow.WebBrowserWindow.isPrivate():
             return
         
         if browser.url().isEmpty():

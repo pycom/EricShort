@@ -26,7 +26,7 @@ from PyQt5.QtWebEngineWidgets import QWebEnginePage
 from E5Gui.E5LineEdit import E5LineEdit
 from E5Gui.E5LineEditButton import E5LineEditButton
 
-import WebBrowser.WebBrowserWindow
+from WebBrowser.WebBrowserWindow import WebBrowserWindow
 
 from .FavIconLabel import FavIconLabel
 ##from .SslLabel import SslLabel
@@ -53,8 +53,7 @@ class UrlBar(E5LineEdit):
         
         self.__mw = mainWindow
         self.__browser = None
-##        self.__privateMode = QWebSettings.globalSettings().testAttribute(
-##            QWebSettings.PrivateBrowsingEnabled)
+        self.__privateMode = WebBrowserWindow.isPrivate()
         
         self.__bmActiveIcon = UI.PixmapCache.getIcon("bookmark16.png")
         self.__bmInactiveIcon = QIcon(
@@ -67,13 +66,6 @@ class UrlBar(E5LineEdit):
 ##        self.__sslLabel = SslLabel(self)
 ##        self.addWidget(self.__sslLabel, E5LineEdit.LeftSide)
 ##        self.__sslLabel.setVisible(False)
-        
-        # TODO: Privacy
-##        self.__privacyButton = E5LineEditButton(self)
-##        self.__privacyButton.setIcon(
-##            UI.PixmapCache.getIcon("privateBrowsing.png"))
-##        self.addWidget(self.__privacyButton, E5LineEdit.RightSide)
-##        self.__privacyButton.setVisible(self.__privateMode)
         
         self.__rssButton = E5LineEditButton(self)
         self.__rssButton.setIcon(UI.PixmapCache.getIcon("rss16.png"))
@@ -91,10 +83,7 @@ class UrlBar(E5LineEdit):
         
         self.__bookmarkButton.clicked.connect(self.__showBookmarkInfo)
         self.__rssButton.clicked.connect(self.__rssClicked)
-        # TODO: Privacy
-##        self.__privacyButton.clicked.connect(self.__privacyClicked)
         self.__clearButton.clicked.connect(self.clear)
-##        self.__mw.privacyChanged.connect(self.__privacyButton.setVisible)
         self.textChanged.connect(self.__textChanged)
         
         self.__mw.bookmarksManager().entryChanged.connect(
@@ -222,22 +211,6 @@ class UrlBar(E5LineEdit):
 ##        except RuntimeError:
 ##            pass
     
-    # TODO: Privacy
-##    def setPrivateMode(self, on):
-##        """
-##        Public method to set the private mode.
-##        
-##        @param on flag indicating the privacy state (boolean)
-##        """
-##        self.__privateMode = on
-##        self.__privacyButton.setVisible(on)
-##    
-##    def __privacyClicked(self):
-##        """
-##        Private slot to handle the click of the private mode button.
-##        """
-##        self.__mw.setPrivateMode(False)
-##    
     def __textChanged(self, txt):
         """
         Private slot to handle changes of the text.
@@ -290,13 +263,12 @@ class UrlBar(E5LineEdit):
         
         @param evt reference to the paint event (QPaintEvent)
         """
-        # TODO: Privacy
-##        if self.__privateMode:
-##            backgroundColor = QColor(220, 220, 220)     # light gray
-##            foregroundColor = Qt.black
-##        else:
-        backgroundColor = QApplication.palette().color(QPalette.Base)
-        foregroundColor = QApplication.palette().color(QPalette.Text)
+        if self.__privateMode:
+            backgroundColor = QColor(220, 220, 220)     # light gray
+            foregroundColor = Qt.black
+        else:
+            backgroundColor = QApplication.palette().color(QPalette.Base)
+            foregroundColor = QApplication.palette().color(QPalette.Text)
         
         if self.__browser is not None:
             p = self.palette()

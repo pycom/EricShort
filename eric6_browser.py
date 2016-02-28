@@ -48,6 +48,8 @@ if qVersion() < MIN_QT_VERSION:
           .format(MIN_QT_VERSION))
     sys.exit(100)
 
+SettingsDir = None
+
 for arg in sys.argv[:]:
     if arg.startswith("--config="):
         import Globals
@@ -56,11 +58,11 @@ for arg in sys.argv[:]:
         sys.argv.remove(arg)
     elif arg.startswith("--settings="):
         from PyQt5.QtCore import QSettings
-        settingsDir = os.path.expanduser(arg.replace("--settings=", ""))
-        if not os.path.isdir(settingsDir):
-            os.makedirs(settingsDir)
+        SettingsDir = os.path.expanduser(arg.replace("--settings=", ""))
+        if not os.path.isdir(SettingsDir):
+            os.makedirs(SettingsDir)
         QSettings.setPath(QSettings.IniFormat, QSettings.UserScope,
-                          settingsDir)
+                          SettingsDir)
         sys.argv.remove(arg)
 
 # make ThirdParty package available as a packages repository
@@ -102,7 +104,8 @@ def createMainWidget(argv):
         home = ""
     
     browser = WebBrowserWindow(home, '.', None, 'web_browser',
-                               searchWord=searchWord, private=private)
+                               searchWord=searchWord, private=private,
+                               settingsDir=SettingsDir)
     return browser
 
 

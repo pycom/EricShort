@@ -187,8 +187,7 @@ class HistoryManager(QObject):
         @type WebBrowserView
         """
         import WebBrowser.WebBrowserWindow
-        if WebBrowser.WebBrowserWindow.WebBrowserWindow\
-                .mainWindow().getWindow().isPrivate():
+        if WebBrowser.WebBrowserWindow.WebBrowserWindow.isPrivate():
             return
         
         url = view.url()
