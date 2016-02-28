@@ -50,8 +50,6 @@ import UI.PixmapCache
 import UI.Config
 from UI.Info import Version
 ##
-##from .Network.NetworkAccessManager import SSL_AVAILABLE
-##
 ##from .data import icons_rc          # __IGNORE_WARNING__
 ##from .data import html_rc           # __IGNORE_WARNING__
 from .data import javascript_rc     # __IGNORE_WARNING__
@@ -167,7 +165,7 @@ class WebBrowserWindow(E5MainWindow):
 ##                from E5Network.E5SslUtilities import initSSL
 ##                initSSL()
             
-            # TODO: do these once Qt 5.6 is available
+            # TODO: QtHelp
 ##            if WebBrowserWindow.UseQtHelp:
 ##                self.__helpEngine = \
 ##                    QHelpEngine(os.path.join(Utilities.getConfigDir(),
@@ -191,7 +189,6 @@ class WebBrowserWindow(E5MainWindow):
             self.__tabWidget.currentChanged[int].connect(self.__currentChanged)
             self.__tabWidget.titleChanged.connect(self.__titleChanged)
             self.__tabWidget.showMessage.connect(self.statusBar().showMessage)
-            self.__tabWidget.browserClosed.connect(self.__browserClosed)
             self.__tabWidget.browserZoomValueChanged.connect(
                 self.__zoomWidget.setValue)
             
@@ -320,7 +317,6 @@ class WebBrowserWindow(E5MainWindow):
             self.__virusTotal.fileScanReport.connect(
                 self.__virusTotalFileScanReport)
             
-            self.__previewer = None
             self.__shutdownCalled = False
             
             self.flashCookieManager()
@@ -334,9 +330,8 @@ class WebBrowserWindow(E5MainWindow):
             self.__lastActiveWindow = None
             e5App().focusChanged[QWidget, QWidget].connect(
                 self.__appFocusChanged)
-            #TODO: Sync
-##            
-##            QTimer.singleShot(0, syncMgr.loadSettings)
+            
+            QTimer.singleShot(0, syncMgr.loadSettings)
     
     def __del__(self):
         """
@@ -1592,6 +1587,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.__actions.append(self.flashblockAct)
         
         # TODO: Certificates
+        
+        from .Network.NetworkManager import SSL_AVAILABLE
 ##        if SSL_AVAILABLE:
 ##            self.certificatesAct = E5Action(
 ##                self.tr('Manage SSL Certificates'),
@@ -2163,31 +2160,6 @@ class WebBrowserWindow(E5MainWindow):
         h.show()
     
     # TODO: Private Window
-    
-    # TODO: check if this is still needed/possible
-    def previewer(self):
-        """
-        Public method to get a reference to the previewer tab.
-        
-        @return reference to the previewer tab (WebBrowserView)
-        """
-        if self.__previewer is None:
-            if self.__tabWidget.count() != 1 or \
-               self.currentBrowser().url().toString() not in [
-                    "", "eric:home", "eric:speeddial", "about:blank"]:
-                self.newTab()
-            self.__previewer = self.currentBrowser()
-        self.__tabWidget.setCurrentWidget(self.__previewer)
-        return self.__previewer
-    
-    def __browserClosed(self, browser):
-        """
-        Private slot handling the closure of a browser tab.
-        
-        @param browser reference to the browser window (QWidget)
-        """
-        if browser is self.__previewer:
-            self.__previewer = None
     
     def __openFile(self):
         """
