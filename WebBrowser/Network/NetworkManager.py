@@ -15,6 +15,11 @@ from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkProxy
 from E5Gui import E5MessageBox
 
 from E5Network.E5NetworkProxyFactory import proxyAuthenticationRequired
+try:
+    from E5Network.E5SslErrorHandler import E5SslErrorHandler
+    SSL_AVAILABLE = True
+except ImportError:
+    SSL_AVAILABLE = False
 
 from WebBrowser.WebBrowserWindow import WebBrowserWindow
 
@@ -43,12 +48,14 @@ class NetworkManager(QNetworkAccessManager):
         
         self.languagesChanged()
         
-        self.__ignoredSslErrors = {}
-        # dictionary of temporarily ignore SSL errors
+        if SSL_AVAILABLE:
+            self.__sslErrorHandler = E5SslErrorHandler(self)
+            self.sslErrors.connect(self.__sslErrorHandler.sslErrorsReplySlot)
         
-        self.proxyAuthenticationRequired.connect(
-            lambda proxy, auth: self.proxyAuthentication(
-                proxy.hostName(), auth))
+        self.__ignoredSslErrors = {}
+        # dictionary of temporarily ignored SSL errors
+        
+        self.proxyAuthenticationRequired.connect(proxyAuthenticationRequired)
         self.authenticationRequired.connect(
             lambda reply, auth: self.authentication(reply.url(), auth))
     
@@ -126,14 +133,16 @@ class NetworkManager(QNetworkAccessManager):
                 WebBrowser.WebBrowserWindow.WebBrowserWindow.passwordManager()\
                 .setLogin(url, realm, username, password)
     
-    def proxyAuthentication(self, hostname, auth):
+    def proxyAuthentication(self, requestUrl, auth, proxyHost):
         """
         Public slot to handle a proxy authentication request.
         
-        @param hostname name of the proxy host
-        @type str
+        @param requestUrl requested URL
+        @type QUrl
         @param auth reference to the authenticator object
         @type QAuthenticator
+        @param hostname name of the proxy host
+        @type str
         """
         proxy = QNetworkProxy.applicationProxy()
         if proxy.user() and proxy.password():
