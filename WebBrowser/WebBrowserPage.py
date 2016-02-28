@@ -165,6 +165,10 @@ class WebBrowserPage(QWebEnginePage):
         self.authenticationRequired.connect(
             WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()
             .authentication)
+        
+        self.proxyAuthenticationRequired.connect(
+            WebBrowser.WebBrowserWindow.WebBrowserWindow.networkManager()
+            .proxyAuthentication)
     
     def acceptNavigationRequest(self, url, type_, isMainFrame):
         """

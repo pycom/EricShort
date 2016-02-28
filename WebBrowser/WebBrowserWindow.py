@@ -1587,8 +1587,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        self.__actions.append(self.flashblockAct)
         
         # TODO: Certificates
-        
-        from .Network.NetworkManager import SSL_AVAILABLE
+##        
+##        from .Network.NetworkManager import SSL_AVAILABLE
 ##        if SSL_AVAILABLE:
 ##            self.certificatesAct = E5Action(
 ##                self.tr('Manage SSL Certificates'),
@@ -1853,6 +1853,8 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.searchEnginesAct)
         menu.addSeparator()
         menu.addAction(self.passwordsAct)
+        # TODO: Certificates
+##        from .Network.NetworkManager import SSL_AVAILABLE
 ##        if SSL_AVAILABLE:
 ##            menu.addAction(self.certificatesAct)
 ##        menu.addSeparator()

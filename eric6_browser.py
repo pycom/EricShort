@@ -67,10 +67,6 @@ for arg in sys.argv[:]:
 sys.path.insert(2, os.path.join(os.path.dirname(__file__),
                                 "ThirdParty", "Pygments"))
 
-##import Preferences
-##if Preferences.getWebBrowser("WebInspectorEnabled"):
-##    os.environ["QTWEBENGINE_REMOTE_DEBUGGING"] = \
-##        str(Preferences.getWebBrowser("WebInspectorPort"))
 from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
 
 import Globals

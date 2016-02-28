@@ -314,13 +314,13 @@ class UrlBar(E5LineEdit):
                 p.setBrush(QPalette.Text, foregroundColor)
             else:
                 if self.__browser.url().scheme() == "https":
-                    if QSslCertificate is not None:
-                        if self.__browser.page().hasValidSslInfo():
-                            backgroundColor = Preferences.getWebBrowser(
-                                "SaveUrlColor")
-                    else:
-                        backgroundColor = Preferences.getWebBrowser(
-                            "SaveUrlColor")
+##                    if QSslCertificate is not None:
+##                        if self.__browser.page().hasValidSslInfo():
+##                            backgroundColor = Preferences.getWebBrowser(
+##                                "SaveUrlColor")
+##                    else:
+                    backgroundColor = Preferences.getWebBrowser(
+                        "SaveUrlColor")
                 highlight = QApplication.palette().color(QPalette.Highlight)
                 r = (highlight.red() + 2 * backgroundColor.red()) // 3
                 g = (highlight.green() + 2 * backgroundColor.green()) // 3
