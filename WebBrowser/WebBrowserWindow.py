@@ -671,7 +671,7 @@ class WebBrowserWindow(E5MainWindow):
                 bookmarksManager.exportBookmarks)
         self.__actions.append(self.exportBookmarksAct)
         
-        # TODO: print stuff
+        # TODO: Print
 ##        self.printAct = E5Action(
 ##            self.tr('Print'),
 ##            UI.PixmapCache.getIcon("print.png"),
@@ -834,7 +834,6 @@ class WebBrowserWindow(E5MainWindow):
         if not self.__initShortcutsOnly:
             self.reloadAct.triggered.connect(self.__reload)
         self.__actions.append(self.reloadAct)
-        # TODO: add 'Reload bypassing cache' or use that for above
         
         self.stopAct = E5Action(
             self.tr('Stop'),
@@ -2568,7 +2567,8 @@ class WebBrowserWindow(E5MainWindow):
         """
         Private slot called to handle the reload action.
         """
-        self.currentBrowser().reload()
+##        self.currentBrowser().reload()
+        self.currentBrowser().reloadBypassingCache()
     
     def __stopLoading(self):
         """

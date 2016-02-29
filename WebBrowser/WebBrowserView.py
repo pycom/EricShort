@@ -287,7 +287,6 @@ class WebBrowserView(QWebEngineView):
             name.setUrl(Preferences.getWebBrowser("DefaultScheme") +
                         name.toString())
         
-        # TODO: move some of this to web page
         if len(name.scheme()) == 1 or \
            name.scheme() == "file":
             # name is a local file
@@ -393,6 +392,12 @@ class WebBrowserView(QWebEngineView):
         Public slot to reload the current page.
         """
         self.triggerPageAction(QWebEnginePage.Reload)
+    
+    def reloadBypassingCache(self):
+        """
+        Public slot to reload the current page bypassing the cache.
+        """
+        self.triggerPageAction(QWebEnginePage.ReloadAndBypassCache)
     
     def copy(self):
         """
