@@ -171,6 +171,7 @@ class WebBrowserTabWidget(E5TabWidget):
             self.tr("Close Others"), self.__tabContextMenuCloseOthers)
         self.__tabContextMenu.addAction(
             self.tr('Close All'), self.closeAllBrowsers)
+        # TODO: Print
 ##        self.__tabContextMenu.addSeparator()
 ##        self.__tabContextMenu.addAction(
 ##            UI.PixmapCache.getIcon("printPreview.png"),
@@ -270,6 +271,7 @@ class WebBrowserTabWidget(E5TabWidget):
                 list(range(index - 1, -1, -1)):
             self.closeBrowserAt(i)
     
+    # TODO: Print
 ##    def __tabContextMenuPrint(self):
 ##        """
 ##        Private method to print the selected tab.
@@ -526,6 +528,7 @@ class WebBrowserTabWidget(E5TabWidget):
             li.append(self.widget(index))
         return li
     
+    # TODO: Print
 ##    @pyqtSlot()
 ##    def printBrowser(self, browser=None):
 ##        """
@@ -536,6 +539,7 @@ class WebBrowserTabWidget(E5TabWidget):
 ##        if browser is None:
 ##            browser = self.currentBrowser()
 ##        
+##        browser.page().runJavaScript("window.print()")
 ##        self.__printRequested(browser.page().mainFrame())
 ##    
 ##    def __printRequested(self, frame):

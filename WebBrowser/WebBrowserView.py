@@ -663,8 +663,14 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("openNewTab.png"),
             self.tr("Open Link in New Tab\tCtrl+LMB"),
             self.__openLinkInNewTab).setData(hitTest.linkUrl())
-        # TODO: context menu: Open Link in New Window
-        # TODO: context menu: Open Link in Private Window
+        menu.addAction(
+            UI.PixmapCache.getIcon("newWindow.png"),
+            self.tr("Open Link in New Window"),
+            self.__openLinkInNewWindow).setData(hitTest.linkUrl())
+        menu.addAction(
+            UI.PixmapCache.getIcon("privateMode.png"),
+            self.tr("Open Link in New Private Window"),
+            self.__openLinkInNewPrivateWindow).setData(hitTest.linkUrl())
         menu.addSeparator()
         # TODO: Qt 5.6
 ##        menu.addAction(
@@ -972,7 +978,7 @@ class WebBrowserView(QWebEngineView):
     def __openLinkInNewTab(self):
         """
         Private method called by the context menu to open a link in a new
-        window.
+        tab.
         """
         act = self.sender()
         url = act.data()
@@ -983,6 +989,30 @@ class WebBrowserView(QWebEngineView):
         self.__ctrlPressed = True
         self.setSource(url)
         self.__ctrlPressed = False
+    
+    def __openLinkInNewWindow(self):
+        """
+        Private slot called by the context menu to open a link in a new
+        window.
+        """
+        act = self.sender()
+        url = act.data()
+        if url.isEmpty():
+            return
+        
+        self.__mw.newWindow(url)
+    
+    def __openLinkInNewPrivateWindow(self):
+        """
+        Private slot called by the context menu to open a link in a new
+        private window.
+        """
+        act = self.sender()
+        url = act.data()
+        if url.isEmpty():
+            return
+        
+        self.__mw.newPrivateWindow(url)
     
     def __bookmarkLink(self):
         """

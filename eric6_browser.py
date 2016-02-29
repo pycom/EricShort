@@ -35,17 +35,16 @@ MIN_QT_VERSION = "5.5.0"
 
 from PyQt5.QtCore import qVersion
 if qVersion() < MIN_QT_VERSION:
-    try:    # Py2
-        import tkMessageBox as messagebox
-    except ImportError:
-        try:    # Py3
-            from tkinter import messagebox
-        except ImportError:
-            sys.exit(100)
-    messagebox.showerror(
-        "eric6 Error",
+    from PyQt5.QtCore import QTimer
+    from PyQt5.QtWidgets import QApplication
+    from E5Gui import E5MessageBox
+    app = QApplication([])
+    QTimer.singleShot(0, lambda: E5MessageBox.critical(
+        None,
+        "eric6 Web Browser",
         "You need at least Qt Version {0} to execute the web browser."
-          .format(MIN_QT_VERSION))
+          .format(MIN_QT_VERSION)))
+    app.exec_()
     sys.exit(100)
 
 SettingsDir = None
