@@ -14,7 +14,7 @@ import os
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt, QUrl
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QMenu, QToolButton, QDialog
-##from PyQt5.QtPrintSupport import QPrinter, QPrintDialog
+from PyQt5.QtPrintSupport import QPrinter, QPrintDialog
 ##from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkRequest
 
 from E5Gui.E5TabWidget import E5TabWidget
@@ -22,6 +22,7 @@ from E5Gui import E5MessageBox
 from E5Gui.E5Application import e5App
 
 from .WebBrowserView import WebBrowserView
+from .Tools import WebBrowserTools
 from . import WebInspector
 
 import UI.PixmapCache
@@ -171,17 +172,16 @@ class WebBrowserTabWidget(E5TabWidget):
             self.tr("Close Others"), self.__tabContextMenuCloseOthers)
         self.__tabContextMenu.addAction(
             self.tr('Close All'), self.closeAllBrowsers)
-        # TODO: Print
-##        self.__tabContextMenu.addSeparator()
-##        self.__tabContextMenu.addAction(
-##            UI.PixmapCache.getIcon("printPreview.png"),
-##            self.tr('Print Preview'), self.__tabContextMenuPrintPreview)
-##        self.__tabContextMenu.addAction(
-##            UI.PixmapCache.getIcon("print.png"),
-##            self.tr('Print'), self.__tabContextMenuPrint)
-##        self.__tabContextMenu.addAction(
-##            UI.PixmapCache.getIcon("printPdf.png"),
-##            self.tr('Print as PDF'), self.__tabContextMenuPrintPdf)
+        self.__tabContextMenu.addSeparator()
+        self.__tabContextMenu.addAction(
+            UI.PixmapCache.getIcon("printPreview.png"),
+            self.tr('Print Preview'), self.__tabContextMenuPrintPreview)
+        self.__tabContextMenu.addAction(
+            UI.PixmapCache.getIcon("print.png"),
+            self.tr('Print'), self.__tabContextMenuPrint)
+        self.__tabContextMenu.addAction(
+            UI.PixmapCache.getIcon("printPdf.png"),
+            self.tr('Print as PDF'), self.__tabContextMenuPrintPdf)
         self.__tabContextMenu.addSeparator()
         self.__tabContextMenu.addAction(
             UI.PixmapCache.getIcon("reload.png"),
@@ -271,28 +271,27 @@ class WebBrowserTabWidget(E5TabWidget):
                 list(range(index - 1, -1, -1)):
             self.closeBrowserAt(i)
     
-    # TODO: Print
-##    def __tabContextMenuPrint(self):
-##        """
-##        Private method to print the selected tab.
-##        """
-##        browser = self.widget(self.__tabContextMenuIndex)
-##        self.printBrowser(browser)
-##    
-##    def __tabContextMenuPrintPdf(self):
-##        """
-##        Private method to print the selected tab as PDF.
-##        """
-##        browser = self.widget(self.__tabContextMenuIndex)
-##        self.printBrowserPdf(browser)
-##    
-##    def __tabContextMenuPrintPreview(self):
-##        """
-##        Private method to show a print preview of the selected tab.
-##        """
-##        browser = self.widget(self.__tabContextMenuIndex)
-##        self.printPreviewBrowser(browser)
-##    
+    def __tabContextMenuPrint(self):
+        """
+        Private method to print the selected tab.
+        """
+        browser = self.widget(self.__tabContextMenuIndex)
+        self.printBrowser(browser)
+    
+    def __tabContextMenuPrintPdf(self):
+        """
+        Private method to print the selected tab as PDF.
+        """
+        browser = self.widget(self.__tabContextMenuIndex)
+        self.printBrowserPdf(browser)
+    
+    def __tabContextMenuPrintPreview(self):
+        """
+        Private method to show a print preview of the selected tab.
+        """
+        browser = self.widget(self.__tabContextMenuIndex)
+        self.printPreviewBrowser(browser)
+    
     @pyqtSlot()
     def __newBrowser(self):
         """
@@ -351,7 +350,6 @@ class WebBrowserTabWidget(E5TabWidget):
         browser.search.connect(self.newBrowser)
         browser.page().windowCloseRequested.connect(
             self.__windowCloseRequested)
-##        browser.page().printRequested.connect(self.__printRequested)
         browser.zoomValueChanged.connect(self.browserZoomValueChanged)
         
         if position == -1:
@@ -528,159 +526,108 @@ class WebBrowserTabWidget(E5TabWidget):
             li.append(self.widget(index))
         return li
     
-    # TODO: Print
-##    @pyqtSlot()
-##    def printBrowser(self, browser=None):
-##        """
-##        Public slot called to print the displayed page.
-##        
-##        @param browser reference to the browser to be printed (WebBrowserView)
-##        """
-##        if browser is None:
-##            browser = self.currentBrowser()
-##        
-##        browser.page().runJavaScript("window.print()")
-##        self.__printRequested(browser.page().mainFrame())
-##    
-##    def __printRequested(self, frame):
-##        """
-##        Private slot to handle a print request.
-##        
-##        @param frame reference to the frame to be printed (QWebFrame)
-##        """
-##        printer = QPrinter(mode=QPrinter.HighResolution)
-##        if Preferences.getPrinter("ColorMode"):
-##            printer.setColorMode(QPrinter.Color)
-##        else:
-##            printer.setColorMode(QPrinter.GrayScale)
-##        if Preferences.getPrinter("FirstPageFirst"):
-##            printer.setPageOrder(QPrinter.FirstPageFirst)
-##        else:
-##            printer.setPageOrder(QPrinter.LastPageFirst)
-##        printer.setPageMargins(
-##            Preferences.getPrinter("LeftMargin") * 10,
-##            Preferences.getPrinter("TopMargin") * 10,
-##            Preferences.getPrinter("RightMargin") * 10,
-##            Preferences.getPrinter("BottomMargin") * 10,
-##            QPrinter.Millimeter
-##        )
-##        printerName = Preferences.getPrinter("PrinterName")
-##        if printerName:
-##            printer.setPrinterName(printerName)
-##        
-##        printDialog = QPrintDialog(printer, self)
-##        if printDialog.exec_() == QDialog.Accepted:
-##            try:
-##                frame.print_(printer)
-##            except AttributeError:
-##                E5MessageBox.critical(
-##                    self,
-##                    self.tr("eric6 Web Browser"),
-##                    self.tr(
-##                        """<p>Printing is not available due to a bug in"""
-##                        """ PyQt5. Please upgrade.</p>"""))
-##                return
-##    
-##    @pyqtSlot()
-##    def printBrowserPdf(self, browser=None):
-##        """
-##        Public slot called to print the displayed page to PDF.
-##        
-##        @param browser reference to the browser to be printed (HelpBrowser)
-##        """
-##        if browser is None:
-##            browser = self.currentBrowser()
-##        
-##        self.__printPdfRequested(browser.page().mainFrame())
-##    
-##    def __printPdfRequested(self, frame):
-##        """
-##        Private slot to handle a print to PDF request.
-##        
-##        @param frame reference to the frame to be printed (QWebFrame)
-##        """
-##        printer = QPrinter(mode=QPrinter.HighResolution)
-##        if Preferences.getPrinter("ColorMode"):
-##            printer.setColorMode(QPrinter.Color)
-##        else:
-##            printer.setColorMode(QPrinter.GrayScale)
-##        printerName = Preferences.getPrinter("PrinterName")
-##        if printerName:
-##            printer.setPrinterName(printerName)
-##        printer.setOutputFormat(QPrinter.PdfFormat)
-##        name = frame.url().path().rsplit('/', 1)[-1]
-##        if name:
-##            name = name.rsplit('.', 1)[0]
-##            name += '.pdf'
-##            printer.setOutputFileName(name)
-##        
-##        printDialog = QPrintDialog(printer, self)
-##        if printDialog.exec_() == QDialog.Accepted:
-##            try:
-##                frame.print_(printer)
-##            except AttributeError:
-##                E5MessageBox.critical(
-##                    self,
-##                    self.tr("eric6 Web Browser"),
-##                    self.tr(
-##                        """<p>Printing is not available due to a bug in"""
-##                        """ PyQt5. Please upgrade.</p>"""))
-##                return
-##    
-##    @pyqtSlot()
-##    def printPreviewBrowser(self, browser=None):
-##        """
-##        Public slot called to show a print preview of the displayed file.
-##        
-##        @param browser reference to the browser to be printed (HelpBrowserWV)
-##        """
-##        from PyQt5.QtPrintSupport import QPrintPreviewDialog
-##        
-##        if browser is None:
-##            browser = self.currentBrowser()
-##        
-##        printer = QPrinter(mode=QPrinter.HighResolution)
-##        if Preferences.getPrinter("ColorMode"):
-##            printer.setColorMode(QPrinter.Color)
-##        else:
-##            printer.setColorMode(QPrinter.GrayScale)
-##        if Preferences.getPrinter("FirstPageFirst"):
-##            printer.setPageOrder(QPrinter.FirstPageFirst)
-##        else:
-##            printer.setPageOrder(QPrinter.LastPageFirst)
-##        printer.setPageMargins(
-##            Preferences.getPrinter("LeftMargin") * 10,
-##            Preferences.getPrinter("TopMargin") * 10,
-##            Preferences.getPrinter("RightMargin") * 10,
-##            Preferences.getPrinter("BottomMargin") * 10,
-##            QPrinter.Millimeter
-##        )
-##        printerName = Preferences.getPrinter("PrinterName")
-##        if printerName:
-##            printer.setPrinterName(printerName)
-##        
-##        self.__printPreviewBrowser = browser
-##        preview = QPrintPreviewDialog(printer, self)
-##        preview.paintRequested.connect(self.__printPreview)
-##        preview.exec_()
-##    
-##    def __printPreview(self, printer):
-##        """
-##        Private slot to generate a print preview.
-##        
-##        @param printer reference to the printer object (QPrinter)
-##        """
-##        try:
-##            self.__printPreviewBrowser.print_(printer)
-##        except AttributeError:
-##            E5MessageBox.critical(
-##                self,
-##                self.tr("eric6 Web Browser"),
-##                self.tr(
-##                    """<p>Printing is not available due to a bug in PyQt5."""
-##                    """Please upgrade.</p>"""))
-##            return
-##    
+    @pyqtSlot()
+    def printBrowser(self, browser=None):
+        """
+        Public slot called to print the displayed page.
+        
+        @param browser reference to the browser to be printed (WebBrowserView)
+        """
+        if browser is None:
+            browser = self.currentBrowser()
+        
+        printer = QPrinter(mode=QPrinter.HighResolution)
+        if Preferences.getPrinter("ColorMode"):
+            printer.setColorMode(QPrinter.Color)
+        else:
+            printer.setColorMode(QPrinter.GrayScale)
+        if Preferences.getPrinter("FirstPageFirst"):
+            printer.setPageOrder(QPrinter.FirstPageFirst)
+        else:
+            printer.setPageOrder(QPrinter.LastPageFirst)
+        printer.setPageMargins(
+            Preferences.getPrinter("LeftMargin") * 10,
+            Preferences.getPrinter("TopMargin") * 10,
+            Preferences.getPrinter("RightMargin") * 10,
+            Preferences.getPrinter("BottomMargin") * 10,
+            QPrinter.Millimeter
+        )
+        printerName = Preferences.getPrinter("PrinterName")
+        if printerName:
+            printer.setPrinterName(printerName)
+        printer.setResolution(Preferences.getPrinter("Resolution"))
+        
+        printDialog = QPrintDialog(printer, self)
+        if printDialog.exec_() == QDialog.Accepted:
+            browser.render(printer)
+    
+    @pyqtSlot()
+    def printBrowserPdf(self, browser=None):
+        """
+        Public slot called to print the displayed page to PDF.
+        
+        @param browser reference to the browser to be printed (HelpBrowser)
+        """
+        if browser is None:
+            browser = self.currentBrowser()
+        
+        printer = QPrinter(mode=QPrinter.HighResolution)
+        if Preferences.getPrinter("ColorMode"):
+            printer.setColorMode(QPrinter.Color)
+        else:
+            printer.setColorMode(QPrinter.GrayScale)
+        printerName = Preferences.getPrinter("PrinterName")
+        if printerName:
+            printer.setPrinterName(printerName)
+        printer.setOutputFormat(QPrinter.PdfFormat)
+        name = WebBrowserTools.getFileNameFromUrl(browser.url())
+        if name:
+            name = name.rsplit('.', 1)[0]
+            name += '.pdf'
+            printer.setOutputFileName(name)
+        printer.setResolution(Preferences.getPrinter("Resolution"))
+        
+        printDialog = QPrintDialog(printer, self)
+        if printDialog.exec_() == QDialog.Accepted:
+            browser.render(printer)
+    
+    @pyqtSlot()
+    def printPreviewBrowser(self, browser=None):
+        """
+        Public slot called to show a print preview of the displayed file.
+        
+        @param browser reference to the browser to be printed (HelpBrowserWV)
+        """
+        from PyQt5.QtPrintSupport import QPrintPreviewDialog
+        
+        if browser is None:
+            browser = self.currentBrowser()
+        
+        printer = QPrinter(mode=QPrinter.HighResolution)
+        if Preferences.getPrinter("ColorMode"):
+            printer.setColorMode(QPrinter.Color)
+        else:
+            printer.setColorMode(QPrinter.GrayScale)
+        if Preferences.getPrinter("FirstPageFirst"):
+            printer.setPageOrder(QPrinter.FirstPageFirst)
+        else:
+            printer.setPageOrder(QPrinter.LastPageFirst)
+        printer.setPageMargins(
+            Preferences.getPrinter("LeftMargin") * 10,
+            Preferences.getPrinter("TopMargin") * 10,
+            Preferences.getPrinter("RightMargin") * 10,
+            Preferences.getPrinter("BottomMargin") * 10,
+            QPrinter.Millimeter
+        )
+        printerName = Preferences.getPrinter("PrinterName")
+        if printerName:
+            printer.setPrinterName(printerName)
+        printer.setResolution(Preferences.getPrinter("Resolution"))
+        
+        preview = QPrintPreviewDialog(printer, self)
+        preview.paintRequested.connect(lambda p: browser.render(p))
+        preview.exec_()
+    
     def __sourceChanged(self, url):
         """
         Private slot to handle a change of a browsers source.

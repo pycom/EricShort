@@ -671,53 +671,52 @@ class WebBrowserWindow(E5MainWindow):
                 bookmarksManager.exportBookmarks)
         self.__actions.append(self.exportBookmarksAct)
         
-        # TODO: Print
-##        self.printAct = E5Action(
-##            self.tr('Print'),
-##            UI.PixmapCache.getIcon("print.png"),
-##            self.tr('&Print'),
-##            QKeySequence(self.tr("Ctrl+P", "File|Print")),
-##            0, self, 'webbrowser_file_print')
-##        self.printAct.setStatusTip(self.tr('Print the displayed help'))
-##        self.printAct.setWhatsThis(self.tr(
-##            """<b>Print</b>"""
-##            """<p>Print the displayed help text.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.printAct.triggered.connect(self.__tabWidget.printBrowser)
-##        self.__actions.append(self.printAct)
-##        
-##        self.printPdfAct = E5Action(
-##            self.tr('Print as PDF'),
-##            UI.PixmapCache.getIcon("printPdf.png"),
-##            self.tr('Print as PDF'),
-##            0, 0, self, 'webbrowser_file_print_pdf')
-##        self.printPdfAct.setStatusTip(self.tr(
-##            'Print the displayed help as PDF'))
-##        self.printPdfAct.setWhatsThis(self.tr(
-##            """<b>Print as PDF</b>"""
-##            """<p>Print the displayed help text as a PDF file.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.printPdfAct.triggered.connect(
-##                self.__tabWidget.printBrowserPdf)
-##        self.__actions.append(self.printPdfAct)
-##        
-##        self.printPreviewAct = E5Action(
-##            self.tr('Print Preview'),
-##            UI.PixmapCache.getIcon("printPreview.png"),
-##            self.tr('Print Preview'),
-##            0, 0, self, 'webbrowser_file_print_preview')
-##        self.printPreviewAct.setStatusTip(self.tr(
-##            'Print preview of the displayed help'))
-##        self.printPreviewAct.setWhatsThis(self.tr(
-##            """<b>Print Preview</b>"""
-##            """<p>Print preview of the displayed help text.</p>"""
-##        ))
-##        if not self.__initShortcutsOnly:
-##            self.printPreviewAct.triggered.connect(
-##                self.__tabWidget.printPreviewBrowser)
-##        self.__actions.append(self.printPreviewAct)
+        self.printAct = E5Action(
+            self.tr('Print'),
+            UI.PixmapCache.getIcon("print.png"),
+            self.tr('&Print'),
+            QKeySequence(self.tr("Ctrl+P", "File|Print")),
+            0, self, 'webbrowser_file_print')
+        self.printAct.setStatusTip(self.tr('Print the displayed help'))
+        self.printAct.setWhatsThis(self.tr(
+            """<b>Print</b>"""
+            """<p>Print the displayed help text.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.printAct.triggered.connect(self.__tabWidget.printBrowser)
+        self.__actions.append(self.printAct)
+        
+        self.printPdfAct = E5Action(
+            self.tr('Print as PDF'),
+            UI.PixmapCache.getIcon("printPdf.png"),
+            self.tr('Print as PDF'),
+            0, 0, self, 'webbrowser_file_print_pdf')
+        self.printPdfAct.setStatusTip(self.tr(
+            'Print the displayed help as PDF'))
+        self.printPdfAct.setWhatsThis(self.tr(
+            """<b>Print as PDF</b>"""
+            """<p>Print the displayed help text as a PDF file.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.printPdfAct.triggered.connect(
+                self.__tabWidget.printBrowserPdf)
+        self.__actions.append(self.printPdfAct)
+        
+        self.printPreviewAct = E5Action(
+            self.tr('Print Preview'),
+            UI.PixmapCache.getIcon("printPreview.png"),
+            self.tr('Print Preview'),
+            0, 0, self, 'webbrowser_file_print_preview')
+        self.printPreviewAct.setStatusTip(self.tr(
+            'Print preview of the displayed help'))
+        self.printPreviewAct.setWhatsThis(self.tr(
+            """<b>Print Preview</b>"""
+            """<p>Print preview of the displayed help text.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.printPreviewAct.triggered.connect(
+                self.__tabWidget.printPreviewBrowser)
+        self.__actions.append(self.printPreviewAct)
         
         self.closeAct = E5Action(
             self.tr('Close'),
@@ -1759,15 +1758,13 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.savePageScreenAct)
         menu.addAction(self.saveVisiblePageScreenAct)
         menu.addSeparator()
-##        menu.addAction(self.printPreviewAct)
-##        menu.addAction(self.printAct)
-##        menu.addAction(self.printPdfAct)
-##        menu.addSeparator()
+        menu.addAction(self.printPreviewAct)
+        menu.addAction(self.printAct)
+        menu.addAction(self.printPdfAct)
+        menu.addSeparator()
         menu.addAction(self.closeAct)
         menu.addAction(self.closeAllAct)
         menu.addSeparator()
-##        menu.addAction(self.privateBrowsingAct)
-##        menu.addSeparator()
         menu.addAction(self.exitAct)
         
         menu = mb.addMenu(self.tr('&Edit'))
@@ -1928,10 +1925,10 @@ class WebBrowserWindow(E5MainWindow):
 ##        filetb.addAction(self.saveAsAct)
         filetb.addAction(self.savePageScreenAct)
         filetb.addSeparator()
-##        filetb.addAction(self.printPreviewAct)
-##        filetb.addAction(self.printAct)
-##        filetb.addAction(self.printPdfAct)
-##        filetb.addSeparator()
+        filetb.addAction(self.printPreviewAct)
+        filetb.addAction(self.printAct)
+        filetb.addAction(self.printPdfAct)
+        filetb.addSeparator()
         filetb.addAction(self.closeAct)
         filetb.addAction(self.exitAct)
         

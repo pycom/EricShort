@@ -712,6 +712,7 @@ class Prefs(object):
         "RightMargin": 1.0,
         "TopMargin": 1.0,
         "BottomMargin": 1.0,
+        "Resolution": 150,      # printer resolution in DPI
     }
     
     # defaults for the project settings
@@ -2270,7 +2271,7 @@ def getPrinter(key, prefClass=Prefs):
     if key in ["ColorMode", "FirstPageFirst"]:
         return toBool(prefClass.settings.value(
             "Printer/" + key, prefClass.printerDefaults[key]))
-    elif key in ["Magnification", "Orientation", "PageSize"]:
+    elif key in ["Magnification", "Orientation", "PageSize", "Resolution"]:
         return int(prefClass.settings.value(
             "Printer/" + key, prefClass.printerDefaults[key]))
     elif key in ["LeftMargin", "RightMargin", "TopMargin", "BottomMargin"]:

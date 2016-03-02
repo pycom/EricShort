@@ -52,6 +52,8 @@ class PrinterPage(ConfigurationPageBase, Ui_PrinterPage):
             Preferences.getPrinter("TopMargin"))
         self.bottomMarginSpinBox.setValue(
             Preferences.getPrinter("BottomMargin"))
+        self.resolutionSpinBox.setValue(
+            Preferences.getPrinter("Resolution"))
         
     def save(self):
         """
@@ -84,6 +86,9 @@ class PrinterPage(ConfigurationPageBase, Ui_PrinterPage):
         Preferences.setPrinter(
             "BottomMargin",
             self.bottomMarginSpinBox.value())
+        Preferences.setPrinter(
+            "Resolution",
+            self.resolutionSpinBox.value())
         
     @pyqtSlot()
     def on_printheaderFontButton_clicked(self):
