@@ -46,6 +46,7 @@ import Preferences
 from Preferences import Shortcuts
 
 import Utilities
+import Globals
 
 import UI.PixmapCache
 import UI.Config
@@ -686,21 +687,24 @@ class WebBrowserWindow(E5MainWindow):
             self.printAct.triggered.connect(self.__tabWidget.printBrowser)
         self.__actions.append(self.printAct)
         
-        self.printPdfAct = E5Action(
-            self.tr('Print as PDF'),
-            UI.PixmapCache.getIcon("printPdf.png"),
-            self.tr('Print as PDF'),
-            0, 0, self, 'webbrowser_file_print_pdf')
-        self.printPdfAct.setStatusTip(self.tr(
-            'Print the displayed help as PDF'))
-        self.printPdfAct.setWhatsThis(self.tr(
-            """<b>Print as PDF</b>"""
-            """<p>Print the displayed help text as a PDF file.</p>"""
-        ))
-        if not self.__initShortcutsOnly:
-            self.printPdfAct.triggered.connect(
-                self.__tabWidget.printBrowserPdf)
-        self.__actions.append(self.printPdfAct)
+        if Globals.isLinuxPlatform():
+            self.printPdfAct = E5Action(
+                self.tr('Print as PDF'),
+                UI.PixmapCache.getIcon("printPdf.png"),
+                self.tr('Print as PDF'),
+                0, 0, self, 'webbrowser_file_print_pdf')
+            self.printPdfAct.setStatusTip(self.tr(
+                'Print the displayed help as PDF'))
+            self.printPdfAct.setWhatsThis(self.tr(
+                """<b>Print as PDF</b>"""
+                """<p>Print the displayed help text as a PDF file.</p>"""
+            ))
+            if not self.__initShortcutsOnly:
+                self.printPdfAct.triggered.connect(
+                    self.__tabWidget.printBrowserPdf)
+            self.__actions.append(self.printPdfAct)
+        else:
+            self.printPdfAct = None
         
         self.printPreviewAct = E5Action(
             self.tr('Print Preview'),
@@ -1760,7 +1764,8 @@ class WebBrowserWindow(E5MainWindow):
         menu.addSeparator()
         menu.addAction(self.printPreviewAct)
         menu.addAction(self.printAct)
-        menu.addAction(self.printPdfAct)
+        if self.printPdfAct:
+            menu.addAction(self.printPdfAct)
         menu.addSeparator()
         menu.addAction(self.closeAct)
         menu.addAction(self.closeAllAct)
@@ -1927,7 +1932,8 @@ class WebBrowserWindow(E5MainWindow):
         filetb.addSeparator()
         filetb.addAction(self.printPreviewAct)
         filetb.addAction(self.printAct)
-        filetb.addAction(self.printPdfAct)
+        if self.printPdfAct:
+            filetb.addAction(self.printPdfAct)
         filetb.addSeparator()
         filetb.addAction(self.closeAct)
         filetb.addAction(self.exitAct)
