@@ -144,7 +144,11 @@ class PluginManager(QObject):
             self.__networkManager.sslErrors.connect(self.__sslErrors)
         self.__replies = []
         
-        self.__ui.onlineStateChanged.connect(self.__onlineStateChanged)
+        try:
+            self.__ui.onlineStateChanged.connect(self.__onlineStateChanged)
+        except AttributeError:
+            # it was not called from eric
+            pass
     
     def finalizeSetup(self):
         """

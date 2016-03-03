@@ -79,6 +79,7 @@ class ConfigurationWidget(QWidget):
     HelpBrowserMode = 1
     TrayStarterMode = 2
     HexEditorMode = 3
+    WebBrowserMode = 4
     
     def __init__(self, parent=None, fromEric=True, displayMode=DefaultMode,
                  expandedEntries=[]):
@@ -89,7 +90,8 @@ class ConfigurationWidget(QWidget):
         @keyparam fromEric flag indicating a dialog generation from within the
             eric6 ide (boolean)
         @keyparam displayMode mode of the configuration dialog
-            (DefaultMode, HelpBrowserMode, TrayStarterMode, HexEditorMode)
+            (DefaultMode, HelpBrowserMode, TrayStarterMode, HexEditorMode,
+             WebBrowserMode)
         @exception RuntimeError raised to indicate an invalid dialog mode
         @keyparam expandedEntries list of entries to be shown expanded
             (list of strings)
@@ -99,6 +101,7 @@ class ConfigurationWidget(QWidget):
             ConfigurationWidget.HelpBrowserMode,
             ConfigurationWidget.TrayStarterMode,
             ConfigurationWidget.HexEditorMode,
+            ConfigurationWidget.WebBrowserMode,
         )
         
         super(ConfigurationWidget, self).__init__(parent)
@@ -118,6 +121,7 @@ class ConfigurationWidget(QWidget):
                 e5App().registerObject("PluginManager", self.pluginManager)
         
         if displayMode == ConfigurationWidget.DefaultMode:
+            # TODO: add QtWebEngine based browser config pages to default mode
             self.configItems = {
                 # key : [display string, pixmap name, dialog module name or
                 #        page creation function, parent key,
@@ -387,6 +391,34 @@ class ConfigurationWidget(QWidget):
             except ImportError:
                 pass
         
+        elif displayMode == ConfigurationWidget.WebBrowserMode:
+            # TODO: Check config pages for QWebKit and add QWebEngine
+            self.configItems = {
+                # key : [display string, pixmap name, dialog module name or
+                #        page creation function, parent key,
+                #        reference to configuration page (must always be last)]
+                # The dialog module must have the module function 'create' to
+                # create the configuration page. This must have the method
+                # 'save' to save the settings.
+                "networkPage":
+                [self.tr("Network"), "preferences-network.png",
+                 "NetworkPage", None, None],
+                "printerPage":
+                [self.tr("Printer"), "preferences-printer.png",
+                 "PrinterPage", None, None],
+                "securityPage":
+                [self.tr("Security"), "preferences-security.png",
+                 "SecurityPage", None, None],
+                
+                "helpFlashCookieManagerPage":
+                [self.tr("Flash Cookie Manager"),
+                 "flashCookie16.png",
+                 "HelpFlashCookieManagerPage", None, None],
+                "helpVirusTotalPage":
+                [self.tr("VirusTotal Interface"), "virustotal.png",
+                 "HelpVirusTotalPage", None, None],
+            }
+        
         elif displayMode == ConfigurationWidget.TrayStarterMode:
             self.configItems = {
                 # key : [display string, pixmap name, dialog module name or
@@ -446,7 +478,8 @@ class ConfigurationWidget(QWidget):
         
         if displayMode in [ConfigurationWidget.HelpBrowserMode,
                            ConfigurationWidget.TrayStarterMode,
-                           ConfigurationWidget.HexEditorMode]:
+                           ConfigurationWidget.HexEditorMode,
+                           ConfigurationWidget.WebBrowserMode]:
             self.configListSearch.hide()
         
         if displayMode not in [ConfigurationWidget.TrayStarterMode,
@@ -854,6 +887,7 @@ class ConfigurationDialog(QDialog):
     HelpBrowserMode = ConfigurationWidget.HelpBrowserMode
     TrayStarterMode = ConfigurationWidget.TrayStarterMode
     HexEditorMode = ConfigurationWidget.HexEditorMode
+    WebBrowserMode = ConfigurationWidget.WebBrowserMode
     
     def __init__(self, parent=None, name=None, modal=False,
                  fromEric=True, displayMode=ConfigurationWidget.DefaultMode,
@@ -867,7 +901,8 @@ class ConfigurationDialog(QDialog):
         @keyparam fromEric flag indicating a dialog generation from within the
             eric6 ide (boolean)
         @keyparam displayMode mode of the configuration dialog
-            (DefaultMode, HelpBrowserMode, TrayStarterMode, HexEditorMode)
+            (DefaultMode, HelpBrowserMode, TrayStarterMode, HexEditorMode,
+             WebBrowserMode)
         @keyparam expandedEntries list of entries to be shown expanded
             (list of strings)
         """

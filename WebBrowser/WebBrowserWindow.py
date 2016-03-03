@@ -1733,7 +1733,7 @@ class WebBrowserWindow(E5MainWindow):
         self.forwardAct.setEnabled(False)
         
         # now read the keyboard shortcuts for the actions
-        # TODO: change this to webBrowser
+        # TODO: shortcuts: change this to webBrowser
         Shortcuts.readShortcuts(helpViewer=self)
     
     def getActions(self):
@@ -2733,30 +2733,28 @@ class WebBrowserWindow(E5MainWindow):
                 # set value of zoom widget
                 self.__zoomWidget.setValue(cb.zoomValue())
     
-    # TODO: Preferences dialog
     def __showPreferences(self):
         """
         Private slot to set the preferences.
         """
-        # TODO: Preferences
-##        from Preferences.ConfigurationDialog import ConfigurationDialog
-##        dlg = ConfigurationDialog(
-##            self, 'Configuration', True, fromEric=self.__fromEric,
-##            displayMode=ConfigurationDialog.WebBrowserMode)
-##        dlg.preferencesChanged.connect(self.preferencesChanged)
-##        dlg.masterPasswordChanged.connect(self.masterPasswordChanged)
-##        dlg.show()
-##        if self.__lastConfigurationPageName:
-##            dlg.showConfigurationPageByName(self.__lastConfigurationPageName)
-##        else:
-##            dlg.showConfigurationPageByName("empty")
-##        dlg.exec_()
-##        QApplication.processEvents()
-##        if dlg.result() == QDialog.Accepted:
-##            dlg.setPreferences()
-##            Preferences.syncPreferences()
-##            self.preferencesChanged()
-##        self.__lastConfigurationPageName = dlg.getConfigurationPageName()
+        from Preferences.ConfigurationDialog import ConfigurationDialog
+        dlg = ConfigurationDialog(
+            self, 'Configuration', True, fromEric=self.__fromEric,
+            displayMode=ConfigurationDialog.WebBrowserMode)
+        dlg.preferencesChanged.connect(self.preferencesChanged)
+        dlg.masterPasswordChanged.connect(self.masterPasswordChanged)
+        dlg.show()
+        if self.__lastConfigurationPageName:
+            dlg.showConfigurationPageByName(self.__lastConfigurationPageName)
+        else:
+            dlg.showConfigurationPageByName("empty")
+        dlg.exec_()
+        QApplication.processEvents()
+        if dlg.result() == QDialog.Accepted:
+            dlg.setPreferences()
+            Preferences.syncPreferences()
+            self.preferencesChanged()
+        self.__lastConfigurationPageName = dlg.getConfigurationPageName()
     
     def preferencesChanged(self):
         """
