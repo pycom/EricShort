@@ -11,10 +11,6 @@ from __future__ import unicode_literals
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog
-try:
-    from PyQt5.QtWebKit import QWebSettings
-except ImportError:
-    QWebSettings = None
 
 from .ConfigurationPageBase import ConfigurationPageBase
 from .Ui_SecurityPage import Ui_SecurityPage
@@ -38,6 +34,7 @@ class SecurityPage(ConfigurationPageBase, Ui_SecurityPage):
         self.setObjectName("SecurityPage")
         
         self.__configDlg = configDialog
+        self.__displayMode = None
         
         # set initial values
         self.savePasswordsCheckBox.setChecked(
@@ -46,14 +43,40 @@ class SecurityPage(ConfigurationPageBase, Ui_SecurityPage):
             Preferences.getUser("UseMasterPassword"))
         self.masterPasswordButton.setEnabled(
             Preferences.getUser("UseMasterPassword"))
-        if QWebSettings and hasattr(QWebSettings, "DnsPrefetchEnabled"):
-            self.dnsPrefetchCheckBox.setChecked(
-                Preferences.getHelp("DnsPrefetchEnabled"))
-        else:
-            self.dnsPrefetchCheckBox.setEnabled(False)
         
         self.__newPassword = ""
         self.__oldUseMasterPassword = Preferences.getUser("UseMasterPassword")
+    
+    def setMode(self, displayMode):
+        """
+        Public method to perform mode dependent setups.
+        
+        @param displayMode mode of the configuration dialog
+            (ConfigurationWidget.DefaultMode,
+             ConfigurationWidget.HelpBrowserMode,
+             ConfigurationWidget.WebBrowserMode)
+        """
+        from ..ConfigurationDialog import ConfigurationWidget
+        assert displayMode in (
+            ConfigurationWidget.DefaultMode,
+            ConfigurationWidget.HelpBrowserMode,
+            ConfigurationWidget.WebBrowserMode
+        )
+        
+        self.__displayMode = displayMode
+        if self.__displayMode == ConfigurationWidget.HelpBrowserMode:
+            try:
+                from PyQt5.QtWebKit import QWebSettings
+                if QWebSettings and \
+                        hasattr(QWebSettings, "DnsPrefetchEnabled"):
+                    self.dnsPrefetchCheckBox.setChecked(
+                        Preferences.getHelp("DnsPrefetchEnabled"))
+            except ImportError:
+                self.dnsPrefetchCheckBox.setEnabled(False)
+        # TODO: add config for default Mode
+        else:
+            self.dnsPrefetchCheckBox.setEnabled(False)
+            self.dnsGroup.hide()
     
     def save(self):
         """

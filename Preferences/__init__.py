@@ -2774,7 +2774,7 @@ def getWebBrowser(key, prefClass=Prefs):
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["DiskCacheEnabled", "FilterTrackingCookies",
-##                 "PrintBackgrounds", "AdBlockEnabled", "AutoLoadImages",
+##                 "PrintBackgrounds", "AdBlockEnabled"
 ##                 "JavaEnabled",
 ##                 "JavaScriptCanCloseWindows",
 ##                 "PluginsEnabled", "DnsPrefetchEnabled",

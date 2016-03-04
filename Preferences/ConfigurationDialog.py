@@ -392,7 +392,6 @@ class ConfigurationWidget(QWidget):
                 pass
         
         elif displayMode == ConfigurationWidget.WebBrowserMode:
-            # TODO: Check config pages for QWebKit and add QWebEngine
             self.configItems = {
                 # key : [display string, pixmap name, dialog module name or
                 #        page creation function, parent key,
@@ -400,6 +399,9 @@ class ConfigurationWidget(QWidget):
                 # The dialog module must have the module function 'create' to
                 # create the configuration page. This must have the method
                 # 'save' to save the settings.
+                "interfacePage":
+                [self.tr("Interface"), "preferences-interface.png",
+                 "HelpInterfacePage", None, None],
                 "networkPage":
                 [self.tr("Network"), "preferences-network.png",
                  "NetworkPage", None, None],
@@ -410,6 +412,15 @@ class ConfigurationWidget(QWidget):
                 [self.tr("Security"), "preferences-security.png",
                  "SecurityPage", None, None],
                 
+                # TODO: QtHelp
+##                "helpDocumentationPage":
+##                [self.tr("Help Documentation"),
+##                 "preferences-helpdocumentation.png",
+##                 "HelpDocumentationPage", None, None],
+                
+                "webBrowserAppearancePage":
+                [self.tr("Appearance"), "preferences-styles.png",
+                 "WebBrowserAppearancePage", None, None],
                 "helpFlashCookieManagerPage":
                 [self.tr("Flash Cookie Manager"),
                  "flashCookie16.png",
