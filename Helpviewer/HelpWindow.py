@@ -50,6 +50,7 @@ import Preferences
 from Preferences import Shortcuts
 
 import Utilities
+import Globals
 
 import UI.PixmapCache
 import UI.Config
@@ -169,7 +170,6 @@ class HelpWindow(E5MainWindow):
             self.tabWidget.currentChanged[int].connect(self.__currentChanged)
             self.tabWidget.titleChanged.connect(self.__titleChanged)
             self.tabWidget.showMessage.connect(self.statusBar().showMessage)
-            self.tabWidget.browserClosed.connect(self.__browserClosed)
             self.tabWidget.browserZoomValueChanged.connect(
                 self.__zoomWidget.setValue)
             
@@ -291,7 +291,6 @@ class HelpWindow(E5MainWindow):
             self.__virusTotal.fileScanReport.connect(
                 self.__virusTotalFileScanReport)
             
-            self.__previewer = None
             self.__shutdownCalled = False
             
             self.flashCookieManager()
@@ -614,21 +613,24 @@ class HelpWindow(E5MainWindow):
             self.printAct.triggered.connect(self.tabWidget.printBrowser)
         self.__actions.append(self.printAct)
         
-        self.printPdfAct = E5Action(
-            self.tr('Print as PDF'),
-            UI.PixmapCache.getIcon("printPdf.png"),
-            self.tr('Print as PDF'),
-            0, 0, self, 'help_file_print_pdf')
-        self.printPdfAct.setStatusTip(self.tr(
-            'Print the displayed help as PDF'))
-        self.printPdfAct.setWhatsThis(self.tr(
-            """<b>Print as PDF</b>"""
-            """<p>Print the displayed help text as a PDF file.</p>"""
-        ))
-        if not self.initShortcutsOnly:
-            self.printPdfAct.triggered.connect(
-                self.tabWidget.printBrowserPdf)
-        self.__actions.append(self.printPdfAct)
+        if Globals.isLinuxPlatform():
+            self.printPdfAct = E5Action(
+                self.tr('Print as PDF'),
+                UI.PixmapCache.getIcon("printPdf.png"),
+                self.tr('Print as PDF'),
+                0, 0, self, 'help_file_print_pdf')
+            self.printPdfAct.setStatusTip(self.tr(
+                'Print the displayed help as PDF'))
+            self.printPdfAct.setWhatsThis(self.tr(
+                """<b>Print as PDF</b>"""
+                """<p>Print the displayed help text as a PDF file.</p>"""
+            ))
+            if not self.initShortcutsOnly:
+                self.printPdfAct.triggered.connect(
+                    self.tabWidget.printBrowserPdf)
+            self.__actions.append(self.printPdfAct)
+        else:
+            self.printPdfAct = None
         
         self.printPreviewAct = E5Action(
             self.tr('Print Preview'),
@@ -1614,7 +1616,8 @@ class HelpWindow(E5MainWindow):
         menu.addSeparator()
         menu.addAction(self.printPreviewAct)
         menu.addAction(self.printAct)
-        menu.addAction(self.printPdfAct)
+        if self.printPdfAct:
+            menu.addAction(self.printPdfAct)
         menu.addSeparator()
         menu.addAction(self.closeAct)
         menu.addAction(self.closeAllAct)
@@ -1772,7 +1775,8 @@ class HelpWindow(E5MainWindow):
         filetb.addSeparator()
         filetb.addAction(self.printPreviewAct)
         filetb.addAction(self.printAct)
-        filetb.addAction(self.printPdfAct)
+        if self.printPdfAct:
+            filetb.addAction(self.printPdfAct)
         filetb.addSeparator()
         filetb.addAction(self.closeAct)
         filetb.addAction(self.exitAct)
@@ -1998,30 +2002,6 @@ class HelpWindow(E5MainWindow):
             linkName = link
         h = HelpWindow(linkName, ".", self.parent(), "qbrowser", self.fromEric)
         h.show()
-    
-    def previewer(self):
-        """
-        Public method to get a reference to the previewer tab.
-        
-        @return reference to the previewer tab (HelpBrowserWV)
-        """
-        if self.__previewer is None:
-            if self.tabWidget.count() != 1 or \
-               self.currentBrowser().url().toString() not in [
-                    "", "eric:home", "eric:speeddial", "about:blank"]:
-                self.newTab()
-            self.__previewer = self.currentBrowser()
-        self.tabWidget.setCurrentWidget(self.__previewer)
-        return self.__previewer
-    
-    def __browserClosed(self, browser):
-        """
-        Private slot handling the closure of a browser tab.
-        
-        @param browser reference to the browser window (QWidget)
-        """
-        if browser is self.__previewer:
-            self.__previewer = None
     
     def __openFile(self):
         """
@@ -2275,6 +2255,8 @@ class HelpWindow(E5MainWindow):
         self.speedDial().close()
         
         self.syncManager().close()
+        
+        self.zoomManager().close()
         
         self.__virusTotal.close()
         
@@ -3861,6 +3843,6 @@ class HelpWindow(E5MainWindow):
         @return flag indicating, if notifications are enabled (boolean)
         """
         if cls._fromEric:
-            return e5App().getObject("UserInterface").notificationsEnabled
+            return e5App().getObject("UserInterface").notificationsEnabled()
         else:
             return Preferences.getUI("NotificationsEnabled")

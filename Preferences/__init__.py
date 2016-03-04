@@ -29,7 +29,7 @@ import json
 import sys
 
 from PyQt5.QtCore import QDir, QPoint, QLocale, QSettings, QFileInfo, \
-    QCoreApplication, QByteArray, QSize, QUrl, Qt, QLibraryInfo
+    QCoreApplication, QByteArray, QSize, QUrl, Qt, QLibraryInfo, qVersion
 from PyQt5.QtGui import QColor, QFont, QPalette
 from PyQt5.QtWidgets import QInputDialog, QApplication
 from PyQt5.QtNetwork import QNetworkRequest
@@ -1149,6 +1149,7 @@ class Prefs(object):
     }
 
     # defaults for Qt related stuff
+    # TODO: introduce Qt5TranslationsDir and use it depending on Qt version
     qtDefaults = {
         "Qt4TranslationsDir": "",
         "QtToolsPrefix4": "",
@@ -2900,9 +2901,10 @@ def setSystem(key, value, prefClass=Prefs):
     prefClass.settings.setValue("System/" + key, value)
     
 
-def getQt4TranslationsDir(prefClass=Prefs):
+def getQtTranslationsDir(prefClass=Prefs):
     """
-    Module function to retrieve the Qt4TranslationsDir setting.
+    Module function to retrieve the Qt4TranslationsDir setting (Name kept for
+    backward compatibility).
     
     @param prefClass preferences class used as the storage area
     @return the requested Qt4TranslationsDir setting (string)
@@ -2910,7 +2912,12 @@ def getQt4TranslationsDir(prefClass=Prefs):
     s = prefClass.settings.value(
         "Qt/Qt4TranslationsDir", prefClass.qtDefaults["Qt4TranslationsDir"])
     if s == "":
-        s = os.getenv("QT4TRANSLATIONSDIR", "")
+        s = os.getenv("QTTRANSLATIONSDIR", "")
+    if s == "":
+        if qVersion() < "5.0.0":
+            s = os.getenv("QT4TRANSLATIONSDIR", "")
+        else:
+            s = os.getenv("QT5TRANSLATIONSDIR", "")
     if s == "":
         s = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
     if s == "" and isWindowsPlatform():
@@ -2929,7 +2936,7 @@ def getQt(key, prefClass=Prefs):
     @return the requested Qt setting
     """
     if key == "Qt4TranslationsDir":
-        return getQt4TranslationsDir(prefClass)
+        return getQtTranslationsDir(prefClass)
     elif key in ["PyuicIndent"]:
         return int(prefClass.settings.value(
             "Qt/" + key, prefClass.qtDefaults[key]))

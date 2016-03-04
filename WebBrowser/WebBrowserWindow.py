@@ -2174,7 +2174,6 @@ class WebBrowserWindow(E5MainWindow):
         """
         Public slot called to open a new private web browser window.
         
-        
         @param link URL to be displayed in the new window
         @type str or QUrl
         """

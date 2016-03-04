@@ -233,10 +233,11 @@ def simpleAppStartup(argv, appinfo, mwFactory, quitOnLastWindowClosed=True,
     initializeResourceSearchPath()
     QApplication.setWindowIcon(UI.PixmapCache.getIcon("eric.png"))
     
-    qt4TransDir = Preferences.getQt4TranslationsDir()
-    if not qt4TransDir:
-        qt4TransDir = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
-    loadTranslators(qt4TransDir, app)
+    qtTransDir = Preferences.getQtTranslationsDir()
+    if not qtTransDir:
+        qtTransDir = QLibraryInfo.location(QLibraryInfo.TranslationsPath)
+    loadTranslators(qtTransDir, app, ("qscintilla",))
+    # qscintilla needed for web browser
     
     w = mwFactory(argv)
     if quitOnLastWindowClosed:

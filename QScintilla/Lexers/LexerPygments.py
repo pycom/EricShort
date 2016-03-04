@@ -103,7 +103,7 @@ TOKEN_MAP = {
     Token.Keyword.Declaration: PYGMENTS_KEYWORD,
     Token.Keyword.Namespace: PYGMENTS_KEYWORD,
     Token.Keyword.Pseudo: PYGMENTS_PSEUDOKEYWORD,
-    Token.Keyword.Reserved:PYGMENTS_RESERVEDKEYWORD,
+    Token.Keyword.Reserved: PYGMENTS_RESERVEDKEYWORD,
     Token.Keyword.Type: PYGMENTS_TYPEKEYWORD,
 
     Token.Literal: PYGMENTS_LITERAL,

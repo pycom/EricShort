@@ -8046,22 +8046,22 @@ com o rato.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="466"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="500"/>
         <source>Choose a file to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="468"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="502"/>
         <source>Choose files to open</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="472"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="506"/>
         <source>Choose a file to save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../E5Gui/E5PathPicker.py" line="474"/>
+        <location filename="../E5Gui/E5PathPicker.py" line="508"/>
         <source>Choose a directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8973,7 +8973,7 @@ com o rato.&lt;/li&gt;
         <translation>Desselecionar tudo</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7224"/>
+        <location filename="../QScintilla/Editor.py" line="7225"/>
         <source>Check spelling...</source>
         <translation>Verificação ortográfica...</translation>
     </message>
@@ -9213,7 +9213,7 @@ com o rato.&lt;/li&gt;
         <translation>Editar ponto de interrupção...</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5138"/>
+        <location filename="../QScintilla/Editor.py" line="5139"/>
         <source>Enable breakpoint</source>
         <translation>Habilitar pontos de interrupção</translation>
     </message>
@@ -9398,257 +9398,257 @@ com o rato.&lt;/li&gt;
         <translation>Autocompletar não está disponivel porque a fonte de autocompletar não está definida.</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5141"/>
+        <location filename="../QScintilla/Editor.py" line="5142"/>
         <source>Disable breakpoint</source>
         <translation>Inabilitar ponto de interrupção</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5515"/>
+        <location filename="../QScintilla/Editor.py" line="5516"/>
         <source>Code Coverage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5515"/>
+        <location filename="../QScintilla/Editor.py" line="5516"/>
         <source>Please select a coverage file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5578"/>
+        <location filename="../QScintilla/Editor.py" line="5579"/>
         <source>Show Code Coverage Annotations</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5571"/>
+        <location filename="../QScintilla/Editor.py" line="5572"/>
         <source>All lines have been covered.</source>
         <translation>Foram cobertas as linhas todas.</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5578"/>
+        <location filename="../QScintilla/Editor.py" line="5579"/>
         <source>There is no coverage file available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5693"/>
+        <location filename="../QScintilla/Editor.py" line="5694"/>
         <source>Profile Data</source>
         <translation>Dados de Perfil</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5693"/>
+        <location filename="../QScintilla/Editor.py" line="5694"/>
         <source>Please select a profile file</source>
         <translation>Escolha um ficheiro de perfil por favor</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5853"/>
+        <location filename="../QScintilla/Editor.py" line="5854"/>
         <source>Syntax Error</source>
         <translation>Erro de Sintaxe</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="5853"/>
+        <location filename="../QScintilla/Editor.py" line="5854"/>
         <source>No syntax error message available.</source>
         <translation>Não está disponível a mensagem de erro de sintaxe.</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6168"/>
+        <location filename="../QScintilla/Editor.py" line="6169"/>
         <source>Macro Name</source>
         <translation>Nome de Macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6168"/>
+        <location filename="../QScintilla/Editor.py" line="6169"/>
         <source>Select a macro name:</source>
         <translation>Selecionar um nome de macro:</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6196"/>
+        <location filename="../QScintilla/Editor.py" line="6197"/>
         <source>Load macro file</source>
         <translation>Carregar ficheiro macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6239"/>
+        <location filename="../QScintilla/Editor.py" line="6240"/>
         <source>Macro files (*.macro)</source>
         <translation>Ficheiros Macro (*.macro)</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6219"/>
+        <location filename="../QScintilla/Editor.py" line="6220"/>
         <source>Error loading macro</source>
         <translation>Erro ao carregar macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6210"/>
+        <location filename="../QScintilla/Editor.py" line="6211"/>
         <source>&lt;p&gt;The macro file &lt;b&gt;{0}&lt;/b&gt; could not be read.&lt;/p&gt;</source>
         <translation>&lt;p&gt;O ficheiro macro &lt;b&gt;{0}&lt;/b&gt; não se pode ler.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6219"/>
+        <location filename="../QScintilla/Editor.py" line="6220"/>
         <source>&lt;p&gt;The macro file &lt;b&gt;{0}&lt;/b&gt; is corrupt.&lt;/p&gt;</source>
         <translation>&lt;p&gt;O ficheiro macro &lt;b&gt;{0}&lt;/b&gt; está corrompido.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6239"/>
+        <location filename="../QScintilla/Editor.py" line="6240"/>
         <source>Save macro file</source>
         <translation>Gravar ficheiro macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6256"/>
+        <location filename="../QScintilla/Editor.py" line="6257"/>
         <source>Save macro</source>
         <translation>Gravar macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6256"/>
+        <location filename="../QScintilla/Editor.py" line="6257"/>
         <source>&lt;p&gt;The macro file &lt;b&gt;{0}&lt;/b&gt; already exists. Overwrite it?&lt;/p&gt;</source>
         <translation>&lt;p&gt;O ficheiro macro &lt;b&gt;{0}&lt;/b&gt; já existe. Sobreescrever-lo?&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6272"/>
+        <location filename="../QScintilla/Editor.py" line="6273"/>
         <source>Error saving macro</source>
         <translation>Erro ao gravar macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6272"/>
+        <location filename="../QScintilla/Editor.py" line="6273"/>
         <source>&lt;p&gt;The macro file &lt;b&gt;{0}&lt;/b&gt; could not be written.&lt;/p&gt;</source>
         <translation>&lt;p&gt;O ficheiro macro &lt;b&gt;{0}&lt;/b&gt; não pode ser escrito.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6285"/>
+        <location filename="../QScintilla/Editor.py" line="6286"/>
         <source>Start Macro Recording</source>
         <translation>Iniciar Registo de Macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6285"/>
+        <location filename="../QScintilla/Editor.py" line="6286"/>
         <source>Macro recording is already active. Start new?</source>
         <translation>A gravação de macro já está ativada. Começar nova?</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6311"/>
+        <location filename="../QScintilla/Editor.py" line="6312"/>
         <source>Macro Recording</source>
         <translation>Gravação de Macro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6311"/>
+        <location filename="../QScintilla/Editor.py" line="6312"/>
         <source>Enter name of the macro:</source>
         <translation>Introduza o nome de macro:</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6449"/>
+        <location filename="../QScintilla/Editor.py" line="6450"/>
         <source>File changed</source>
         <translation>Ficheiro alterado</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6611"/>
+        <location filename="../QScintilla/Editor.py" line="6612"/>
         <source>{0} (ro)</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6751"/>
+        <location filename="../QScintilla/Editor.py" line="6752"/>
         <source>Drop Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6751"/>
+        <location filename="../QScintilla/Editor.py" line="6752"/>
         <source>&lt;p&gt;&lt;b&gt;{0}&lt;/b&gt; is not a file.&lt;/p&gt;</source>
         <translation>&lt;p&gt;&lt;b&gt;{0}&lt;/b&gt; não é um ficheiro.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6772"/>
+        <location filename="../QScintilla/Editor.py" line="6773"/>
         <source>Resources</source>
         <translation>Recursos</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6774"/>
+        <location filename="../QScintilla/Editor.py" line="6775"/>
         <source>Add file...</source>
         <translation>Adicionar Ficheiro...</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6776"/>
+        <location filename="../QScintilla/Editor.py" line="6777"/>
         <source>Add files...</source>
         <translation>Adicionar Ficheiros...</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6778"/>
+        <location filename="../QScintilla/Editor.py" line="6779"/>
         <source>Add aliased file...</source>
         <translation>Adicionar ficheiro com pseudónimo...</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6781"/>
+        <location filename="../QScintilla/Editor.py" line="6782"/>
         <source>Add localized resource...</source>
         <translation>Adicionar recursos localizado...</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6785"/>
+        <location filename="../QScintilla/Editor.py" line="6786"/>
         <source>Add resource frame</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6804"/>
+        <location filename="../QScintilla/Editor.py" line="6805"/>
         <source>Add file resource</source>
         <translation>Adicionar recurso de ficheiro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6820"/>
+        <location filename="../QScintilla/Editor.py" line="6821"/>
         <source>Add file resources</source>
         <translation>Adicionar recursos de ficheiro</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6848"/>
+        <location filename="../QScintilla/Editor.py" line="6849"/>
         <source>Add aliased file resource</source>
         <translation>Adicionar recurso de ficheiro com pseudónimo</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6848"/>
+        <location filename="../QScintilla/Editor.py" line="6849"/>
         <source>Alias for file &lt;b&gt;{0}&lt;/b&gt;:</source>
         <translation>Pseudónimo para o ficheiro &lt;b&gt;{0}&lt;/b&gt;:</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6912"/>
+        <location filename="../QScintilla/Editor.py" line="6913"/>
         <source>Package Diagram</source>
         <translation>Diagrama do Pacote</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6912"/>
+        <location filename="../QScintilla/Editor.py" line="6913"/>
         <source>Include class attributes?</source>
         <translation>Incluir atributos de classes?</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6932"/>
+        <location filename="../QScintilla/Editor.py" line="6933"/>
         <source>Imports Diagram</source>
         <translation>Diagrama de Imports</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6932"/>
+        <location filename="../QScintilla/Editor.py" line="6933"/>
         <source>Include imports from external modules?</source>
         <translation>Incluir imports de módulos externos?</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6946"/>
+        <location filename="../QScintilla/Editor.py" line="6947"/>
         <source>Application Diagram</source>
         <translation>Diagrama da Aplicação</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6946"/>
+        <location filename="../QScintilla/Editor.py" line="6947"/>
         <source>Include module names?</source>
         <translation>Incluir nome dos módulos?</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7227"/>
+        <location filename="../QScintilla/Editor.py" line="7228"/>
         <source>Add to dictionary</source>
         <translation>Adicionar dicionário</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7229"/>
+        <location filename="../QScintilla/Editor.py" line="7230"/>
         <source>Ignore All</source>
         <translation>Ignorar Tudo</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6107"/>
+        <location filename="../QScintilla/Editor.py" line="6108"/>
         <source>Warning: {0}</source>
         <translation>Aviso: {0}</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6114"/>
+        <location filename="../QScintilla/Editor.py" line="6115"/>
         <source>Error: {0}</source>
         <translation>Erro: {0}</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6445"/>
+        <location filename="../QScintilla/Editor.py" line="6446"/>
         <source>&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; You will lose your changes upon reopening it.</source>
         <translation>&lt;br&gt;&lt;b&gt;Aviso:&lt;/b&gt; Perderá todas as alterações uma vez que o volte a abrir.</translation>
     </message>
@@ -9693,27 +9693,27 @@ com o rato.&lt;/li&gt;
         <translation>Alteração anterior</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7641"/>
+        <location filename="../QScintilla/Editor.py" line="7642"/>
         <source>Sort Lines</source>
         <translation>Ordenar Linhas</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7641"/>
+        <location filename="../QScintilla/Editor.py" line="7642"/>
         <source>The selection contains illegal data for a numerical sort.</source>
         <translation>A seleção contém dados ilegais para uma ordenação numérica.</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6043"/>
+        <location filename="../QScintilla/Editor.py" line="6044"/>
         <source>Warning</source>
         <translation>Aviso</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6043"/>
+        <location filename="../QScintilla/Editor.py" line="6044"/>
         <source>No warning messages available.</source>
         <translation>Não estão disponíveis mensagens de aviso.</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6104"/>
+        <location filename="../QScintilla/Editor.py" line="6105"/>
         <source>Style: {0}</source>
         <translation>Estilo: {0}</translation>
     </message>
@@ -9738,7 +9738,7 @@ com o rato.&lt;/li&gt;
         <translation>Reabrir Com Codificação</translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="6439"/>
+        <location filename="../QScintilla/Editor.py" line="6440"/>
         <source>&lt;p&gt;The file &lt;b&gt;{0}&lt;/b&gt; has been changed while it was opened in eric6. Reread it?&lt;/p&gt;</source>
         <translation>&lt;p&gt;O ficheiro &lt;b&gt;{0}&lt;/b&gt; foi alterado enquanto estava aberto em eric6. Recarregar?&lt;/p&gt;</translation>
     </message>
@@ -9773,12 +9773,12 @@ com o rato.&lt;/li&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7728"/>
+        <location filename="../QScintilla/Editor.py" line="7729"/>
         <source>Register Mouse Click Handler</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/Editor.py" line="7728"/>
+        <location filename="../QScintilla/Editor.py" line="7729"/>
         <source>A mouse click handler for &quot;{0}&quot; was already registered by &quot;{1}&quot;. Aborting request by &quot;{2}&quot;...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -16519,67 +16519,67 @@ Razão: {0}</translation>
         <translation>Introduzir um nome para o motor</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2090"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2094"/>
         <source>Error loading page: {0}</source>
         <translation>Erro ao carregar a página: {0}</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2108"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2112"/>
         <source>When connecting to: {0}.</source>
         <translation>Ao conectar com: {0}.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2111"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2115"/>
         <source>Check the address for errors such as &lt;b&gt;ww&lt;/b&gt;.example.org instead of &lt;b&gt;www&lt;/b&gt;.example.org</source>
         <translation>Verifique se a direção tem erros como &lt;b&gt;ww&lt;/b&gt;.exemplo.org em lugar de &lt;b&gt;www&lt;/b&gt;.exemplo.org</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2116"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2120"/>
         <source>If the address is correct, try checking the network connection.</source>
         <translation>Se a direção está correcta, verifique a conexão da rede.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2120"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2124"/>
         <source>If your computer or network is protected by a firewall or proxy, make sure that the browser is permitted to access the network.</source>
         <translation>Se um firewall ou proxy protegem o seu computador ou rede, certifique-se de que o navegador tem permissão para aceder à rede.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2126"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2130"/>
         <source>If your cache policy is set to offline browsing,only pages in the local cache are available.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2171"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2175"/>
         <source>Web Database Quota</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2171"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2175"/>
         <source>&lt;p&gt;The database quota of &lt;strong&gt;{0}&lt;/strong&gt; has been exceeded while accessing database &lt;strong&gt;{1}&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;Shall it be changed?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2182"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2186"/>
         <source>New Web Database Quota</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2182"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2186"/>
         <source>Enter the new quota in MB (current = {0}, used = {1}; step size = 5 MB):</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2206"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2210"/>
         <source>bytes</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2209"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2213"/>
         <source>kB</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2212"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2216"/>
         <source>MB</source>
         <translation></translation>
     </message>
@@ -16684,7 +16684,7 @@ Razão: {0}</translation>
         <translation>Agente de Usuario</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2131"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2135"/>
         <source>Try Again</source>
         <translation>Tentar de Novo</translation>
     </message>
@@ -16724,17 +16724,17 @@ Razão: {0}</translation>
         <translation>Gravar Media</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2567"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2571"/>
         <source>eric6 Web Browser</source>
         <translation>Navegador Web de eric6</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2567"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2571"/>
         <source>&lt;p&gt;Printing is not available due to a bug in PyQt5. Please upgrade.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Imprimir não está disponível devido a um falho em PyQt5. Por favor atualize.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpBrowserWV.py" line="2535"/>
+        <location filename="../Helpviewer/HelpBrowserWV.py" line="2539"/>
         <source>&lt;p&gt;Printing is not available due to a bug in PyQt5.Please upgrade.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Imprimir não está disponível devido a um falho em PyQt5.Por favor atualize.&lt;/p&gt;</translation>
     </message>
@@ -17336,32 +17336,32 @@ Razão: {0}</translation>
         <translation>Marcar Todos os Separadores</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="350"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="357"/>
         <source>...</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="759"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="767"/>
         <source>Loading...</source>
         <translation>Carregando...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="780"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="788"/>
         <source>Finished loading</source>
         <translation>Acabou de carregar</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="782"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="790"/>
         <source>Failed to load</source>
         <translation>Falhou ao carregar</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="822"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="830"/>
         <source>Are you sure you want to close the window?</source>
         <translation>Tem a certeza de que quer fechar a janela?</translation>
     </message>
     <message numerus="yes">
-        <location filename="../Helpviewer/HelpTabWidget.py" line="822"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="830"/>
         <source>Are you sure you want to close the window?
 You have %n tab(s) open.</source>
         <translation>
@@ -17372,17 +17372,17 @@ Tem %n separadores abertos.</numerusform>
         </translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="830"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="838"/>
         <source>&amp;Close</source>
         <translation>Fe&amp;char</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="834"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="842"/>
         <source>&amp;Quit</source>
         <translation>Sai&amp;r</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="837"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="845"/>
         <source>C&amp;lose Current Tab</source>
         <translation>F&amp;echar o Separador Atual</translation>
     </message>
@@ -17402,37 +17402,37 @@ Tem %n separadores abertos.</numerusform>
         <translation>Restaurar o Separador Fechado</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="994"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="1002"/>
         <source>Restore All Closed Tabs</source>
         <translation>Restaurar Todos os Separadores Fechados</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="996"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="1004"/>
         <source>Clear List</source>
         <translation>Limpar Lista</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="658"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="666"/>
         <source>eric6 Web Browser</source>
         <translation>Navegador Web de eric6</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="604"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="612"/>
         <source>&lt;p&gt;Printing is not available due to a bug in PyQt5. Please upgrade.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Imprimir não está disponível devido a um falho em PyQt5. Por favor atualize.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="658"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="666"/>
         <source>&lt;p&gt;Printing is not available due to a bug in PyQt5.Please upgrade.&lt;/p&gt;</source>
         <translation>&lt;p&gt;Imprimir não está disponível devido a um falho em PyQt5.Por favor atualize.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="459"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="467"/>
         <source>Do you really want to close this page?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpTabWidget.py" line="459"/>
+        <location filename="../Helpviewer/HelpTabWidget.py" line="467"/>
         <source>You have modified this page and when closing it you would lose the modification.
 Do you really want to close this page?</source>
         <translation type="unfinished"></translation>
@@ -19045,7 +19045,7 @@ URL: {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2401"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2403"/>
         <source>Full Screen</source>
         <translation>Ecrã Inteiro</translation>
     </message>
@@ -19490,67 +19490,67 @@ URL: {1}</source>
         <translation>Separadores Guardados</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2431"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2433"/>
         <source>&lt;b&gt;Are you sure you want to turn on private browsing?&lt;/b&gt;&lt;p&gt;When private browsing is turned on, web pages are not added to the history, searches are not added to the list of recent searches and web site icons and cookies are not stored. HTML5 offline storage will be deactivated. Until you close the window, you can still click the Back and Forward buttons to return to the web pages you have opened.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2711"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2713"/>
         <source>Could not find an associated content.</source>
         <translation>Não se encontrou nenhum conteúdo associado.</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2834"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2836"/>
         <source>Updating search index</source>
         <translation>A atualizar índice de pesquisa</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2904"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2906"/>
         <source>Looking for Documentation...</source>
         <translation>A procurar a Documentação...</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2939"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2941"/>
         <source>Unfiltered</source>
         <translation>Sem filtrar</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2958"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2960"/>
         <source>Help Engine</source>
         <translation>Motor de Ajuda</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3473"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3475"/>
         <source>ISO</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3474"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3476"/>
         <source>Windows</source>
         <translation>Windows</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3475"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3477"/>
         <source>ISCII</source>
         <translation>ISCII</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3476"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3478"/>
         <source>Unicode</source>
         <translation>Unicódigo</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3477"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3479"/>
         <source>Other</source>
         <translation>Outro</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3478"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3480"/>
         <source>IBM</source>
         <translation>IBM</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3500"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3502"/>
         <source>Default Encoding</source>
         <translation>Codificação Padrão</translation>
     </message>
@@ -19585,12 +19585,12 @@ URL: {1}</source>
         <translation>Analizar sítio atual</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3738"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3740"/>
         <source>VirusTotal Scan</source>
         <translation>Análise de VirusTotal</translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3738"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3740"/>
         <source>&lt;p&gt;The VirusTotal scan could not be scheduled.&lt;p&gt;
 &lt;p&gt;Reason: {0}&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
@@ -19680,7 +19680,7 @@ URL: {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2408"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2410"/>
         <source>Restore Window</source>
         <translation>Restaurar Janela</translation>
     </message>
@@ -19875,7 +19875,7 @@ URL: {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="2914"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="2916"/>
         <source>eric6 Web Browser</source>
         <translation>Navegador Web de eric6</translation>
     </message>
@@ -19895,27 +19895,27 @@ URL: {1}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3773"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3775"/>
         <source>IP Address Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3783"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3785"/>
         <source>Domain Report</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3764"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3766"/>
         <source>Enter a valid IPv4 address in dotted quad notation:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3773"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3775"/>
         <source>The given IP address is not in dotted quad notation.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Helpviewer/HelpWindow.py" line="3783"/>
+        <location filename="../Helpviewer/HelpWindow.py" line="3785"/>
         <source>Enter a valid domain name:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -36738,7 +36738,7 @@ the repository and be placed in this directory.&lt;/p&gt;</source>
 <context>
     <name>OpenSearchManager</name>
     <message>
-        <location filename="../Helpviewer/OpenSearch/OpenSearchManager.py" line="404"/>
+        <location filename="../Helpviewer/OpenSearch/OpenSearchManager.py" line="405"/>
         <source>&lt;p&gt;Do you want to add the following engine to your list of search engines?&lt;br/&gt;&lt;br/&gt;Name: {0}&lt;br/&gt;Searches on: {1}&lt;/p&gt;</source>
         <translation>&lt;p&gt;Deseja adicionar o motor seguinte à lista de motores de pesquisa?&lt;br/&gt;&lt;br/&gt;Nome: {0}&lt;br/&gt;Pesquisar em: {1}&lt;/p&gt;</translation>
     </message>
@@ -38117,27 +38117,27 @@ Select Update.</source>
 <context>
     <name>Preferences</name>
     <message>
-        <location filename="../Preferences/__init__.py" line="1347"/>
+        <location filename="../Preferences/__init__.py" line="1348"/>
         <source>Export Preferences</source>
         <translation>Exportar Preferências</translation>
     </message>
     <message>
-        <location filename="../Preferences/__init__.py" line="1375"/>
+        <location filename="../Preferences/__init__.py" line="1376"/>
         <source>Import Preferences</source>
         <translation>Importar Preferências</translation>
     </message>
     <message>
-        <location filename="../Preferences/__init__.py" line="1375"/>
+        <location filename="../Preferences/__init__.py" line="1376"/>
         <source>Properties File (*.ini);;All Files (*)</source>
         <translation>Ficheiro de Propriedades (*.ini);;Ficheiros Todos (*)</translation>
     </message>
     <message>
-        <location filename="../Preferences/__init__.py" line="1477"/>
+        <location filename="../Preferences/__init__.py" line="1478"/>
         <source>Select Python{0} Interpreter</source>
         <translation>Selecionar intérprete de Python{0}</translation>
     </message>
     <message>
-        <location filename="../Preferences/__init__.py" line="1477"/>
+        <location filename="../Preferences/__init__.py" line="1478"/>
         <source>Select the Python{0} interpreter to be used:</source>
         <translation>Selecionar o intérprete de Python{0} a usar:</translation>
     </message>
@@ -46267,22 +46267,22 @@ expression; &apos;(?&amp;lt;![abc])q&apos; will match a &apos;q&apos; only if no
         <translation>&lt;font color=&quot;#FF0000&quot;&gt;&lt;b&gt;Nota:&lt;/b&gt; Estas definições estarão activadas a próxima vez que arranque a aplicação.&lt;/font&gt;</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="79"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="84"/>
         <source>Qt Tools</source>
         <translation>Ferramentas Qt</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="85"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="90"/>
         <source>The tool executable is composed of the prefix, the tool name and the postfix. For win, the extension is added automatically.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="129"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="134"/>
         <source>This gives an example of the complete tool name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="132"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="137"/>
         <source>designer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -46298,46 +46298,51 @@ expression; &apos;(?&amp;lt;![abc])q&apos; will match a &apos;q&apos; only if no
     </message>
     <message>
         <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="66"/>
-        <source>&lt;b&gt;Note:&lt;/b&gt; Leave this entry empty to use the QT4TRANSLATIONSDIR environment variable or the path compiled into the Qt library.</source>
+        <source>&lt;b&gt;Note:&lt;/b&gt; Leave this entry empty to use an environment variable or the path compiled into the Qt library. Environment variables supported are
+&lt;ul&gt;
+&lt;li&gt;QT4TRANSLATIONSDIR for Qt4&lt;/li&gt;
+&lt;li&gt;QT5TRANSLATIONSDIR for Qt5&lt;/li&gt;
+&lt;li&gt;QTTRANSLATIONSDIR for any Qt variant&lt;/li&gt;
+&lt;/ul&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="95"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="100"/>
         <source>Qt-Prefix:</source>
         <translation>Prefixo de Qt:</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="102"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="107"/>
         <source>Enter the prefix for the Qt tools name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="109"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="114"/>
         <source>Qt-Postfix:</source>
         <translation>Sufixo de Qt:</translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="116"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="121"/>
         <source>Enter the postfix for the Qt tools name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="142"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="147"/>
         <source>pyuic / pyside-uic Options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="148"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="153"/>
         <source>Indent Width:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="155"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="160"/>
         <source>Select the indent width (default: 4)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="187"/>
+        <location filename="../Preferences/ConfigurationPages/QtPage.ui" line="192"/>
         <source>Generate imports relative to &apos;.&apos;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -47424,17 +47429,17 @@ Reason: {0}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/SearchReplaceWidget.py" line="660"/>
+        <location filename="../QScintilla/SearchReplaceWidget.py" line="664"/>
         <source>&apos;{0}&apos; was not found.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/SearchReplaceWidget.py" line="782"/>
+        <location filename="../QScintilla/SearchReplaceWidget.py" line="786"/>
         <source>Replaced {0} occurrences.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../QScintilla/SearchReplaceWidget.py" line="787"/>
+        <location filename="../QScintilla/SearchReplaceWidget.py" line="791"/>
         <source>Nothing replaced because &apos;{0}&apos; was not found.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -55629,8 +55634,8 @@ In order to switch to the trunk version leave it empty.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Sync/SyncHandler.py" line="63"/>
-        <source>Remote bookmarks file does NOT exists. Exporting local copy...</source>
-        <translation>Ficheiro de marcadores remoto NÃO existe. Exportando a cópia local...</translation>
+        <source>Remote bookmarks file does NOT exist. Exporting local copy...</source>
+        <translation type="unfinished">Ficheiro de marcadores remoto NÃO existe. Exportando a cópia local...</translation>
     </message>
     <message>
         <location filename="../Helpviewer/Sync/SyncHandler.py" line="66"/>
@@ -55654,7 +55659,7 @@ In order to switch to the trunk version leave it empty.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Sync/SyncHandler.py" line="76"/>
-        <source>Remote history file does NOT exists. Exporting local copy...</source>
+        <source>Remote history file does NOT exist. Exporting local copy...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -55679,7 +55684,7 @@ In order to switch to the trunk version leave it empty.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Sync/SyncHandler.py" line="89"/>
-        <source>Remote logins file does NOT exists. Exporting local copy...</source>
+        <source>Remote logins file does NOT exist. Exporting local copy...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -55704,7 +55709,7 @@ In order to switch to the trunk version leave it empty.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Sync/SyncHandler.py" line="103"/>
-        <source>Remote user agent settings file does NOT exists. Exporting local copy...</source>
+        <source>Remote user agent settings file does NOT exist. Exporting local copy...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -55729,7 +55734,7 @@ In order to switch to the trunk version leave it empty.&lt;/p&gt;</source>
     </message>
     <message>
         <location filename="../Helpviewer/Sync/SyncHandler.py" line="119"/>
-        <source>Remote speed dial settings file does NOT exists. Exporting local copy...</source>
+        <source>Remote speed dial settings file does NOT exist. Exporting local copy...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
