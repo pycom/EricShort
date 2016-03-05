@@ -2267,6 +2267,8 @@ class WebBrowserWindow(E5MainWindow):
         """
         Private slot to show the about information.
         """
+        chromeVersion, webengineVersion = \
+            WebBrowserTools.getWebEngineVersions()
         E5MessageBox.about(
             self,
             self.tr("eric6 Web Browser"),
@@ -2275,7 +2277,8 @@ class WebBrowserWindow(E5MainWindow):
                 """<p>The eric6 Web Browser is a combined help file and HTML"""
                 """ browser. It is part of the eric6 development"""
                 """ toolset.</p>"""
-            ).format(Version))
+                """<p>It is based on QtWebEngine {1} and Chrome {2}.</p>"""
+            ).format(Version, webengineVersion, chromeVersion))
         
     def __aboutQt(self):
         """

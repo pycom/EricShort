@@ -3023,6 +3023,7 @@ class UserInterface(E5MainWindow):
                 .format(qWebKitVersion())
         except ImportError:
             pass
+        # TODO: add QtWebEngine version info
         versionText += """<tr><td><b>{0}</b></td><td>{1}</td></tr>"""\
             .format(Program, Version)
         versionText += self.tr("""</table>""")

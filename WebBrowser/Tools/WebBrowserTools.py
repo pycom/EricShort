@@ -14,8 +14,9 @@ except NameError:
     pass
 
 import os
+import re
 
-from PyQt5.QtCore import QFile, QByteArray, QUrl
+from PyQt5.QtCore import QFile, QByteArray, QUrl, QCoreApplication
 from PyQt5.QtGui import QPixmap
 
 
@@ -149,3 +150,28 @@ def pixmapFromByteArray(data):
     pixmap.loadFromData(barray)
     
     return pixmap
+
+
+def getWebEngineVersions():
+    """
+    Module function to extract the web engine version from the default user
+    agent string.
+    
+    @return tuple containing the Chrome version and the QtWebEngine version
+    @rtype tuple of str
+    """
+    from WebBrowser.WebBrowserWindow import WebBrowserWindow
+    useragent = WebBrowserWindow.webProfile().defaultUserAgent
+    match = re.search(r"""Chrome/([\d.]+)""", useragent)
+    if match:
+        chromeVersion = match.group(1)
+    else:
+        chromeVersion = QCoreApplication.translate(
+            "WebBrowserTools", "<unknown>")
+    match = re.search(r"""QtWebEngine/([\d.]+)""", useragent)
+    if match:
+        webengineVersion = match.group(1)
+    else:
+        webengineVersion = QCoreApplication.translate(
+            "WebBrowserTools", "<unknown>")
+    return (chromeVersion, webengineVersion)
