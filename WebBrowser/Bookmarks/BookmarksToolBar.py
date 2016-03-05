@@ -83,29 +83,32 @@ class BookmarksToolBar(E5ModelToolBar):
             v = act.data()
             
             if act.menu() is None:
-                menuAction = menu.addAction(
-                    self.tr("&Open"), self.__openBookmark)
-                menuAction.setData(v)
-                menuAction = menu.addAction(
-                    self.tr("Open in New &Tab\tCtrl+LMB"),
-                    self.__openBookmarkInNewTab)
-                menuAction.setData(v)
-                # TODO: Bookmarks: add open in new window
-                # TODO: Bookmarks: add open in private window
+                menu.addAction(
+                    self.tr("Open"),
+                    self.__openBookmark).setData(v)
+                menu.addAction(
+                    self.tr("Open in New Tab\tCtrl+LMB"),
+                    self.__openBookmarkInNewTab).setData(v)
+                menu.addAction(
+                    self.tr("Open in New Window"),
+                    self.__openBookmarkInNewWindow).setData(v)
+                menu.addAction(
+                    self.tr("Open in New Private Window"),
+                    self.__openBookmarkInPrivateWindow).setData(v)
                 menu.addSeparator()
             
-            menuAction = menu.addAction(
-                self.tr("&Remove"), self.__removeBookmark)
-            menuAction.setData(v)
+            menu.addAction(
+                self.tr("Remove"),
+                self.__removeBookmark).setData(v)
             menu.addSeparator()
             
-            menuAction = menu.addAction(
-                self.tr("&Properties..."), self.__edit)
-            menuAction.setData(v)
+            menu.addAction(
+                self.tr("Properties..."),
+                self.__edit).setData(v)
             menu.addSeparator()
         
-        menu.addAction(self.tr("Add &Bookmark..."), self.__newBookmark)
-        menu.addAction(self.tr("Add &Folder..."), self.__newFolder)
+        menu.addAction(self.tr("Add Bookmark..."), self.__newBookmark)
+        menu.addAction(self.tr("Add Folder..."), self.__newFolder)
         
         menu.exec_(QCursor.pos())
     
@@ -166,6 +169,26 @@ class BookmarksToolBar(E5ModelToolBar):
         self.newUrl.emit(
             idx.data(BookmarksModel.UrlRole),
             idx.data(Qt.DisplayRole))
+    
+    def __openBookmarkInNewWindow(self):
+        """
+        Private slot to open a bookmark in a new window.
+        """
+        idx = self.index(self.sender())
+        url = idx.data(BookmarksModel.UrlRole)
+        
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        WebBrowserWindow.mainWindow().newWindow(url)
+    
+    def __openBookmarkInPrivateWindow(self):
+        """
+        Private slot to open a bookmark in a new private window.
+        """
+        idx = self.index(self.sender())
+        url = idx.data(BookmarksModel.UrlRole)
+        
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        WebBrowserWindow.mainWindow().newPrivateWindow(url)
     
     def __removeBookmark(self):
         """
