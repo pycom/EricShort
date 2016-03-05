@@ -9,7 +9,7 @@ Module implementing the Web Browser configuration page.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QFontDialog
 
 from E5Gui.E5PathPicker import E5PathPickerModes
@@ -45,17 +45,33 @@ class WebBrowserAppearancePage(ConfigurationPageBase,
         self.__displayMode = None
         
         # set initial values
-        self.standardFont = Preferences.getWebBrowser("StandardFont")
-        self.standardFontSample.setFont(self.standardFont)
-        self.standardFontSample.setText(
-            "{0} {1}".format(self.standardFont.family(),
-                             self.standardFont.pointSize()))
+        defaultFontSize = Preferences.getWebBrowser("DefaultFontSize")
+        fixedFontSize = Preferences.getWebBrowser("DefaultFixedFontSize")
+        self.defaultSizeSpinBox.setValue(defaultFontSize)
+        self.fixedSizeSpinBox.setValue(fixedFontSize)
+        self.minSizeSpinBox.setValue(
+            Preferences.getWebBrowser("MinimumFontSize"))
+        self.minLogicalSizeSpinBox.setValue(
+            Preferences.getWebBrowser("MinimumLogicalFontSize"))
         
-        self.fixedFont = Preferences.getWebBrowser("FixedFont")
-        self.fixedFontSample.setFont(self.fixedFont)
-        self.fixedFontSample.setText(
-            "{0} {1}".format(self.fixedFont.family(),
-                             self.fixedFont.pointSize()))
+        self.standardFontCombo.setCurrentFont(
+            QFont(Preferences.getWebBrowser("StandardFontFamily"),
+                  defaultFontSize, QFont.Normal, False))
+        self.fixedFontCombo.setCurrentFont(
+            QFont(Preferences.getWebBrowser("FixedFontFamily"),
+                  fixedFontSize, QFont.Normal, False))
+        self.serifFontCombo.setCurrentFont(
+            QFont(Preferences.getWebBrowser("SerifFontFamily"),
+                  defaultFontSize, QFont.Normal, False))
+        self.sansSerifFontCombo.setCurrentFont(
+            QFont(Preferences.getWebBrowser("SansSerifFontFamily"),
+                  defaultFontSize, QFont.Normal, False))
+        self.cursiveFontCombo.setCurrentFont(
+            QFont(Preferences.getWebBrowser("CursiveFontFamily"),
+                  defaultFontSize, QFont.Normal, True))
+        self.fantasyFontCombo.setCurrentFont(
+            QFont(Preferences.getWebBrowser("FantasyFontFamily"),
+                  defaultFontSize, QFont.Normal, False))
         
         self.initColour("SaveUrlColor", self.secureURLsColourButton,
                         Preferences.getWebBrowser)
@@ -94,8 +110,37 @@ class WebBrowserAppearancePage(ConfigurationPageBase,
         """
         Public slot to save the Help Viewers configuration.
         """
-        Preferences.setWebBrowser("StandardFont", self.standardFont)
-        Preferences.setWebBrowser("FixedFont", self.fixedFont)
+        Preferences.setWebBrowser(
+            "StandardFontFamily",
+            self.standardFontCombo.currentFont().family())
+        Preferences.setWebBrowser(
+            "FixedFontFamily",
+            self.fixedFontCombo.currentFont().family())
+        Preferences.setWebBrowser(
+            "SerifFontFamily",
+            self.serifFontCombo.currentFont().family())
+        Preferences.setWebBrowser(
+            "SansSerifFontFamily",
+            self.sansSerifFontCombo.currentFont().family())
+        Preferences.setWebBrowser(
+            "CursiveFontFamily",
+            self.cursiveFontCombo.currentFont().family())
+        Preferences.setWebBrowser(
+            "FantasyFontFamily",
+            self.fantasyFontCombo.currentFont().family())
+        
+        Preferences.setWebBrowser(
+            "DefaultFontSize",
+            self.defaultSizeSpinBox.value())
+        Preferences.setWebBrowser(
+            "DefaultFixedFontSize",
+            self.fixedSizeSpinBox.value())
+        Preferences.setWebBrowser(
+            "MinimumFontSize",
+            self.minSizeSpinBox.value())
+        Preferences.setWebBrowser(
+            "MinimumLogicalFontSize",
+            self.minLogicalSizeSpinBox.value())
         
         Preferences.setWebBrowser(
             "AutoLoadImages",
@@ -116,23 +161,6 @@ class WebBrowserAppearancePage(ConfigurationPageBase,
         Preferences.setWebBrowser(
             "WarnOnMultipleClose",
             self.warnOnMultipleCloseCheckBox.isChecked())
-    
-    @pyqtSlot()
-    def on_standardFontButton_clicked(self):
-        """
-        Private method used to select the standard font.
-        """
-        self.standardFont = \
-            self.selectFont(self.standardFontSample, self.standardFont, True)
-    
-    @pyqtSlot()
-    def on_fixedFontButton_clicked(self):
-        """
-        Private method used to select the fixed-width font.
-        """
-        self.fixedFont = self.selectFont(
-            self.fixedFontSample, self.fixedFont, True,
-            options=MonospacedFontsOption)
     
 
 def create(dlg):

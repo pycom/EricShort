@@ -1070,24 +1070,43 @@ class Prefs(object):
             return
         
         webEngineSettings = QWebEngineSettings.globalSettings()
-        fontFamily = webEngineSettings.fontFamily(
-            QWebEngineSettings.StandardFont)
-        fontSize = webEngineSettings.fontSize(
-            QWebEngineSettings.DefaultFontSize)
-        cls.webBrowserDefaults["StandardFont"] = \
-            QFont(fontFamily, fontSize).toString()
-        fontFamily = webEngineSettings.fontFamily(
-            QWebEngineSettings.FixedFont)
-        fontSize = webEngineSettings.fontSize(
-            QWebEngineSettings.DefaultFixedFontSize)
-        cls.webBrowserDefaults["FixedFont"] = \
-            QFont(fontFamily, fontSize).toString()
+##        fontFamily = webEngineSettings.fontFamily(
+##            QWebEngineSettings.StandardFont)
+##        fontSize = webEngineSettings.fontSize(
+##            QWebEngineSettings.DefaultFontSize)
+##        cls.webBrowserDefaults["StandardFont"] = \
+##            QFont(fontFamily, fontSize).toString()
+##        fontFamily = webEngineSettings.fontFamily(
+##            QWebEngineSettings.FixedFont)
+##        fontSize = webEngineSettings.fontSize(
+##            QWebEngineSettings.DefaultFixedFontSize)
+##        cls.webBrowserDefaults["FixedFont"] = \
+##            QFont(fontFamily, fontSize).toString()
         cls.webBrowserDefaults.update({
+            "StandardFontFamily": webEngineSettings.fontFamily(
+                QWebEngineSettings.StandardFont),
+            "FixedFontFamily": webEngineSettings.fontFamily(
+                QWebEngineSettings.FixedFont),
+            "SerifFontFamily": webEngineSettings.fontFamily(
+                QWebEngineSettings.StandardFont),
+            "SansSerifFontFamily": webEngineSettings.fontFamily(
+                QWebEngineSettings.SansSerifFont),
+            "CursiveFontFamily": webEngineSettings.fontFamily(
+                QWebEngineSettings.CursiveFont),
+            "FantasyFontFamily": webEngineSettings.fontFamily(
+                QWebEngineSettings.FantasyFont),
+            "DefaultFontSize": webEngineSettings.fontSize(
+                QWebEngineSettings.DefaultFontSize),
+            "DefaultFixedFontSize": webEngineSettings.fontSize(
+                QWebEngineSettings.DefaultFixedFontSize),
+            "MinimumFontSize": webEngineSettings.fontSize(
+                QWebEngineSettings.MinimumFontSize),
+            "MinimumLogicalFontSize": webEngineSettings.fontSize(
+                QWebEngineSettings.MinimumLogicalFontSize),
+            
             "AutoLoadImages": webEngineSettings.testAttribute(
                 QWebEngineSettings.AutoLoadImages),
             "SaveUrlColor": QColor(184, 248, 169),
-##            "JavaEnabled":
-##            websettings.testAttribute(QWebSettings.JavaEnabled),
             "JavaScriptEnabled": webEngineSettings.testAttribute(
                 QWebEngineSettings.JavascriptEnabled),
             "JavaScriptCanOpenWindows": webEngineSettings.testAttribute(
@@ -1118,10 +1137,6 @@ class Prefs(object):
                 QWebEngineSettings.ScrollAnimatorEnabled),
             "ErrorPageEnabled": webEngineSettings.testAttribute(
                 QWebEngineSettings.ErrorPageEnabled),
-            "MinimumFontSize": webEngineSettings.fontSize(
-                QWebEngineSettings.MinimumFontSize),
-            "MinimumLogicalFontSize": webEngineSettings.fontSize(
-                QWebEngineSettings.MinimumLogicalFontSize),
         })
         
         cls.webEngineSettingsIntitialized = True
@@ -2766,11 +2781,13 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "OfflineWebApplicationCacheQuota", "CachePolicy",
 ##                 "AdBlockUpdatePeriod",
 ##                  ]:
-    elif key in ["StartupBehavior", "MinimumFontSize",
-                 "MinimumLogicalFontSize", "HistoryLimit",
+    elif key in ["StartupBehavior", "HistoryLimit",
                  "DownloadManagerRemovePolicy","SyncType", "SyncFtpPort",
                  "SyncFtpIdleTimeout", "SyncEncryptionKeyLength",
-                 "SearchLanguage", "WebInspectorPort"]:
+                 "SearchLanguage", "WebInspectorPort",
+                 "DefaultFontSize", "DefaultFixedFontSize",
+                 "MinimumFontSize", "MinimumLogicalFontSize",
+                 ]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["DiskCacheEnabled", "FilterTrackingCookies",
@@ -2785,7 +2802,7 @@ def getWebBrowser(key, prefClass=Prefs):
 ##                 "SiteSpecificQuirksEnabled",
 ##                 "ClickToFlashEnabled",
 ##                 ]:
-    elif key in ["SingleHelpWindow", "SaveGeometry", "JavaScriptEnabled",
+    elif key in ["SingleWebBrowserWindow", "SaveGeometry", "JavaScriptEnabled",
                  "JavaScriptCanOpenWindows", "JavaScriptCanAccessClipboard",
                  "AutoLoadImages", "LocalStorageEnabled",
                  "SpatialNavigationEnabled", "LinksIncludedInFocusChain",

@@ -823,6 +823,7 @@
     <Source>Preferences/ConfigurationPages/VcsPage.py</Source>
     <Source>Preferences/ConfigurationPages/ViewmanagerPage.py</Source>
     <Source>Preferences/ConfigurationPages/WebBrowserAppearancePage.py</Source>
+    <Source>Preferences/ConfigurationPages/WebBrowserPage.py</Source>
     <Source>Preferences/ConfigurationPages/__init__.py</Source>
     <Source>Preferences/MouseClickDialog.py</Source>
     <Source>Preferences/PreferencesLexer.py</Source>
@@ -1753,6 +1754,7 @@
     <Form>Preferences/ConfigurationPages/VcsPage.ui</Form>
     <Form>Preferences/ConfigurationPages/ViewmanagerPage.ui</Form>
     <Form>Preferences/ConfigurationPages/WebBrowserAppearancePage.ui</Form>
+    <Form>Preferences/ConfigurationPages/WebBrowserPage.ui</Form>
     <Form>Preferences/MouseClickDialog.ui</Form>
     <Form>Preferences/ProgramsDialog.ui</Form>
     <Form>Preferences/ShortcutDialog.ui</Form>

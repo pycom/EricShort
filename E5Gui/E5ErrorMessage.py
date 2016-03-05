@@ -44,7 +44,8 @@ class E5ErrorMessage(QErrorMessage):
             "QFont::",
             "QCocoaMenu::removeMenuItem",
             "QCocoaMenu::insertNative",
-            ",type id:"
+            ",type id:",
+            "Remote debugging server started successfully"
         ]
     
     def __filterMessage(self, message):

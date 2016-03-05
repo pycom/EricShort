@@ -421,6 +421,10 @@ class ConfigurationWidget(QWidget):
                 "webBrowserAppearancePage":
                 [self.tr("Appearance"), "preferences-styles.png",
                  "WebBrowserAppearancePage", None, None],
+                "webBrowserPage":
+                [self.tr("eric6 Web Browser"), "ericWeb.png",
+                 "WebBrowserPage", None, None],
+                
                 "helpFlashCookieManagerPage":
                 [self.tr("Flash Cookie Manager"),
                  "flashCookie16.png",

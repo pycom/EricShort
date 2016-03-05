@@ -72,7 +72,6 @@ class WebBrowserWindow(E5MainWindow):
     @signal zoomTextOnlyChanged(bool) emitted after the zoom text only setting
         was changed
     """
-##    zoomTextOnlyChanged = pyqtSignal(bool)
     webBrowserClosed = pyqtSignal()
     
     BrowserWindows = []
@@ -379,21 +378,33 @@ class WebBrowserWindow(E5MainWindow):
         """
         Private method to set the global web settings.
         """
-        standardFont = Preferences.getWebBrowser("StandardFont")
-        fixedFont = Preferences.getWebBrowser("FixedFont")
-        # TODO: Fonts: add support for other font types
-
         settings = QWebEngineSettings.globalSettings()
-##        settings.setAttribute(QWebSettings.DeveloperExtrasEnabled, True)
         
-        settings.setFontFamily(QWebEngineSettings.StandardFont,
-                               standardFont.family())
-        settings.setFontSize(QWebEngineSettings.DefaultFontSize,
-                             standardFont.pointSize())
-        settings.setFontFamily(QWebEngineSettings.FixedFont,
-                               fixedFont.family())
-        settings.setFontSize(QWebEngineSettings.DefaultFixedFontSize,
-                             fixedFont.pointSize())
+        settings.setFontFamily(
+            QWebEngineSettings.StandardFont,
+            Preferences.getWebBrowser("StandardFontFamily"))
+        settings.setFontFamily(
+            QWebEngineSettings.FixedFont,
+            Preferences.getWebBrowser("FixedFontFamily"))
+        settings.setFontFamily(
+            QWebEngineSettings.SerifFont,
+            Preferences.getWebBrowser("SerifFontFamily"))
+        settings.setFontFamily(
+            QWebEngineSettings.SansSerifFont,
+            Preferences.getWebBrowser("SansSerifFontFamily"))
+        settings.setFontFamily(
+            QWebEngineSettings.CursiveFont,
+            Preferences.getWebBrowser("CursiveFontFamily"))
+        settings.setFontFamily(
+            QWebEngineSettings.FantasyFont,
+            Preferences.getWebBrowser("FantasyFontFamily"))
+        
+        settings.setFontSize(
+            QWebEngineSettings.DefaultFontSize,
+            Preferences.getWebBrowser("DefaultFontSize"))
+        settings.setFontSize(
+            QWebEngineSettings.DefaultFixedFontSize,
+            Preferences.getWebBrowser("DefaultFixedFontSize"))
         settings.setFontSize(
             QWebEngineSettings.MinimumFontSize,
             Preferences.getWebBrowser("MinimumFontSize"))
@@ -407,6 +418,7 @@ class WebBrowserWindow(E5MainWindow):
         settings.setAttribute(
             QWebEngineSettings.AutoLoadImages,
             Preferences.getWebBrowser("AutoLoadImages"))
+        # TODO: Qt 5.6
 ##        settings.setAttribute(
 ##            QWebSettings.JavaEnabled,
 ##            Preferences.getWebBrowser("JavaEnabled"))
@@ -419,6 +431,7 @@ class WebBrowserWindow(E5MainWindow):
         settings.setAttribute(
             QWebEngineSettings.JavascriptCanAccessClipboard,
             Preferences.getWebBrowser("JavaScriptCanAccessClipboard"))
+        # TODO: Qt 5.6
 ##        settings.setAttribute(
 ##            QWebSettings.PluginsEnabled,
 ##            Preferences.getWebBrowser("PluginsEnabled"))
@@ -490,10 +503,6 @@ class WebBrowserWindow(E5MainWindow):
         settings.setAttribute(
             QWebEngineSettings.XSSAuditingEnabled,
             Preferences.getWebBrowser("XSSAuditingEnabled"))
-##        if hasattr(QWebSettings, "SiteSpecificQuirksEnabled"):
-##            settings.setAttribute(
-##                QWebSettings.SiteSpecificQuirksEnabled,
-##                Preferences.getWebBrowser("SiteSpecificQuirksEnabled"))
 ##        
 ##        QWebSecurityOrigin.addLocalScheme("eric")
         settings.setAttribute(
@@ -1154,25 +1163,6 @@ class WebBrowserWindow(E5MainWindow):
             self.zoomResetAct.triggered.connect(self.__zoomReset)
         self.__actions.append(self.zoomResetAct)
         
-##        if hasattr(QWebSettings, 'ZoomTextOnly'):
-##            self.zoomTextOnlyAct = E5Action(
-##                self.tr('Zoom text only'),
-##                self.tr('Zoom &text only'),
-##                0, 0, self, 'webbrowser_view_zoom_text_only')
-##            self.zoomTextOnlyAct.setCheckable(True)
-##            self.zoomTextOnlyAct.setStatusTip(self.tr(
-##                'Zoom text only; pictures remain constant'))
-##            self.zoomTextOnlyAct.setWhatsThis(self.tr(
-##                """<b>Zoom text only</b>"""
-##                """<p>Zoom text only; pictures remain constant.</p>"""
-##            ))
-##            if not self.__initShortcutsOnly:
-##                self.zoomTextOnlyAct.triggered[bool].connect(
-##                    self.__zoomTextOnly)
-##            self.__actions.append(self.zoomTextOnlyAct)
-##        else:
-##            self.zoomTextOnlyAct = None
-        
         self.pageSourceAct = E5Action(
             self.tr('Show page source'),
             self.tr('Show page source'),
@@ -1792,8 +1782,6 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.zoomInAct)
         menu.addAction(self.zoomResetAct)
         menu.addAction(self.zoomOutAct)
-##        if self.zoomTextOnlyAct is not None:
-##            menu.addAction(self.zoomTextOnlyAct)
         menu.addSeparator()
         menu.addAction(self.pageSourceAct)
         menu.addAction(self.fullScreenAct)
@@ -1893,6 +1881,7 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.siteInfoAct)
         menu.addSeparator()
         menu.addAction(self.synchronizationAct)
+        # TODO: Network Monitor
 ##        menu.addSeparator()
 ##        menu.addAction(self.toolsMonitorAct)
         
@@ -2483,8 +2472,10 @@ class WebBrowserWindow(E5MainWindow):
         
         self.downloadManager().shutdown()
         
+        # TODO: Network Monitor
 ##        self.__closeNetworkMonitor()
 ##        
+        # TODO: Cookies
 ##        self.cookieJar().close()
 ##        
         self.bookmarksToolBar.setModel(None)
@@ -2494,10 +2485,13 @@ class WebBrowserWindow(E5MainWindow):
         
         self.passwordManager().close()
         
+        # TODO: AdBlock
 ##        self.adBlockManager().close()
 ##        
+        # TODO: UserAgents
 ##        self.userAgentsManager().close()
 ##        
+        # TODO: SpeedDial
 ##        self.speedDial().close()
         
         self.syncManager().close()
@@ -2569,7 +2563,6 @@ class WebBrowserWindow(E5MainWindow):
         """
         Private slot called to handle the reload action.
         """
-##        self.currentBrowser().reload()
         self.currentBrowser().reloadBypassingCache()
     
     def __stopLoading(self):
@@ -2607,16 +2600,6 @@ class WebBrowserWindow(E5MainWindow):
         self.currentBrowser().zoomReset()
         self.__zoomWidget.setValue(self.currentBrowser().zoomValue())
     
-##    def __zoomTextOnly(self, textOnly):
-##        """
-##        Private slot called to handle the zoom text only action.
-##        
-##        @param textOnly flag indicating to zoom text only (boolean)
-##        """
-##        QWebSettings.globalSettings().setAttribute(
-##            QWebSettings.ZoomTextOnly, textOnly)
-##        self.zoomTextOnlyChanged.emit(textOnly)
-##    
     def __viewFullScreen(self):
         """
         Private slot called to toggle fullscreen mode.
@@ -2771,6 +2754,10 @@ class WebBrowserWindow(E5MainWindow):
         
         self.searchEdit.preferencesChanged()
         
+        if not self.isPrivate():
+            # TODO: Cache settings
+            pass
+            
         self.__virusTotal.preferencesChanged()
         if not Preferences.getWebBrowser("VirusTotalEnabled") or \
            Preferences.getWebBrowser("VirusTotalServiceKey") == "":
@@ -2805,6 +2792,7 @@ class WebBrowserWindow(E5MainWindow):
         dlg.exec_()
         self.networkManager().languagesChanged()
     
+    # TODO: Cookies
 ##    def __showCookiesConfiguration(self):
 ##        """
 ##        Private slot to configure the cookies handling.
@@ -2872,7 +2860,8 @@ class WebBrowserWindow(E5MainWindow):
             cls._networkManager = NetworkManager()
         
         return cls._networkManager
-        
+    
+    # TODO: Cookies
 ##    @classmethod
 ##    def cookieJar(cls):
 ##        """
@@ -2899,10 +2888,6 @@ class WebBrowserWindow(E5MainWindow):
         """
         if not self.__activating:
             self.__activating = True
-##            req = QNetworkRequest(url)
-##            req.setRawHeader(b"X-Eric6-UserLoadAction", b"1")
-##            self.currentBrowser().setSource(
-##                None, (req, QNetworkAccessManager.GetOperation, b""))
             self.currentBrowser().setUrl(url)
             self.__activating = False
         
@@ -3039,7 +3024,8 @@ class WebBrowserWindow(E5MainWindow):
         @return dictionary with tab id as key and host/namespace as value
         """
         return self.__tabWidget.getSourceFileList()
-        
+    
+    # TODO: QtHelp
 ##    def __manageQtHelpFilters(self):
 ##        """
 ##        Private slot to manage the QtHelp filters.
@@ -3319,7 +3305,8 @@ class WebBrowserWindow(E5MainWindow):
         
         dlg = PasswordsDialog(self)
         dlg.exec_()
-        
+    
+    # TODO: Certificates
 ##    def __showCertificatesDialog(self):
 ##        """
 ##        Private slot to show the certificates management dialog.
@@ -3329,12 +3316,14 @@ class WebBrowserWindow(E5MainWindow):
 ##        dlg = E5SslCertificatesDialog(self)
 ##        dlg.exec_()
 ##        
+    # TODO: AdBlock
 ##    def __showAdBlockDialog(self):
 ##        """
 ##        Private slot to show the AdBlock configuration dialog.
 ##        """
 ##        self.adBlockManager().showDialog()
 ##        
+    # TODO: Click2Flash
 ##    def __showClickToFlashDialog(self):
 ##        """
 ##        Private slot to open the ClickToFlash whitelist configuration dialog.
@@ -3368,7 +3357,8 @@ class WebBrowserWindow(E5MainWindow):
         
         dlg = ZoomValuesDialog(self)
         dlg.exec_()
-        
+    
+    # TODO: Network Monitor
 ##    def __showNetworkMonitor(self):
 ##        """
 ##        Private slot to show the network monitor dialog.
@@ -3383,6 +3373,7 @@ class WebBrowserWindow(E5MainWindow):
         """
         self.downloadManager().show()
         
+    # TODO: Network Monitor
 ##    def __closeNetworkMonitor(self):
 ##        """
 ##        Private slot to close the network monitor dialog.
@@ -3448,9 +3439,6 @@ class WebBrowserWindow(E5MainWindow):
         @param url URL to be opened (QUrl)
         @param title title of the bookmark (string)
         """
-##        req = QNetworkRequest(url)
-##        req.setRawHeader(b"X-Eric6-UserLoadAction", b"1")
-##        self.newTab(None, (req, QNetworkAccessManager.GetOperation, b""))
         self.newTab(url)
     
     @classmethod
@@ -3478,7 +3466,8 @@ class WebBrowserWindow(E5MainWindow):
             cls._passwordManager = PasswordManager()
         
         return cls._passwordManager
-        
+    
+    # TODO: AdBlock
 ##    @classmethod
 ##    def adBlockManager(cls):
 ##        """
@@ -4079,6 +4068,8 @@ class WebBrowserWindow(E5MainWindow):
                 cls._webProfile = QWebEngineProfile.defaultProfile()
             cls._webProfile.downloadRequested.connect(
                 cls.downloadRequested)
+            
+            # TODO: Cache settings
             
             # Setup QWebChannel user script
             script = QWebEngineScript()
