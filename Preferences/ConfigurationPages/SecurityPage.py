@@ -75,8 +75,9 @@ class SecurityPage(ConfigurationPageBase, Ui_SecurityPage):
                 self.dnsPrefetchCheckBox.setEnabled(False)
         # TODO: add config for default Mode
         else:
-            self.dnsPrefetchCheckBox.setEnabled(False)
-            self.dnsGroup.hide()
+            if self.__configDlg.isUsingWebEngine():
+                self.dnsPrefetchCheckBox.setEnabled(False)
+                self.dnsGroup.hide()
     
     def save(self):
         """

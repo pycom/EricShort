@@ -2012,6 +2012,7 @@
     <Other>eric6.appdata.xml</Other>
     <Other>eric6.desktop</Other>
     <Other>eric6.e4p</Other>
+    <Other>eric6_browser.desktop</Other>
     <Other>eric6_webbrowser.desktop</Other>
     <Other>eric6config.linux</Other>
     <Other>icons</Other>

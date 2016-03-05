@@ -1030,6 +1030,8 @@ class Prefs(object):
         "ShowPreview": True,
         "WebInspectorPort": 42024,
         "WebInspectorEnabled": False,
+        "DiskCacheEnabled": True,
+        "DiskCacheSize": 50,        # 50 MB
         # Grease Monkey
         "GreaseMonkeyDisabledScripts": [],
         # Downloads
@@ -2775,7 +2777,7 @@ def getWebBrowser(key, prefClass=Prefs):
 ##        if QWebSettings is None:
 ##            value = prefClass.helpDefaults[key]
 ##        return value
-##    elif key in ["DiskCacheSize", "AcceptCookies",
+##    elif key in ["AcceptCookies",
 ##                 "KeepCookiesUntil", "StartupBehavior",
 ##                 "OfflineStorageDatabaseQuota",
 ##                 "OfflineWebApplicationCacheQuota", "CachePolicy",
@@ -2787,7 +2789,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "SearchLanguage", "WebInspectorPort",
                  "DefaultFontSize", "DefaultFixedFontSize",
                  "MinimumFontSize", "MinimumLogicalFontSize",
-                 ]:
+                 "DiskCacheSize", ]:
         return int(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))
 ##    elif key in ["DiskCacheEnabled", "FilterTrackingCookies",
@@ -2813,7 +2815,7 @@ def getWebBrowser(key, prefClass=Prefs):
                  "SyncEnabled", "SyncBookmarks", "SyncHistory",
                  "SyncPasswords", "SyncUserAgents", "SyncSpeedDial",
                  "SyncEncryptData", "SyncEncryptPasswordsOnly",
-                 "ShowPreview", "WebInspectorEnabled",
+                 "ShowPreview", "WebInspectorEnabled", "DiskCacheEnabled",
                  ]:
         return toBool(prefClass.settings.value(
             "WebBrowser/" + key, prefClass.webBrowserDefaults[key]))

@@ -37,10 +37,16 @@ for arg in sys.argv[:]:
                           settingsDir)
         sys.argv.remove(arg)
 
-try:
-    from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
-except ImportError:
-    pass
+# TODO: adjust this to 5.6.0 when done
+from PyQt5.QtCore import qVersion
+if qVersion() < "5.5.0":
+    WEBENGINE_AVAILABLE = False
+else:
+    try:
+        from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
+        WEBENGINE_AVAILABLE = True
+    except ImportError:
+        WEBENGINE_AVAILABLE = False
 
 # make ThirdParty package available as a packages repository
 sys.path.insert(2, os.path.join(os.path.dirname(__file__),
@@ -59,7 +65,7 @@ def createMainWidget(argv):
     @return reference to the main widget (QWidget)
     """
     from Preferences.ConfigurationDialog import ConfigurationWindow
-    w = ConfigurationWindow()
+    w = ConfigurationWindow(webEngine=WEBENGINE_AVAILABLE)
     w.show()
     w.showConfigurationPageByName("empty")
     return w

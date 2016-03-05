@@ -90,6 +90,8 @@ class BookmarksToolBar(E5ModelToolBar):
                     self.tr("Open in New &Tab\tCtrl+LMB"),
                     self.__openBookmarkInNewTab)
                 menuAction.setData(v)
+                # TODO: Bookmarks: add open in new window
+                # TODO: Bookmarks: add open in private window
                 menu.addSeparator()
             
             menuAction = menu.addAction(

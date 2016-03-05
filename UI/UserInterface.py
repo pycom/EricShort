@@ -5229,8 +5229,13 @@ class UserInterface(E5MainWindow):
                 home = QUrl.fromLocalFile(home).toString()
         
         if WEBENGINE_AVAILABLE or WEBKIT_AVAILABLE:
-            if not (useSingle or Preferences.getHelp("SingleHelpWindow")) or \
-               self.helpWindow is None:
+            single = useSingle
+            if WEBENGINE_AVAILABLE:
+                single = single or \
+                    Preferences.getWebBrowser("SingleWebBrowserWindow")
+            elif WEBKIT_AVAILABLE:
+                single = single or Preferences.getHelp("SingleHelpWindow")
+            if not single or self.helpWindow is None:
                 if WEBENGINE_AVAILABLE:
                     from WebBrowser.WebBrowserWindow import WebBrowserWindow
                     help = WebBrowserWindow(home, '.', None, 'web_browser',
@@ -5246,10 +5251,11 @@ class UserInterface(E5MainWindow):
                 else:
                     help.showMaximized()
                 
-                if useSingle or Preferences.getHelp("SingleHelpWindow"):
+                if single:
                     self.helpWindow = help
                     try:
-                        self.helpWindow.webBrowserClosed.connect(self.__helpClosed)
+                        self.helpWindow.webBrowserClosed.connect(
+                            self.__helpClosed)
                     except AttributeError:
                         self.helpWindow.helpClosed.connect(self.__helpClosed)
                     self.preferencesChanged.connect(
@@ -5269,7 +5275,11 @@ class UserInterface(E5MainWindow):
         """
         Private slot to handle the helpClosed signal of the help window.
         """
-        if Preferences.getHelp("SingleHelpWindow"):
+        if WEBENGINE_AVAILABLE:
+            single = Preferences.getWebBrowser("SingleWebBrowserWindow")
+        elif WEBKIT_AVAILABLE:
+            single = Preferences.getHelp("SingleHelpWindow")
+        if single:
             self.preferencesChanged.disconnect(
                 self.helpWindow.preferencesChanged)
             self.masterPasswordChanged.disconnect(
@@ -5327,6 +5337,7 @@ class UserInterface(E5MainWindow):
         dlg = ConfigurationDialog(
             self, 'Configuration',
             expandedEntries=self.__expandedConfigurationEntries,
+            webEngine=WEBENGINE_AVAILABLE,
         )
         dlg.preferencesChanged.connect(self.__preferencesChanged)
         dlg.masterPasswordChanged.connect(self.__masterPasswordChanged)

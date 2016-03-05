@@ -462,38 +462,11 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0" colspan="3">
-       <layout class="QHBoxLayout" name="horizontalLayout_5">
-        <item>
-         <widget class="QCheckBox" name="diskCacheCheckBox">
-          <property name="text">
-           <string>Enable disk cache</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <spacer name="horizontalSpacer_7">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QPushButton" name="noCacheHostsButton">
-          <property name="toolTip">
-           <string>Press to edit the list of hosts exempted from caching</string>
-          </property>
-          <property name="text">
-           <string>Edit Exempted Hosts ...</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <widget class="QCheckBox" name="diskCacheCheckBox">
+        <property name="text">
+         <string>Enable disk cache</string>
+        </property>
+       </widget>
       </item>
       <item row="1" column="0">
        <widget class="QLabel" name="label_7">
@@ -723,7 +696,6 @@
   <tabstop>xssAuditingCheckBox</tabstop>
   <tabstop>expireHistory</tabstop>
   <tabstop>diskCacheCheckBox</tabstop>
-  <tabstop>noCacheHostsButton</tabstop>
   <tabstop>cacheSizeSpinBox</tabstop>
   <tabstop>languageCombo</tabstop>
   <tabstop>spatialCheckBox</tabstop>

@@ -115,6 +115,8 @@ def uninstallEric():
                      "/usr/share/appdata/eric6" + marker + ".appdata.xml",
                      "/usr/share/applications/eric6_webbrowser" + marker +
                      ".desktop",
+                     "/usr/share/applications/eric6_browser" + marker +
+                     ".desktop",
                      "/usr/share/pixmaps/eric" + marker + ".png",
                      "/usr/share/pixmaps/ericWeb" + marker + ".png"]:
             if os.path.exists(name):
@@ -132,7 +134,7 @@ def uninstallEric():
         "eric6_plugininstall", "eric6_pluginuninstall",
         "eric6_pluginrepository", "eric6_sqlbrowser",
         "eric6_webbrowser", "eric6_iconeditor",
-        "eric6_snap", "eric6_hexeditor",
+        "eric6_snap", "eric6_hexeditor", "eric6_browser",
     ]
     if includePythonVariant:
         marker = PythonMarkers[sys.version_info.major]

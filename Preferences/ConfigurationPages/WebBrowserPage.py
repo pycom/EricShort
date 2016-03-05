@@ -84,11 +84,10 @@ class WebBrowserPage(ConfigurationPageBase, Ui_WebBrowserPage):
 ##        self.sendRefererCheckBox.setChecked(
 ##            Preferences.getWebBrowser("SendReferer"))
         
-        # TODO: Cache
-##        self.diskCacheCheckBox.setChecked(
-##            Preferences.getWebBrowser("DiskCacheEnabled"))
-##        self.cacheSizeSpinBox.setValue(
-##            Preferences.getWebBrowser("DiskCacheSize"))
+        self.diskCacheCheckBox.setChecked(
+            Preferences.getWebBrowser("DiskCacheEnabled"))
+        self.cacheSizeSpinBox.setValue(
+            Preferences.getWebBrowser("DiskCacheSize"))
         
         self.startupCombo.setCurrentIndex(
             Preferences.getWebBrowser("StartupBehavior"))
@@ -153,7 +152,6 @@ class WebBrowserPage(ConfigurationPageBase, Ui_WebBrowserPage):
         self.doNotTrackCheckBox.hide()
         self.sendRefererCheckBox.hide()
         self.refererWhitelistButton.hide()
-        self.noCacheHostsButton.hide()
     
     def save(self):
         """
@@ -207,13 +205,12 @@ class WebBrowserPage(ConfigurationPageBase, Ui_WebBrowserPage):
 ##            "SendReferer",
 ##            self.sendRefererCheckBox.isChecked())
         
-        # TODO: Cache
-##        Preferences.setWebBrowser(
-##            "DiskCacheEnabled",
-##            self.diskCacheCheckBox.isChecked())
-##        Preferences.setWebBrowser(
-##            "DiskCacheSize",
-##            self.cacheSizeSpinBox.value())
+        Preferences.setWebBrowser(
+            "DiskCacheEnabled",
+            self.diskCacheCheckBox.isChecked())
+        Preferences.setWebBrowser(
+            "DiskCacheSize",
+            self.cacheSizeSpinBox.value())
         
         Preferences.setWebBrowser(
             "StartupBehavior",
@@ -306,16 +303,6 @@ class WebBrowserPage(ConfigurationPageBase, Ui_WebBrowserPage):
 ##        from Helpviewer.Network.SendRefererWhitelistDialog import \
 ##            SendRefererWhitelistDialog
 ##        SendRefererWhitelistDialog(self).exec_()
-    
-    # TODO: Cache
-##    @pyqtSlot()
-##    def on_noCacheHostsButton_clicked(self):
-##        """
-##        Private slot to edit the list of hosts exempted from caching.
-##        """
-##        from Helpviewer.Network.NoCacheHostsDialog import \
-##            NoCacheHostsDialog
-##        NoCacheHostsDialog(self).exec_()
 
 
 def create(dlg):

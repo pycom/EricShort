@@ -511,7 +511,9 @@ def cleanUp():
         for name in ["/usr/share/applications/eric6" + marker + ".desktop",
                      "/usr/share/appdata/eric6" + marker + ".appdata.xml",
                      "/usr/share/applications/eric6_webbrowser" + marker +
-                     ".desktop"]:
+                     ".desktop",
+                     "/usr/share/applications/eric6_browser" + marker +
+                     ".desktop",]:
             if os.path.exists(name):
                 os.remove(name)
     
@@ -527,7 +529,7 @@ def cleanUp():
         "eric6_plugininstall", "eric6_pluginuninstall",
         "eric6_pluginrepository", "eric6_sqlbrowser",
         "eric6_webbrowser", "eric6_iconeditor",
-        "eric6_snap", "eric6_hexeditor",
+        "eric6_snap", "eric6_hexeditor", "eric6_browser",
     ]
     if includePythonVariant:
         marker = PythonMarkers[sys.version_info.major]
@@ -637,7 +639,7 @@ def installEric():
                  "eric6_qregularexpression", "eric6_re", "eric6_snap",
                  "eric6_sqlbrowser", "eric6_tray", "eric6_trpreviewer",
                  "eric6_uipreviewer", "eric6_unittest", "eric6_webbrowser",
-                 "eric6"]:
+                 "eric6_browser", "eric6"]:
         wnames.append(createPyWrapper(cfg['ericDir'], name))
     
     # set install prefix, if not None
@@ -814,6 +816,10 @@ def installEric():
                 os.path.join(sourceDir, "eric6_webbrowser.desktop"),
                 os.path.join(dst, "eric6_webbrowser" + marker + ".desktop"),
                 marker)
+            copyDesktopFile(
+                os.path.join(sourceDir, "eric6_browser.desktop"),
+                os.path.join(dst, "eric6_browser" + marker + ".desktop"),
+                marker)
             dst = os.path.normpath(
                 os.path.join(distDir, "usr/share/appdata"))
             if not os.path.exists(dst):
@@ -841,6 +847,11 @@ def installEric():
             copyDesktopFile(
                 os.path.join(sourceDir, "eric6_webbrowser.desktop"),
                 "/usr/share/applications/eric6_webbrowser" + marker +
+                ".desktop",
+                marker)
+            copyDesktopFile(
+                os.path.join(sourceDir, "eric6_browser.desktop"),
+                "/usr/share/applications/eric6_browser" + marker +
                 ".desktop",
                 marker)
     

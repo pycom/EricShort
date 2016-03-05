@@ -82,7 +82,7 @@ class ConfigurationWidget(QWidget):
     WebBrowserMode = 4
     
     def __init__(self, parent=None, fromEric=True, displayMode=DefaultMode,
-                 expandedEntries=[]):
+                 expandedEntries=[], webEngine=False):
         """
         Constructor
         
@@ -95,6 +95,7 @@ class ConfigurationWidget(QWidget):
         @exception RuntimeError raised to indicate an invalid dialog mode
         @keyparam expandedEntries list of entries to be shown expanded
             (list of strings)
+        @keyparam webEngine flag indicating QtWebEngine is used (bool)
         """
         assert displayMode in (
             ConfigurationWidget.DefaultMode,
@@ -107,6 +108,7 @@ class ConfigurationWidget(QWidget):
         super(ConfigurationWidget, self).__init__(parent)
         self.fromEric = fromEric
         self.displayMode = displayMode
+        self.__webEngine = webEngine
         
         self.__setupUi()
         
@@ -319,25 +321,49 @@ class ConfigurationWidget(QWidget):
                 [self.tr("Viewmanager"), "preferences-viewmanager.png",
                  "ViewmanagerPage", "0interfacePage", None],
             }
-            try:
-                from PyQt5 import QtWebKit      # __IGNORE_WARNING__
+            if webEngine:
                 self.configItems.update({
-                    "helpAppearancePage":
+                    "0webBrowserPage":
+                    [self.tr("Web Browser"), "ericWeb.png",
+                     None, None, None],
+                    "webBrowserAppearancePage":
                     [self.tr("Appearance"), "preferences-styles.png",
-                     "HelpAppearancePage", "0helpPage", None],
+                     "WebBrowserAppearancePage", "0webBrowserPage", None],
+                    "webBrowserPage":
+                    [self.tr("eric6 Web Browser"), "ericWeb.png",
+                     "WebBrowserPage", "0webBrowserPage", None],
                     "helpFlashCookieManagerPage":
                     [self.tr("Flash Cookie Manager"),
                      "flashCookie16.png",
-                     "HelpFlashCookieManagerPage", "0helpPage", None],
+                     "HelpFlashCookieManagerPage", "0webBrowserPage", None],
                     "helpVirusTotalPage":
                     [self.tr("VirusTotal Interface"), "virustotal.png",
-                     "HelpVirusTotalPage", "0helpPage", None],
-                    "helpWebBrowserPage":
-                    [self.tr("eric6 Web Browser"), "ericWeb.png",
-                     "HelpWebBrowserPage", "0helpPage", None],
+                     "HelpVirusTotalPage", "0webBrowserPage", None],
                 })
-            except ImportError:
-                pass
+            else:
+                try:
+                    from PyQt5 import QtWebKit      # __IGNORE_WARNING__
+                    self.configItems.update({
+                        "0helpBrowserPage":
+                        [self.tr("Web Browser"), "ericWeb.png",
+                         None, None, None],
+                        "helpAppearancePage":
+                        [self.tr("Appearance"), "preferences-styles.png",
+                         "HelpAppearancePage", "0helpBrowserPage", None],
+                        "helpWebBrowserPage":
+                        [self.tr("eric6 Web Browser"), "ericWeb.png",
+                         "HelpWebBrowserPage", "0helpBrowserPage", None],
+                        "helpFlashCookieManagerPage":
+                        [self.tr("Flash Cookie Manager"),
+                         "flashCookie16.png",
+                         "HelpFlashCookieManagerPage", "0helpBrowserPage",
+                         None],
+                        "helpVirusTotalPage":
+                        [self.tr("VirusTotal Interface"), "virustotal.png",
+                         "HelpVirusTotalPage", "0helpBrowserPage", None],
+                    })
+                except ImportError:
+                    pass
             
             self.configItems.update(
                 e5App().getObject("PluginManager").getPluginConfigData())
@@ -363,30 +389,27 @@ class ConfigurationWidget(QWidget):
                 [self.tr("Security"), "preferences-security.png",
                  "SecurityPage", None, None],
                 
-                "0helpPage":
-                [self.tr("Help"), "preferences-help.png",
-                 None, None, None],
                 "helpDocumentationPage":
                 [self.tr("Help Documentation"),
                  "preferences-helpdocumentation.png",
-                 "HelpDocumentationPage", "0helpPage", None],
+                 "HelpDocumentationPage", None, None],
             }
             try:
                 from PyQt5 import QtWebKit      # __IGNORE_WARNING__
                 self.configItems.update({
                     "helpAppearancePage":
                     [self.tr("Appearance"), "preferences-styles.png",
-                     "HelpAppearancePage", "0helpPage", None],
+                     "HelpAppearancePage", None, None],
                     "helpFlashCookieManagerPage":
                     [self.tr("Flash Cookie Manager"),
                      "flashCookie16.png",
-                     "HelpFlashCookieManagerPage", "0helpPage", None],
+                     "HelpFlashCookieManagerPage", None, None],
                     "helpVirusTotalPage":
                     [self.tr("VirusTotal Interface"), "virustotal.png",
-                     "HelpVirusTotalPage", "0helpPage", None],
+                     "HelpVirusTotalPage", None, None],
                     "helpWebBrowserPage":
                     [self.tr("eric6 Web Browser"), "ericWeb.png",
-                     "HelpWebBrowserPage", "0helpPage", None],
+                     "HelpWebBrowserPage", None, None],
                 })
             except ImportError:
                 pass
@@ -885,6 +908,13 @@ class ConfigurationWidget(QWidget):
         pageName = item.data(0, Qt.UserRole)
         if pageName not in self.__expandedEntries:
             self.__expandedEntries.append(pageName)
+    
+    def isUsingWebEngine(self):
+        """
+        Public method to get an indication, if QtWebEngine is being used.
+        """
+        return self.__webEngine or \
+            self.displayMode == ConfigurationWidget.WebBrowserMode
 
 
 class ConfigurationDialog(QDialog):
@@ -906,7 +936,7 @@ class ConfigurationDialog(QDialog):
     
     def __init__(self, parent=None, name=None, modal=False,
                  fromEric=True, displayMode=ConfigurationWidget.DefaultMode,
-                 expandedEntries=[]):
+                 expandedEntries=[], webEngine=False):
         """
         Constructor
         
@@ -920,6 +950,7 @@ class ConfigurationDialog(QDialog):
              WebBrowserMode)
         @keyparam expandedEntries list of entries to be shown expanded
             (list of strings)
+        @keyparam webEngine flag indicating QtWebEngine is used (bool)
         """
         super(ConfigurationDialog, self).__init__(parent)
         if name:
@@ -933,7 +964,8 @@ class ConfigurationDialog(QDialog):
         
         self.cw = ConfigurationWidget(self, fromEric=fromEric,
                                       displayMode=displayMode,
-                                      expandedEntries=expandedEntries)
+                                      expandedEntries=expandedEntries,
+                                      webEngine=webEngine)
         size = self.cw.size()
         self.layout.addWidget(self.cw)
         self.resize(size)
@@ -1001,15 +1033,17 @@ class ConfigurationWindow(E5MainWindow):
     """
     Main window class for the standalone dialog.
     """
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, webEngine=False):
         """
         Constructor
         
         @param parent reference to the parent widget (QWidget)
+        @keyparam webEngine flag indicating QtWebEngine is used (bool)
         """
         super(ConfigurationWindow, self).__init__(parent)
         
-        self.cw = ConfigurationWidget(self, fromEric=False)
+        self.cw = ConfigurationWidget(self, fromEric=False,
+                                      webEngine=webEngine)
         size = self.cw.size()
         self.setCentralWidget(self.cw)
         self.resize(size)

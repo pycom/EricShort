@@ -2755,8 +2755,14 @@ class WebBrowserWindow(E5MainWindow):
         self.searchEdit.preferencesChanged()
         
         if not self.isPrivate():
-            # TODO: Cache settings
-            pass
+            profile = self.webProfile()
+            if Preferences.getWebBrowser("DiskCacheEnabled"):
+                profile.setHttpCacheType(QWebEngineProfile.DiskHttpCache)
+                profile.setHttpCacheMaximumSize(
+                    Preferences.getWebBrowser("DiskCacheSize") * 1024 * 1024)
+            else:
+                profile.setHttpCacheType(QWebEngineProfile.MemoryHttpCache)
+                profile.setHttpCacheMaximumSize(0)
             
         self.__virusTotal.preferencesChanged()
         if not Preferences.getWebBrowser("VirusTotalEnabled") or \
@@ -3250,6 +3256,7 @@ class WebBrowserWindow(E5MainWindow):
             if history:
                 self.historyManager().clear(historyPeriod)
                 self.__tabWidget.clearClosedTabsList()
+                self.webProfile().clearAllVisitedLinks()
             if searches:
                 self.searchEdit.clear()
             if downloads:
@@ -4069,7 +4076,28 @@ class WebBrowserWindow(E5MainWindow):
             cls._webProfile.downloadRequested.connect(
                 cls.downloadRequested)
             
-            # TODO: Cache settings
+            # add the default user agent string
+            userAgent = cls._webProfile.httpUserAgent()
+            cls._webProfile.defaultUserAgent = userAgent
+            
+            if not private:
+                if Preferences.getWebBrowser("DiskCacheEnabled"):
+                    cls._webProfile.setHttpCacheType(
+                        QWebEngineProfile.DiskHttpCache)
+                    cls._webProfile.setHttpCacheMaximumSize(
+                        Preferences.getWebBrowser("DiskCacheSize")
+                        * 1024 * 1024)
+                    cls._webProfile.setCachePath(os.path.join(
+                        Utilities.getConfigDir(), "web_browser"))
+                else:
+                    cls._webProfile.setHttpCacheType(
+                        QWebEngineProfile.MemoryHttpCache)
+                    cls._webProfile.setHttpCacheMaximumSize(0)
+                cls._webProfile.setPersistentStoragePath(os.path.join(
+                    Utilities.getConfigDir(), "web_browser",
+                    "persistentstorage"))
+                cls._webProfile.setPersistentCookiesPolicy(
+                    QWebEngineProfile.AllowPersistentCookies)
             
             # Setup QWebChannel user script
             script = QWebEngineScript()
