@@ -13,7 +13,6 @@ from PyQt5.QtCore import pyqtSignal, pyqtSlot, QObject, QUrl, QRegExp, \
     QByteArray,  QCryptographicHash
 from PyQt5.QtWebEngineWidgets import QWebEngineScript
 
-from .GreaseMonkeyUrlMatcher import GreaseMonkeyUrlMatcher
 from .GreaseMonkeyJavaScript import bootstrap_js, values_js
 
 from ..Tools.DelayedFileWatcher import DelayedFileWatcher
@@ -25,6 +24,7 @@ class GreaseMonkeyScript(QObject):
     """
     DocumentStart = 0
     DocumentEnd = 1
+    DocumentIdle = 2
     
     scriptChanged = pyqtSignal()
     
@@ -56,7 +56,6 @@ class GreaseMonkeyScript(QObject):
         self.__fileName = path
         self.__enabled = True
         self.__valid = False
-        self.__metaData = ""
         self.__noFrames = False
         
         self.__parseScript()
@@ -167,10 +166,7 @@ class GreaseMonkeyScript(QObject):
         
         @return list of included URLs (list of strings)
         """
-        list = []
-        for matcher in self.__include:
-            list.append(matcher.pattern())
-        return list
+        return self.__include[:]
     
     def exclude(self):
         """
@@ -178,10 +174,7 @@ class GreaseMonkeyScript(QObject):
         
         @return list of excluded URLs (list of strings)
         """
-        list = []
-        for matcher in self.__exclude:
-            list.append(matcher.pattern())
-        return list
+        return self.__exclude[:]
     
     def script(self):
         """
@@ -191,15 +184,6 @@ class GreaseMonkeyScript(QObject):
         """
         return self.__script
     
-    def metaData(self):
-        """
-        Public method to get the script meta information.
-        
-        @return script meta information
-        @rtype str
-        """
-        return self.__metaData
-    
     def fileName(self):
         """
         Public method to get the path of the Javascript file.
@@ -207,26 +191,6 @@ class GreaseMonkeyScript(QObject):
         @return path path of the Javascript file (string)
         """
         return self.__fileName
-    
-    def match(self, urlString):
-        """
-        Public method to check, if the script matches the given URL.
-        
-        @param urlString URL (string)
-        @return flag indicating a match (boolean)
-        """
-        if not self.isEnabled():
-            return False
-        
-        for matcher in self.__exclude:
-            if matcher.match(urlString):
-                return False
-        
-        for matcher in self.__include:
-            if matcher.match(urlString):
-                return True
-        
-        return False
     
     @pyqtSlot(str)
     def __watchedFileChanged(self, fileName):
@@ -266,7 +230,6 @@ class GreaseMonkeyScript(QObject):
         self.__script = ""
         self.__enabled = True
         self.__valid = False
-        self.__metaData = ""
         self.__noFrames = False
         
         try:
@@ -325,10 +288,10 @@ class GreaseMonkeyScript(QObject):
 ##                self.__downloadUrl = QUrl(value)
 ##            
             elif key in ["@include", "@match"]:
-                self.__include.append(GreaseMonkeyUrlMatcher(value))
+                self.__include.append(value)
             
             elif key in ["@exclude", "@exclude_match"]:
-                self.__exclude.append(GreaseMonkeyUrlMatcher(value))
+                self.__exclude.append(value)
             
             elif key == "@require":
                 requireList.append(value)
@@ -338,6 +301,8 @@ class GreaseMonkeyScript(QObject):
                     self.__startAt = GreaseMonkeyScript.DocumentEnd
                 elif value == "document-start":
                     self.__startAt = GreaseMonkeyScript.DocumentStart
+                elif value == "document-idle":
+                    self.__startAt = GreaseMonkeyScript.DocumentIdle
             
             elif key == "@downloadURL" and self.__downloadUrl.isEmpty():
                 self.__downloadUrl = QUrl(value)
@@ -346,19 +311,37 @@ class GreaseMonkeyScript(QObject):
                 self.__updateUrl = QUrl(value)
         
         if not self.__include:
-            self.__include.append(GreaseMonkeyUrlMatcher("*"))
-        
-        marker = "// ==/UserScript=="
-        index = fileData.find(marker) + len(marker)
-        self.__metaData = fileData[:index]
-        script = fileData[index:].strip()
+            self.__include.append("*")
         
         nspace = bytes(QCryptographicHash.hash(
             QByteArray(self.fullName().encode("utf-8")),
             QCryptographicHash.Md4).toHex()).decode("ascii")
         valuesScript = values_js.format(nspace)
-        self.__script = "(function(){{{0}\n{1}\n{2}\n}})();".format(
-            valuesScript, self.__manager.requireScripts(requireList), script
+        runCheck = """
+            for (var value of {0}) {{
+                var re = new RegExp(value);
+                if (re.test(window.location.href)) {{
+                    return;
+                }}
+            }}
+            __eric_includes = false;
+            for (var value of {1}) {{
+                var re = new RegExp(value);
+                if (re.test(window.location.href)) {{
+                    __eric_includes = true;
+                    break;
+                }}
+            }}
+            if (!__eric_includes) {{
+                return;
+            }}
+            delete __eric_includes;""".format(
+                self.__toJavaScriptList(self.__exclude[:]),
+                self.__toJavaScriptList(self.__include[:])
+            )
+        self.__script = "(function(){{{0}\n{1}\n{2}\n{3}\n}})();".format(
+            runCheck, valuesScript,
+            self.__manager.requireScripts(requireList), fileData
         )
         self.__valid = True
     
@@ -369,15 +352,44 @@ class GreaseMonkeyScript(QObject):
         @return prepared script object
         @rtype QWebEngineScript
         """
+        if self.startAt() == GreaseMonkeyScript.DocumentStart:
+            injectionPoint = QWebEngineScript.DocumentCreation
+        elif self.startAt() == GreaseMonkeyScript.DocumentEnd:
+            injectionPoint = QWebEngineScript.DocumentReady
+        elif self.startAt() == GreaseMonkeyScript.DocumentIdle:
+            injectionPoint = QWebEngineScript.Deferred
+        else:
+            raise ValueError("Wrong script start point.")
+        
         script = QWebEngineScript()
         script.setName(self.fullName())
-        if self.startAt() == GreaseMonkeyScript.DocumentStart:
-            script.setInjectionPoint(QWebEngineScript.DocumentCreation)
-        else:
-            script.setInjectionPoint(QWebEngineScript.DocumentReady)
+        script.setInjectionPoint(injectionPoint)
         script.setWorldId(QWebEngineScript.MainWorld)
         script.setRunsOnSubFrames(not self.__noFrames)
-        script.setSourceCode("{0}\n{1}\n{2}".format(
-            self.__metaData, bootstrap_js, self.__script
+        script.setSourceCode("{0}\n{1}".format(
+            bootstrap_js, self.__script
         ))
+        return script
+    
+    def __toJavaScriptList(self, patterns):
+        """
+        Private method to convert a list of str to a string containing a valid
+        JavaScript list definition.
+        
+        @param patterns list of match patterns
+        @type list of str
+        @return JavaScript script containing the list
+        @rtype str
+        """
+        patternList = []
+        for pattern in patterns:
+            if pattern.startswith("/") and pattern.endswith("/") and \
+                    len(pattern) > 1:
+                pattern = pattern[1:-1]
+            else:
+                pattern = pattern.replace(".", "\\.").replace("*", ".*")
+            pattern = "'{0}'".format(pattern)
+            patternList.append(pattern)
+        
+        script = "[{0}]".format(",".join(patternList))
         return script

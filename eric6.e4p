@@ -1323,7 +1323,6 @@
     <Source>WebBrowser/GreaseMonkey/GreaseMonkeyManager.py</Source>
     <Source>WebBrowser/GreaseMonkey/GreaseMonkeyScript.py</Source>
     <Source>WebBrowser/GreaseMonkey/GreaseMonkeyUrlInterceptor.py</Source>
-    <Source>WebBrowser/GreaseMonkey/GreaseMonkeyUrlMatcher.py</Source>
     <Source>WebBrowser/GreaseMonkey/__init__.py</Source>
     <Source>WebBrowser/History/HistoryCompleter.py</Source>
     <Source>WebBrowser/History/HistoryDialog.py</Source>
