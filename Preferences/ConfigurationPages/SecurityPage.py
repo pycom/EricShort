@@ -73,7 +73,6 @@ class SecurityPage(ConfigurationPageBase, Ui_SecurityPage):
                         Preferences.getHelp("DnsPrefetchEnabled"))
             except ImportError:
                 self.dnsPrefetchCheckBox.setEnabled(False)
-        # TODO: add config for default Mode
         else:
             if self.__configDlg.isUsingWebEngine():
                 self.dnsPrefetchCheckBox.setEnabled(False)

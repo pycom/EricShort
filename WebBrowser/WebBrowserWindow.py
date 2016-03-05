@@ -1723,8 +1723,8 @@ class WebBrowserWindow(E5MainWindow):
         self.forwardAct.setEnabled(False)
         
         # now read the keyboard shortcuts for the actions
-        # TODO: shortcuts: change this to webBrowser
-        Shortcuts.readShortcuts(helpViewer=self)
+        Shortcuts.readShortcuts(
+            helpViewer=self, helpViewerCategory="webBrowser")
     
     def getActions(self):
         """

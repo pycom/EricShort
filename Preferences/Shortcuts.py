@@ -37,7 +37,8 @@ def __readShortcut(act, category, prefClass):
             act.setAlternateShortcut(QKeySequence(accel), removeEmpty=True)
 
 
-def readShortcuts(prefClass=Prefs, helpViewer=None, pluginName=None):
+def readShortcuts(prefClass=Prefs, helpViewer=None, pluginName=None,
+                  helpViewerCategory=""):
     """
     Module function to read the keyboard shortcuts for the defined QActions.
     
@@ -45,6 +46,7 @@ def readShortcuts(prefClass=Prefs, helpViewer=None, pluginName=None):
     @keyparam helpViewer reference to the help window object
     @keyparam pluginName name of the plugin for which to load shortcuts
         (string)
+    @keyparam helpViewerCategory name of the help viewer category (string)
     """
     if helpViewer is None and pluginName is None:
         for act in e5App().getObject("Project").getActions():
@@ -92,8 +94,10 @@ def readShortcuts(prefClass=Prefs, helpViewer=None, pluginName=None):
                     __readShortcut(act, category, prefClass)
     
     if helpViewer is not None:
+        if not helpViewerCategory:
+            helpViewerCategory = "HelpViewer"
         for act in helpViewer.getActions():
-            __readShortcut(act, "HelpViewer", prefClass)
+            __readShortcut(act, helpViewerCategory, prefClass)
     
     if pluginName is not None:
         try:

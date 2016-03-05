@@ -123,7 +123,6 @@ class ConfigurationWidget(QWidget):
                 e5App().registerObject("PluginManager", self.pluginManager)
         
         if displayMode == ConfigurationWidget.DefaultMode:
-            # TODO: add QtWebEngine based browser config pages to default mode
             self.configItems = {
                 # key : [display string, pixmap name, dialog module name or
                 #        page creation function, parent key,
