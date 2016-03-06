@@ -1682,6 +1682,15 @@ def generateVersionInfo(linesep='\n'):
         qVersion(), linesep, PYQT_VERSION_STR, linesep)
     info += "  sip {0}{1}  QScintilla {2}{3}".format(
         sip_version_str, linesep, QSCINTILLA_VERSION_STR, linesep)
+    # TODO: adjust this to 5.6.0 when done
+    if qVersion() >= "5.5.0":
+        try:
+            from PyQt5 import QtWebEngineWidgets    # __IGNORE_WARNING__
+            from WebBrowser.Tools import WebBrowserTools
+            chromeVersion = WebBrowserTools.getWebEngineVersions()[0]
+            info += "  WebEngine {0}{1}".format(chromeVersion, linesep)
+        except ImportError:
+            pass
     try:
         from PyQt5.QtWebKit import qWebKitVersion
         info += "  WebKit {0}{1}".format(qWebKitVersion(), linesep)
