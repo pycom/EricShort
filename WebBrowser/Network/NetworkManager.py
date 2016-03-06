@@ -102,6 +102,15 @@ class NetworkManager(QNetworkAccessManager):
         
         self.__loaded = True
     
+    def shutdown(self):
+        """
+        Public method to shut down the network manager.
+        """
+        self.__saveTimer.saveIfNeccessary()
+        self.__loaded = False
+        self.__temporarilyIgnoredSslErrors = {}
+        self.__permanentlyIgnoredSslErrors = {}
+    
     def showSslErrorExceptionsDialog(self):
         """
         Public method to show the SSL error exceptions dialog.
@@ -122,6 +131,7 @@ class NetworkManager(QNetworkAccessManager):
         
         self.__permanentlyIgnoredSslErrors = {}
         self.changed.emit()
+        self.__saveTimer.saveIfNeccessary()
     
     def certificateError(self, error, view):
         """

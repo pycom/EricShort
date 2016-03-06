@@ -1511,6 +1511,23 @@ class WebBrowserWindow(E5MainWindow):
             self.clearIconsAct.triggered.connect(self.__clearIconsDatabase)
         self.__actions.append(self.clearIconsAct)
         
+        self.manageIconsAct = E5Action(
+            self.tr('Manage saved Favicons'),
+            UI.PixmapCache.getIcon("icons.png"),
+            self.tr('Manage saved Favicons'),
+            0, 0,
+            self, 'webbrowser_manage_icons_db')
+        self.manageIconsAct.setStatusTip(self.tr(
+            'Show a dialog to manage the saved favicons'))
+        self.manageIconsAct.setWhatsThis(self.tr(
+            """<b>Manage saved Favicons</b>"""
+            """<p>This shows a dialog to manage the saved favicons of"""
+            """ previously visited URLs.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.manageIconsAct.triggered.connect(self.__showWebIconsDialog)
+        self.__actions.append(self.manageIconsAct)
+        
         self.searchEnginesAct = E5Action(
             self.tr('Configure Search Engines'),
             self.tr('Configure Search &Engines...'),
@@ -1871,6 +1888,7 @@ class WebBrowserWindow(E5MainWindow):
         menu.addAction(self.certificateErrorsAct)
         menu.addSeparator()
         menu.addAction(self.zoomValuesAct)
+        menu.addAction(self.manageIconsAct)
         menu.addSeparator()
 ##        menu.addAction(self.adblockAct)
 ##        menu.addAction(self.flashblockAct)
@@ -2557,6 +2575,8 @@ class WebBrowserWindow(E5MainWindow):
         except ValueError:
             pass
         
+        self.networkManager().shutdown()
+        
         if not self.__fromEric:
             Preferences.syncPreferences()
         
@@ -2903,9 +2923,15 @@ class WebBrowserWindow(E5MainWindow):
 ##        
     def __clearIconsDatabase(self):
         """
-        Private slot to clear the icons databse.
+        Private slot to clear the favicons databse.
         """
         WebIconProvider.instance().clear()
+    
+    def __showWebIconsDialog(self):
+        """
+        Private slot to show a dialog to manage the favicons database.
+        """
+        WebIconProvider.instance().showWebIconDialog()
         
     @pyqtSlot(QUrl)
     def __linkActivated(self, url):

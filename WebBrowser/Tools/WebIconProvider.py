@@ -15,6 +15,7 @@ import os
 from PyQt5.QtCore import pyqtSignal, QObject, QByteArray, QBuffer, QIODevice, \
     QUrl
 from PyQt5.QtGui import QIcon, QPixmap, QImage
+from PyQt5.QtWidgets import QDialog
 
 from Utilities.AutoSaver import AutoSaver
 
@@ -107,7 +108,8 @@ class WebIconProvider(QObject):
         if not self.__loaded:
             return
         
-        if self.__iconDatabasePath:
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        if not WebBrowserWindow.isPrivate() and bool(self.__iconDatabasePath):
             db = {}
             for url, icon in self.__iconsDB.items():
                 ba = QByteArray()
@@ -198,6 +200,24 @@ class WebIconProvider(QObject):
         self.__iconsDB = {}
         self.changed.emit()
         self.__saveTimer.saveIfNeccessary()
+    
+    def showWebIconDialog(self):
+        """
+        Public method to show a dialog to manage the Favicons.
+        """
+        self.load()
+        
+        from .WebIconDialog import WebIconDialog
+        dlg = WebIconDialog(self.__iconsDB)
+        if dlg.exec_() == QDialog.Accepted:
+            changed = False
+            urls = dlg.getUrls()
+            for url in list(self.__iconsDB.keys())[:]:
+                if url not in urls:
+                    del self.__iconsDB[url]
+                    changed = True
+            if changed:
+                self.changed.emit()
 
 
 __WebIconProvider = None

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SslErrorExceptionsDialog</class>
- <widget class="QDialog" name="SslErrorExceptionsDialog">
+ <class>WebIconDialog</class>
+ <widget class="QDialog" name="WebIconDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>751</width>
-    <height>513</height>
+    <width>550</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SSL Error Exceptions</string>
+   <string>Favicons</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>
@@ -20,7 +20,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0" rowspan="3">
-      <widget class="QTreeWidget" name="errorsTree">
+      <widget class="QTreeWidget" name="iconsList">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
@@ -33,17 +33,12 @@
        <property name="sortingEnabled">
         <bool>true</bool>
        </property>
-       <property name="allColumnsShowFocus">
-        <bool>true</bool>
+       <property name="headerHidden">
+        <bool>false</bool>
        </property>
        <column>
         <property name="text">
-         <string>Code</string>
-        </property>
-       </column>
-       <column>
-        <property name="text">
-         <string>Error Description</string>
+         <string>URL</string>
         </property>
        </column>
       </widget>
@@ -76,7 +71,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>128</height>
+         <height>40</height>
         </size>
        </property>
       </spacer>
@@ -100,32 +95,32 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SslErrorExceptionsDialog</receiver>
+   <receiver>WebIconDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>388</x>
-     <y>385</y>
+     <x>228</x>
+     <y>581</y>
     </hint>
     <hint type="destinationlabel">
-     <x>399</x>
-     <y>319</y>
+     <x>157</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SslErrorExceptionsDialog</receiver>
+   <receiver>WebIconDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>349</x>
-     <y>391</y>
+     <x>296</x>
+     <y>587</y>
     </hint>
     <hint type="destinationlabel">
-     <x>356</x>
-     <y>286</y>
+     <x>286</x>
+     <y>274</y>
     </hint>
    </hints>
   </connection>

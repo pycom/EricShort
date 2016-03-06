@@ -9,7 +9,7 @@ Module implementing a dialog to edit the SSL error exceptions.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot, QPoint
+from PyQt5.QtCore import pyqtSlot, Qt, QPoint
 from PyQt5.QtWidgets import QDialog, QTreeWidgetItem, QMenu
 from PyQt5.QtWebEngineWidgets import QWebEngineCertificateError
 
@@ -83,6 +83,7 @@ class SslErrorExceptionsDialog(QDialog, Ui_SslErrorExceptionsDialog):
         self.errorsTree.expandAll()
         for i in range(self.errorsTree.columnCount()):
             self.errorsTree.resizeColumnToContents(i)
+        self.errorsTree.sortItems(0, Qt.AscendingOrder)
         
         self.__setRemoveButtons()
     
@@ -139,6 +140,13 @@ class SslErrorExceptionsDialog(QDialog, Ui_SslErrorExceptionsDialog):
                 index = self.errorsTree.indexOfTopLevelItem(itm)
                 self.errorsTree.takeTopLevelItem(index)
             del itm
+        
+        # remove all hosts without an exception
+        for index in range(self.errorsTree.topLevelItemCount() - 1, -1, -1):
+            itm = self.errorsTree.topLevelItem(index)
+            if itm.childCount() == 0:
+                self.errorsTree.takeTopLevelItem(index)
+                del itm
     
     @pyqtSlot()
     def on_removeAllButton_clicked(self):

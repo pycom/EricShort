@@ -1382,6 +1382,7 @@
     <Source>WebBrowser/Tools/Scripts.py</Source>
     <Source>WebBrowser/Tools/WebBrowserTools.py</Source>
     <Source>WebBrowser/Tools/WebHitTestResult.py</Source>
+    <Source>WebBrowser/Tools/WebIconDialog.py</Source>
     <Source>WebBrowser/Tools/WebIconLoader.py</Source>
     <Source>WebBrowser/Tools/WebIconProvider.py</Source>
     <Source>WebBrowser/Tools/__init__.py</Source>
@@ -1841,6 +1842,7 @@
     <Form>WebBrowser/Sync/SyncEncryptionPage.ui</Form>
     <Form>WebBrowser/Sync/SyncFtpSettingsPage.ui</Form>
     <Form>WebBrowser/Sync/SyncHostTypePage.ui</Form>
+    <Form>WebBrowser/Tools/WebIconDialog.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkActionSelectionDialog.ui</Form>
     <Form>WebBrowser/UrlBar/BookmarkInfoDialog.ui</Form>
     <Form>WebBrowser/VirusTotal/VirusTotalDomainReportDialog.ui</Form>
