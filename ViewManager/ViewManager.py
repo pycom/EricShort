@@ -2690,6 +2690,7 @@ class ViewManager(QObject):
             self.ui)
         autocompletionMenu.setTearOffEnabled(True)
         autocompletionMenu.addAction(self.autoCompleteAct)
+        autocompletionMenu.addSeparator()
         autocompletionMenu.addAction(self.autoCompleteFromDocAct)
         autocompletionMenu.addAction(self.autoCompleteFromAPIsAct)
         autocompletionMenu.addAction(self.autoCompleteFromAllAct)

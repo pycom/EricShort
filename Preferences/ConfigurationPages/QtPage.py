@@ -9,7 +9,7 @@ Module implementing the Qt configuration page.
 
 from __future__ import unicode_literals
 
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, qVersion
 
 from E5Gui.E5PathPicker import E5PathPickerModes
 
@@ -34,7 +34,12 @@ class QtPage(ConfigurationPageBase, Ui_QtPage):
         self.qt4TransPicker.setMode(E5PathPickerModes.DirectoryMode)
         
         # set initial values
-        self.qt4TransPicker.setText(Preferences.getQt("Qt4TranslationsDir"))
+        if qVersion() < "5.0.0":
+            self.qt4TransPicker.setText(
+                Preferences.getQt("Qt4TranslationsDir"))
+        else:
+            self.qt4TransPicker.setText(
+                Preferences.getQt("Qt5TranslationsDir"))
         self.qt4PrefixEdit.setText(Preferences.getQt("QtToolsPrefix4"))
         self.qt4PostfixEdit.setText(Preferences.getQt("QtToolsPostfix4"))
         self.__updateQt4Sample()
@@ -46,7 +51,10 @@ class QtPage(ConfigurationPageBase, Ui_QtPage):
         """
         Public slot to save the Qt configuration.
         """
-        Preferences.setQt("Qt4TranslationsDir", self.qt4TransPicker.text())
+        if qVersion() < "5.0.0":
+            Preferences.setQt("Qt4TranslationsDir", self.qt4TransPicker.text())
+        else:
+            Preferences.setQt("Qt5TranslationsDir", self.qt4TransPicker.text())
         Preferences.setQt("QtToolsPrefix4", self.qt4PrefixEdit.text())
         Preferences.setQt("QtToolsPostfix4", self.qt4PostfixEdit.text())
         Preferences.setQt("PyuicIndent", self.pyuicIndentSpinBox.value())

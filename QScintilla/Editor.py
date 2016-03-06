@@ -809,14 +809,15 @@ class Editor(QsciScintillaCompat):
         menu = QMenu(self.tr('Complete'))
         
         self.menuActs["acDynamic"] = menu.addAction(
-            self.tr('dynamic'), self.autoComplete)
+            self.tr('Complete'), self.autoComplete)
         menu.addSeparator()
         menu.addAction(
-            self.tr('from Document'), self.autoCompleteFromDocument)
+            self.tr('Complete from Document'), self.autoCompleteFromDocument)
         self.menuActs["acAPI"] = menu.addAction(
-            self.tr('from APIs'), self.autoCompleteFromAPIs)
+            self.tr('Complete from APIs'), self.autoCompleteFromAPIs)
         self.menuActs["acAPIDocument"] = menu.addAction(
-            self.tr('from Document and APIs'), self.autoCompleteFromAll)
+            self.tr('Complete from Document and APIs'),
+            self.autoCompleteFromAll)
         
         menu.aboutToShow.connect(self.__showContextMenuAutocompletion)
         
