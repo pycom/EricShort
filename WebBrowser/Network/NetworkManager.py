@@ -114,6 +114,15 @@ class NetworkManager(QNetworkAccessManager):
             self.__permanentlyIgnoredSslErrors = dlg.getSslErrorExceptions()
             self.changed.emit()
     
+    def clearSslExceptions(self):
+        """
+        Public method to clear the permanent SSL certificate error exceptions.
+        """
+        self.__load()
+        
+        self.__permanentlyIgnoredSslErrors = {}
+        self.changed.emit()
+    
     def certificateError(self, error, view):
         """
         Public method to handle SSL certificate errors.

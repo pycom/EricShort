@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>305</width>
-    <height>353</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -187,6 +187,16 @@
     </widget>
    </item>
    <item>
+    <widget class="QCheckBox" name="sslExceptionsCheckBox">
+     <property name="text">
+      <string>SSL Certificate Error Exceptions</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="Line" name="line">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -226,6 +236,7 @@
   <tabstop>passwordsCheckBox</tabstop>
   <tabstop>databasesCheckBox</tabstop>
   <tabstop>zoomCheckBox</tabstop>
+  <tabstop>sslExceptionsCheckBox</tabstop>
   <tabstop>flashCookiesCheckBox</tabstop>
  </tabstops>
  <resources/>

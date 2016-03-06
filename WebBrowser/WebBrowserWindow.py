@@ -3274,7 +3274,7 @@ class WebBrowserWindow(E5MainWindow):
             # passwords, web databases, downloads, Flash cookies
             (history, searches, favicons, cache, cookies,
              passwords, databases, downloads, flashCookies, zoomValues,
-             historyPeriod) = dlg.getData()
+             sslExceptions, historyPeriod) = dlg.getData()
             if history:
                 self.historyManager().clear(historyPeriod)
                 self.__tabWidget.clearClosedTabsList()
@@ -3307,6 +3307,8 @@ class WebBrowserWindow(E5MainWindow):
                 self.flashCookieManager().removeAllCookies()
             if zoomValues:
                 ZoomManager.instance().clear()
+            if sslExceptions:
+                self.networkManager().clearSslExceptions()
         
     def __showEnginesConfigurationDialog(self):
         """
