@@ -1603,6 +1603,24 @@ class WebBrowserWindow(E5MainWindow):
 ##                    self.__showCertificatesDialog)
 ##            self.__actions.append(self.certificatesAct)
         
+        self.certificateErrorsAct = E5Action(
+            self.tr('Manage SSL Certificate Errors'),
+            UI.PixmapCache.getIcon("certificates.png"),
+            self.tr('Manage SSL Certificate Errors...'),
+            0, 0,
+            self, 'webbrowser_manage_certificate_errors')
+        self.certificateErrorsAct.setStatusTip(self.tr(
+            'Manage the accepted SSL certificate Errors'))
+        self.certificateErrorsAct.setWhatsThis(self.tr(
+            """<b>Manage SSL Certificate Errors...</b>"""
+            """<p>Opens a dialog to manage the accepted SSL"""
+            """ certificate errors.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.certificateErrorsAct.triggered.connect(
+                self.__showCertificateErrorsDialog)
+        self.__actions.append(self.certificateErrorsAct)
+        
         # TODO: Network Monitor (?)
 ##        self.toolsMonitorAct = E5Action(
 ##            self.tr('Network Monitor'),
@@ -1850,7 +1868,8 @@ class WebBrowserWindow(E5MainWindow):
 ##        from .Network.NetworkManager import SSL_AVAILABLE
 ##        if SSL_AVAILABLE:
 ##            menu.addAction(self.certificatesAct)
-##        menu.addSeparator()
+        menu.addAction(self.certificateErrorsAct)
+        menu.addSeparator()
         menu.addAction(self.zoomValuesAct)
         menu.addSeparator()
 ##        menu.addAction(self.adblockAct)
@@ -3326,6 +3345,12 @@ class WebBrowserWindow(E5MainWindow):
 ##        dlg = E5SslCertificatesDialog(self)
 ##        dlg.exec_()
 ##        
+    def __showCertificateErrorsDialog(self):
+        """
+        Private slot to show the certificate errors management dialog.
+        """
+        self.networkManager().showSslErrorExceptionsDialog()
+    
     # TODO: AdBlock
 ##    def __showAdBlockDialog(self):
 ##        """

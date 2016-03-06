@@ -9,6 +9,9 @@ Module implementing a network manager class.
 
 from __future__ import unicode_literals
 
+import json
+
+from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtNetwork import QNetworkAccessManager, QNetworkProxy
 
@@ -23,13 +26,18 @@ except ImportError:
 
 from WebBrowser.WebBrowserWindow import WebBrowserWindow
 
+from Utilities.AutoSaver import AutoSaver
 import Preferences
 
 
 class NetworkManager(QNetworkAccessManager):
     """
     Class implementing a network manager.
+    
+    @signal changed() emitted to indicate a change
     """
+    changed = pyqtSignal()
+    
     def __init__(self, parent=None):
         """
         Constructor
@@ -52,12 +60,59 @@ class NetworkManager(QNetworkAccessManager):
             self.__sslErrorHandler = E5SslErrorHandler(self)
             self.sslErrors.connect(self.__sslErrorHandler.sslErrorsReplySlot)
         
-        self.__ignoredSslErrors = {}
-        # dictionary of temporarily ignored SSL errors
+        self.__temporarilyIgnoredSslErrors = {}
+        self.__permanentlyIgnoredSslErrors = {}
+        # dictionaries of permanently and temporarily ignored SSL errors
         
+        self.__loaded = False
+        self.__saveTimer = AutoSaver(self, self.__save)
+        
+        self.changed.connect(self.__saveTimer.changeOccurred)
         self.proxyAuthenticationRequired.connect(proxyAuthenticationRequired)
         self.authenticationRequired.connect(
             lambda reply, auth: self.authentication(reply.url(), auth))
+    
+    def __save(self):
+        """
+        Private slot to save the permanent SSL error exceptions.
+        """
+        if not self.__loaded:
+            return
+        
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        if not WebBrowserWindow.isPrivate():
+            dbString = json.dumps(self.__permanentlyIgnoredSslErrors)
+            Preferences.setWebBrowser("SslExceptionsDB", dbString)
+    
+    def __load(self):
+        """
+        Private method to load the permanent SSL error exceptions.
+        """
+        if self.__loaded:
+            return
+        
+        dbString = Preferences.getWebBrowser("SslExceptionsDB")
+        if dbString:
+            try:
+                db = json.loads(dbString)
+                self.__permanentlyIgnoredSslErrors = db
+            except ValueError:
+                # ignore silently
+                pass
+        
+        self.__loaded = True
+    
+    def showSslErrorExceptionsDialog(self):
+        """
+        Public method to show the SSL error exceptions dialog.
+        """
+        self.__load()
+        
+        from .SslErrorExceptionsDialog import SslErrorExceptionsDialog
+        dlg = SslErrorExceptionsDialog(self.__permanentlyIgnoredSslErrors)
+        if dlg.exec_() == QDialog.Accepted:
+            self.__permanentlyIgnoredSslErrors = dlg.getSslErrorExceptions()
+            self.changed.emit()
     
     def certificateError(self, error, view):
         """
@@ -70,16 +125,21 @@ class NetworkManager(QNetworkAccessManager):
         @return flag indicating to ignore this error
         @rtype bool
         """
-        # TODO: permanent SSL certificate error exceptions
+        self.__load()
+        
         host = error.url().host()
         
-        if host in self.__ignoredSslErrors and \
-                self.__ignoredSslErrors[host] == error.error():
+        if host in self.__temporarilyIgnoredSslErrors and \
+                error.error() in self.__temporarilyIgnoredSslErrors[host]:
+            return True
+        
+        if host in self.__permanentlyIgnoredSslErrors and \
+                error.error() in self.__permanentlyIgnoredSslErrors[host]:
             return True
         
         title = self.tr("SSL Certificate Error")
-        accept = E5MessageBox.yesNo(
-            view,
+        msgBox = E5MessageBox.E5MessageBox(
+            E5MessageBox.Warning,
             title,
             self.tr("""<b>{0}</b>"""
                     """<p>The page you are trying to access has errors"""
@@ -87,12 +147,26 @@ class NetworkManager(QNetworkAccessManager):
                     """<ul><li>{1}</li></ul>"""
                     """<p>Would you like to make an exception?</p>""")
             .format(title, error.errorDescription()),
-            icon=E5MessageBox.Warning)
-        if accept:
-            self.__ignoredSslErrors[error.url().host()] = error.error()
+            modal=True, parent=view)
+        permButton = msgBox.addButton(self.tr("&Permanent accept"),
+                                      E5MessageBox.AcceptRole)
+        tempButton = msgBox.addButton(self.tr("&Temporary accept"),
+                                      E5MessageBox.AcceptRole)
+        msgBox.addButton(self.tr("&Reject"), E5MessageBox.RejectRole)
+        msgBox.exec_()
+        if msgBox.clickedButton() == permButton:
+            if host not in self.__permanentlyIgnoredSslErrors:
+                self.__permanentlyIgnoredSslErrors[host] = []
+            self.__permanentlyIgnoredSslErrors[host].append(error.error())
+            self.changed.emit()
             return True
-        
-        return False
+        elif msgBox.clickedButton() == tempButton:
+            if host not in self.__temporarilyIgnoredSslErrors:
+                self.__temporarilyIgnoredSslErrors[host] = []
+            self.__temporarilyIgnoredSslErrors[host].append(error.error())
+            return True
+        else:
+            return False
     
     def authentication(self, url, auth):
         """

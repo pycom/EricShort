@@ -1032,6 +1032,7 @@ class Prefs(object):
         "WebInspectorEnabled": False,
         "DiskCacheEnabled": True,
         "DiskCacheSize": 50,        # 50 MB
+        "SslExceptionsDB": "{}",    # empty JSON dictionary
         # Grease Monkey
         "GreaseMonkeyDisabledScripts": [],
         # Downloads

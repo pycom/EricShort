@@ -1337,6 +1337,7 @@
     <Source>WebBrowser/Network/FollowRedirectReply.py</Source>
     <Source>WebBrowser/Network/LoadRequest.py</Source>
     <Source>WebBrowser/Network/NetworkManager.py</Source>
+    <Source>WebBrowser/Network/SslErrorExceptionsDialog.py</Source>
     <Source>WebBrowser/Network/UrlInterceptor.py</Source>
     <Source>WebBrowser/Network/__init__.py</Source>
     <Source>WebBrowser/OpenSearch/DefaultSearchEngines/DefaultSearchEngines_rc.py</Source>
@@ -1826,6 +1827,7 @@
     <Form>WebBrowser/GreaseMonkey/GreaseMonkeyConfiguration/GreaseMonkeyConfigurationDialog.ui</Form>
     <Form>WebBrowser/GreaseMonkey/GreaseMonkeyConfiguration/GreaseMonkeyConfigurationScriptInfoDialog.ui</Form>
     <Form>WebBrowser/History/HistoryDialog.ui</Form>
+    <Form>WebBrowser/Network/SslErrorExceptionsDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchDialog.ui</Form>
     <Form>WebBrowser/OpenSearch/OpenSearchEditDialog.ui</Form>
     <Form>WebBrowser/PageScreenDialog.ui</Form>

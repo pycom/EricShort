@@ -150,19 +150,22 @@ class PasswordManager(QObject):
         if not self.__loaded:
             return
         
-        from .PasswordWriter import PasswordWriter
-        loginFile = self.getFileName()
-        writer = PasswordWriter()
-        if not writer.write(
-                loginFile, self.__logins, self.__loginForms, self.__never):
-            E5MessageBox.critical(
-                None,
-                self.tr("Saving login data"),
-                self.tr(
-                    """<p>Login data could not be saved to <b>{0}</b></p>"""
-                ).format(loginFile))
-        else:
-            self.passwordsSaved.emit()
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        if not WebBrowserWindow.isPrivate():
+            from .PasswordWriter import PasswordWriter
+            loginFile = self.getFileName()
+            writer = PasswordWriter()
+            if not writer.write(
+                    loginFile, self.__logins, self.__loginForms, self.__never):
+                E5MessageBox.critical(
+                    None,
+                    self.tr("Saving login data"),
+                    self.tr(
+                        """<p>Login data could not be saved to"""
+                        """ <b>{0}</b></p>"""
+                    ).format(loginFile))
+            else:
+                self.passwordsSaved.emit()
     
     def __load(self):
         """

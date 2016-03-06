@@ -70,8 +70,10 @@ class ZoomManager(QObject):
         if not self.__loaded:
             return
         
-        dbString = json.dumps(self.__zoomDB)
-        Preferences.setWebBrowser("ZoomValuesDB", dbString)
+        from WebBrowser.WebBrowserWindow import WebBrowserWindow
+        if not WebBrowserWindow.isPrivate():
+            dbString = json.dumps(self.__zoomDB)
+            Preferences.setWebBrowser("ZoomValuesDB", dbString)
     
     def __keyFromUrl(self, url):
         """
