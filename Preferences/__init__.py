@@ -1020,9 +1020,9 @@ class Prefs(object):
     }
 
     # defaults for Qt related stuff
-    # TODO: introduce Qt5TranslationsDir and use it depending on Qt version
     qtDefaults = {
         "Qt4TranslationsDir": "",
+        "Qt5TranslationsDir": "",
         "QtToolsPrefix4": "",
         "QtToolsPostfix4": "",
         "PyuicIndent": 4,
@@ -2574,14 +2574,20 @@ def setSystem(key, value, prefClass=Prefs):
 
 def getQtTranslationsDir(prefClass=Prefs):
     """
-    Module function to retrieve the Qt4TranslationsDir setting (Name kept for
-    backward compatibility).
+    Module function to retrieve the Qt4TranslationsDir or Qt5TranslationsDir
+    setting depending on the current Qt version.
     
     @param prefClass preferences class used as the storage area
-    @return the requested Qt4TranslationsDir setting (string)
+    @return the requested setting (string)
     """
-    s = prefClass.settings.value(
-        "Qt/Qt4TranslationsDir", prefClass.qtDefaults["Qt4TranslationsDir"])
+    if qVersion() < "5.0.0":
+        s = prefClass.settings.value(
+            "Qt/Qt4TranslationsDir",
+            prefClass.qtDefaults["Qt4TranslationsDir"])
+    else:
+        s = prefClass.settings.value(
+            "Qt/Qt5TranslationsDir",
+            prefClass.qtDefaults["Qt5TranslationsDir"])
     if s == "":
         s = os.getenv("QTTRANSLATIONSDIR", "")
     if s == "":
@@ -2606,7 +2612,7 @@ def getQt(key, prefClass=Prefs):
     @param prefClass preferences class used as the storage area
     @return the requested Qt setting
     """
-    if key == "Qt4TranslationsDir":
+    if key in ["Qt4TranslationsDir", "Qt5TranslationsDir"]:
         return getQtTranslationsDir(prefClass)
     elif key in ["PyuicIndent"]:
         return int(prefClass.settings.value(
