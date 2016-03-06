@@ -808,11 +808,16 @@ class WebBrowserView(QWebEngineView):
             UI.PixmapCache.getIcon("mailSend.png"),
             self.tr("Send Text"),
             self.__sendLink).setData(self.selectedText())
-        # TODO: OpenSearch: add a search entry using the current engine
-        self.__searchMenu = menu.addMenu(self.tr("Search with..."))
+        
+        engineName = self.__mw.openSearchManager().currentEngineName()
+        if engineName:
+            menu.addAction(self.tr("Search with '{0}'").format(engineName), 
+                           self.__searchDefaultRequested)
         
         from .OpenSearch.OpenSearchEngineAction import \
             OpenSearchEngineAction
+        
+        self.__searchMenu = menu.addMenu(self.tr("Search with..."))
         engineNames = self.__mw.openSearchManager().allEnginesNames()
         for engineName in engineNames:
             engine = self.__mw.openSearchManager().engine(engineName)
@@ -1122,6 +1127,19 @@ class WebBrowserView(QWebEngineView):
         url = act.data()
         self.__mw.requestVirusTotalScan(url)
     
+    def __searchDefaultRequested(self):
+        """
+        Private slot to search for some text with the current search engine.
+        """
+        searchText = self.selectedText()
+        
+        if not searchText:
+            return
+        
+        engine = self.__mw.openSearchManager().currentEngine()
+        if engine:
+            self.search.emit(engine.searchUrl(searchText))
+    
     def __searchRequested(self, act):
         """
         Private slot to search for some text with a selected search engine.
@@ -1136,6 +1154,9 @@ class WebBrowserView(QWebEngineView):
         engineName = act.data()
         if engineName:
             engine = self.__mw.openSearchManager().engine(engineName)
+        else:
+            engine = self.__mw.openSearchManager().currentEngine()
+        if engine:
             self.search.emit(engine.searchUrl(searchText))
     
     def __addSearchEngine(self):
