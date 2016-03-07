@@ -20,7 +20,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0" rowspan="3">
-      <widget class="QTreeWidget" name="iconsList">
+      <widget class="QListWidget" name="iconsList">
        <property name="contextMenuPolicy">
         <enum>Qt::CustomContextMenu</enum>
        </property>
@@ -30,17 +30,15 @@
        <property name="selectionMode">
         <enum>QAbstractItemView::ExtendedSelection</enum>
        </property>
+       <property name="iconSize">
+        <size>
+         <width>22</width>
+         <height>22</height>
+        </size>
+       </property>
        <property name="sortingEnabled">
         <bool>true</bool>
        </property>
-       <property name="headerHidden">
-        <bool>false</bool>
-       </property>
-       <column>
-        <property name="text">
-         <string>URL</string>
-        </property>
-       </column>
       </widget>
      </item>
      <item row="0" column="1">

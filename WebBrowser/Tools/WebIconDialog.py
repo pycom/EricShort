@@ -8,7 +8,7 @@ Module implementing a dialog to manage the Favicons.
 """
 
 from PyQt5.QtCore import pyqtSlot, Qt, QPoint
-from PyQt5.QtWidgets import QDialog, QTreeWidgetItem, QMenu
+from PyQt5.QtWidgets import QDialog, QListWidgetItem, QMenu
 
 from .Ui_WebIconDialog import Ui_WebIconDialog
 
@@ -30,9 +30,8 @@ class WebIconDialog(QDialog, Ui_WebIconDialog):
         self.setupUi(self)
         
         for url, icon in iconsDB.items():
-            itm = QTreeWidgetItem(self.iconsList, [url])
-            itm.setIcon(0, icon)
-        self.iconsList.sortItems(0, Qt.AscendingOrder)
+            QListWidgetItem(icon, url, self.iconsList)
+        self.iconsList.sortItems(Qt.AscendingOrder)
         
         self.__setRemoveButtons()
     
@@ -40,7 +39,7 @@ class WebIconDialog(QDialog, Ui_WebIconDialog):
         """
         Private method to set the state of the 'remove' buttons.
         """
-        self.removeAllButton.setEnabled(self.iconsList.topLevelItemCount() > 0)
+        self.removeAllButton.setEnabled(self.iconsList.count() > 0)
         self.removeButton.setEnabled(len(self.iconsList.selectedItems()) > 0)
     
     @pyqtSlot(QPoint)
@@ -59,7 +58,7 @@ class WebIconDialog(QDialog, Ui_WebIconDialog):
         menu.addAction(
             self.tr("Remove All"),
             self.on_removeAllButton_clicked).setEnabled(
-            self.iconsList.topLevelItemCount() > 0)
+            self.iconsList.count() > 0)
         
         menu.exec_(self.iconsList.mapToGlobal(pos))
     
@@ -76,8 +75,8 @@ class WebIconDialog(QDialog, Ui_WebIconDialog):
         Private slot to remove the selected items.
         """
         for itm in self.iconsList.selectedItems():
-            index = self.iconsList.indexOfTopLevelItem(itm)
-            self.iconsList.takeTopLevelItem(index)
+            row = self.iconsList.row(itm)
+            self.iconsList.takeItem(row)
             del itm
     
     @pyqtSlot()
@@ -95,7 +94,7 @@ class WebIconDialog(QDialog, Ui_WebIconDialog):
         @rtype list of str
         """
         urls = []
-        for index in range(self.iconsList.topLevelItemCount()):
-            urls.append(self.iconsList.topLevelItem(index).text(0))
+        for row in range(self.iconsList.count()):
+            urls.append(self.iconsList.item(row).text())
         
         return urls
