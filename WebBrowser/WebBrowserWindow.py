@@ -241,6 +241,19 @@ class WebBrowserWindow(E5MainWindow):
 ##                self.__searchDock.setWidget(self.__searchWindow)
 ##                self.addDockWidget(Qt.LeftDockWidgetArea, self.__searchDock)
 ##            
+            # JavaScript Console window
+            from .WebBrowserJavaScriptConsole import \
+                WebBrowserJavaScriptConsole
+            self.__javascriptConsole = WebBrowserJavaScriptConsole(self)
+            self.__javascriptConsoleDock = QDockWidget(
+                self.tr("JavaScript Console"))
+            self.__javascriptConsoleDock.setObjectName("JavascriptConsole")
+            self.__javascriptConsoleDock.setAllowedAreas(
+                Qt.BottomDockWidgetArea | Qt.TopDockWidgetArea)
+            self.__javascriptConsoleDock.setWidget(self.__javascriptConsole)
+            self.addDockWidget(Qt.BottomDockWidgetArea,
+                               self.__javascriptConsoleDock)
+            
             if Preferences.getWebBrowser("SaveGeometry"):
                 g = Preferences.getGeometry("WebBrowserGeometry")
             else:
@@ -1754,6 +1767,21 @@ class WebBrowserWindow(E5MainWindow):
             self.zoomValuesAct.triggered.connect(self.__showZoomValuesDialog)
         self.__actions.append(self.zoomValuesAct)
         
+        self.showJavaScriptConsoleAct = E5Action(
+            self.tr('JavaScript Console'),
+            self.tr('JavaScript Console'),
+            0, 0, self, 'webbrowser_show_javascript_console')
+        self.showJavaScriptConsoleAct.setStatusTip(self.tr(
+            'Toggle the JavaScript console window'))
+        self.showJavaScriptConsoleAct.setWhatsThis(self.tr(
+            """<b>JavaScript Console</b>"""
+            """<p>This toggles the JavaScript console window.</p>"""
+        ))
+        if not self.__initShortcutsOnly:
+            self.showJavaScriptConsoleAct.triggered.connect(
+                self.__toggleJavaScriptConsole)
+        self.__actions.append(self.showJavaScriptConsoleAct)
+        
         self.backAct.setEnabled(False)
         self.forwardAct.setEnabled(False)
         
@@ -1925,6 +1953,7 @@ class WebBrowserWindow(E5MainWindow):
         menu = mb.addMenu(self.tr("&Window"))
         menu.setTearOffEnabled(True)
         menu.addAction(self.showDownloadManagerAct)
+        menu.addAction(self.showJavaScriptConsoleAct)
 ##        if WebBrowserWindow.UseQtHelp:
 ##            menu.addSeparator()
 ##            menu.addAction(self.showTocAct)
@@ -3462,6 +3491,24 @@ class WebBrowserWindow(E5MainWindow):
         editor.setText(src, "Html")
         editor.setLanguage("dummy.html")
         editor.show()
+    
+    def __toggleJavaScriptConsole(self):
+        """
+        Private slot to toggle the JavaScript console.
+        """
+        if self.__javascriptConsoleDock.isVisible():
+            self.__javascriptConsoleDock.hide()
+        else:
+            self.__javascriptConsoleDock.show()
+    
+    def javascriptConsole(self):
+        """
+        Public method to get a reference to the JavaScript console widget.
+        
+        @return reference to the JavaScript console
+        @rtype WebBrowserJavaScriptConsole
+        """
+        return self.__javascriptConsole
     
     @classmethod
     def icon(cls, url):

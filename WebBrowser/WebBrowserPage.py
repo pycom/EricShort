@@ -751,6 +751,18 @@ class WebBrowserPage(QWebEnginePage):
     ## Methods below deal with JavaScript messages
     ##############################################
     
-    # TODO: JavaScript messages: do this right and add the others
     def javaScriptConsoleMessage(self, level, message, lineNumber,  sourceId):
-        print("JS-console:", message, lineNumber, sourceId)
+        """
+        Public method to show a console message.
+        
+        @param level severity
+        @type QWebEnginePage.JavaScriptConsoleMessageLevel
+        @param message message to be shown
+        @type str
+        @param lineNumber line number of an error
+        @type int
+        @param sourceId source URL causing the error
+        @type str
+        """
+        self.view().mainWindow().javascriptConsole().javaScriptConsoleMessage(
+            level, message, lineNumber,  sourceId)

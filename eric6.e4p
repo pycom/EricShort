@@ -1398,6 +1398,7 @@
     <Source>WebBrowser/VirusTotal/VirusTotalWhoisDialog.py</Source>
     <Source>WebBrowser/VirusTotal/__init__.py</Source>
     <Source>WebBrowser/WebBrowserClearPrivateDataDialog.py</Source>
+    <Source>WebBrowser/WebBrowserJavaScriptConsole.py</Source>
     <Source>WebBrowser/WebBrowserLanguagesDialog.py</Source>
     <Source>WebBrowser/WebBrowserPage.py</Source>
     <Source>WebBrowser/WebBrowserSnap.py</Source>
