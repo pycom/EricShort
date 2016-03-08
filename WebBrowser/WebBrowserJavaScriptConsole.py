@@ -96,12 +96,14 @@ class WebBrowserJavaScriptConsole(QTextEdit):
         @param sourceId source URL causing the error
         @type str
         """
-        txt = self.tr("[{0}] {1}\n").format(
+        txt = self.tr("[{0}] {1}").format(
             self.__levelStrings[level], message)
         self.__appendText(txt)
         
         if lineNumber:
-            self.__appendText(self.tr("at line {0}\n").format(lineNumber))
+            self.__appendText(self.tr(" at line {0}\n").format(lineNumber))
+        else:
+            self.__appendText("\n")
         
         if sourceId:
             self.__appendText(self.tr("URL: {0}\n").format(sourceId))
